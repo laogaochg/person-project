@@ -15,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.test.model.BlDataDictXml;
 import com.test.service.LoginService;
-import com.test.util.BlParseUtil;
 
 @Controller
 public class TestController {
@@ -29,8 +27,6 @@ public class TestController {
         // File file = new File("F:\\daima\\之前项目\\mobilebank\\designSource\\bl\\account\\queryAAInvitationDetail.bl");
         File file = new File("F:\\daima\\之前项目\\mobilebank\\designSource\\common\\dataDict\\dataDict.xml");
         // BlXmlModel data = BlParseUtil.parseDataDictXml(file);
-        BlDataDictXml data = BlParseUtil.getBlDataDictXmlByFile(file);
-        System.out.println("data = " + data);
     }
 
     @RequestMapping("test")

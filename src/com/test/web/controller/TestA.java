@@ -13,7 +13,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import com.test.domain.User;
 import com.test.domain.UserVo;
 import com.test.model.Login;
-import com.test.util.QueryTestDataCallable;
 
 public class TestA {
     public static void main(String[] args) throws Exception {
