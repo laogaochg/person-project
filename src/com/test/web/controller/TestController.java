@@ -1,5 +1,9 @@
 package com.test.web.controller;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,6 +32,24 @@ public class TestController {
         File file = new File("F:\\daima\\之前项目\\mobilebank\\designSource\\common\\dataDict\\dataDict.xml");
         // BlXmlModel data = BlParseUtil.parseDataDictXml(file);
     }
+
+    /**
+     * 打印主体类的所有set方法
+     *
+     * @param objName
+     * @param clzz
+     * @throws IntrospectionException
+     */
+    public static void soutSetMethod(String objName,Class<?> clzz) throws IntrospectionException {
+        BeanInfo beanInfo = Introspector.getBeanInfo(clzz,Object.class);
+        for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+            String name = propertyDescriptor.getName();
+            String s = name.substring(0,1).toUpperCase() + name.substring(1);
+            System.out.println(objName + ".set" + s + "(" + name + ");");
+        }
+    }
+
+
 
     @RequestMapping("test")
     @ResponseBody
