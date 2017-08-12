@@ -99,15 +99,7 @@ public class User implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", nickname=").append(nickname);
-        sb.append(", email=").append(email);
-        sb.append(", pswd=").append(pswd);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", lastLoginTime=").append(lastLoginTime);
-        sb.append(", status=").append(status);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("id=").append(id);
         sb.append("]");
         return sb.toString();
     }

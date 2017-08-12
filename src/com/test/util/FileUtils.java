@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * laogaochg
  * 2017/7/6.
@@ -17,7 +19,8 @@ public class FileUtils {
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             while (br.ready()) {
-                list.add(br.readLine().trim());
+                String s = br.readLine();
+                if (StringUtils.isNotBlank(s)) list.add(s.trim());
             }
         } catch (Exception e) {
             e.printStackTrace();
