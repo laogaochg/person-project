@@ -1,4 +1,0 @@
-<!DOCTYPE host PUBLIC "-//jrds//DTD Host//EN" "urn:jrds:host">
-<host name="localhost">
-    <probe type="ProbeType" />
-</host>
