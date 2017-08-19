@@ -1,2 +1,10 @@
 server:
-    port: 7901
+  port: 7901
+spring:
+  thymeleaf:
+      cache: false
+  output:
+    ansi:
+      enabled: detect #彩色日志
+  resources:
+    static-locations: file:d:/laogao2/PersionProject-vue.js/webapps/

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+<div id="app">
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Sex</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="p in people">
+            <td>{{ p.name  }}</td>
+            <td>{{ p.age  }}</td>
+            <td>{{ p.sex  }}</td>
+            <td>{{ p.sex1  }}</td>
+        </tr>
+        <ul class="pagination">
+            <li v-for="p in people">
+                <a href="javascripit:void(0)" v-bind:class="activeNumber === p.age - 1 ? 'active' : ''">
+                    {{activeNumber}}
+                    {{activeNumber === (p.age - 1)}}
+                    {{activeNumber === (p.age - 1) ? 'active' : ''}}:{{ p.age + 1 }}</a>
+            </li>
+        </ul>
+        {{activeNumber}}
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="/js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            activeNumber:29,
+            people: [{
+                name: 'Jack',
+                age: 30,
+                sex: 'Male'
+            }, {
+                name: 'Bill',
+                age: 26,
+                sex: 'Male'
+            }, {
+                name: 'Tracy',
+                age: 22,
+                sex: 'Female'
+            }, {
+                name: 'Chris',
+                age: 36,
+                sex: 'Male'
+            }]
+        }
+    })
+</script>
+
+</html>

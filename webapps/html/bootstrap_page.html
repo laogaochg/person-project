@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>bootstrap分页插件</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/layui/layui.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+</head>
+<body>
+<div class="container">
+    <div id="selectUserDemo" class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                        <th>Table heading</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                        <td>Table cell</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- /.table-responsive -->
+
+        </div>
+        <div id="app" class="row">
+            <div class="col-md-offset-3 col-md-4">
+                <button @click="send" class="btn btn-info">下载数据</button>
+                <button @click="deleteSelectUser" class="btn btn-info">删除所选用户</button>
+                <button @click="cancelUser(1)" class="btn btn-info">全选</button>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>id</th>
+                    <th>名字</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="(user , value , index) in userData">
+                    <th>
+                        <input type="checkbox" v-model="user.select">
+                        {{user.id}}
+                    </th>
+                    <th>{{user.name}}</th>
+                    <th>{{user.age}}</th>
+                    <th>
+                        <button @click="deleteUser(value)" class="btn btn-danger">删除</button>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/vue.js"></script>
+<script type="text/javascript">
+
+    new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue.js!',
+            url: '/getUserList',
+            userIdCheckbox: true,
+            userData: []
+        },
+        created: function() {//初始化操作
+            layui.use(['laypage','layer'],function() {
+                var laypage=layui.laypage,layer=layui.layer;
+                laypage({
+                    cont: 'demo4'
+                    ,pages: 100
+                    ,first: false
+                    ,last: false
+                    ,skin: '#1E9FFF'
+                });
+            });
+        },
+        methods: {
+            send: function() {
+                var vue=this;
+                axios.post(vue.url,{id: 1})
+                    .then(function(res) {
+                        for (var i=0; i<res.data.length; i++) {
+                            res.data[i].select=false;
+                        }
+                        vue.userData=res.data;
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+            },
+            deleteUser: function(id) {
+                var vue=this;
+                console.debug(id);
+                layer.confirm("发送删除id为" + vue.userData[id].id + '的用户',{
+                    btn: ['确定','取消']    //按钮
+                },function() {
+                    //里面的数据删除一个
+                    vue.userData.splice(id,1);
+                    layer.closeAll();
+                });
+            },
+            cancelUser: function(state) {//把用户选中状态删除
+                var vue=this;
+                for (var i=0; i<vue.userData.length; i++) {
+                    console.debug(vue.userData[i]);
+                    if(state==1) {
+                        vue.userData[i].select=true;
+                        vue.userData[i].name="天天天";
+                    } else {
+                        vue.userData[i].select=false;
+                    }
+                }
+                console.debug(vue.userData);
+            },
+            deleteSelectUser: function() {
+                var vue=this;
+                var ids="1=1";
+                for (var i=0; i<vue.userData.length; i++) {
+                    if(vue.userData[i].select) {
+                        ids+="&id=" + vue.userData[i].id;
+                    }
+                }
+
+                if("1=1"==ids) {
+                    layer.confirm("请选择用户",{btn: ['确定']});    //按钮
+                    var a={};
+                    a.a=1;
+                    a.b=2;
+                    a.c=3;
+                    for (var k in a) {
+                        console.debug(k);
+                        console.debug(a[k]);
+                    }
+                    return;
+                }
+                console.debug(ids);
+
+            }
+        }
+
+    });
+</script>
+</html>

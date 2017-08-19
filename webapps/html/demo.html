@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+</head>
+<body>
+
+<div id="app">
+    <input v-model="name">
+    <input v-model="age">
+    <select v-model="sex">
+        <option>Male</option>
+        <option>Female</option>
+    </select>
+    <button v-on:click="addPersion()" type="button">添加</button>
+    <table class="table">
+        <tr>
+            <th>name</th>
+            <th>age</th>
+            <th>sex</th>
+            <th>操作</th>
+        </tr>
+        <tr v-for="(p , , index) in persons">
+            <th>{{p.name}}</th>
+            <th>{{p.age}}</th>
+            <th>{{p.sex}}</th>
+            <th>
+                <button v-on:click="deletePerson(index)">删除</button>
+            </th>
+        </tr>
+    </table>
+</div>
+</body>
+<script src="/js/vue.js"></script>
+<script>
+    var vm=new Vue({
+        el: '#app',
+        data: {
+            sex: 'Male',
+            age: '',
+            name: '',
+            persons: [
+                {
+                    sex: 'Male',
+                    age: '1',
+                    name: '1'
+                },
+                {
+                    sex: 'Male',
+                    age: '1',
+                    name: '1'
+                }
+            ]
+        }
+    });
+
+    function addPersion() {
+        var person={};
+        person.age=vm.age;
+        person.name=vm.name;
+        person.sex=vm.sex;
+        vm.persons.push(person);
+        vm.age="";
+        vm.name="";
+        vm.sex="Male";
+    };
+
+    function deletePerson(index) {
+        //vm.persons.pop();
+        var a=vm.persons.splice(index,1);
+    }
+</script>
+</html>
