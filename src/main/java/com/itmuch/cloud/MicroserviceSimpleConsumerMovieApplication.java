@@ -7,6 +7,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class MicroserviceSimpleConsumerMovieApplication {
+
     @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();

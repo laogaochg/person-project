@@ -1,9 +1,19 @@
 package com.itmuch.cloud.controller;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 public class TestUser {
     private String username;
     private String password;
     private Integer age;
+
+    public static void main(String[] args) {
+        DecimalFormat decimalFormat = new DecimalFormat("##.##");
+        String s = decimalFormat.format(new BigDecimal("10.00"));
+        System.out.println("s = " + s);
+        System.out.println(new BigDecimal("10.00"));
+    }
 
     public String getUsername() {
         return username;
@@ -31,10 +41,6 @@ public class TestUser {
 
     @Override
     public String toString() {
-        return "TestUser{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", age=" + age +
-                '}';
+        return "TestUser{" + "username='" + username + '\'' + ", password='" + password + '\'' + ", age=" + age + '}';
     }
 }

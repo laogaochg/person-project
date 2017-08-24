@@ -11,51 +11,39 @@
 <body>
 <div class="container">
     <div id="selectUserDemo" class="row">
-        <div class="col-md-offset-3 col-md-6">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div><!-- /.table-responsive -->
+        <div v-show="showEditUserTab" class="col-md-offset-3 col-md-4"
+             style="position: fixed;margin-top: 100px;padding: 10px;background-color: #b8f1f3;">
+            <div style="background-color: #d7f5d2;">
+                <form class="form-horizontal">
+                    <div class="row" style="    margin-bottom: 0px;">
+                        <button @click="submitUser" type="button" class="btn btn-default"
+                                style="float: right;margin-right: 15px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">名字</label>
+                        <div class="col-sm-10">
+                            <input v-model="user.name" class="form-control" id="inputEmail3" placeholder="名字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">年龄</label>
+                        <div class="col-sm-10">
+                            <input v-model="user.age" class="form-control" id="inputPassword3" placeholder="年龄">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-1 col-sm-2">
+                            <button type="button" @click="submitUser" class="btn btn-default">取消</button>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-3">
+                            <button type="button" @click="submitUser" class="btn btn-default">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
         </div>
         <div id="app" class="row">
@@ -63,6 +51,7 @@
                 <button @click="send" class="btn btn-info">下载数据</button>
                 <button @click="deleteSelectUser" class="btn btn-info">删除所选用户</button>
                 <button @click="cancelUser(1)" class="btn btn-info">全选</button>
+                <button @click="editUser()" class="btn btn-info">新建用户</button>
             </div>
             <table class="table">
                 <tr>
@@ -79,6 +68,7 @@
                     <th>{{user.name}}</th>
                     <th>{{user.age}}</th>
                     <th>
+                        <button @click="editUser(value)" class="btn btn-default">编辑</button>
                         <button @click="deleteUser(value)" class="btn btn-danger">删除</button>
                     </th>
                 </tr>
@@ -91,12 +81,15 @@
 <script type="text/javascript">
 
     new Vue({
-        el: '#app',
+        el: '#selectUserDemo',
         data: {
             message: 'Hello Vue.js!',
             url: '/getUserList',
             userIdCheckbox: true,
-            userData: []
+            userData: [],
+            user: {},
+            selectState: true,//保存用户选中状态
+            showEditUserTab: false//保存用户选中状态
         },
         created: function() {//初始化操作
             layui.use(['laypage','layer'],function() {
@@ -138,15 +131,22 @@
             cancelUser: function(state) {//把用户选中状态删除
                 var vue=this;
                 for (var i=0; i<vue.userData.length; i++) {
-                    console.debug(vue.userData[i]);
-                    if(state==1) {
-                        vue.userData[i].select=true;
-                        vue.userData[i].name="天天天";
-                    } else {
-                        vue.userData[i].select=false;
-                    }
+                    vue.userData[i].select=vue.selectState;
                 }
+                vue.selectState= !vue.selectState;
                 console.debug(vue.userData);
+            },
+            editUser: function(index) {
+                var vue=this;
+                if(index) {
+                    var user=vue.userData[index];
+                    vue.user=user;
+                    console.debug(user);
+                    vue.showEditUserTab=true;
+                } else {
+                    vue.user={};
+                    vue.showEditUserTab=true;
+                }
             },
             deleteSelectUser: function() {
                 var vue=this;
@@ -171,9 +171,14 @@
                 }
                 console.debug(ids);
 
+            },
+            submitUser: function() {
+                var vue=this;
+                vue.showEditUserTab=false;
             }
         }
 
     });
 </script>
+
 </html>

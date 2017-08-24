@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu implements Serializable {
+
+    public static void main(String[] args) {
+        List<Long> ids = null;
+        for (int i = 0;ids!=null && i < ids.size();i++) {
+            System.out.println(1);
+        }
+    }
+
     /**
      * 菜单ID
      */
@@ -23,8 +31,6 @@ public class Menu implements Serializable {
      * 子菜单
      */
     private List<Menu> menuList = new ArrayList<Menu>();
-
-
 
     public List<Menu> getMenuList() {
         return menuList;

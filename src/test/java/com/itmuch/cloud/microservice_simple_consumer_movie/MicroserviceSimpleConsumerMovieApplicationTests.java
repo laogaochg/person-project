@@ -1,4 +1,4 @@
-package test.java.com.itmuch.cloud.microservice_simple_consumer_movie;
+package com.itmuch.cloud.microservice_simple_consumer_movie;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -2,6 +2,7 @@ package com.itmuch.cloud.entiey;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class User implements Serializable{
     private Long id ;
@@ -9,6 +10,25 @@ public class User implements Serializable{
     private String username;
     private Short age ;
     private BigDecimal balance;
+    private Boolean man;
+    private String remark;
+    private Date borthDate;
+
+    public Date getBorthDate() {
+        return borthDate;
+    }
+
+    public void setBorthDate(Date borthDate) {
+        this.borthDate = borthDate;
+    }
+
+    public Boolean getMan() {
+        return man;
+    }
+
+    public void setMan(Boolean man) {
+        this.man = man;
+    }
 
     public Long getId() {
         return id;
@@ -48,5 +68,13 @@ public class User implements Serializable{
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemark() {
+        return remark;
     }
 }
