@@ -16,17 +16,7 @@ import com.test.model.Login;
 
 public class TestA {
     public static void main(String[] args) throws Exception {
-        User user = new User();
-        UserVo vo = new UserVo();
-
-//        new Thread(() -> {
-//            try {
-//                doLock2(user,vo);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }).start();
-        doLock(user,vo);
+        collectionNine();
     }
 
      private static void doLock(User u,UserVo v) throws InterruptedException {

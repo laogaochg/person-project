@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.test.model.CouponDto;
+import com.test.model.JavaBeanInfo;
 
 /**
  * laogaochg
@@ -41,10 +42,20 @@ public class JavaDocUtil {
      * @return
      */
     public static Map<String,String> get注解Map(List<String> propertiesText,List<String> nameList) {
+        List<JavaBeanInfo> list = new ArrayList<>();
         Map<String,String> map = new HashMap<>();
         //sb记录这个字段之前的注释
         StringBuilder sb = new StringBuilder();
         for (String s : propertiesText) {
+            System.out.println(s);
+            if (s.contains("private ") && s.contains(";")) {
+                String paramType = s.split(" ")[1];
+                String paramName = s.split(" ")[2];
+                JavaBeanInfo bean = new JavaBeanInfo();
+                bean.setName(paramName);
+                bean.setType(paramType);
+                list.add(bean);
+            }
             boolean add = true;
             for (String name : nameList) {
                 if (s.contains(" " + name)) {
@@ -64,13 +75,13 @@ public class JavaDocUtil {
                             map.put(name,s);
                         } else {
                             map.put(name,name);
-
                         }
                     }
                     sb = new StringBuilder();
                 }
             }
         }
+        System.out.println(list);
         return map;
     }
 
