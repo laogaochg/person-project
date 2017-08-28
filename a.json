@@ -2,115 +2,265 @@
   "code": 200,
   "data": [
     {
-      "goodsBrief": "孕妇专用，纯天然成分，安全可靠",
-      "goodsId": "1000014900",
-      "goodsName": "孕妇专用防晒霜，安全可靠天然成分，SUV++++",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/43aac904-a618-40d9-ab1b-05ce9ffa2ad6.jpg",
-      "price": "342.00",
-      "salePrice": "233.44",
-      "shopId": "2000000354",
-      "type": 2
+      "categoryId": 745,
+      "categoryName": "飞机模型",
+      "listData": [
+        {
+          "couponPrice": "10.00",
+          "goodName": "航空精品测试1",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/18/59620ee7-3c00-4c74-b510-93d0011c2ebb.jpg",
+          "itemId": 1000014925,
+          "payUnit": "¥",
+          "price": "20.00"
+        },
+        {
+          "couponPrice": "100.00",
+          "goodName": "夏季卫衣",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/05ca2331-9919-4d39-86c1-c242b94fa1a5.jpg",
+          "itemId": 1000014803,
+          "payUnit": "¥",
+          "price": "120.00"
+        },
+        {
+          "couponPrice": "150.00",
+          "goodName": "女装卫衣",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/bbca682d-b7b2-48eb-949b-9533633327b6.jpg",
+          "itemId": 1000014802,
+          "payUnit": "¥",
+          "price": "220.00"
+        },
+        {
+          "couponPrice": "0.01",
+          "goodName": "安贝儿孕妇奶粉三合一营养奶粉",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/9/5fa33678-d3eb-4f49-8fc6-a54b7f514873.jpg",
+          "itemId": 1000014884,
+          "payUnit": "¥",
+          "price": "0.01"
+        },
+        {
+          "couponPrice": "233.44",
+          "goodName": "孕妇专用防晒霜，安全可靠天然成分，SUV++++",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/43aac904-a618-40d9-ab1b-05ce9ffa2ad6.jpg",
+          "itemId": 1000014900,
+          "payUnit": "¥",
+          "price": "342.00"
+        }
+      ]
     },
     {
-      "goodsBrief": "雅培母婴孕妇奶粉500g金装罐",
-      "goodsId": "1000014910",
-      "goodsName": "雅培母婴孕妇奶粉500g金装罐",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/15d01ed6-9777-48eb-b42f-1fa448c608ba.jpg",
-      "price": "555.55",
-      "salePrice": "432.55",
-      "shopId": "2000000354",
-      "type": 1
+      "categoryId": 528,
+      "categoryName": "母婴用品",
+      "listData": [
+        {
+          "couponPrice": "567.00",
+          "goodName": "雀巢孕妇奶粉，高蛋白高钙高维生素微量元素，保障孕妇与胎儿营养",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/24763e98-2614-4147-a0ae-248dc9817418.jpg",
+          "itemId": 1000014904,
+          "payUnit": "¥",
+          "price": "853.00"
+        },
+        {
+          "couponPrice": "432.55",
+          "goodName": "雅培母婴孕妇奶粉500g金装罐",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/15d01ed6-9777-48eb-b42f-1fa448c608ba.jpg",
+          "itemId": 1000014910,
+          "payUnit": "¥",
+          "price": "555.55"
+        },
+        {
+          "couponPrice": "232.66",
+          "goodName": "健培孕妇奶粉专用葡萄糖",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/19/0867961f-98d8-4099-bd37-ef13bd730e33.jpg",
+          "itemId": 1000014906,
+          "payUnit": "¥",
+          "price": "433.33"
+        },
+        {
+          "couponPrice": "456.66",
+          "goodName": "金领冠母婴产妇奶粉智选100金冠金罐 ",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/abb4e586-f078-436c-a6fd-21024166c31f.jpg",
+          "itemId": 1000014914,
+          "payUnit": "¥",
+          "price": "555.55"
+        },
+        {
+          "couponPrice": "500.33",
+          "goodName": "雀巢奶粉1+1超值优惠套餐",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/e2d31e25-c057-4bad-bd14-ae7ec44f4fa4.jpg",
+          "itemId": 1000014920,
+          "payUnit": "¥",
+          "price": "600.55"
+        }
+      ]
     },
     {
-      "goodsBrief": "雀巢奶粉1+1超值优惠套餐",
-      "goodsId": "1000014920",
-      "goodsName": "雀巢奶粉1+1超值优惠套餐",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/e2d31e25-c057-4bad-bd14-ae7ec44f4fa4.jpg",
-      "price": "600.55",
-      "salePrice": "500.33",
-      "shopId": "2000000354",
-      "type": 1
+      "categoryId": 432,
+      "categoryName": "食品饮品",
+      "listData": [
+        {
+          "couponPrice": "0.01",
+          "goodName": "FASFDSA",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/16/a2bb94c6-33ef-4649-8aee-4a04a974a342.jpg",
+          "itemId": 1000014924,
+          "payUnit": "￥",
+          "price": "3333.00"
+        },
+        {
+          "couponPrice": "2.00",
+          "goodName": "蓝山咖啡粉",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/25/d89401dd-d854-4223-8c56-59cf7e03182c.jpg",
+          "itemId": 1000014944,
+          "payUnit": "¥",
+          "price": "1.00"
+        },
+        {
+          "couponPrice": "23443.00",
+          "goodName": "coffee",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/23/b5ba29e8-4980-4100-930c-308ab3d430bc.jpg",
+          "itemId": 1000014938,
+          "payUnit": "¥",
+          "price": "455.00"
+        },
+        {
+          "couponPrice": "5.00",
+          "goodName": "三合一速溶咖啡100条2公斤更低脂肪",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/22/0ff26672-4e41-4f8c-acc2-96e425c49b41.jpg",
+          "itemId": 1000014919,
+          "payUnit": "¥",
+          "price": "6.00"
+        },
+        {
+          "couponPrice": "7.00",
+          "goodName": "OWL猫头鹰三合一速溶咖啡100条2公斤更低脂肪",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/d09976c9-7e31-46e3-9eb7-3f2e443c85a9.jpg",
+          "itemId": 1000014921,
+          "payUnit": "¥",
+          "price": "7.00"
+        }
+      ]
     },
     {
-      "goodsBrief": "葡萄糖呀，葡萄糖呀",
-      "goodsId": "1000014906",
-      "goodsName": "健培孕妇奶粉专用葡萄糖",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/19/0867961f-98d8-4099-bd37-ef13bd730e33.jpg",
-      "price": "433.33",
-      "salePrice": "232.66",
-      "shopId": "2000000354",
-      "type": 2
+      "categoryId": 429,
+      "categoryName": "奶粉特辑",
+      "listData": [
+        {
+          "couponPrice": "1.00",
+          "goodName": "飒飒",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/990ad7d7-b107-4912-856f-91827eed4a74.jpg",
+          "itemId": 1000014862,
+          "payUnit": "¥",
+          "price": "1.00"
+        },
+        {
+          "couponPrice": "12.00",
+          "goodName": "孕妇奶粉一段奶粉250g盒装",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/9/a2692256-7d33-4c67-aa22-4fe073370137.jpg",
+          "itemId": 1000014882,
+          "payUnit": "¥",
+          "price": "0.01"
+        },
+        {
+          "couponPrice": "232.00",
+          "goodName": "test分页",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/23/98f922ca-1602-465b-a41b-4117189cc430.jpg",
+          "itemId": 1000014940,
+          "payUnit": "¥",
+          "price": "2222.00"
+        },
+        {
+          "couponPrice": "333.00",
+          "goodName": "金实力母婴奶粉",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/21/aa8ae52c-7891-48ef-ad54-fc87edcf7e7a.jpg",
+          "itemId": 1000014931,
+          "payUnit": "¥",
+          "price": "455.00"
+        },
+        {
+          "couponPrice": "2222.00",
+          "goodName": "23424234",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/8/c1ad3ec0-a5a7-4e64-b982-3b7d2b100db6.jpg",
+          "itemId": 1000014880,
+          "payUnit": "¥",
+          "price": "222.00"
+        }
+      ]
     },
     {
-      "goodsBrief": "",
-      "goodsId": "1000014803",
-      "goodsName": "夏季卫衣",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/05ca2331-9919-4d39-86c1-c242b94fa1a5.jpg",
-      "price": "120.00",
-      "salePrice": "100.00",
-      "shopId": "2000000354",
-      "type": 1
+      "categoryId": 443,
+      "categoryName": "雨伞特辑",
+      "listData": [
+        {
+          "couponPrice": "39.80",
+          "goodName": "天堂三折遮阳伞",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/12/eb01f936-eb7a-41ad-8618-7745fc66bb7b.jpg",
+          "itemId": 1000014814,
+          "payUnit": "¥",
+          "price": "49.00"
+        },
+        {
+          "couponPrice": "0.10",
+          "goodName": "【美国直邮 包邮】美国California Baby加州宝宝香茅防蚊驱虫止痒喷雾192ml",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/f746e1fd-d13f-4e3f-8c18-fce024804226.jpg",
+          "itemId": 1000014899,
+          "payUnit": "¥",
+          "price": "1.00"
+        },
+        {
+          "couponPrice": "99.99",
+          "goodName": "情侣晴雨伞，天堂碳墨超轻大骨架伞每人限购一份，限时7天",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/c954fe03-d5c6-4d83-a265-230646ce29de.jpg",
+          "itemId": 1000014892,
+          "payUnit": "¥",
+          "price": "110.99"
+        },
+        {
+          "couponPrice": "123.22",
+          "goodName": "《哈姆雷特》中国工业大学2017最新翻译版",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/10/681883fa-c81e-444e-a9f3-5333b538394e.jpg",
+          "itemId": 1000014888,
+          "payUnit": "¥",
+          "price": "100.22"
+        },
+        {
+          "couponPrice": "232.00",
+          "goodName": "天堂限量版天空之星晴雨伞",
+          "hasPromotion": "1",
+          "imgUrl": "http://10.101.173.224/album/2017/8/9/61a98f32-a031-4fdb-b353-b8811006bee4.jpg",
+          "itemId": 1000014883,
+          "payUnit": "¥",
+          "price": "232.00"
+        }
+      ]
     },
     {
-      "goodsBrief": "每天两杯，健康一生",
-      "goodsId": "1000014904",
-      "goodsName": "雀巢孕妇奶粉，高蛋白高钙高维生素微量元素，保障孕妇与胎儿营养",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/24763e98-2614-4147-a0ae-248dc9817418.jpg",
-      "price": "853.00",
-      "salePrice": "567.00",
-      "shopId": "2000000354",
-      "type": 2
-    },
-    {
-      "goodsBrief": "",
-      "goodsId": "1000014802",
-      "goodsName": "女装卫衣",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/bbca682d-b7b2-48eb-949b-9533633327b6.jpg",
-      "price": "220.00",
-      "salePrice": "150.00",
-      "shopId": "2000000354",
-      "type": 2
-    },
-    {
-      "goodsBrief": "妈妈优选，聪明之选",
-      "goodsId": "1000014914",
-      "goodsName": "金领冠母婴产妇奶粉智选100金冠金罐 ",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/10/abb4e586-f078-436c-a6fd-21024166c31f.jpg",
-      "price": "555.55",
-      "salePrice": "456.66",
-      "shopId": "2000000354",
-      "type": 2
-    },
-    {
-      "goodsBrief": "营养奶粉",
-      "goodsId": "1000014884",
-      "goodsName": "安贝儿孕妇奶粉三合一营养奶粉",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/9/5fa33678-d3eb-4f49-8fc6-a54b7f514873.jpg",
-      "price": "0.01",
-      "salePrice": "0.01",
-      "shopId": "2000000354",
-      "type": 2
-    },
-    {
-      "goodsBrief": "看看价格",
-      "goodsId": "1000014925",
-      "goodsName": "航空精品测试1",
-      "hasPromotion": "1",
-      "imgUrl": "http://10.101.173.224/album/2017/8/18/59620ee7-3c00-4c74-b510-93d0011c2ebb.jpg",
-      "price": "20.00",
-      "salePrice": "10.00",
-      "shopId": "2000000354",
-      "type": 2
+      "categoryId": 830,
+      "categoryName": "测试",
+      "listData": []
     }
   ],
-  "mes": "success"
+  "mes": "sucess"
 }

@@ -21,7 +21,10 @@ public class JavaDocUtil {
     public static void main(String[] args) throws Exception {
         String className = "CouponDto";
         Class<CouponDto> couponDtoClass = CouponDto.class;
-        File file = new File("D:\\laogao2\\WorkPlace-0810\\dubbo_frontend_dataservice\\mall-service\\src\\main\\java\\com\\nanhang\\mall\\dto\\resp/" + className + ".java");
+        File file = new File(//
+                "D:\\laogao2\\WorkPlace-0810\\dubbo_frontend_dataservice" +//
+                        "\\mall-service\\src\\main\\java" +//
+                        "\\com\\nanhang\\mall\\dto\\resp/" + className + ".java");
         List<String> propertiesText = getPropertiesText(file);
         List<String> nameList = JavaBeanUtils.getNameList(couponDtoClass);
         Map<String,String> map = get注解Map(propertiesText,nameList);
@@ -33,7 +36,7 @@ public class JavaDocUtil {
             l.add(map.get(s));
             data.add(l);
         }
-//        ExcelUtils.createExcel("d:/test.xls",data);
+        ExcelUtils.createExcel("d:/test.xls","11",data);
     }
 
     /**
