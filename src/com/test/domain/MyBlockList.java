@@ -69,7 +69,6 @@ public class MyBlockList<T> {
         try {
             while (!putValue(t)) {
                 System.out.println("队列已满，放元素线程阻塞");
-                isFull.await();
                 System.out.println("已经叫醒存元素的线程。");
             }
         } finally {

@@ -2,7 +2,8 @@ package com.test.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,20 +19,20 @@ public class UserVo {
     private Long id;
 
     public static void main(String[] args) {
-        List<User> list = new ArrayList<User>();
-        List<UserVo> collect = list.stream()
-                .filter(uf->uf.getId()>2)//筛选
-                .sorted((o1,o2) ->(int)(o1.getId()-o2.getId()))//排序
-                .map(us -> {    //转变成为另外一种流
-                    UserVo v = new UserVo();
-                    v.setId(us.getId());//其它操作
-                    return v;
-                }).collect(Collectors.toList());//输出结果
-        System.out.println("collect = " + collect);
+        String s = "发广告管韩国管韩国和韩国刚好骨灰盒或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或乖乖怪怪乖乖怪怪gggggggggggg&lt;img src=&quot;/album/2017/8/28/ae5af6f7-fa9b-4ef1-a531-e0439901cdbc.jpg&quot; alt=&quot;&quot; /&gt;";
+        System.out.println(replaceImgSrc(s));
+    }
+
+    private static String replaceImgSrc(String content) {
+        if (StringUtils.isNotBlank(content)) {
+            return content.replace("&lt;img src=&quot;","&lt;img src=&quot;" + "http://10.101.173.224");
+        } else {
+            return content;
+        }
     }
 
     private static List<User> getUsers() {
-        List<User> list =new ArrayList<User>();
+        List<User> list = new ArrayList<User>();
         User u = new User();
         u.setId(1L);
         u.setNickname("11");

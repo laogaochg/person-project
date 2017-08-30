@@ -6,6 +6,11 @@ import java.util.Date;
 public class User implements Serializable {
     private Long id;
 
+    public static void main(String[] args) {
+        Date d = new Date(1478585822000L);
+        System.out.println(d.toLocaleString());
+    }
+
     /**
      * 用户昵称
      */
