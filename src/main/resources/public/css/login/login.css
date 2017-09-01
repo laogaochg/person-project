@@ -1,0 +1,167 @@
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.pos-r {
+    position: relative;
+}
+
+
+/*---------------------header----------------------*/
+
+body {
+    background: url(../../image/login/bg1.jpg) no-repeat 0px 0px;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    min-height: 1050px;
+}
+
+
+/*---------------------banner----------------------*/
+
+.footer {
+    text-align: center;
+    font-size: 14px;
+    position: absolute;
+    width: 100%;
+    bottom: 50px;
+}
+
+.login-aside {
+    position: absolute;
+    width: 370px;
+    height: 458px;
+    z-index: 9999999;
+    border-radius: 5px;
+    left: 50%;
+    top: 100px;
+    margin-left: -185px;
+}
+
+.error-box {
+    color: #f7ccc8;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+label.form-label {
+    display: block;
+    float: none;
+    height: auto;
+    line-height: 12px;
+    text-align: left;
+    width: auto;
+    font-size: 14px;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #4e6877;
+    -o-text-shadow: 1px 1px 1px #4e6877;
+    -o-moz-shadow: 1px 1px 1px #4e6877;
+    -o-mis-shadow: 1px 1px 1px #4e6877;
+    -o-webkit-shadow: 1px 1px 1px #4e6877;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+#o-box-up,
+#o-box-down {
+    width: 370px;
+    height: 458px;
+    position: absolute;
+    border-radius: 5px;
+}
+
+#o-box-up {
+    background-color: white;
+    /* filter:alpha(opacity:40);
+    opacity:0.4;*/
+}
+
+#o-box-down {
+    padding: 30px 34px;
+}
+
+.i-text {
+    width: 240px;
+    height: 37px;
+    line-height: 37px;
+    border: 1px solid #858585;
+    background: #eef3f8;
+    color: #9cb5cd;
+    font-size: 14px;
+    text-indent: 12px;
+    box-shadow: 1px 1px 1px #dfe4e8 inset;
+    -moz-box-shadow: 1px 1px 1px #dfe4e8 inset;
+    -webkit-box-shadow: 1px 1px 1px #dfe4e8 inset;
+    -o-box-shadow: 1px 1px 1px #dfe4e8 inset;
+    -mis-box-shadow: 1px 1px 1px #dfe4e8 inset;
+}
+
+.yzm {
+    width: 112px;
+}
+
+.yzm-img {
+    width: 100%;
+    cursor: pointer;
+    height: 100%;
+    overflow: hidden;
+}
+
+.btn-login {
+    width: 242px;
+    height: 38px;
+    background: url(../images/login-btn.png) no-repeat;
+    border: none;
+    margin-top: 5px;
+}
+
+.fm-item {
+    padding: 10px 0;
+}
+
+.fm-item .form-control {
+    height: 50px;
+    line-height: 50px;
+    font-size: 15px;
+    /*color:#9e9e9e;*/
+}
+.grey{
+    color:#9e9e9e;
+}
+.back{
+    color:black;
+}
+#yzm {
+    width: 154px;
+}
+
+.yz-img {
+    width: 140px;
+    height: 42px;
+    position: absolute;
+    top: 14px;
+    right: 0;
+}
+
+.bt {
+    padding-bottom: 20px;
+    font-size: 26px;
+}
+
+#send-btn {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background: #11a9ec;
+    color: white;
+    border-radius: 10px;
+    border: none;
+}

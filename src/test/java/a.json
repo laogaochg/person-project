@@ -1,0 +1,146 @@
+{
+  "currentPage": 1,
+  "listData": [
+    {
+      "categoryId": 1,
+      "goodCateoryName": "免税店",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "name": "颜色",
+          "value": [
+            "红",
+            "黑"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 2,
+      "goodCateoryName": "商务礼品",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "1",
+            "2",
+            "3",
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 3,
+      "goodCateoryName": "电子产品",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "4",
+            "1",
+            "2",
+            "3"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 4,
+      "goodCateoryName": "精品",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "4"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 5,
+      "goodCateoryName": "服装",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "5"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 6,
+      "goodCateoryName": "生活用品",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "6"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 7,
+      "goodCateoryName": "家具电器",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "1"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 8,
+      "goodCateoryName": "航空系列",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 9,
+      "goodCateoryName": "电子商品",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "3"
+          ]
+        }
+      ]
+    },
+    {
+      "categoryId": 10,
+      "goodCateoryName": "毛绒玩具",
+      "property": [
+        {
+          "name": "尺寸",
+          "value": [
+            "4"
+          ]
+        }
+      ]
+    }
+  ],
+  "nextPage": 2,
+  "pageSize": 10,
+  "prevPage": 1,
+  "totalCount": 11,
+  "totalPage": 2
+}

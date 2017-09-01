@@ -1,10 +1,6 @@
-server:
-  port: 7901
 spring:
+#提供热部署功能
   thymeleaf:
       cache: false
-  output:
-    ansi:
-      enabled: detect #彩色日志
-  resources:
-    static-locations: file:d:/laogao2/PersionProject-vue.js/webapps/
+  profiles:
+    active: test # 设置需要加载的配置文件,加载resources目录下application-${profile}.yml/properties文件
