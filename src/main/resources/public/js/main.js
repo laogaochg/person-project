@@ -254,33 +254,6 @@ $(document).ready(function () {
     }();
 });
 
-/*----------------------------   整个系统中的分页配置   ----------------------------------*/
-layui.use(['laypage', 'layer'], function(){
-    var laypage = layui.laypage
-        ,layer = layui.layer;
-    laypage({
-        cont: 'demo4'
-        ,pages: 100
-        ,first: false
-        ,last: false
-        ,skin: '#1E9FFF'
-    });
-/*-------------   弹窗中的分页统一用#demo5  ---------------------*/
-    laypage({
-        cont: 'demo5'
-        ,pages: 100
-        ,first: false
-        ,last: false
-        ,skin: '#1E9FFF'
-    });
-    laypage({
-        cont: 'demo6'
-        ,pages: 100
-        ,first: false
-        ,last: false
-        ,skin: '#1E9FFF'
-    });
-});
 
 //获取到当前页面的路径
 function getRootPath_web() {

@@ -34,8 +34,6 @@ public interface PermissionService {
 
     /**
      * 查询没有菜单的权限
-     *
-     * @return
      */
     List<Permission> queryNoMenuPermission();
 
@@ -99,6 +97,7 @@ public interface PermissionService {
      * 查询权限；按菜单的id归类并且查询菜单权限放在数组的第一个
      */
     Map<String,List<Permission>> queryAllPermissionSort();
+
     /**
      * 得到所有没有对应权限的url和它的方法
      */

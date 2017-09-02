@@ -18,8 +18,6 @@ import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.csair.admin.dao.UserDao;
-import com.csair.admin.po.UserQuery;
 import com.csair.admin.service.PermissionService;
 
 /**
@@ -32,8 +30,6 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
     private PermissionService permissionService;
     @Value("${upload-path}")
     private String uploadPath;
-    @Autowired
-    private UserDao userDao;
 
     /**
      * springMVC启动加载权限
@@ -48,9 +44,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
         }
         EnvironmentParams.IMG_PATH = uploadPath + EnvironmentParams.IMG_URL_PATH;//D:/tes/html/img
         //重载权限
-        UserQuery qo = new UserQuery();
-        System.out.println(userDao.selectByExample(qo));
-//        reloadPermission(event);
+        reloadPermission(event);
         //配置SpringContextUtil的参数
         SpringContextUtil.applicationContext = event.getApplicationContext();
     }

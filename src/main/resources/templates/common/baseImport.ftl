@@ -9,5 +9,12 @@
 <script src="${context.contextPath}/js/bootstrap.min.js"></script>
 <script src="${context.contextPath}/js/baseJS.js"></script>
 <script type="text/javascript" src="${context.contextPath}/js/common/pageQuery.js"></script>
-<script src="${context.contextPath}/js/layui/layui.js"></script>
+<script src="${context.contextPath}/js/layui/lay/dest/layui.all.js"></script>
 <script src="${context.contextPath}/js/main.js"></script>
+<script src="/js/layui/layui.js" charset="utf-8"></script>
+<style>
+    .layui-layout-admin .layui-body {
+        /*如果不要底部栏*/
+        bottom: 0px;
+    }
+</style>
