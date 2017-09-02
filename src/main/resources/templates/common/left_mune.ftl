@@ -12,6 +12,8 @@
                 <dd><a href="">消息管理</a></dd>
                 <dd><a href="">授权管理</a></dd>
             </dl>
+
+
         </li>
     </ul>
     <ul class="layui-nav layui-layout-right">
@@ -28,22 +30,42 @@
         <li class="layui-nav-item"><a href="">退了</a></li>
     </ul>
 </div>
-
+<style>
+    .menu {
+        border-top: 0px none;
+        text-align: left;
+        padding-left: 20px;
+        line-height: 40px;
+        height: 40px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+        padding: 0 20px;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: auto;
+    }
+    .menu:hover {
+        border-left: 5px green solid;
+    }
+</style>
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <ul>
         <#list user.menus as menu>
-            <li class="layui-nav-item">
-                <a href="${(menu.url!"#")}">${menu.mname}</a>
-                <#if ((menu.menuList)?size>0)>
-                    <dl class="layui-nav-child layui-nav-itemed">
-                        <#list menu.menuList as menu2>
-                            <dd><a href="${(menu2.url!"#")}">${menu2.mname}</a></dd>
+            <li class="menu text-center">${menu.mname}</li>
+            <ul class="childList" >
+                <#list menu.menuList as menu2>
+                    <li class="menu text-center">${menu2.mname}</li>
+                    <ul class="childList" >
+                        <#list menu.menuList as menu3>
+                            <li class="menu">${menu3.mname}</li>
                         </#list>
-                    </dl>
-                </#if>
-            </li>
+                    </ul>
+                </#list>
+            </ul>
         </#list>
         </ul>
     </div>
@@ -53,5 +75,7 @@
     layui.use('element',function() {
         var element=layui.element;
 
+    });
+    $(function() {
     });
 </script>

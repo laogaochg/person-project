@@ -17,4 +17,24 @@
         /*如果不要底部栏*/
         bottom: 0px;
     }
+
+    .thirdMenu > li {
+        margin-left: 15px;
+    }
+
+    .secondMenu:hover {
+        background-color: #23262E;
+    }
+
+    .secondMenu a {
+        background-color: #23262E;
+    }
+
+    .secondMenu a:hover {
+        background-color: #2e2a28;
+    }
+
+    .thirdMenu:hover {
+        background-color: #23262E;
+    }
 </style>

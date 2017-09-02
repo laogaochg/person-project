@@ -5,6 +5,22 @@
 
 /* --------------------------       baseMsg.html          --------------------------------*/
 $(function() {
+    /*---------------------- 用于左边菜单栏的三级菜单的点击事件   ---------------------*/
+    $(".secondMenu>a").data("childshow",true);
+    $(".secondMenu>a").click(function() {
+        var menuid=$(this).data("menuid");
+        var toShow=$(this).data("childshow");
+        $(".thirdMenu").hide(150);
+        $(".secondMenu>a").data("childshow",true);
+        if(toShow) {
+            $(".thirdMenu_" + menuid).show(150);
+            $(this).data("childshow",false);
+        } else {
+            $(".thirdMenu_" + menuid).hide(150);
+            $(this).data("childshow",true);
+        }
+    });
+
     var nav = $(".nav>li");
     var navb = $(".nav-box");
     var lastA=$(".jsNav .changeCont");
@@ -13,7 +29,7 @@ $(function() {
         $(this).siblings(".nav>li").removeClass("ys").end().addClass("ys");
         navb.eq(index).siblings(".nav-box").hide().end().show();
 
-     //面包最后一个的内容
+        //面包最后一个的内容
         var liTxt=$(this).text();
         lastA.html(liTxt);
     });
@@ -80,24 +96,24 @@ $('#ArticlassList').on('click', function(){
 //弹窗中表格的点击事件
 $(document).ready(function () {
     +function () {
-       var $tr=$(".popSelectGood .jsTrItem"),      //每一个有文字的tr
+        var $tr=$(".popSelectGood .jsTrItem"),      //每一个有文字的tr
             trLength=$tr.length,
             jstr="jstr";                            //有这个类的tr显示钩钩
-       for(var i=0;i<trLength;i++){
-           $tr.eq(i).on("click",function () {
+        for(var i=0;i<trLength;i++){
+            $tr.eq(i).on("click",function () {
                 $('tr.jsTrItem').removeClass(jstr);
                 $(this).addClass(jstr);
-           });
-       };
+            });
+        };
     }()
 });
 
 $(function(){
     //提示框的鼠标事件
     $(".upimg-div").hover(function () {
-         $("#Htxt").addClass("current");
+        $("#Htxt").addClass("current");
     },function () {
-         $("#Htxt").removeClass("current");
+        $("#Htxt").removeClass("current");
     });
     /*--------------------editGoodsList.html-----------------------*/
     $('#selectProp').on('click', function(){
@@ -110,19 +126,19 @@ $(function(){
         });
     });
     //批量删除
-   $(".deleteBtn").on("click",function () {
-       layui.use('layer', function(){
-           layer.confirm('您确定要删除吗？', {
-               btn: ['确定','取消']    //按钮
-           }, function(){
-               Hsubmit();   //调用删除成功的方法
-               layer.msg('删除成功', {icon: 1});
-           }, function(){
+    $(".deleteBtn").on("click",function () {
+        layui.use('layer', function(){
+            layer.confirm('您确定要删除吗？', {
+                btn: ['确定','取消']    //按钮
+            }, function(){
+                Hsubmit();   //调用删除成功的方法
+                layer.msg('删除成功', {icon: 1});
+            }, function(){
 
-           });
-       })
+            });
+        })
 
-   });
+    });
 
 
     //删除的方法
@@ -138,7 +154,7 @@ $(function(){
         })
     }
 
-/*-------------------- 表格------------------------*/
+    /*-------------------- 表格------------------------*/
 //全局配置
     var Apis  = {
             main       : '',        //主链接
@@ -201,7 +217,7 @@ $(document).ready(function () {
                     console.log(count);       //这里是计算勾选了几个选框
                 }
             });
-         count - cheNum ? $(allCheX).removeClass(h) : $(allCheX).addClass(h);       //js中0代表false,  个数对比   根据是否含类h 比较计算显示
+            count - cheNum ? $(allCheX).removeClass(h) : $(allCheX).addClass(h);       //js中0代表false,  个数对比   根据是否含类h 比较计算显示
         }
 
         /*--------------------------------------------------选择操作方法（单选，多选，全选）-------------------------------------------------------------------*/
