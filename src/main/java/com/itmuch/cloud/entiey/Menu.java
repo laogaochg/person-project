@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu implements Serializable {
+    public static final String u = "aaaa";
 
     public static void main(String[] args) {
-        List<Long> ids = null;
-        for (int i = 0;ids!=null && i < ids.size();i++) {
-            System.out.println(1);
-        }
+        String s = u;
+        s = "22";
+        System.out.println(u);
     }
 
     /**
