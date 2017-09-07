@@ -54,15 +54,15 @@ public class RedisUtils {
 
     public static void main(String[] args) throws Exception {
         int toCount = 579;
+//        String s = getSet("incr","0");
         CountDownLatch doneSignal = new CountDownLatch(toCount);
         for (int i = 0;i < toCount;i++) {
             new Thread(() -> {
                 count1++;
                 count2.incrementAndGet();
-
-                getNullBlock("block",null,null);
+//                getRedisLock("block",null,null);
                 count++;
-                unLock("block");
+//                unLock("block");
                 doneSignal.countDown();
             }).start();
         }
@@ -71,7 +71,6 @@ public class RedisUtils {
         System.out.println(count);
         System.out.println(count1);
         System.out.println(count2);
-
     }
 
     public static void unLock(String key) {
@@ -82,7 +81,7 @@ public class RedisUtils {
         //如果锁已经不存在；抛出异常；
     }
 
-    public static void getNullBlock(String key,Long waitSecond,Date endDate) {
+    public static void getRedisLock(String key,Long waitSecond,Date endDate) {
         Date now = new Date();
         if (endDate == null && waitSecond != null) endDate = DateUtils.addSeconds(now,waitSecond.intValue());
         if (endDate != null && now.after(endDate) && waitSecond != null) {
@@ -144,34 +143,40 @@ public class RedisUtils {
             e.printStackTrace();
         } finally {
             System.out.println("之前锁还在生效，睡醒之后再调用本方法");
-            getNullBlock(key,waitSecond,endDate);//睡1秒再试
+            getRedisLock(key,waitSecond,endDate);//睡1秒再试
         }
     }
 
-    private static String getSet(String key,String value) {
+    public static String getSet(String key,String value) {
         Jedis redis = jedisPool.getResource();
         String result = redis.getSet(key,value);
         redis.close();
         return result;
     }
 
-    private static long setnx(String key,String value) {
+    public static long setnx(String key,String value) {
         Jedis redis = jedisPool.getResource();
         long result = redis.setnx(key,value);
         redis.close();
         return result;
     }
 
-    private static long del(String key) {
+    public static long del(String key) {
         Jedis redis = jedisPool.getResource();
         long result = redis.del(key);
         redis.close();
         return result;
     }
 
-    private static String get(String key) {
+    public static String get(String key) {
         Jedis redis = jedisPool.getResource();
         String result = redis.get(key);
+        redis.close();
+        return result;
+    }
+    public static Long incr(String key) {
+        Jedis redis = jedisPool.getResource();
+        Long result = redis.incr(key);
         redis.close();
         return result;
     }
