@@ -1,18 +1,18 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <title>title</title>
-    <title>121</title>
-    <style>
-        li {
-            list-style: none;
-        }
-    </style>
+    <!-- style.css是项目的样式文件  -->
+
 </head>
 <body>
 <#include "../common/left_mune.ftl" />
-<div class="container rightContent">
+<div class="rightContent" style=" margin-left: 215px; margin-top: 0;">
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-4"><h4>管理菜单</h4></div>

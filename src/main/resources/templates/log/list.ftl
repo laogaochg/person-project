@@ -1,34 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script type="text/javascript" src="${context.contextPath}/js/common/timepick.js"></script>
-    <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
-    <script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
-    <title>后台操作记录</title>
+    <!-- style.css是项目的样式文件  -->
+
 </head>
-<script type="text/javascript">
-    $(function() {
-        $('#pagination').twbsPagination({
-            first: "首页",
-            prev: "上一页",
-            next: "下一页",
-            last: "未页",
-            startPage:${qo.currentPage},
-            totalPages: ${pageResult.totalPage},
-            visiblePages: ${qo.pageSize},
-            onPageClick: function(event,page) {
-                $("[name=currentPage]").val(page);
-                $("#searchForm").submit();
-            }
-        });
-    });
-</script>
 <body>
+<div class="layui-layout layui-layout-admin" style="">
 <#include "../common/left_mune.ftl" />
-<div class="container rightContent">
+    <div class="layui-body" >
 
     <div class="row">
         <div class="col-md-4"></div>
@@ -72,17 +57,31 @@
             <div style="text-align: center;">
                 <ul id="pagination" class="pagination"></ul>
             </div>
-        <#-- 共${pageResult.totalPage}页；
-         <button type="button" class="btn btn-default changePage" data="${pageResult.prevPage}">上一页</button>
-         当前第${pageResult.currentPage}页
-         <button class="btn btn-default changePage" type="button" data="${pageResult.nextPage}">下一页</button>
-         <br/>
-         共找到${pageResult.totalCount}条；当前一页共<input style="width: 40px" name="pageSize"
-                                                  value="${pageResult.pageSize}"/>条数据
-
-         <button class="btn btn-default">确定</button>-->
         </div>
     </form>
 </div>
 </body>
+<script type="text/javascript">
+    $(function() {
+        $('#pagination').twbsPagination({
+            first: "首页",
+            prev: "上一页",
+            next: "下一页",
+            last: "未页",
+            startPage:${qo.currentPage},
+            totalPages: ${pageResult.totalPage},
+            visiblePages: ${qo.pageSize},
+            onPageClick: function(event,page) {
+                $("[name=currentPage]").val(page);
+                $("#searchForm").submit();
+            }
+        });
+    });
+</script>
+<script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/common/timepick.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
+
 </html>

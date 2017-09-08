@@ -22,7 +22,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.csair.admin.util.PlatformException;
 
-@EnableAutoConfiguration
 @SpringBootApplication
 @ComponentScan
 @MapperScan("com.csair.admin.dao")
@@ -34,11 +33,15 @@ public class Application extends SpringBootServletInitializer {
     static {
         property = new Properties();
         try {
-            property.load(new InputStreamReader(Application.class.getClassLoader().getResourceAsStream("jdbc.properties"),"UTF-8"));
+            property.load(new InputStreamReader(Application.class.getClassLoader().getResourceAsStream("jdbc.properties"), "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
             throw new PlatformException(e.getMessage());
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Application.class, args);//test123
     }
 
     //DataSource配置
@@ -67,7 +70,4 @@ public class Application extends SpringBootServletInitializer {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class,args);//test123
-    }
 }

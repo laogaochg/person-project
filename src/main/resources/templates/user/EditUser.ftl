@@ -1,10 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
+    <!-- style.css是项目的样式文件  -->
 
 </head>
+<body>
+<#include "../common/left_mune.ftl" />
+<div class="rightContent" style=" margin-left: 215px; margin-top: 0;">
+    <div class="row">
+        <div class="col-md-5">
+            <form id="editUserForm" action="/user/editUser" class="" method="post">
+                用户信息<br/>
+                <input name="id" type="hidden" value="${(editUser.id)!""}">
+                用户名<input name="email" value="${(editUser.email)!""}" class="form-control"><br/>
+                昵称：<input name="nickname" value="${(editUser.nickname)!""}" class="form-control"><br/>
+                密码：<input name="pswd" type="password" class="form-control"><br/>
+                角色选择：
+            <#list roleList as role>
+                <#if roleIds??>
+                    <input type="checkbox" <#if roleIds?seq_contains(role.id)>checked="checked"</#if> name="roleIds"
+                           value="${role.id}"/>${role.name}|
+                <#else >
+                    <input type="checkbox" name="roleIds"
+                           value="${role.id}"/>${role.name}|
+                </#if>
+
+            </#list>
+                <br/>
+                用户状态：
+                <input type="radio" value="1"
+                <#if !(editUser.status)??||((editUser.status)?? &&(editUser.status==1))> checked="checked"</#if>
+                       name="state">有效
+                <input type="radio" <#if (editUser.status)?? &&(editUser.status==2)>checked="checked"</#if> name="state"
+                       value="0">无效<br/>
+
+                备注<input name="remark" class="form-control" value="${(role.remark)!""}" class="input-lg"><br/>
+                <button type="button" id="editUserButton" class="btn btn-success">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 <script type="text/javascript">
     $(function() {
         $("#editUserButton").click(function() {
@@ -62,42 +104,6 @@
         })
     })
 </script>
-<body>
-<#include "../common/left_mune.ftl" />
+<script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
 
-<div class="container rightContent">
-    <div class="row">
-        <div class="col-md-5">
-            <form id="editUserForm" action="/user/editUser" class="" method="post">
-                用户信息<br/>
-                <input name="id" type="hidden" value="${(editUser.id)!""}">
-                用户名<input name="email" value="${(editUser.email)!""}" class="form-control"><br/>
-                昵称：<input name="nickname" value="${(editUser.nickname)!""}" class="form-control"><br/>
-                密码：<input name="pswd" type="password" class="form-control"><br/>
-                角色选择：
-            <#list roleList as role>
-                <#if roleIds??>
-                    <input type="checkbox" <#if roleIds?seq_contains(role.id)>checked="checked"</#if> name="roleIds"
-                           value="${role.id}"/>${role.name}|
-                <#else >
-                    <input type="checkbox" name="roleIds"
-                           value="${role.id}"/>${role.name}|
-                </#if>
-
-            </#list>
-                <br/>
-                用户状态：
-                <input type="radio" value="1"
-                <#if !(editUser.status)??||((editUser.status)?? &&(editUser.status==1))> checked="checked"</#if>
-                       name="state">有效
-                <input type="radio" <#if (editUser.status)?? &&(editUser.status==2)>checked="checked"</#if> name="state"
-                       value="0">无效<br/>
-
-                备注<input name="remark" class="form-control" value="${(role.remark)!""}" class="input-lg"><br/>
-                <button type="button" id="editUserButton" class="btn btn-success">提交</button>
-            </form>
-        </div>
-    </div>
-</div>
-</body>
 </html>

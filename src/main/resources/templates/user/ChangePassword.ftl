@@ -1,53 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
+    <!-- style.css是项目的样式文件  -->
+
 </head>
-<script type="text/javascript">
-    $(function() {
-        $(".toChangePassword").click(function() {
-            var newPassword1=$("#newPassword1").val();
-            var newPassword2=$("#newPassword2").val();
-            var oldPassword=$("#oldPassword").val();
-            if(!newPassword1|| !newPassword2|| !oldPassword) {
-                myModal("myModalTest","错误","请确定你输入的信息完整。",function() {});
-                return;
-            }
-            if(newPassword1!=newPassword2) {
-                myModal("myModalTest","错误","新密码两次不一致。",function() {});
-                return;
-            }
-            var data={};
-            data.newPassword=newPassword1;
-            data.oldPassword=oldPassword;
-            $.ajax({
-                type: "POST",
-                url: "/user/changePassword",
-                data: data,
-                success: function(data) {
-                    if(data.code==200) {
-                        myModal("myModalTest","成功",data.mes,function() {
-                            location.reload();
-                        });
-                    } else {
-                        myModal("myModalTest","失败",data.mes,function() {
-                            location.reload();
-                        });
-                    }
-                },error: function(data) {
-                    myModal("myModalTest","失败",data.mes,function() {
-                        location.reload();
-                    });
-                }
-            });
-        });
-    });
-</script>
 <body>
 <#include "../common/left_mune.ftl" />
-
-<div class="container rightContent">
+<div class="rightContent" style=" margin-left: 215px; margin-top: 0;">
+    <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
 
     <div style="padding:5px" class="row">
         <div class="col-sm-1">
@@ -100,6 +66,47 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+
 </div>
+<script type="text/javascript">
+    $(function() {
+        $(".toChangePassword").click(function() {
+            var newPassword1=$("#newPassword1").val();
+            var newPassword2=$("#newPassword2").val();
+            var oldPassword=$("#oldPassword").val();
+            if(!newPassword1|| !newPassword2|| !oldPassword) {
+                myModal("myModalTest","错误","请确定你输入的信息完整。",function() {});
+                return;
+            }
+            if(newPassword1!=newPassword2) {
+                myModal("myModalTest","错误","新密码两次不一致。",function() {});
+                return;
+            }
+            var data={};
+            data.newPassword=newPassword1;
+            data.oldPassword=oldPassword;
+            $.ajax({
+                type: "POST",
+                url: "/user/changePassword",
+                data: data,
+                success: function(data) {
+                    if(data.code==200) {
+                        myModal("myModalTest","成功",data.mes,function() {
+                            location.reload();
+                        });
+                    } else {
+                        myModal("myModalTest","失败",data.mes,function() {
+                            location.reload();
+                        });
+                    }
+                },error: function(data) {
+                    myModal("myModalTest","失败",data.mes,function() {
+                        location.reload();
+                    });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

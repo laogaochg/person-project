@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <title>as</title>
+    <!-- style.css是项目的样式文件  -->
+
 </head>
 <body>
+<div class="layui-layout layui-layout-admin" style="">
 <#include "../common/left_mune.ftl" />
-<div class="container rightContent">
+    <div class="layui-body" >
     <div class="rwo" style="margin-top: 20px;">
         <div class="col-md-9 col-md-offset-1" style="font-size: 20px;color: #000;">
             修改信息：${(msg.mes)!""}

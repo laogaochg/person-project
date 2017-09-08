@@ -12,29 +12,9 @@
 <script src="${context.contextPath}/js/layui/lay/dest/layui.all.js"></script>
 <script src="${context.contextPath}/js/main.js"></script>
 <script src="/js/layui/layui.js" charset="utf-8"></script>
-<style>
-    .layui-layout-admin .layui-body {
-        /*如果不要底部栏*/
-        bottom: 0px;
-    }
+<script>
+    layui.use('element',function() {
+        var element=layui.element;
 
-    .thirdMenu > li {
-        margin-left: 15px;
-    }
-
-    .secondMenu:hover {
-        background-color: #23262E;
-    }
-
-    .secondMenu a {
-        background-color: #23262E;
-    }
-
-    .secondMenu a:hover {
-        background-color: #2e2a28;
-    }
-
-    .thirdMenu:hover {
-        background-color: #23262E;
-    }
-</style>
+    });
+</script>

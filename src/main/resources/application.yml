@@ -1,6 +1,48 @@
+#测试环境配置
+#保存图片的目录
+upload-path: D:/test/
+#代理地址
+proxyHost: 10.101.1.6
+proxyPort: 80
+server:
+  port: 8080 #服务端口配置
 spring:
 #提供热部署功能
   thymeleaf:
       cache: false
-  profiles:
-    active: test # 设置需要加载的配置文件,加载resources目录下application-${profile}.yml/properties文件
+  output:
+    ansi:
+      enabled: detect #彩色日志
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${upload-path}
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/csair_eshop?serverTimezone=UTC&characterEncoding=utf-8&useSSL=true
+    username: root
+    password: admin
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+  #freemarker配置
+  freemarker:
+    allow-request-override: false
+    cache: false #关闭缓存，便与调试。在生产环境中???
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false
+    settings:
+      number_format: 0.########
+logging:
+  pattern:
+    level: DEBUG
+  level:
+    com.csair.admin: DEBUG
+#    prefix:
+#    request-context-attribute:
+#    settings.*:
+#    suffix: .ftl
+#    template-loader-path: /templates
+    #comma-separated list
+#    view-names:  # whitelist of view names that can be resolved

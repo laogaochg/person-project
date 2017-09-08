@@ -39,6 +39,7 @@ public class IndexController {
         PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
         model.addObject("logResult",operationLogPageResult);
         model.setViewName("index");
+        model.addObject("selectMenuIdForIntropect",0);
         return model;
     }
 }

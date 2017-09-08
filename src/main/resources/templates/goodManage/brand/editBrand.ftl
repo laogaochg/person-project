@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>添加品牌</title>
+    <title>平面运营后台</title>
 <#include "../../common/baseImport.ftl" />
-    <link rel="stylesheet" href="${context.contextPath}/css/index/upimg.css">
-    <script src="${context.contextPath}/js/common/imgUp.js"></script>
-    <!--layui中的时间插件-->
-    <script src="${context.contextPath}/js/common/layuiTime.js"></script>
+    <!-- style.css是项目的样式文件  -->
+
 </head>
 <body>
-
-<div class="contentBody clearfix">
+<div class="layui-layout layui-layout-admin" style="">
 <#include "../../common/left_mune.ftl" />
-    <div class="rightContent">
+    <div class="layui-body" >
         <div class="headerTxt">
             添加品牌
         </div>
@@ -138,5 +135,9 @@
         });
     });
 </script>
+<link rel="stylesheet" href="${context.contextPath}/css/index/upimg.css">
+<script src="${context.contextPath}/js/common/imgUp.js"></script>
+<!--layui中的时间插件-->
+<script src="${context.contextPath}/js/common/layuiTime.js"></script>
 </body>
 </html>

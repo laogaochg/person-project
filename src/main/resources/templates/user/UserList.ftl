@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<#include "../common/baseImport.ftl" />
-    <script src="${context.contextPath}/js/common/BaseUtil.js"></script>
-    <script>
-        $(function() {
+<script src="${context.contextPath}/js/common/BaseUtil.js"></script>
+<script>
+    $(function() {
 
+    });
+    function forbidUserLogin(id) {
+        layer.confirm('确定要禁止这个会员登录吗?',{
+            btn: ['确定','取消']    //按钮
+        },function() {
+            postAjax("/forbidUserLogin",{id: id});
         });
-        function forbidUserLogin(id) {
-            layer.confirm('确定要禁止这个会员登录吗?',{
-                btn: ['确定','取消']    //按钮
-            },function() {
-                postAjax("/forbidUserLogin",{id: id});
-            });
-        }
-        function cancelForbidUserLogin(id) {
-            layer.confirm('确定要允许这个会员登录吗?',{
-                btn: ['确定','取消']    //按钮
-            },function() {
-                postAjax("/cancelForbidUserLogin",{id: id});
-            });
-        }
-    </script>
-</head>
-<body>
-<#include "../common/left_mune.ftl" />
-
-<div class="container rightContent">
+    }
+    function cancelForbidUserLogin(id) {
+        layer.confirm('确定要允许这个会员登录吗?',{
+            btn: ['确定','取消']    //按钮
+        },function() {
+            postAjax("/cancelForbidUserLogin",{id: id});
+        });
+    }
+</script>
 
 
     <div class="row">
@@ -104,4 +95,24 @@
 
 
 </body>
+<script src="${context.contextPath}/js/common/BaseUtil.js"></script>
+<script>
+    $(function() {
+
+    });
+    function forbidUserLogin(id) {
+        layer.confirm('确定要禁止这个会员登录吗?',{
+            btn: ['确定','取消']    //按钮
+        },function() {
+            postAjax("/forbidUserLogin",{id: id});
+        });
+    }
+    function cancelForbidUserLogin(id) {
+        layer.confirm('确定要允许这个会员登录吗?',{
+            btn: ['确定','取消']    //按钮
+        },function() {
+            postAjax("/cancelForbidUserLogin",{id: id});
+        });
+    }
+</script>
 </html>

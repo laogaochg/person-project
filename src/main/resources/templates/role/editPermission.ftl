@@ -1,33 +1,19 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <!-- ztree -->
-    <link rel="stylesheet" href="${context.contextPath}/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-    <script type="text/javascript" src="${context.contextPath}/js/ztree/js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript" src="${context.contextPath}/js/html/role/editPermission.js"></script>
-    <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $(".selectPermissionId").change(function() {
-                var _this=$(".selectPermissionId option:selected");
-                var url=_this.data("url");
-                var name=_this.data("name");
-                var mid=_this.data("mid");
-                $("[name=name]").val(name);
-                $("[name=url]").val(url);
-                $("[name=id]").val(_this.val());
-                $("[name=menuId]").val(mid);
-            })
-        })
-    </script>
+    <!-- style.css是项目的样式文件  -->
 
 </head>
 <body>
-
-
+<div class="layui-layout layui-layout-admin" style="">
 <#include "../common/left_mune.ftl" />
-<div class="container rightContent">
+    <div class="layui-body" >
     <!-- 模态框（Modal） -->
     <div id="myModalTest" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
@@ -121,6 +107,24 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="${context.contextPath}/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="${context.contextPath}/js/ztree/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/html/role/editPermission.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".selectPermissionId").change(function() {
+            var _this=$(".selectPermissionId option:selected");
+            var url=_this.data("url");
+            var name=_this.data("name");
+            var mid=_this.data("mid");
+            $("[name=name]").val(name);
+            $("[name=url]").val(url);
+            $("[name=id]").val(_this.val());
+            $("[name=menuId]").val(mid);
+        })
+    })
+</script>
 
 
 </body>

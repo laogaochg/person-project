@@ -1,19 +1,18 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <!-- ztree -->
-    <link rel="stylesheet" href="${context.contextPath}/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-    <script type="text/javascript" src="${context.contextPath}/js/ztree/js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript">
-    </script>
+    <!-- style.css是项目的样式文件  -->
+
 </head>
 <body>
-
-
-
 <#include "../common/left_mune.ftl" />
-<div class="container rightContent">
+<div class="rightContent" style=" margin-left: 215px; margin-top: 0;">
     <div class="row">
         <div class="col-sm-5">
             <h3>菜单编辑</h3>
