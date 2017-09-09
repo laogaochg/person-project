@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import com.csair.admin.oldDao.PermissionDao;
+import com.csair.admin.oldDao.PermissionDao1;
 import com.csair.admin.oldDao.QueryData;
 import com.csair.admin.po.Permission;
 import com.csair.admin.po.PermissionQueryObject;
@@ -16,7 +16,7 @@ import com.csair.admin.util.DataSourceUtils;
 import com.csair.admin.util.StringUtil;
 
 @Repository
-public class PermissionDaoImpl implements PermissionDao {
+public class PermissionDaoImpl implements PermissionDao1 {
 
     public static final String baseSelect = "select p.id ,p.name ,p.url ,p.mid from e_admin_permission p ";
     @Autowired

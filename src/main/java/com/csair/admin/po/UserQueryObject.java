@@ -11,7 +11,25 @@ public class UserQueryObject extends QueryObject {
     private String name;
     private String email;
     private String type;
+    private String platformFlag;
     private String keyWord;//关键词
+    private Long roleId;//角色名
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getPlatformFlag() {
+        return platformFlag;
+    }
+
+    public void setPlatformFlag(String platformFlag) {
+        this.platformFlag = platformFlag;
+    }
 
     public String getEmail() {
         return email;

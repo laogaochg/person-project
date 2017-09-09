@@ -82,10 +82,7 @@ public class PermissionController {
         Map<String,List<Permission>> map = permissionService.queryAllPermissionSort();
         model.addObject("permissionMap",map);
         //查询角色
-        RoleQueryObject rqo = new RoleQueryObject();
-        rqo.setId(qo.getRoleId());
-        PageResult query = roleService.query(rqo);
-        model.addObject("role",query.getListData().get(0));
+        model.addObject("role",roleService.queryById(qo.getRoleId()));
         //查询角色下的权限
         PageResult pageResult = permissionService.query(qo);
         permissionList = pageResult.getListData();

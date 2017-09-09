@@ -79,7 +79,7 @@
             共<input style="width: 40px" name="pageSize"
                     value="${pageResult.pageSize}"/>条数据
             <input type="hidden" name="currentPage" value="${pageResult.currentPage}"/>
-            <input type="hidden" name="id" value="${role.id}"/>
+            <input type="hidden" name="roleId" value="${role.id}"/>
             <button class="btn btn-info">确定</button>
         </form>
     </div>

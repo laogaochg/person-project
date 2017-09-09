@@ -12,7 +12,7 @@ public abstract class QueryObject {
 
     private Integer pageSize = 10 ;//总页数
 
-    protected List<Object> paramList = new ArrayList();
+    protected List<Object> paramList = new ArrayList<>();
 
     public Integer getStartRow() {
         return (currentPage - 1) * pageSize;

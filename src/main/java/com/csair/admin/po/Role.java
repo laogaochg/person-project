@@ -13,6 +13,15 @@ public class Role {
     private List<Permission> permissionList;// 一个角色对应多个权限
     private List<User> userList;// 一个角色对应多个用户
     public static final String  ADMIN ="admin";
+    private Long shopId;
+
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
 
     public Role() {
     }

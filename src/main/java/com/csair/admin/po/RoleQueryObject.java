@@ -6,7 +6,6 @@ import org.springframework.util.StringUtils;
  * 角色查询参数封装
  */
 public class RoleQueryObject extends QueryObject {
-    private Long id;//如果没
     private String name;
     private String type;
 
@@ -19,32 +18,9 @@ public class RoleQueryObject extends QueryObject {
     }
 
     public String getConditionString() {
-        if (StringUtils.hasText(conditionString)) {
-            return conditionString;
-        }
         StringBuilder sb = new StringBuilder(" where 1=1 ");
-        if (id != null) {
-            sb.append(" AND r.id = ? ");
-            paramList.add(id);
-        }
-        if (StringUtils.hasText(name)) {
-            sb.append(" AND r.name = ? ");
-            paramList.add(name);
-        }
-        if (StringUtils.hasText(type)) {
-            sb.append(" AND r.type = ? ");
-            paramList.add(type);
-        }
         conditionString = sb.toString();
         return sb.toString();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -65,6 +41,6 @@ public class RoleQueryObject extends QueryObject {
 
     @Override
     public String toString() {
-        return "RoleQueryObject{" + "id=" + id + ", name='" + name + '\'' + ", type='" + type + '\'' + "} " + super.toString();
+        return "RoleQueryObject{" + "id=" + ", name='" + name + '\'' + ", type='" + type + '\'' + "} " + super.toString();
     }
 }

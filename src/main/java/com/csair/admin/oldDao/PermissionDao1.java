@@ -8,7 +8,7 @@ import com.csair.admin.po.PermissionQueryObject;
 /**
  * Created by lenovo on 2017/6/27.
  */
-public interface PermissionDao {
+public interface PermissionDao1 {
     /**
      * 不用分页
      * 查询角色下的权限

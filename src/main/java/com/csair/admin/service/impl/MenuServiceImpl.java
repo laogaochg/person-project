@@ -81,7 +81,7 @@ public class MenuServiceImpl implements MenuService {
         int i = menuDao.deleteMenu(mid);
         if (i != 0) {
             Long pid = permissionService.deleteByMenuId(mid,"查看菜单:" + m.getMname());
-            operationLogService.log(user.getId(),"删除菜单","菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(),user.getLastIp());
+//            operationLogService.log(user.getId(),"删除菜单","菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(),user.getLastIp());
             return permissionService.deleteRolePermissionByPid(pid);
         }
         return 0;

@@ -12,12 +12,24 @@ public class Permission {
     private List<Role> roleList;//一个权限对应多个角色
     private Long mid;//对应菜单的id
     /**
+     * NULL为管理平台的权限；2为商家权限
+     */
+    private Byte type;
+    /**
      * 对应父菜单的名字
      */
 //    private String menuName;
 
     public Long getMid() {
         return mid;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
     }
 
     public void setMid(Long mid) {

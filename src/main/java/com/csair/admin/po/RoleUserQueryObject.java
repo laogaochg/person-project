@@ -1,7 +1,5 @@
 package com.csair.admin.po;
 
-import com.csair.admin.oldDao.impl.UserDaoImpl;
-
 /**
  * Created by lenovo on 2017/6/27.
  */
@@ -14,8 +12,8 @@ public class RoleUserQueryObject extends QueryObject {
     private String keyWord;//关键词
 
     public String getSqlString() {
-        String sql = UserDaoImpl.BASE_SELECT + " JOIN e_admin_user_role ur ON  ur.uid = u.id ";
-        return sql;
+//        String sql = UserDaoImpl.BASE_SELECT + " JOIN e_admin_user_role ur ON  ur.uid = u.id ";
+        return "";
     }
 
     public String getCountSqlString() {

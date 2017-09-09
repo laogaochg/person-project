@@ -46,7 +46,7 @@ public class PermissionFilter extends AccessControlFilter {
         } else {
             if (httpRequest.getSession().getAttribute("selectMenuIdForIntropect") == null) {
                 httpRequest.getSession().setAttribute("selectMenuIdForIntropect", 0);
-            }\
+            }
         }
         /**
          * 此处是改版后，为了兼容项目不需要部署到root下，也可以正常运行，但是权限没设置目前必须到root 的URI，

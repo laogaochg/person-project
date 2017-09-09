@@ -2,6 +2,7 @@ package com.csair.admin.dao;
 
 import java.util.List;
 
+import com.csair.admin.po.UserQueryObject;
 import org.apache.ibatis.annotations.Param;
 
 import com.csair.admin.po.User;
@@ -22,11 +23,16 @@ public interface UserDao {
 
     User selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") User record,@Param("example") UserQuery example);
+    int updateByExampleSelective(@Param("record") User record, @Param("example") UserQuery example);
 
-    int updateByExample(@Param("record") User record,@Param("example") UserQuery example);
+    int updateByExample(@Param("record") User record, @Param("example") UserQuery example);
 
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    List<User> pageQueryUserList(UserQueryObject qo);
+
+    Integer pageQueryCount(UserQueryObject qo);
+
 }

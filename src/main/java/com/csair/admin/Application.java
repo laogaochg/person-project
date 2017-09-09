@@ -34,30 +34,29 @@ public class Application extends SpringBootServletInitializer {
         property = new Properties();
         try {
             property.load(new InputStreamReader(Application.class.getClassLoader().getResourceAsStream("jdbc.properties"), "UTF-8"));
+            DruidDataSource data = new DruidDataSource();
+            data.setUrl(property.get("jdbc_url") + "");
+            data.setUsername(property.get("jdbc_username") + "");
+            data.setPassword(property.get("jdbc_password") + "");
+            dataSource = data;
         } catch (Exception e) {
             e.printStackTrace();
             throw new PlatformException(e.getMessage());
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);//test123
-    }
+
 
     //DataSource配置
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
-        DruidDataSource data = new DruidDataSource();
-        data.setUrl(property.get("jdbc_url") + "");
-        data.setUsername(property.get("jdbc_username") + "");
-        data.setPassword(property.get("jdbc_password") + "");
-        dataSource = data;
-        return data;
+        return dataSource;
     }
 
     @Bean //提供SqlSeesion
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
+        System.out.println("==================================\nApplication.sqlSessionFactoryBean");
+        System.out.println(dataSource);
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -68,6 +67,9 @@ public class Application extends SpringBootServletInitializer {
     @Bean
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource);
+    }
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(Application.class, args);//test123
     }
 
 }

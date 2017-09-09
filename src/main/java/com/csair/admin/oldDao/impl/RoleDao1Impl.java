@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.csair.admin.oldDao.QueryData;
-import com.csair.admin.oldDao.RoleDao;
+import com.csair.admin.oldDao.RoleDao1;
 import com.csair.admin.po.Role;
 import com.csair.admin.po.RoleQueryObject;
 import com.csair.admin.po.RoleUserQueryObject;
@@ -16,7 +16,7 @@ import com.csair.admin.po.User;
 import com.csair.admin.util.DataSourceUtils;
 
 @Repository
-public class RoleDaoImpl implements RoleDao {
+public class RoleDao1Impl implements RoleDao1 {
 
     @Autowired
     private DataSourceUtils dataSourceUtils;

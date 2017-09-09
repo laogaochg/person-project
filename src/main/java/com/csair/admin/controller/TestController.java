@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.dao.UserDao;
+import com.csair.admin.po.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -32,20 +34,13 @@ public class TestController {
     private String hello;
 
     @Autowired
-    private DaoUtils daoUtils;
-    @Autowired
-    private RestTemplate restTemplate;
+    private UserDao userDao;
 
     @Autowired
     private OperationLogService operationLogService;
 
     @RequestMapping("/jsp")
     public String helloJsp(Map<String,Object> map) {
-        long begin = System.currentTimeMillis();
-        for (int i = 0;i < 50;i++) {
-            operationLogService.log(1L,"测试操作历史调用","test",i + "");
-        }
-        System.out.println("测试耗用时间：" + (System.currentTimeMillis() - begin));
         return "";
     }
 

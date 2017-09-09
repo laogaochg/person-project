@@ -15,6 +15,7 @@ import com.csair.admin.po.PermissionQueryObject;
 public interface PermissionService {
     /**
      * 查询角色下的权限
+     * 不支持分页
      */
     PageResult<Permission> query(PermissionQueryObject qo);
 
@@ -65,20 +66,10 @@ public interface PermissionService {
     int addAdminPermission();
 
     /**
-     * 返回删除的权限的主键
      *
-     * @param mid
-     * @return
      */
     Long deleteByMenuId(Long mid,String mname);
 
-    /**
-     * 删除指定指定权限下角色与权限的关系
-     *
-     * @param pid
-     * @return
-     */
-    int deleteRolePermissionByPid(Long pid);
 
     /**
      * 根据名字和菜单id查询权限
@@ -103,4 +94,5 @@ public interface PermissionService {
      */
     Map<String,Method> getNoPermissionRequestMapping();
 
+    Map<String,Object> editRolePermission(Long roleId, Long[] permissionIds, User user);
 }

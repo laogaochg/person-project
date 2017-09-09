@@ -120,13 +120,13 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.csair.admin.po.User">
-    insert into e_admin_user (id, nickname, email, 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.csair.admin.po.User">
+    insert into e_admin_user (nickname, email,
       pswd, create_time, last_login_time, 
       status, mobile, wx_unionid, 
       last_ip, remark, type, shop_id, 
       platform_flag, hash_code)
-    values (#{id,jdbcType=BIGINT}, #{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+    values (#{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
       #{pswd,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{wxUnionid,jdbcType=VARCHAR}, 
       #{lastIp,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{shopId,jdbcType=INTEGER}, 
@@ -375,4 +375,49 @@
       hash_code = #{hashCode,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="pageQueryUserList" resultMap="BaseResultMap">
+        select
+        id,nickname,email,pswd,create_time,last_login_time,status,mobile,wx_unionid,last_ip,remark,type,shop_id,platform_flag,hash_code
+        from e_admin_user u
+        <if test="roleId!=null">
+            JOIN e_admin_user_role r ON u.id = r.uid
+        </if>
+        <include refid="base_where"/>
+        <if test="pageSize>0">
+            LIMIT #{startRow},#{pageSize}
+        </if>
+    </select>
+    <select id="pageQueryCount" resultType="int">
+        SELECT COUNT(1) FROM e_admin_user u
+        <if test="roleId!=null">
+            JOIN e_admin_user_role r ON u.id = r.uid
+        </if>
+        <include refid="base_where"/>
+    </select>
+    <sql id="base_where">
+        <where>
+            <if test="roleId!=null">
+                AND r.rid = #{roleId}
+            </if>
+            <if test="platformFlag!=null">
+                AND u.platform_flag = #{platformFlag}
+            </if>
+            <if test="keyWord!=null">
+                AND ( u.nickname LIKE CONCAT( '%' , #{keyWord} , '%')
+                OR u.email LIKE CONCAT('%',#{keyWord},'%') )
+            </if>
+            <if test="type!=null">
+                AND u.type = #{type}
+            </if>
+            <if test="email!=null">
+                AND u.email = #{email}
+            </if>
+            <if test="name!=null">
+                AND u.nickname = #{name}
+            </if>
+            <if test="id!=null">
+                AND u.id = #{id}
+            </if>
+        </where>
+    </sql>
 </mapper>

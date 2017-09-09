@@ -2,17 +2,23 @@ package com.csair.admin.service.impl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.csair.admin.dao.PermissionDao;
+import com.csair.admin.po.PermissionQuery;
+import com.csair.admin.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.csair.admin.oldDao.PermissionDao;
+import com.csair.admin.oldDao.PermissionDao1;
 import com.csair.admin.po.PageResult;
 import com.csair.admin.po.Permission;
 import com.csair.admin.po.PermissionQueryObject;
@@ -31,15 +37,87 @@ public class PermissionServiceImpl implements PermissionService {
     private RoleService roleService;
     @Autowired
     private OperationLogService operationLogService;
+    private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
+
+
+    @Override
+    public Map<String, Object> editRolePermission(Long roleId, Long[] permissionIds, User user) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        List<Long> newPermissionIds = new ArrayList<Long>();
+        Collections.addAll(newPermissionIds, permissionIds);
+        logger.debug("操作人修改角色权限:userId:" + user.getId() + "roleId:" + roleId + "permissionIds" + newPermissionIds);
+        Role role = roleService.queryById(roleId);
+        if (role != null && Role.ADMIN.equalsIgnoreCase(role.getType())) {
+            resultMap.put("mes", "超级管理员不能修改其权限。");
+            return resultMap;
+        }
+        List<Long> oldPermissionIds = queryPermissionIdByRoleId(roleId);
+        //需要新增的权限的ID集合
+        List<Long> addPermissionIds = new ArrayList<Long>();
+        //需要删除的权限的ID集合
+        List<Long> removePermissionIds = new ArrayList<Long>();
+        for (Long old : oldPermissionIds) {
+            //如果旧的东西在新的里面没有；执行删除操作
+            if (!newPermissionIds.contains(old)) {
+                removePermissionIds.add(old);
+            }
+        }
+        for (Long newPermissionId : newPermissionIds) {
+            //如果旧的东西里面没有新的id；执行添加操作
+            if (!oldPermissionIds.contains(newPermissionId)) {
+                addPermissionIds.add(newPermissionId);
+            }
+        }
+        if (addPermissionIds.size() > 0) {
+            for (Long id : addPermissionIds) {
+                permissionDao.addRolePermission(roleId, id);
+            }
+        }
+        if (removePermissionIds.size() > 0) {
+            for (Long permissionId : removePermissionIds) {
+                permissionDao.removeRolePermission(roleId, permissionId);
+            }
+        }
+        StringBuilder sb = new StringBuilder("角色的id" + roleId);
+        if (addPermissionIds.size() > 0) {
+            String add = StringUtil.join(addPermissionIds, ",");
+            if (StringUtils.hasText(add)) {
+                add = "；增加角色的id集合：" + add;
+                sb.append(add);
+            }
+        }
+        if (removePermissionIds.size() > 0) {
+            String add = StringUtil.join(removePermissionIds, ",");
+            if (StringUtils.hasText(add)) {
+                add = "；删除角色的id集合：" + add;
+                sb.append(add);
+            }
+        }
+        operationLogService.log(user.getId(), "修改角色权限", sb.toString(), user.getLastIp());
+        resultMap.put("mes", "保存成功！");
+        return resultMap;
+    }
+
+    private List<Long> queryPermissionIdByRoleId(Long roleId) {
+        PermissionQueryObject qo = new PermissionQueryObject();
+        qo.setRoleId(roleId);
+        List<Permission> list = permissionDao.queryPermission(qo);
+        List<Long> result = new ArrayList<>();
+        for (Permission p : list) {
+            result.add(p.getId());
+        }
+        return result;
+    }
+
     /**
      * 没有建立对应权限的url集合。
      * 考虑到修改这个共享变量不多
      * 所有为共享变量
      */
-    public static Map<String,Method> noPermissionRequestMapping;
+    public static Map<String, Method> noPermissionRequestMapping;
 
     @Override
-    public Map<String,Method> getNoPermissionRequestMapping() {
+    public Map<String, Method> getNoPermissionRequestMapping() {
         return noPermissionRequestMapping;
     }
 
@@ -49,29 +127,30 @@ public class PermissionServiceImpl implements PermissionService {
      * @return
      */
     @Override
-    public Map<String,List<Permission>> queryAllPermissionSort() {
-        List<Permission> permissionList = permissionDao.queryAllPermission();
-        Map<String,List<Permission>> map = new HashMap<String,List<Permission>>();
+    public Map<String, List<Permission>> queryAllPermissionSort() {
+        PermissionQuery ex = new PermissionQuery();
+        List<Permission> permissionList = permissionDao.selectByExample(ex);
+        Map<String, List<Permission>> map = new HashMap<String, List<Permission>>();
         for (Permission p : permissionList) {
             //如果之前；就新建
             if (!map.containsKey(p.getMid() + "")) {
                 List<Permission> ps = new ArrayList<Permission>();
                 ps.add(p);
-                map.put(p.getMid() + "",ps);
+                map.put(p.getMid() + "", ps);
             } else {
                 List<Permission> ps = map.get(p.getMid() + "");
                 if (p.getName().startsWith("查看菜单")) {
                     ps.add(ps.get(0));
                 }
-                ps.add(0,p);
+                ps.add(0, p);
             }
         }
         return map;
     }
 
     @Override
-    public int updatePermissByPid(Permission p,User u) {
-        operationLogService.log(u.getId(),"修改权限","权限的id：" + p.getId() + "权限的名字：" + p.getName() + "  权限的url：" + p.getUrl(),u.getLastIp());
+    public int updatePermissByPid(Permission p, User u) {
+        operationLogService.log(u.getId(), "修改权限", "权限的id：" + p.getId() + "权限的名字：" + p.getName() + "  权限的url：" + p.getUrl(), u.getLastIp());
         //维护共享变量
         if (StringUtils.hasText(p.getUrl())) {
             String[] split = p.getUrl().split("\\|\\|");
@@ -79,22 +158,28 @@ public class PermissionServiceImpl implements PermissionService {
                 noPermissionRequestMapping.remove(s);
             }
         }
-        return permissionDao.updatePermisssionByPid(p);
+        return permissionDao.updateByPrimaryKey(p);
     }
 
     @Override
-    public Permission findByNameMid(String mname,Long mid) {
-        return permissionDao.findByNameMid(mname,mid);
+    public Permission findByNameMid(String mname, Long mid) {
+        PermissionQuery qo = new PermissionQuery();
+        qo.createCriteria().andNameEqualTo(mname).andMidEqualTo(mid);
+        List<Permission> permissions = permissionDao.selectByExample(qo);
+        if (permissions.size() > 0) {
+            return permissions.get(0);
+        } else {
+            return null;
+        }
     }
 
-    @Override
-    public int deleteRolePermissionByPid(Long pid) {
-        return permissionDao.deleteRolePermissionByPid(pid);
-    }
 
     @Override
-    public Long deleteByMenuId(Long mid,String mname) {
-        return permissionDao.deleteByMenuId(mid,mname);
+    public Long deleteByMenuId(Long mid, String mname) {
+        PermissionQuery ex = new PermissionQuery();
+        ex.createCriteria().andMidEqualTo(mid).andNameEqualTo(mname);
+        permissionDao.deleteByExample(ex);
+        return 0L;
     }
 
     //考虑到有共同资源所以用了synchronized
@@ -105,18 +190,13 @@ public class PermissionServiceImpl implements PermissionService {
         qo.setPageSize(1111);
         List<Role> listData = roleService.query(qo).getListData();
         for (Role r : listData) {
-            List<Long> hasPermission = roleService.queryPermissionIdByRoleId(r.getId());
-            List<Permission> newPids = permissionDao.queryAllPermission();
-            List<Long> pids = new ArrayList<Long>();
+            List<Long> hasPermission = queryPermissionIdByRoleId(r.getId());
+            PermissionQuery ex = new PermissionQuery();
+            List<Permission> newPids = permissionDao.selectByExample(ex);
             for (Permission p : newPids) {
                 if (!hasPermission.contains(p.getId())) {
-                    pids.add(p.getId());
+                    permissionDao.addRolePermission(r.getId(), p.getId());
                 }
-            }
-            List<Long> rids = new ArrayList<Long>();
-            rids.add(r.getId());
-            if (pids.size() > 0) {
-                permissionDao.insertPermissionRole(rids,pids);
             }
         }
         return 1;
@@ -129,8 +209,9 @@ public class PermissionServiceImpl implements PermissionService {
      * @return
      */
     @Override
-    public Long addPermission(Permission p,User u) {
-        Long id = permissionDao.addPermission(p);
+    public Long addPermission(Permission p, User u) {
+        permissionDao.insert(p);
+        Long id = p.getId();
         //维护共享变量
         if (StringUtils.hasText(p.getUrl())) {
             String[] split = p.getUrl().split("\\|\\|");
@@ -138,7 +219,7 @@ public class PermissionServiceImpl implements PermissionService {
                 noPermissionRequestMapping.remove(s);
             }
         }
-        operationLogService.log(u.getId(),"新增权限","权限的id：" + id + "权限的名字：" + p.getName() + "  权限的url：" + p.getUrl(),u.getLastIp());
+        operationLogService.log(u.getId(), "新增权限", "权限的id：" + id + "权限的名字：" + p.getName() + "  权限的url：" + p.getUrl(), u.getLastIp());
         //维护超级管理员权限
         addAdminPermission();
         return id;
@@ -151,21 +232,26 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<Permission> selectByMenuId(Long mid) {
-        return permissionDao.selectByMenuId(mid);
+        PermissionQuery qo = new PermissionQuery();
+        qo.createCriteria().andMidEqualTo(mid);
+        return permissionDao.selectByExample(qo);
     }
 
     @Override
     public List<Permission> queryNoMenuPermission() {
-        return permissionDao.selectByMenuId(null);
+        PermissionQuery qo = new PermissionQuery();
+        qo.createCriteria().andMidIsNull();
+        return permissionDao.selectByExample(qo);
     }
 
     @Override
     public List<Permission> findAllPermission() {
-        return permissionDao.queryAllPermission();
+        PermissionQuery qo = new PermissionQuery();
+        return permissionDao.selectByExample(qo);
     }
 
     @Override
-    public int reloadPermission(Map<String,Method> urlAndMethod) {
+    public int reloadPermission(Map<String, Method> urlAndMethod) {
         List<Permission> ps = findAllPermission();
         Set<String> hasPattern = new HashSet<>();
         for (Permission o : ps) {
@@ -220,8 +306,8 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public PageResult<Permission> query(PermissionQueryObject qo) {
         qo.setPageSize(-1);
-        List<Permission> list = permissionDao.query(qo);
-        return new PageResult<Permission>(list,1,1,1);
+        List<Permission> list = permissionDao.queryPermission(qo);
+        return new PageResult<Permission>(list, 1, 1, 1);
     }
 
 }

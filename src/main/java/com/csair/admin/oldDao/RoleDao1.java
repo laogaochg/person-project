@@ -7,7 +7,7 @@ import com.csair.admin.po.User;
 import com.csair.admin.po.RoleQueryObject;
 import com.csair.admin.po.RoleUserQueryObject;
 
-public interface RoleDao {
+public interface RoleDao1 {
     /**
      * 分布查询角色
      */

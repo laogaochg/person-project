@@ -41,6 +41,10 @@ public class Menu implements Serializable {
     private Long pid;
     private String logoFileName;
     /**
+     * NULL为管理平台的权限；2为商家权限
+     */
+    private Byte type;
+    /**
      * 子菜单
      */
     private List<Menu> menuList = new ArrayList<Menu>();
@@ -49,6 +53,14 @@ public class Menu implements Serializable {
      * 菜单下的权限
      */
     private List<Permission> permissionList = new ArrayList<Permission>(0);
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
 
     public String getLogoFileName() {
         return logoFileName;
