@@ -1,14 +1,12 @@
 package com.csair.admin.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.csair.admin.dao.RoleDao;
 import com.csair.admin.po.RoleQuery;
-import com.csair.admin.service.PermissionService;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.csair.admin.service.OperationLogService;
-import com.csair.admin.oldDao.RoleDao1;
 import com.csair.admin.po.Role;
 import com.csair.admin.po.User;
 import com.csair.admin.po.PageResult;
 import com.csair.admin.po.RoleQueryObject;
-import com.csair.admin.po.RoleUserQueryObject;
 import com.csair.admin.service.RoleService;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.StringUtil;

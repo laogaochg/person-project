@@ -40,25 +40,6 @@ public class BrandController {
         return "goodManage/brand/brandList";
     }
 
-    /**
-     * 修改类目的顺序
-     *
-     * @param ids      类目id
-     * @param newOrder 新的顺序
-     */
-    @RequestMapping("editBrandOrder")
-    @ResponseBody
-    public ResponseEntity editBrandOrder(Long[] ids,Long[] newOrder) {
-        ResponseEntity re = new ResponseEntity();
-        //前台数据验证
-        if (ids == null || newOrder == null || ids.length != newOrder.length) {
-            re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("参数错误。");
-            return re;
-        }
-        User user = ServletUtils.getUser();
-        return brandService.editBrandOrder(ids,newOrder,user);
-    }
 
     @RequestMapping("batchDeleteBrand")
     @ResponseBody

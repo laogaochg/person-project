@@ -44,7 +44,6 @@ public class CodeGenerator {
         }
         sb.append("@Repository\n");
         sb.append("public class " + interfaceName + "Imple implements " + interfaceName + " {\n");
-        sb.append("    @Autowired\n" + "    private DaoUtils daoUtils;\n");
         for (String method : methods) {
             sb.append("@Override\n");
             sb.append("public " + method + " {\n");

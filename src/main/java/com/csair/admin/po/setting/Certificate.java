@@ -9,11 +9,28 @@ import java.util.List;
  * 2017/7/24.
  */
 public class Certificate {
+    /**
+     * 用户id
+     */
     private Long id;
+
+    /**
+     * 用户昵称
+     */
     private String name;
+
+    /**
+     * 备注
+     */
     private String remark;
+
+    /**
+     * 创建人
+     */
     private Long createId;
+
     private Date createDate;
+
     private Date updateDate;
     private List<Long> goodCategoryIds = new ArrayList<>();
 
@@ -72,4 +89,5 @@ public class Certificate {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 }

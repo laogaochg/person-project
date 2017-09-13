@@ -3,6 +3,7 @@ package com.csair.admin.po;
 import java.util.Date;
 
 import com.csair.admin.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * laogaochg
@@ -21,7 +22,7 @@ public class OperationLogQueryObject extends QueryObject {
 
 
     public String getCountSql() {
-        return " select count(1) from csair_log_operation l " ;
+        return " select count(1) from csair_log_operation l ";
     }
 
 
@@ -34,6 +35,7 @@ public class OperationLogQueryObject extends QueryObject {
     }
 
     public String getKeyword() {
+        if (StringUtils.isBlank(keyword)) return null;
         return keyword;
     }
 
@@ -58,6 +60,7 @@ public class OperationLogQueryObject extends QueryObject {
     }
 
     public String getAuthorId() {
+        if (StringUtils.isBlank(authorId)) return null;
         return authorId;
     }
 
@@ -66,6 +69,7 @@ public class OperationLogQueryObject extends QueryObject {
     }
 
     public String getAction() {
+        if (StringUtils.isBlank(action)) return null;
         return action;
     }
 

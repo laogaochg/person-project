@@ -156,12 +156,12 @@ public class MenuQuery {
             return (Criteria) this;
         }
 
-        public Criteria andMidEqualTo(Integer value) {
+        public Criteria andMidEqualTo(Long value) {
             addCriterion("mid =", value, "mid");
             return (Criteria) this;
         }
 
-        public Criteria andMidNotEqualTo(Integer value) {
+        public Criteria andMidNotEqualTo(Long value) {
             addCriterion("mid <>", value, "mid");
             return (Criteria) this;
         }
@@ -286,7 +286,7 @@ public class MenuQuery {
             return (Criteria) this;
         }
 
-        public Criteria andPidEqualTo(Integer value) {
+        public Criteria andPidEqualTo(Long value) {
             addCriterion("pid =", value, "pid");
             return (Criteria) this;
         }

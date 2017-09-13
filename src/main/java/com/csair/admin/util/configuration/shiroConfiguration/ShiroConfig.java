@@ -26,6 +26,7 @@ public class ShiroConfig {
 
     /**
      * 过滤器配置，相当于web.xml里的过滤器设置
+     *
      * @return
      */
     @Bean
@@ -43,7 +44,7 @@ public class ShiroConfig {
      * 配置核心安全事务管理器
      */
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager  defaultWebSecurityManager(AuthRealm authRealm) {
+    public DefaultWebSecurityManager defaultWebSecurityManager(AuthRealm authRealm) {
         System.err.println("--------------shiro已经加载----------------");
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(authRealm);
@@ -69,6 +70,7 @@ public class ShiroConfig {
 
     /**
      * cache管理
+     *
      * @return
      */
     @Bean
@@ -113,6 +115,7 @@ public class ShiroConfig {
 
     /**
      * 配置哪些需要认证
+     *
      * @param manager
      * @return
      */
@@ -125,7 +128,7 @@ public class ShiroConfig {
         bean.setSuccessUrl("/home");
         bean.setUnauthorizedUrl("/404");
         //配置访问权限
-        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
+        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         filterChainDefinitionMap.put("/login", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/uploadFile", "anon"); //表示可以匿名访问
         filterChainDefinitionMap.put("/authImage", "anon"); //表示可以匿名访问
@@ -142,8 +145,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/*.*", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         //把权限拦截器放进去
-        PermissionFilter  f =new PermissionFilter();
-        bean.getFilters().put("permission",f);
+        PermissionFilter f = new PermissionFilter();
+        bean.getFilters().put("permission", f);
         return bean;
     }
 

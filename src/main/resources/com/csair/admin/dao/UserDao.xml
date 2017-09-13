@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csair.admin.dao.UserDao">
     <resultMap id="BaseResultMap" type="com.csair.admin.po.User">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
-        <result column="email" property="email" jdbcType="VARCHAR"/>
-        <result column="pswd" property="pswd" jdbcType="VARCHAR"/>
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
-        <result column="status" property="status" jdbcType="BIGINT"/>
-        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
-        <result column="wx_unionid" property="wxUnionid" jdbcType="VARCHAR"/>
-        <result column="last_ip" property="lastIp" jdbcType="VARCHAR"/>
-        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <id column="id" property="id" />
+        <result column="nickname" property="nickname" />
+        <result column="email" property="email" />
+        <result column="pswd" property="pswd" />
+        <result column="create_time" property="createTime" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="status" property="status" />
+        <result column="mobile" property="mobile" />
+        <result column="wx_unionid" property="wxUnionid" />
+        <result column="last_ip" property="lastIp" />
+        <result column="remark" property="remark" />
         <result column="type" property="type" jdbcType="BIT"/>
         <result column="shop_id" property="shopId" jdbcType="INTEGER"/>
-        <result column="platform_flag" property="platformFlag" jdbcType="VARCHAR"/>
-        <result column="hash_code" property="hashCode" jdbcType="VARCHAR"/>
+        <result column="platform_flag" property="platformFlag" />
+        <result column="hash_code" property="hashCode" />
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -108,11 +108,11 @@
     select 
     id,nickname,email,pswd,create_time,last_login_time,status,mobile,wx_unionid,last_ip,remark,type,shop_id,platform_flag,hash_code
     from e_admin_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from e_admin_user
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id}
   </delete>
     <delete id="deleteByExample" parameterType="com.csair.admin.po.UserQuery">
         delete from e_admin_user
@@ -126,11 +126,11 @@
       status, mobile, wx_unionid, 
       last_ip, remark, type, shop_id, 
       platform_flag, hash_code)
-    values (#{nickname,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-      #{pswd,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=BIGINT}, #{mobile,jdbcType=VARCHAR}, #{wxUnionid,jdbcType=VARCHAR}, 
-      #{lastIp,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{shopId,jdbcType=INTEGER}, 
-      #{platformFlag,jdbcType=VARCHAR}, #{hashCode,jdbcType=VARCHAR})
+    values (#{nickname}, #{email},
+      #{pswd}, #{createTime}, #{lastLoginTime}, 
+      #{status}, #{mobile}, #{wxUnionid}, 
+      #{lastIp}, #{remark}, #{type}, #{shopId}, 
+      #{platformFlag}, #{hashCode})
   </insert>
     <insert id="insertSelective" parameterType="com.csair.admin.po.User">
         insert into e_admin_user
@@ -183,49 +183,49 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=BIGINT},
+                #{id},
             </if>
             <if test="nickname != null">
-                #{nickname,jdbcType=VARCHAR},
+                #{nickname},
             </if>
             <if test="email != null">
-                #{email,jdbcType=VARCHAR},
+                #{email},
             </if>
             <if test="pswd != null">
-                #{pswd,jdbcType=VARCHAR},
+                #{pswd},
             </if>
             <if test="createTime != null">
-                #{createTime,jdbcType=TIMESTAMP},
+                #{createTime},
             </if>
             <if test="lastLoginTime != null">
-                #{lastLoginTime,jdbcType=TIMESTAMP},
+                #{lastLoginTime},
             </if>
             <if test="status != null">
-                #{status,jdbcType=BIGINT},
+                #{status},
             </if>
             <if test="mobile != null">
-                #{mobile,jdbcType=VARCHAR},
+                #{mobile},
             </if>
             <if test="wxUnionid != null">
-                #{wxUnionid,jdbcType=VARCHAR},
+                #{wxUnionid},
             </if>
             <if test="lastIp != null">
-                #{lastIp,jdbcType=VARCHAR},
+                #{lastIp},
             </if>
             <if test="remark != null">
-                #{remark,jdbcType=VARCHAR},
+                #{remark},
             </if>
             <if test="type != null">
-                #{type,jdbcType=BIT},
+                #{type},
             </if>
             <if test="shopId != null">
-                #{shopId,jdbcType=INTEGER},
+                #{shopId},
             </if>
             <if test="platformFlag != null">
-                #{platformFlag,jdbcType=VARCHAR},
+                #{platformFlag},
             </if>
             <if test="hashCode != null">
-                #{hashCode,jdbcType=VARCHAR},
+                #{hashCode},
             </if>
         </trim>
     </insert>
@@ -239,49 +239,49 @@
         update e_admin_user
         <set>
             <if test="record.id != null">
-                id = #{record.id,jdbcType=BIGINT},
+                id = #{record.id},
             </if>
             <if test="record.nickname != null">
-                nickname = #{record.nickname,jdbcType=VARCHAR},
+                nickname = #{record.nickname},
             </if>
             <if test="record.email != null">
-                email = #{record.email,jdbcType=VARCHAR},
+                email = #{record.email},
             </if>
             <if test="record.pswd != null">
-                pswd = #{record.pswd,jdbcType=VARCHAR},
+                pswd = #{record.pswd},
             </if>
             <if test="record.createTime != null">
-                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+                create_time = #{record.createTime},
             </if>
             <if test="record.lastLoginTime != null">
-                last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+                last_login_time = #{record.lastLoginTime},
             </if>
             <if test="record.status != null">
-                status = #{record.status,jdbcType=BIGINT},
+                status = #{record.status},
             </if>
             <if test="record.mobile != null">
-                mobile = #{record.mobile,jdbcType=VARCHAR},
+                mobile = #{record.mobile},
             </if>
             <if test="record.wxUnionid != null">
-                wx_unionid = #{record.wxUnionid,jdbcType=VARCHAR},
+                wx_unionid = #{record.wxUnionid},
             </if>
             <if test="record.lastIp != null">
-                last_ip = #{record.lastIp,jdbcType=VARCHAR},
+                last_ip = #{record.lastIp},
             </if>
             <if test="record.remark != null">
-                remark = #{record.remark,jdbcType=VARCHAR},
+                remark = #{record.remark},
             </if>
             <if test="record.type != null">
-                type = #{record.type,jdbcType=BIT},
+                type = #{record.type},
             </if>
             <if test="record.shopId != null">
-                shop_id = #{record.shopId,jdbcType=INTEGER},
+                shop_id = #{record.shopId},
             </if>
             <if test="record.platformFlag != null">
-                platform_flag = #{record.platformFlag,jdbcType=VARCHAR},
+                platform_flag = #{record.platformFlag},
             </if>
             <if test="record.hashCode != null">
-                hash_code = #{record.hashCode,jdbcType=VARCHAR},
+                hash_code = #{record.hashCode},
             </if>
         </set>
         <if test="_parameter != null">
@@ -290,21 +290,21 @@
     </update>
     <update id="updateByExample" parameterType="map">
         update e_admin_user
-        set id = #{record.id,jdbcType=BIGINT},
-        nickname = #{record.nickname,jdbcType=VARCHAR},
-        email = #{record.email,jdbcType=VARCHAR},
-        pswd = #{record.pswd,jdbcType=VARCHAR},
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-        last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
-        status = #{record.status,jdbcType=BIGINT},
-        mobile = #{record.mobile,jdbcType=VARCHAR},
-        wx_unionid = #{record.wxUnionid,jdbcType=VARCHAR},
-        last_ip = #{record.lastIp,jdbcType=VARCHAR},
-        remark = #{record.remark,jdbcType=VARCHAR},
-        type = #{record.type,jdbcType=BIT},
-        shop_id = #{record.shopId,jdbcType=INTEGER},
-        platform_flag = #{record.platformFlag,jdbcType=VARCHAR},
-        hash_code = #{record.hashCode,jdbcType=VARCHAR}
+        set id = #{record.id},
+        nickname = #{record.nickname},
+        email = #{record.email},
+        pswd = #{record.pswd},
+        create_time = #{record.createTime},
+        last_login_time = #{record.lastLoginTime},
+        status = #{record.status},
+        mobile = #{record.mobile},
+        wx_unionid = #{record.wxUnionid},
+        last_ip = #{record.lastIp},
+        remark = #{record.remark},
+        type = #{record.type},
+        shop_id = #{record.shopId},
+        platform_flag = #{record.platformFlag},
+        hash_code = #{record.hashCode}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -313,67 +313,67 @@
         update e_admin_user
         <set>
             <if test="nickname != null">
-                nickname = #{nickname,jdbcType=VARCHAR},
+                nickname = #{nickname},
             </if>
             <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
+                email = #{email},
             </if>
             <if test="pswd != null">
-                pswd = #{pswd,jdbcType=VARCHAR},
+                pswd = #{pswd},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP},
+                create_time = #{createTime},
             </if>
             <if test="lastLoginTime != null">
-                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+                last_login_time = #{lastLoginTime},
             </if>
             <if test="status != null">
-                status = #{status,jdbcType=BIGINT},
+                status = #{status},
             </if>
             <if test="mobile != null">
-                mobile = #{mobile,jdbcType=VARCHAR},
+                mobile = #{mobile},
             </if>
             <if test="wxUnionid != null">
-                wx_unionid = #{wxUnionid,jdbcType=VARCHAR},
+                wx_unionid = #{wxUnionid},
             </if>
             <if test="lastIp != null">
-                last_ip = #{lastIp,jdbcType=VARCHAR},
+                last_ip = #{lastIp},
             </if>
             <if test="remark != null">
-                remark = #{remark,jdbcType=VARCHAR},
+                remark = #{remark},
             </if>
             <if test="type != null">
-                type = #{type,jdbcType=BIT},
+                type = #{type},
             </if>
             <if test="shopId != null">
-                shop_id = #{shopId,jdbcType=INTEGER},
+                shop_id = #{shopId},
             </if>
             <if test="platformFlag != null">
-                platform_flag = #{platformFlag,jdbcType=VARCHAR},
+                platform_flag = #{platformFlag},
             </if>
             <if test="hashCode != null">
-                hash_code = #{hashCode,jdbcType=VARCHAR},
+                hash_code = #{hashCode},
             </if>
         </set>
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.csair.admin.po.User">
     update e_admin_user
-    set nickname = #{nickname,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      pswd = #{pswd,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=BIGINT},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      wx_unionid = #{wxUnionid,jdbcType=VARCHAR},
-      last_ip = #{lastIp,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      type = #{type,jdbcType=BIT},
-      shop_id = #{shopId,jdbcType=INTEGER},
-      platform_flag = #{platformFlag,jdbcType=VARCHAR},
-      hash_code = #{hashCode,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    set nickname = #{nickname},
+      email = #{email},
+      pswd = #{pswd},
+      create_time = #{createTime},
+      last_login_time = #{lastLoginTime},
+      status = #{status},
+      mobile = #{mobile},
+      wx_unionid = #{wxUnionid},
+      last_ip = #{lastIp},
+      remark = #{remark},
+      type = #{type},
+      shop_id = #{shopId},
+      platform_flag = #{platformFlag},
+      hash_code = #{hashCode}
+    where id = #{id}
   </update>
     <select id="pageQueryUserList" resultMap="BaseResultMap">
         select

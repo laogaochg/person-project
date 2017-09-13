@@ -3,12 +3,14 @@ package com.csair.admin.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.csair.admin.dao.CertificateDao;
+import com.csair.admin.po.setting.CertificateQuery;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.csair.admin.oldDao.CertificateDao;
 import com.csair.admin.po.PageResult;
 import com.csair.admin.po.ResponseEntity;
 import com.csair.admin.po.User;
@@ -27,64 +29,61 @@ public class CertificateServiceImpl implements CertificateService {
     private OperationLogService operationLogService;
 
     @Override
-    public ResponseEntity<Object> deleteCertificate(Long id,User user) {
+    public ResponseEntity<Object> deleteCertificate(Long id, User user) {
         ResponseEntity<Object> re = new ResponseEntity<>();
-        certificateDao.deleteById(id);
-        String content = String.format("证书id:%s;",id);
-        operationLogService.log(user.getId(),"添加证书",content,user.getLastIp());
+        certificateDao.deleteByPrimaryKey(id);
+        String content = String.format("证书id:%s;", id);
+        operationLogService.log(user.getId(), "添加证书", content, user.getLastIp());
         return re;
     }
 
     @Override
-    public int editCertificate(Certificate c,User user) {
+    public int editCertificate(Certificate c, User user) {
         if (c.getId() == null) {
             c.setCreateDate(new Date());
             c.setCreateId(user.getId());
-            Long aLong = certificateDao.insertCertificate(c);
-            String content = String.format("证书id:%s;证书名字%s;",aLong,c.getName());
-            operationLogService.log(user.getId(),"添加证书",content,user.getLastIp());
+            certificateDao.insert(c);
+            String content = String.format("证书id:%s;证书名字%s;", c.getId(), c.getName());
+            operationLogService.log(user.getId(), "添加证书", content, user.getLastIp());
             return 1;
         } else {
-            Certificate old = certificateDao.queryById(c.getId());
+            Certificate old = certificateDao.selectByPrimaryKey(c.getId());
             old.setName(c.getName());
             old.setRemark(c.getRemark());
             old.setUpdateDate(new Date());
             old.setGoodCategoryIds(c.getGoodCategoryIds());
-            certificateDao.updateByKey(old);
-            String content = String.format("证书id:%s;证书名字%s;",c.getId(),c.getName());
-            operationLogService.log(user.getId(),"修改证书",content,user.getLastIp());
+            certificateDao.updateByPrimaryKey(old);
+            String content = String.format("证书id:%s;证书名字%s;", c.getId(), c.getName());
+            operationLogService.log(user.getId(), "修改证书", content, user.getLastIp());
             return 1;
         }
     }
 
     @Override
     public PageResult<Certificate> query(CertificateQueryObject qo) {
-        return new PageResult<>(certificateDao.pageQueryList(qo),certificateDao.pageQueryCount(qo),qo.getCurrentPage(),qo.getPageSize());
+        CertificateQuery ex = new CertificateQuery();
+        CertificateQuery.Criteria criteria = ex.createCriteria();
+        if(StringUtils.isNotBlank(qo.getKeyword())) criteria.andNameLike("%" + qo.getKeyword() + "%");
+        List<Certificate> certificates = certificateDao.selectByExample(ex);
+        int count = certificateDao.countByExample(ex);
+        return new PageResult<>(certificates, count, qo.getCurrentPage(), qo.getPageSize());
     }
 
     @Override
     public Long insertCertificate(Certificate p) {
-        return certificateDao.insertCertificate(p);
+        certificateDao.insert(p);
+        return p.getId();
     }
 
-    @Override
-    public List<Certificate> queryAllCertificate() {
-        return certificateDao.queryAllCertificate();
-    }
-
-    @Override
-    public int updateByKey(Certificate p) {
-        return certificateDao.updateByKey(p);
-    }
 
     @Override
     public Certificate queryById(Long id) {
-        return certificateDao.queryById(id);
+        return certificateDao.selectByPrimaryKey(id);
     }
 
     @Override
     public int deleteById(Long id) {
-        return certificateDao.deleteById(id);
+        return certificateDao.deleteByPrimaryKey(id);
     }
 
 }

@@ -11,13 +11,9 @@ import com.csair.admin.po.PageResult;
 public interface BrandService {
 
     /**
-    *插入返回id
+    *插入
     **/
-    Long editBrand(Brand p) ;
-    /**
-    *查询所有
-    **/
-    List<Brand> queryAllBrand() ;
+    int editBrand(Brand p) ;
     /**
     *根据主键修改
     *属性为null表里面的也会也为null
@@ -58,12 +54,4 @@ public interface BrandService {
      */
     ResponseEntity batchDeleteBrand(Long[] ids,User user);
 
-    /**
-     * 修改类目的序号
-     * @param ids
-     * @param newOrder
-     * @param user
-     * @return
-     */
-    ResponseEntity editBrandOrder(Long[] ids,Long[] newOrder,User user);
 }

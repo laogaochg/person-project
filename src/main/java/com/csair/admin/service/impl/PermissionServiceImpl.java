@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.csair.admin.oldDao.PermissionDao1;
 import com.csair.admin.po.PageResult;
 import com.csair.admin.po.Permission;
 import com.csair.admin.po.PermissionQueryObject;
@@ -39,6 +38,12 @@ public class PermissionServiceImpl implements PermissionService {
     private OperationLogService operationLogService;
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
+    @Override
+    public int deletePermissionByPid(Long pid) {
+        PermissionQuery ex = new PermissionQuery();
+        ex.createCriteria().andMidEqualTo(pid);//todo 考虑关系表也删除
+        return permissionDao.deleteByExample(ex);
+    }
 
     @Override
     public Map<String, Object> editRolePermission(Long roleId, Long[] permissionIds, User user) {

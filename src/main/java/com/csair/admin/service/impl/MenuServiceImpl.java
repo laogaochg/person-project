@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.csair.admin.dao.MenuDao;
+import com.csair.admin.po.MenuQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.csair.admin.service.OperationLogService;
-import com.csair.admin.oldDao.MenuDao;
 import com.csair.admin.po.Menu;
 import com.csair.admin.po.MenuVo;
 import com.csair.admin.po.Permission;
@@ -37,24 +38,32 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> queryParentMenus(String url) {
-        Menu menu = menuDao.queryMenuByUrl(url);
+        Menu menu;
+        MenuQuery ex = new MenuQuery();
+        ex.createCriteria().andUrlEqualTo(url);
+        List<Menu> menus = menuDao.selectByExample(ex);
+        if (menus.size() > 0) {
+            menu = menus.get(0);
+        } else {
+            menu = null;
+        }
         List<Menu> ms = new ArrayList<>();
         if (menu != null) {
             ms.add(menu);
-            queryRootMenu(menu,ms);
+            queryRootMenu(menu, ms);
         }
         //倒序操作
         Collections.reverse(ms);
         return ms;
     }
 
-    private List<Menu> queryRootMenu(Menu menu,List<Menu> ms) {
+    private List<Menu> queryRootMenu(Menu menu, List<Menu> ms) {
         Long pid = menu.getPid();
         if (pid != null && pid != 0) {
             Menu menu1 = queryMenu(pid);
             if (menu1 != null) {
                 ms.add(menu1);
-                return queryRootMenu(menu1,ms);
+                return queryRootMenu(menu1, ms);
             }
         }
         return ms;
@@ -62,7 +71,8 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuVo> queryAllMenuVo(Long parentId) {
-        List<Menu> menus = menuDao.queryAllMenu();
+        MenuQuery ex = new MenuQuery();
+        List<Menu> menus = menuDao.selectByExample(ex);
         List<MenuVo> vo = new ArrayList<MenuVo>();
         for (Menu m : menus) {
             MenuVo v = new MenuVo(m);
@@ -75,23 +85,25 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public int deleteMenu(Long mid,User user) {
+    public int deleteMenu(Long mid, User user) {
         logger.info("删除菜单：mid" + mid + "user:" + user);
         Menu m = queryMenu(mid);
-        int i = menuDao.deleteMenu(mid);
+        MenuQuery ex = new MenuQuery();
+        ex.createCriteria().andMidEqualTo(mid);
+        int i = menuDao.deleteByExample(ex);
         if (i != 0) {
-            Long pid = permissionService.deleteByMenuId(mid,"查看菜单:" + m.getMname());
+            Long pid = permissionService.deleteByMenuId(mid, "查看菜单:" + m.getMname());
 //            operationLogService.log(user.getId(),"删除菜单","菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(),user.getLastIp());
-            return permissionService.deleteRolePermissionByPid(pid);
+            return permissionService.deletePermissionByPid(pid);
         }
         return 0;
     }
 
     @Override
-    public int editMenu(Menu m,User user) {
+    public int editMenu(Menu m, User user) {
         logger.info("修改菜单：m" + m + "user:" + user);
         Menu oldMenu = queryMenu(m.getMid());
-        Permission p = permissionService.findByNameMid("查看菜单:" + oldMenu.getMname(),oldMenu.getMid());
+        Permission p = permissionService.findByNameMid("查看菜单:" + oldMenu.getMname(), oldMenu.getMid());
         if (StringUtils.hasText(m.getMname())) {
             oldMenu.setMname(m.getMname());
         }
@@ -108,32 +120,31 @@ public class MenuServiceImpl implements MenuService {
         if (null != m.getSort()) {
             oldMenu.setSort(m.getSort());
         }
-        menuDao.editMenuSelectByMenuId(m);
+        menuDao.updateByPrimaryKeySelective(m);
         if (StringUtils.hasText(m.getMname()) && p != null) {
             p.setName("查看菜单:" + oldMenu.getMname());
             p.setMid(m.getMid());
             p.setUrl(m.getUrl());
-            permissionService.updatePermissByPid(p,user);
-            operationLogService.log(user.getId(),"修改菜单","菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(),user.getLastIp());
+            permissionService.updatePermissByPid(p, user);
+            operationLogService.log(user.getId(), "修改菜单", "菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(), user.getLastIp());
         }
         return 1;
     }
 
     @Override
-    public Long addMenu(Menu m,User user) {
+    public Long addMenu(Menu m, User user) {
         logger.info("添加菜单：m" + m + "user:" + user);
-        Long mid = menuDao.insert(m);
-        m.setMid(mid);
+        menuDao.insert(m);
         Permission p = new Permission();
-        p.setMid(mid);
+        p.setMid(m.getMid());
         p.setName("查看菜单:" + m.getMname());
         p.setUrl(m.getUrl());
         //添加权限
-        Long pId = permissionService.addPermission(p,user);
+        Long pId = permissionService.addPermission(p, user);
         //维护admin角色的权限
         permissionService.addAdminPermission();
-        operationLogService.log(user.getId(),"添加菜单","菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(),user.getLastIp());
-        return mid;
+        operationLogService.log(user.getId(), "添加菜单", "菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(), user.getLastIp());
+        return m.getMid();
     }
 
     @Override
@@ -143,10 +154,10 @@ public class MenuServiceImpl implements MenuService {
         //记录根菜单
         List<Menu> rootMenus = new ArrayList<Menu>();
         Set<Long> midMenu = new HashSet<Long>();
-        List<Menu> allMenu = menuDao.queryAllMenu();
+        List<Menu> allMenu = menuDao.selectByExample(new MenuQuery());
         //每一个菜单都找到自己的根菜单；并把找过程的中间菜单记录下来
         for (Menu m : permissionMenuIds) {
-            Menu rootMenu = findRootMenu(m,midMenu,allMenu);
+            Menu rootMenu = findRootMenu(m, midMenu, allMenu);
             if (rootMenu != null) {
                 boolean canAdd = true;
                 for (Menu rm : rootMenus) {
@@ -160,7 +171,7 @@ public class MenuServiceImpl implements MenuService {
         //把中间菜单加进来；这样就全部了
         for (Long mid : midMenu) {
             Menu menu = null;
-            menu = queryShowMenuById(allMenu,mid);
+            menu = queryShowMenuById(allMenu, mid);
             if (menu != null) {
                 boolean canAdd = true;
                 for (Menu m : permissionMenuIds) {
@@ -175,12 +186,12 @@ public class MenuServiceImpl implements MenuService {
         sortMenuList(rootMenus);
         //所有的根菜单在范围内找它们的子菜单
         for (Menu rootMenu : rootMenus) {
-            getChildMenuByLimit(rootMenu,permissionMenuIds);
+            getChildMenuByLimit(rootMenu, permissionMenuIds);
         }
         return rootMenus;
     }
 
-    private Menu queryShowMenuById(List<Menu> allMenu,Long mid) {
+    private Menu queryShowMenuById(List<Menu> allMenu, Long mid) {
         Menu menu = null;
         for (Menu m : allMenu) {
             if (Menu.STATE_SHOW.equals(m.getState()) && mid.equals(m.getMid())) {
@@ -190,11 +201,11 @@ public class MenuServiceImpl implements MenuService {
         return menu;
     }
 
-    private List<Menu> getChildMenuByLimit(Menu pm,List<Menu> list) {
-        List<Menu> menuList = getChildMenuLimit(pm.getMid(),list);
+    private List<Menu> getChildMenuByLimit(Menu pm, List<Menu> list) {
+        List<Menu> menuList = getChildMenuLimit(pm.getMid(), list);
         pm.setMenuList(menuList);
         for (Menu m : menuList) {
-            List<Menu> childMenu = getChildMenuByLimit(m,list);
+            List<Menu> childMenu = getChildMenuByLimit(m, list);
         }
         return menuList;
     }
@@ -206,7 +217,7 @@ public class MenuServiceImpl implements MenuService {
      * @param list 限定的范围
      * @return
      */
-    private List<Menu> getChildMenuLimit(Long mid,List<Menu> list) {
+    private List<Menu> getChildMenuLimit(Long mid, List<Menu> list) {
         List<Menu> ms = new ArrayList<Menu>();
         for (Menu m : list) {
             if (mid.equals(m.getPid())) {
@@ -219,7 +230,7 @@ public class MenuServiceImpl implements MenuService {
 
     private void sortMenuList(List<Menu> list) {
         //对子菜单进行排序
-        Collections.sort(list,Comparator.comparingInt(Menu::getSort));
+        Collections.sort(list, Comparator.comparingInt(Menu::getSort));
     }
 
     private List<Menu> getMenuIds(Long userId) {
@@ -229,9 +240,9 @@ public class MenuServiceImpl implements MenuService {
         for (Permission p : userPermission) {
             if (p.getMid() != null) permissionMenuIds.add(p.getMid());
         }
-        List<Menu> allMenu = menuDao.queryAllMenu();
+        List<Menu> allMenu = menuDao.selectByExample(new MenuQuery());
         for (Long id : permissionMenuIds) {
-            Menu m = queryShowMenuById(allMenu,id);
+            Menu m = queryShowMenuById(allMenu, id);
             if (m != null) {
                 permissionMenus.add(m);
             }
@@ -244,15 +255,15 @@ public class MenuServiceImpl implements MenuService {
      *
      * @param m
      */
-    private Menu findRootMenu(Menu m,Set<Long> midMenuIds,List<Menu> allMenu) {
+    private Menu findRootMenu(Menu m, Set<Long> midMenuIds, List<Menu> allMenu) {
         Menu rootMenu;
         if (m.getPid() == null || m.getPid() == 0L) {
             return m;
         } else {
-            Menu midMenu = queryShowMenuById(allMenu,m.getPid());
+            Menu midMenu = queryShowMenuById(allMenu, m.getPid());
             if (midMenu != null) {
                 midMenuIds.add(midMenu.getMid());
-                return findRootMenu(midMenu,midMenuIds,allMenu);
+                return findRootMenu(midMenu, midMenuIds, allMenu);
             }
             return null;
         }
@@ -260,33 +271,32 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Menu queryMenu(Long mid) {
-        List<Menu> ms = menuDao.queryMenu(mid);
-        if (ms.size() == 0) {
-            return null;
-        }
-        return ms.get(0);
+        return menuDao.selectByPrimaryKey(mid);
     }
 
     @Override
     public List<Menu> getChildMenu(Long parentId) {
-        return menuDao.queryChildMenuByPid(parentId);
+        MenuQuery ex = new MenuQuery();
+        ex.createCriteria().andPidEqualTo(parentId);
+        return menuDao.selectByExample(ex);
     }
 
     @Override
     public List<Menu> getAllMenu() {
-        List<Menu> root = menuDao.queryByRootMenu();
-        List<Menu> menus = menuDao.queryAllMenu();
+        MenuQuery ex = new MenuQuery();
+        List<Menu> menus = menuDao.selectByExample(ex);
+        ex.createCriteria().andPidIsNull();
+        List<Menu> root = menuDao.selectByExample(ex);
         List<Permission> allPermission = permissionService.findAllPermission();
         //排序
         sortMenuList(root);
         for (Menu m : root) {
-            getChildMenu(m,menus,allPermission);
+            getChildMenu(m, menus, allPermission);
         }
         return root;
     }
 
-    private List<Menu> getChildMenu(Menu pm,List<Menu> allMenu,List<Permission> allPermission) {
-//        List<Menu> menuList1 = menuDao.queryChildMenuByPid(pm.getMid());
+    private List<Menu> getChildMenu(Menu pm, List<Menu> allMenu, List<Permission> allPermission) {
         List<Menu> menuList = new ArrayList<>();
         for (Menu m : allMenu) {
             if (pm.getMid().equals(m.getPid())) {
@@ -301,7 +311,7 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         for (Menu m : menuList) {
-            List<Menu> childMenu = getChildMenu(m,allMenu,allPermission);
+            List<Menu> childMenu = getChildMenu(m, allMenu, allPermission);
         }
         return menuList;
     }

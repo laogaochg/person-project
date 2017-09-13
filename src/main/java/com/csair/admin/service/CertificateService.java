@@ -15,16 +15,6 @@ public interface CertificateService {
     **/
     Long insertCertificate(Certificate p) ;
     /**
-    *查询所有
-    **/
-    List<Certificate> queryAllCertificate() ;
-    /**
-    *根据主键修改
-    *属性为null表里面的也会也为null
-    *最好先查出旧的；在旧的上面改
-    **/
-    int updateByKey(Certificate p) ;
-    /**
     *根据主键查询
     *
     **/

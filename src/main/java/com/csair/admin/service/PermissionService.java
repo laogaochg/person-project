@@ -95,4 +95,6 @@ public interface PermissionService {
     Map<String,Method> getNoPermissionRequestMapping();
 
     Map<String,Object> editRolePermission(Long roleId, Long[] permissionIds, User user);
+
+    int deletePermissionByPid(Long pid);
 }

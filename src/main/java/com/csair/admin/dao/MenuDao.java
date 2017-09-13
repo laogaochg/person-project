@@ -10,7 +10,7 @@ public interface MenuDao {
 
     int deleteByExample(MenuQuery example);
 
-    int deleteByPrimaryKey(Integer mid);
+    int deleteByPrimaryKey(Long mid);
 
     int insert(Menu record);
 
@@ -18,7 +18,7 @@ public interface MenuDao {
 
     List<Menu> selectByExample(MenuQuery example);
 
-    Menu selectByPrimaryKey(Integer mid);
+    Menu selectByPrimaryKey(Long mid);
 
     int updateByExampleSelective(@Param("record") Menu record, @Param("example") MenuQuery example);
 
