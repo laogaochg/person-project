@@ -19,7 +19,7 @@ public class PlatformException extends RuntimeException {
     /**
      * 错误代码
      */
-    private String code;
+    private int code;
 
     /**
      * 错误信息
@@ -34,8 +34,9 @@ public class PlatformException extends RuntimeException {
 
     /**
      *
+     * @param code
      */
-    public PlatformException(String code) {
+    public PlatformException(int code) {
         //根据错误码得到对应的错误信息；
         //String mes = MessageStaticUtils.getMessage(code);
         this.code = code;
@@ -46,17 +47,17 @@ public class PlatformException extends RuntimeException {
     /**
      *
      */
-    public PlatformException(String code,String mes) {
+    public PlatformException(int code, String mes) {
         logger.warn("错误代码：  " + code + " 错误信息：" + mes);
         this.code = code;
         this.mes = mes;
     }
 
-    public String getReturnCode() {
+    public int getReturnCode() {
         return code;
     }
 
-    public void setReturnCode(String code) {
+    public void setReturnCode(int code) {
         this.code = code;
     }
 

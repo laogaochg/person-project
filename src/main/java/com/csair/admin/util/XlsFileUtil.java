@@ -60,7 +60,7 @@ public class XlsFileUtil {
             return result;
         } catch (Exception e) {
             logger.warn("解析文件出错" + e.getMessage());
-            throw new PlatformException(ParamConstants.ERROR_PARAM + "","解析文件出错。");
+            throw new PlatformException(ParamConstants.ERROR_PARAM ,"解析文件出错。");
         }
     }
 

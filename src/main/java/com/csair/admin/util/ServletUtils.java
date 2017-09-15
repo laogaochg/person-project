@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.csair.admin.po.core.User;
+import com.csair.admin.core.po.core.User;
 
 /**
  * laogaochg

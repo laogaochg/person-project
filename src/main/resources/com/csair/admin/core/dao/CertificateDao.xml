@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csair.admin.core.dao.CertificateDao" >
+  <resultMap id="BaseResultMap" type="com.csair.admin.core.po.setting.Certificate" >
+    <id column="id" property="id" />
+    <result column="name" property="name"  />
+    <result column="remark" property="remark"  />
+    <result column="create_id" property="createId"  />
+    <result column="create_date" property="createDate"  />
+    <result column="update_date" property="updateDate"  />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, name, remark, create_id, create_date, update_date
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap"  >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from csair_certificate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    id,name,remark,create_id,create_date,update_date
+    from csair_certificate
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from csair_certificate
+    where id = #{id}
+  </delete>
+  <delete id="deleteByExample"  >
+    delete from csair_certificate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+    insert into csair_certificate ( name, remark, 
+      create_id, create_date, update_date
+      )
+    values ( #{name}, #{remark}, 
+      #{createId}, #{createDate}, #{updateDate}
+      )
+  </insert>
+  <insert id="insertSelective"  >
+    insert into csair_certificate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="remark != null" >
+        #{remark},
+      </if>
+      <if test="createId != null" >
+        #{createId},
+      </if>
+      <if test="createDate != null" >
+        #{createDate},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample"  resultType="java.lang.Integer" >
+    select count(*) from csair_certificate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update csair_certificate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate},
+      </if>
+      <if test="record.updateDate != null" >
+        update_date = #{record.updateDate},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update csair_certificate
+    set id = #{record.id},
+      name = #{record.name},
+      remark = #{record.remark},
+      create_id = #{record.createId},
+      create_date = #{record.createDate},
+      update_date = #{record.updateDate}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective"  >
+    update csair_certificate
+    <set >
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey"  >
+    update csair_certificate
+    set name = #{name},
+      remark = #{remark},
+      create_id = #{createId},
+      create_date = #{createDate},
+      update_date = #{updateDate}
+    where id = #{id}
+  </update>
+</mapper>

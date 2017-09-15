@@ -1,6 +1,6 @@
 package com.csair.admin.util;
 
-import com.csair.admin.po.core.User;
+import com.csair.admin.core.po.core.User;
 
 /**
  * laogaochg

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csair.admin.core.dao.MenuDao">
+    <resultMap id="BaseResultMap" type="com.csair.admin.core.po.core.Menu">
+        <id column="mid" property="mid"/>
+        <result column="mname" property="mname"/>
+        <result column="pid" property="pid"/>
+        <result column="url" property="url"/>
+        <result column="state" property="state"/>
+        <result column="sort" property="sort"/>
+        <result column="rank" property="rank"/>
+        <result column="logo_file_name" property="logoFileName"/>
+        <result column="type" property="type"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            mid, mname, pid, url, state, sort, rank, logo_file_name, type
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csair.admin.core.po.core.MenuQuery">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from e_admin_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select 
+    mid,mname,pid,url,state,sort,rank,logo_file_name,type
+    from e_admin_menu
+    where mid = #{mid}
+  </select>
+    <delete id="deleteByPrimaryKey">
+    delete from e_admin_menu
+    where mid = #{mid}
+  </delete>
+    <delete id="deleteByExample">
+        delete from e_admin_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" useGeneratedKeys="true"  keyProperty="mid">
+    insert into e_admin_menu ( mname, pid,
+      url, state, sort, rank, 
+      logo_file_name, type)
+    values ( #{mname}, #{pid},
+      #{url}, #{state}, #{sort}, #{rank}, 
+      #{logoFileName}, #{type})
+  </insert>
+    <insert id="insertSelective">
+        insert into e_admin_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mid != null">
+                mid,
+            </if>
+            <if test="mname != null">
+                mname,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="rank != null">
+                rank,
+            </if>
+            <if test="logoFileName != null">
+                logo_file_name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mid != null">
+                #{mid},
+            </if>
+            <if test="mname != null">
+                #{mname},
+            </if>
+            <if test="pid != null">
+                #{pid},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+            <if test="state != null">
+                #{state},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="rank != null">
+                #{rank},
+            </if>
+            <if test="logoFileName != null">
+                #{logoFileName},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" resultType="java.lang.Integer">
+        select count(*) from e_admin_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective">
+        update e_admin_menu
+        <set>
+            <if test="record.mid != null">
+                mid = #{record.mid},
+            </if>
+            <if test="record.mname != null">
+                mname = #{record.mname},
+            </if>
+            <if test="record.pid != null">
+                pid = #{record.pid},
+            </if>
+            <if test="record.url != null">
+                url = #{record.url},
+            </if>
+            <if test="record.state != null">
+                state = #{record.state},
+            </if>
+            <if test="record.sort != null">
+                sort = #{record.sort},
+            </if>
+            <if test="record.rank != null">
+                rank = #{record.rank},
+            </if>
+            <if test="record.logoFileName != null">
+                logo_file_name = #{record.logoFileName},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample">
+        update e_admin_menu
+        set mid = #{record.mid},
+        mname = #{record.mname},
+        pid = #{record.pid},
+        url = #{record.url},
+        state = #{record.state},
+        sort = #{record.sort},
+        rank = #{record.rank},
+        logo_file_name = #{record.logoFileName},
+        type = #{record.type}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective">
+        update e_admin_menu
+        <set>
+            <if test="mname != null">
+                mname = #{mname},
+            </if>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="url != null">
+                url = #{url},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="rank != null">
+                rank = #{rank},
+            </if>
+            <if test="logoFileName != null">
+                logo_file_name = #{logoFileName},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+        </set>
+        where mid = #{mid}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.csair.admin.core.po.core.Menu">
+    update e_admin_menu
+    set mname = #{mname},
+      pid = #{pid},
+      url = #{url},
+      state = #{state},
+      sort = #{sort},
+      rank = #{rank},
+      logo_file_name = #{logoFileName},
+      type = #{type}
+    where mid = #{mid}
+  </update>
+</mapper>

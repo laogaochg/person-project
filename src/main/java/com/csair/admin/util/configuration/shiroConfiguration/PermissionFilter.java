@@ -11,8 +11,8 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.csair.admin.po.core.Role;
-import com.csair.admin.service.impl.PermissionServiceImpl;
+import com.csair.admin.core.po.core.Role;
+import com.csair.admin.core.service.impl.PermissionServiceImpl;
 import org.springframework.util.StringUtils;
 
 /**

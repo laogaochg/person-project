@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csair.admin.core.dao.BrandDao">
+    <resultMap id="BaseResultMap" type="com.csair.admin.core.po.Brand">
+        <id column="brand_id" property="brandId"/>
+        <result column="brand_name" property="brandName"/>
+        <result column="brand_logo" property="brandLogo"/>
+        <result column="brand_logo_thumb" property="brandLogoThumb"/>
+        <result column="brand_website" property="brandWebsite"/>
+        <result column="brand_order" property="brandOrder"/>
+        <result column="status" property="status"/>
+        <result column="add_time" property="addTime"/>
+        <result column="add_by" property="addBy"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.csair.admin.core.po.Brand" extends="BaseResultMap">
+        <result column="brand_desc" property="brandDesc"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            brand_id, brand_name, brand_logo, brand_logo_thumb, brand_website, brand_order, status,
+            add_time, add_by
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <sql id="Blob_Column_List">
+    brand_desc
+  </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from csair_brand
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from csair_brand
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs">
+        select
+        brand_id,brand_name,brand_logo,brand_logo_thumb,brand_website,brand_order,status,add_time,add_by,brand_desc
+        ,
+        <include refid="Blob_Column_List"/>
+        from csair_brand
+        where brand_id = #{brandId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey">
+    delete from csair_brand
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample">
+        delete from csair_brand
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert">
+    insert into csair_brand (brand_id, brand_name, brand_logo, 
+      brand_logo_thumb, brand_website, brand_order, 
+      status, add_time, add_by, 
+      brand_desc)
+    values (#{brandId,jdbcType=INTEGER}, #{brandName,jdbcType=VARCHAR}, #{brandLogo,jdbcType=VARCHAR}, 
+      #{brandLogoThumb,jdbcType=VARCHAR}, #{brandWebsite,jdbcType=VARCHAR}, #{brandOrder,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{addTime,jdbcType=TIMESTAMP}, #{addBy,jdbcType=INTEGER}, 
+      #{brandDesc,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective">
+        insert into csair_brand
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="brandId != null">
+                brand_id,
+            </if>
+            <if test="brandName != null">
+                brand_name,
+            </if>
+            <if test="brandLogo != null">
+                brand_logo,
+            </if>
+            <if test="brandLogoThumb != null">
+                brand_logo_thumb,
+            </if>
+            <if test="brandWebsite != null">
+                brand_website,
+            </if>
+            <if test="brandOrder != null">
+                brand_order,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="addBy != null">
+                add_by,
+            </if>
+            <if test="brandDesc != null">
+                brand_desc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="brandId != null">
+                #{brandId,jdbcType=INTEGER},
+            </if>
+            <if test="brandName != null">
+                #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="brandLogo != null">
+                #{brandLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="brandLogoThumb != null">
+                #{brandLogoThumb,jdbcType=VARCHAR},
+            </if>
+            <if test="brandWebsite != null">
+                #{brandWebsite,jdbcType=VARCHAR},
+            </if>
+            <if test="brandOrder != null">
+                #{brandOrder,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addBy != null">
+                #{addBy,jdbcType=INTEGER},
+            </if>
+            <if test="brandDesc != null">
+                #{brandDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" resultType="java.lang.Integer">
+        select count(*) from csair_brand
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective">
+        update csair_brand
+        <set>
+            <if test="record.brandId != null">
+                brand_id = #{record.brandId,jdbcType=INTEGER},
+            </if>
+            <if test="record.brandName != null">
+                brand_name = #{record.brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.brandLogo != null">
+                brand_logo = #{record.brandLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="record.brandLogoThumb != null">
+                brand_logo_thumb = #{record.brandLogoThumb,jdbcType=VARCHAR},
+            </if>
+            <if test="record.brandWebsite != null">
+                brand_website = #{record.brandWebsite,jdbcType=VARCHAR},
+            </if>
+            <if test="record.brandOrder != null">
+                brand_order = #{record.brandOrder,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=BIT},
+            </if>
+            <if test="record.addTime != null">
+                add_time = #{record.addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.addBy != null">
+                add_by = #{record.addBy,jdbcType=INTEGER},
+            </if>
+            <if test="record.brandDesc != null">
+                brand_desc = #{record.brandDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs">
+        update csair_brand
+        set brand_id = #{record.brandId,jdbcType=INTEGER},
+        brand_name = #{record.brandName,jdbcType=VARCHAR},
+        brand_logo = #{record.brandLogo,jdbcType=VARCHAR},
+        brand_logo_thumb = #{record.brandLogoThumb,jdbcType=VARCHAR},
+        brand_website = #{record.brandWebsite,jdbcType=VARCHAR},
+        brand_order = #{record.brandOrder,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=BIT},
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+        add_by = #{record.addBy,jdbcType=INTEGER},
+        brand_desc = #{record.brandDesc,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample">
+        update csair_brand
+        set brand_id = #{record.brandId,jdbcType=INTEGER},
+        brand_name = #{record.brandName,jdbcType=VARCHAR},
+        brand_logo = #{record.brandLogo,jdbcType=VARCHAR},
+        brand_logo_thumb = #{record.brandLogoThumb,jdbcType=VARCHAR},
+        brand_website = #{record.brandWebsite,jdbcType=VARCHAR},
+        brand_order = #{record.brandOrder,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=BIT},
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+        add_by = #{record.addBy,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective">
+        update csair_brand
+        <set>
+            <if test="brandName != null">
+                brand_name = #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="brandLogo != null">
+                brand_logo = #{brandLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="brandLogoThumb != null">
+                brand_logo_thumb = #{brandLogoThumb,jdbcType=VARCHAR},
+            </if>
+            <if test="brandWebsite != null">
+                brand_website = #{brandWebsite,jdbcType=VARCHAR},
+            </if>
+            <if test="brandOrder != null">
+                brand_order = #{brandOrder,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="addBy != null">
+                add_by = #{addBy,jdbcType=INTEGER},
+            </if>
+            <if test="brandDesc != null">
+                brand_desc = #{brandDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where brand_id = #{brandId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs">
+    update csair_brand
+    set brand_name = #{brandName,jdbcType=VARCHAR},
+      brand_logo = #{brandLogo,jdbcType=VARCHAR},
+      brand_logo_thumb = #{brandLogoThumb,jdbcType=VARCHAR},
+      brand_website = #{brandWebsite,jdbcType=VARCHAR},
+      brand_order = #{brandOrder,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=INTEGER},
+      brand_desc = #{brandDesc,jdbcType=LONGVARCHAR}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey">
+    update csair_brand
+    set brand_name = #{brandName,jdbcType=VARCHAR},
+      brand_logo = #{brandLogo,jdbcType=VARCHAR},
+      brand_logo_thumb = #{brandLogoThumb,jdbcType=VARCHAR},
+      brand_website = #{brandWebsite,jdbcType=VARCHAR},
+      brand_order = #{brandOrder,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_by = #{addBy,jdbcType=INTEGER}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+  </update>
+    <select id="pageQueryList" resultMap="BaseResultMap">
+        select
+        brand_id, brand_name, brand_logo, brand_logo_thumb, brand_website, brand_order, status,
+        add_time, add_by from csair_brand
+        <where>
+            <if test="keyword!=null">
+                AND brand_name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+        LIMIT #{startRow},#{pageSize}
+    </select>
+    <select id="pageQueryCount" resultType="int">
+        select
+        count(1) from csair_brand
+        <where>
+            <if test="keyword!=null">
+                AND brand_name LIKE CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

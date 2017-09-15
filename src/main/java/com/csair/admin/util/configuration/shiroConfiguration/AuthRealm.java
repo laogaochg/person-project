@@ -18,13 +18,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.csair.admin.po.core.Permission;
-import com.csair.admin.po.core.Role;
-import com.csair.admin.po.core.User;
-import com.csair.admin.po.core.PermissionQueryObject;
-import com.csair.admin.service.PermissionService;
-import com.csair.admin.service.RoleService;
-import com.csair.admin.service.impl.UserServiceImpl;
+import com.csair.admin.core.po.core.Permission;
+import com.csair.admin.core.po.core.Role;
+import com.csair.admin.core.po.core.User;
+import com.csair.admin.core.po.core.PermissionQueryObject;
+import com.csair.admin.core.service.PermissionService;
+import com.csair.admin.core.service.RoleService;
+import com.csair.admin.core.service.impl.UserServiceImpl;
 import com.csair.admin.util.ParamConstants;
 
 /**

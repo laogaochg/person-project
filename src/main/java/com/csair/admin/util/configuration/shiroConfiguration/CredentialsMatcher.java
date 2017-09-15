@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 
-import com.csair.admin.po.core.User;
+import com.csair.admin.core.po.core.User;
 import com.csair.admin.util.PasswordUtils;
 
 /**

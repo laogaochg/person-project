@@ -34,7 +34,7 @@ public class FileUploadUtils {
             inputStream = myfile.getInputStream();
         } catch (IOException e) {
             logger.info(e.getMessage());
-            throw new PlatformException(ParamConstants.PANDLE_FILE_ERROR + "","处理文件出现异常");
+            throw new PlatformException(ParamConstants.PANDLE_FILE_ERROR ,"处理文件出现异常");
         }
         String fileName = myfile.getOriginalFilename();
         String substring = fileName.substring(fileName.lastIndexOf("."));
@@ -65,7 +65,7 @@ public class FileUploadUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException("000011","文件上传异常");
+            throw new PlatformException(000011,"文件上传异常");
 
         }
         return "";
@@ -93,7 +93,7 @@ public class FileUploadUtils {
             inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException("000011","文件上传异常");
+            throw new PlatformException(000011,"文件上传异常");
         }
         return fileName;
     }

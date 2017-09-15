@@ -38,7 +38,7 @@ public class CodeGenerator {
     private static String todoFile(List<String> methods,List<String> imports,File file) {
         StringBuilder sb = new StringBuilder("");
         String interfaceName = file.getName().substring(0,file.getName().length() - 5);
-        sb.append("package com.csair.admin.dao.impl;\n");
+        sb.append("package com.csair.admin.core.dao.impl;\n");
         for (String s : imports) {
             sb.append(s + "\n");
         }

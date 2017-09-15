@@ -46,20 +46,55 @@ public class EnvironmentParams {
      */
     public static String IMG_PATH;
 
+    /**
+     * 微信token
+     */
+    public static String WEIXING_TOKEN;
+    /**
+     * 微信 ENCODING_AESKEY
+     */
+    public static String ENCODING_AESKEY;
+    /**
+     * 微信 AppID
+     */
+    public static String AppID;
+    /**
+     * 微信 AppSecret
+     */
+    public static String AppSecret;
+    /**
+     * 微信 自定义菜单创建接口 后面还要是再拼ACCESS_TOKEN
+     */
+    public static String CREATE_MENU_URL;
+    /**
+     * 微信 得到TOKEN的url，已经拼好参数
+     */
+    public static String GET_TOKEN_URL;
+
     static {
         property = new Properties();
         try {
-            property.load(new InputStreamReader(EnvironmentParams.class.getClassLoader().getResourceAsStream("config.properties"),"UTF-8"));
+            property.load(new InputStreamReader(EnvironmentParams.class.getClassLoader().getResourceAsStream("config.properties"), "UTF-8"));
             PLATFORM_FLAG = "" + property.get("PLATFORM_FLAG");
             DAO_URL = "" + property.get("DAO_URL");
             TEST_ENVIRONMENT = "" + property.get("TEST_ENVIRONMENT");
+            AppSecret = "" + property.get("AppSecret");
+            AppID = "" + property.get("AppID");
+            ENCODING_AESKEY = "" + property.get("EncodingAESKey");
             IMG_THUMBNAIL_WIDTH = new Integer("" + property.get("IMG_THUMBNAIL_WIDTH"));
             IMG_THUMBNAIL_HIGHT = new Integer("" + property.get("IMG_THUMBNAIL_HIGHT"));
-
+            WEIXING_TOKEN = "" + property.get("WEIXING_TOKEN");
+            GET_TOKEN_URL = "" + property.get("GET_TOKEN_URL");
+            GET_TOKEN_URL = String.format(GET_TOKEN_URL, AppID, AppSecret);
+            CREATE_MENU_URL = "" + property.get("CREATE_MENU_URL");
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException(e.getMessage());
+            throw new PlatformException(99999,e + "");
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(1);
     }
 
     public static boolean isTestEnvironment() {

@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csair.admin.core.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.csair.admin.core.po.core.User">
+        <id column="id" property="id" />
+        <result column="nickname" property="nickname" />
+        <result column="email" property="email" />
+        <result column="pswd" property="pswd" />
+        <result column="create_time" property="createTime" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="status" property="status" />
+        <result column="mobile" property="mobile" />
+        <result column="wx_unionid" property="wxUnionid" />
+        <result column="last_ip" property="lastIp" />
+        <result column="remark" property="remark" />
+        <result column="type" property="type" jdbcType="BIT"/>
+        <result column="shop_id" property="shopId" jdbcType="INTEGER"/>
+        <result column="platform_flag" property="platformFlag" />
+        <result column="hash_code" property="hashCode" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <if test="fields == null">
+            id, nickname, email, pswd, create_time, last_login_time, status, mobile, wx_unionid,
+            last_ip, remark, type, shop_id, platform_flag, hash_code
+        </if>
+        <if test="fields != null">
+            ${fields}
+        </if>
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csair.admin.core.po.core.UserQuery">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from e_admin_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startRow != null">
+            limit #{startRow} , #{pageSize}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select 
+    id,nickname,email,pswd,create_time,last_login_time,status,mobile,wx_unionid,last_ip,remark,type,shop_id,platform_flag,hash_code
+    from e_admin_user
+    where id = #{id}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from e_admin_user
+    where id = #{id}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.csair.admin.core.po.core.UserQuery">
+        delete from e_admin_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.csair.admin.core.po.core.User">
+    insert into e_admin_user (nickname, email,
+      pswd, create_time, last_login_time, 
+      status, mobile, wx_unionid, 
+      last_ip, remark, type, shop_id, 
+      platform_flag, hash_code)
+    values (#{nickname}, #{email},
+      #{pswd}, #{createTime}, #{lastLoginTime}, 
+      #{status}, #{mobile}, #{wxUnionid}, 
+      #{lastIp}, #{remark}, #{type}, #{shopId}, 
+      #{platformFlag}, #{hashCode})
+  </insert>
+    <insert id="insertSelective" parameterType="com.csair.admin.core.po.core.User">
+        insert into e_admin_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="pswd != null">
+                pswd,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="wxUnionid != null">
+                wx_unionid,
+            </if>
+            <if test="lastIp != null">
+                last_ip,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="platformFlag != null">
+                platform_flag,
+            </if>
+            <if test="hashCode != null">
+                hash_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="nickname != null">
+                #{nickname},
+            </if>
+            <if test="email != null">
+                #{email},
+            </if>
+            <if test="pswd != null">
+                #{pswd},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="mobile != null">
+                #{mobile},
+            </if>
+            <if test="wxUnionid != null">
+                #{wxUnionid},
+            </if>
+            <if test="lastIp != null">
+                #{lastIp},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="shopId != null">
+                #{shopId},
+            </if>
+            <if test="platformFlag != null">
+                #{platformFlag},
+            </if>
+            <if test="hashCode != null">
+                #{hashCode},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.csair.admin.core.po.core.UserQuery" resultType="java.lang.Integer">
+        select count(*) from e_admin_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update e_admin_user
+        <set>
+            <if test="record.id != null">
+                id = #{record.id},
+            </if>
+            <if test="record.nickname != null">
+                nickname = #{record.nickname},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email},
+            </if>
+            <if test="record.pswd != null">
+                pswd = #{record.pswd},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime},
+            </if>
+            <if test="record.lastLoginTime != null">
+                last_login_time = #{record.lastLoginTime},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status},
+            </if>
+            <if test="record.mobile != null">
+                mobile = #{record.mobile},
+            </if>
+            <if test="record.wxUnionid != null">
+                wx_unionid = #{record.wxUnionid},
+            </if>
+            <if test="record.lastIp != null">
+                last_ip = #{record.lastIp},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark},
+            </if>
+            <if test="record.type != null">
+                type = #{record.type},
+            </if>
+            <if test="record.shopId != null">
+                shop_id = #{record.shopId},
+            </if>
+            <if test="record.platformFlag != null">
+                platform_flag = #{record.platformFlag},
+            </if>
+            <if test="record.hashCode != null">
+                hash_code = #{record.hashCode},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update e_admin_user
+        set id = #{record.id},
+        nickname = #{record.nickname},
+        email = #{record.email},
+        pswd = #{record.pswd},
+        create_time = #{record.createTime},
+        last_login_time = #{record.lastLoginTime},
+        status = #{record.status},
+        mobile = #{record.mobile},
+        wx_unionid = #{record.wxUnionid},
+        last_ip = #{record.lastIp},
+        remark = #{record.remark},
+        type = #{record.type},
+        shop_id = #{record.shopId},
+        platform_flag = #{record.platformFlag},
+        hash_code = #{record.hashCode}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.csair.admin.core.po.core.User">
+        update e_admin_user
+        <set>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="pswd != null">
+                pswd = #{pswd},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="wxUnionid != null">
+                wx_unionid = #{wxUnionid},
+            </if>
+            <if test="lastIp != null">
+                last_ip = #{lastIp},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="shopId != null">
+                shop_id = #{shopId},
+            </if>
+            <if test="platformFlag != null">
+                platform_flag = #{platformFlag},
+            </if>
+            <if test="hashCode != null">
+                hash_code = #{hashCode},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.csair.admin.core.po.core.User">
+    update e_admin_user
+    set nickname = #{nickname},
+      email = #{email},
+      pswd = #{pswd},
+      create_time = #{createTime},
+      last_login_time = #{lastLoginTime},
+      status = #{status},
+      mobile = #{mobile},
+      wx_unionid = #{wxUnionid},
+      last_ip = #{lastIp},
+      remark = #{remark},
+      type = #{type},
+      shop_id = #{shopId},
+      platform_flag = #{platformFlag},
+      hash_code = #{hashCode}
+    where id = #{id}
+  </update>
+    <select id="pageQueryUserList" resultMap="BaseResultMap">
+        select
+        id,nickname,email,pswd,create_time,last_login_time,status,mobile,wx_unionid,last_ip,remark,type,shop_id,platform_flag,hash_code
+        from e_admin_user u
+        <if test="roleId!=null">
+            JOIN e_admin_user_role r ON u.id = r.uid
+        </if>
+        <include refid="base_where"/>
+        <if test="pageSize>0">
+            LIMIT #{startRow},#{pageSize}
+        </if>
+    </select>
+    <select id="pageQueryCount" resultType="int">
+        SELECT COUNT(1) FROM e_admin_user u
+        <if test="roleId!=null">
+            JOIN e_admin_user_role r ON u.id = r.uid
+        </if>
+        <include refid="base_where"/>
+    </select>
+    <sql id="base_where">
+        <where>
+            <if test="roleId!=null">
+                AND r.rid = #{roleId}
+            </if>
+            <if test="platformFlag!=null">
+                AND u.platform_flag = #{platformFlag}
+            </if>
+            <if test="keyWord!=null">
+                AND ( u.nickname LIKE CONCAT( '%' , #{keyWord} , '%')
+                OR u.email LIKE CONCAT('%',#{keyWord},'%') )
+            </if>
+            <if test="type!=null">
+                AND u.type = #{type}
+            </if>
+            <if test="email!=null">
+                AND u.email = #{email}
+            </if>
+            <if test="name!=null">
+                AND u.nickname = #{name}
+            </if>
+            <if test="id!=null">
+                AND u.id = #{id}
+            </if>
+        </where>
+    </sql>
+</mapper>

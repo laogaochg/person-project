@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.csair.admin.service.PermissionService;
+import com.csair.admin.core.service.PermissionService;
 
 /**
  * laogaochg
