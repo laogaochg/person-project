@@ -2,8 +2,11 @@ package com.test.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 
 import com.test.model.JavaBeanInfo;
@@ -17,16 +20,17 @@ import com.test.model.JavaBeanInfo;
  */
 public class JavaBeanInfoUtil {
     public static void main(String[] args) throws Exception {
-        String className = "WindowGoodsDataDto";
+        String className = "UserMessage";
         String path = //
-                "D:\\laogao2\\WorkPlace-0815\\dubbo\\mall-service\\src\\main\\java\\com\\nanhang\\mall\\dto\\resp"
-                //
+                "D:\\laogao2\\WorkPlace-0815\\dubbo\\" +//
+                        "mall-service\\src\\main\\java\\com\\" +//
+                        "nanhang\\mall\\dto\\resp"//
                 ;
         File file = new File(path + "/" + className + ".java");
         List<String> propertiesText = getPropertiesText(file);
         List<JavaBeanInfo> beanInfoList = getBeanInfoList(propertiesText);
         //得到所有的字段名
-        ExcelUtils.createExcel("d:/test.xls","11",createExcelData(beanInfoList));
+        ExcelUtils.createExcel("d:/test.xls", "11", createExcelData(beanInfoList));
     }
 
     public static List<List<String>> createExcelData(List<JavaBeanInfo> list) {
@@ -34,8 +38,10 @@ public class JavaBeanInfoUtil {
         for (JavaBeanInfo info : list) {
             List<String> row = new ArrayList<>();
             row.add(info.getName());
-            row.add("");
             row.add(info.getType());
+            row.add("");
+            row.add("是");
+            row.add("");
             row.add(info.getInfo());
             result.add(row);
         }
@@ -76,52 +82,52 @@ public class JavaBeanInfoUtil {
         List<JavaBeanInfo> resultList = new ArrayList<>();
         //sb记录这个字段之前的注释
         StringBuilder sb = new StringBuilder();
+        Set<String> nameSet = new HashSet<>();
         for (String s : propertiesText) {
             if (s.startsWith("private ") && s.contains(";")) {
                 String name = s.split(" ")[2].split(";")[0].trim();
                 String type = s.split(" ")[1].trim();
                 JavaBeanInfo bean = new JavaBeanInfo();
                 bean.setName(name);
+                nameSet.add(name);
                 bean.setType(type);
                 resultList.add(bean);
             }
         }
+        int begain = 0;
+        List<String> infoList = new ArrayList<>();
         for (String s : propertiesText) {
             boolean add = true;
+            String name = "";
             for (JavaBeanInfo j : resultList) {
-                String name = j.getName();
-                if (s.contains(" " + name)) {
+                String name1 = j.getName();
+                if (s.contains(" " + name1)) {
+                    name = j.getName();
                     add = false;
                 }
             }
             if (add) {
                 //如果之前注释以/** 、* 、 开头 */结尾
-                String s1 = s.replace("/**","").replace("*/","");
-                System.out.println("之前的字段：" + s1);
-                if (s1.startsWith("*")) {
-                    if (s1.length() > 1) s1 = s1.substring(1);
-                }
-                System.out.println("s1 = " + s1);
-                sb.append(s1);
+                String s1 = s.replace("/**", "").replace("*/", "");
+                if (s1.startsWith("*") && s1.length() > 1) s1 = s1.substring(1);
+                sb.append(s1.trim());
             }
-            for (JavaBeanInfo j : resultList) {
-                String name = j.getName();
-                if (s.contains(" " + name)) {
-                    //如果之前的注释不为空就把放进去
-                    if (StringUtils.isNotBlank(sb.toString())) {
-                        j.setInfo(sb.toString());
-                    } else {
-                        //如果有//字符证明采用了这种方式注释
-                        if (s.contains("//")) {
-                            s = s.split("//")[1];
-                            j.setInfo(s);
-                        } else {
-                            j.setInfo(name);
-                        }
-                    }
-                    sb = new StringBuilder();
+            //如果之前的注释不为空就把放进去
+            if (s.contains("private ")) {
+                if (StringUtils.isNotBlank(sb.toString())) {
+                    infoList.add(sb.toString().trim());
+                } else if (s.contains("//")) { //如果有//字符证明采用了这种方式注释
+                    s = s.split("//")[1];
+                    infoList.add(s.trim());
+                } else {
+                    infoList.add(name.trim());
                 }
+                sb = new StringBuilder();
             }
+        }
+        if (infoList.size() != resultList.size()) throw new NullPointerException("注释和字段个数对不上");
+        for (int i = 0; i < resultList.size(); i++) {
+            resultList.get(i).setInfo(infoList.get(i));
         }
         return resultList;
     }

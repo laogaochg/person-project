@@ -38,16 +38,29 @@ public class TestController {
     }
 
 
-    @RequestMapping("/ObjectOutputStream")
-    public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping("/aaa")
+    public void aaa(HttpServletRequest request, HttpServletResponse response, String aa) throws IOException {
         Menu m = new Menu();
+        System.out.println(aa);
         m.setMname("父菜单");
-        Menu  m1 = new Menu();
+        Menu m1 = new Menu();
         m1.setMname("子菜单");
         m.getMenuList().add(m1);
         ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
         out.writeObject(m);
     }
+
+    @RequestMapping("/ObjectOutputStream")
+    public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Menu m = new Menu();
+        m.setMname("父菜单");
+        Menu m1 = new Menu();
+        m1.setMname("子菜单");
+        m.getMenuList().add(m1);
+        ObjectOutputStream out = new ObjectOutputStream(response.getOutputStream());
+        out.writeObject(m);
+    }
+
     /**
      * 打印主体类的所有set方法
      *
@@ -55,23 +68,22 @@ public class TestController {
      * @param clzz
      * @throws IntrospectionException
      */
-    public static void soutSetMethod(String objName,Class<?> clzz) throws IntrospectionException {
-        BeanInfo beanInfo = Introspector.getBeanInfo(clzz,Object.class);
+    public static void soutSetMethod(String objName, Class<?> clzz) throws IntrospectionException {
+        BeanInfo beanInfo = Introspector.getBeanInfo(clzz, Object.class);
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
             String name = propertyDescriptor.getName();
-            String s = name.substring(0,1).toUpperCase() + name.substring(1);
+            String s = name.substring(0, 1).toUpperCase() + name.substring(1);
             System.out.println(objName + ".set" + s + "(" + name + ");");
         }
     }
 
 
-
     @RequestMapping("test")
     @ResponseBody
-    public Map<Object,Object> getLoginUser(HttpServletRequest request,String id) {
+    public Map<Object, Object> getLoginUser(HttpServletRequest request, String id) {
         System.out.println(88);
         loginService.test(88 + "");
-        Map<Object,Object> map = new HashMap<>();
+        Map<Object, Object> map = new HashMap<>();
         return map;
     }
 
@@ -80,13 +92,13 @@ public class TestController {
 	 */
     @RequestMapping("/springUpload")
     @ResponseBody
-    public Map<Object,Object> springUpload(HttpServletRequest request) {
+    public Map<Object, Object> springUpload(HttpServletRequest request) {
         // 获取标签列表
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         // 检查form中是否有enctype="multipart/form-data"
         if (multipartResolver.isMultipart(request)) {
             // 将request变成多部分request
-            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             // 获取multiRequest 中所有的文件名
             Iterator<?> iter = multiRequest.getFileNames();
             while (iter.hasNext()) {
@@ -104,8 +116,8 @@ public class TestController {
                 }
             }
         }
-        Map<Object,Object> m = new HashMap<>();
-        m.put("fileId",1);
+        Map<Object, Object> m = new HashMap<>();
+        m.put("fileId", 1);
         return m;
     }
 
