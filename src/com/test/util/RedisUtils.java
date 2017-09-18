@@ -14,7 +14,7 @@ import redis.clients.jedis.JedisPool;
  * laogaochg
  * 2017/8/30.
  * 设计模式(Design pattern): 将SETNX用于加锁(locking)
- *
+ * <p>
  * SETNX key value
  * 将key的值设为value，当且仅当key不存在。
  * 若给定的key已经存在，则SETNX不做任何动作。
@@ -22,12 +22,12 @@ import redis.clients.jedis.JedisPool;
  * 返回值：
  * 设置成功，返回1。
  * 设置失败，返回0。
- *
+ * <p>
  * 首选setnx看能不能设置成功；失败就没有得到锁；成功就得到锁；
  * 失败的话进行重入检查或自己等待；
- *
+ * <p>
  * 处理死锁(deadlock)
- *
+ * <p>
  * 上面的锁算法有一个问题：如果因为客户端失败、崩溃或其他原因导致没有办法释放锁的话，怎么办？
  * 这种状况可以通过检测发现——因为上锁的key保存的是unix时间戳，假如key值的时间戳小于当前的时间戳，表示锁已经不再有效。
  * 但是，当有多个客户端同时检测一个锁是否过期并尝试释放它的时候，我们不能简单粗暴地删除死锁的key，再用SETNX上锁，因为这时竞争条件(race condition)已经形成了：
@@ -47,22 +47,24 @@ import redis.clients.jedis.JedisPool;
  * 如果其他客户端，比如C5，比C4更快地执行了GETSET操作并获得锁，那么C4的GETSET操作返回的就是一个未过期的时间戳(C5设置的时间戳)。C4只好从第一步开始重试。
  */
 public class RedisUtils {
+    private static final int TIME_OUT = 10;//redis锁失效时间
     public static Integer count = 0;
     public static Integer count1 = 0;
     public static AtomicInteger count2 = new AtomicInteger(0);
-    public static JedisPool jedisPool = new JedisPool("127.0.0.1",6379);
+    public static JedisPool jedisPool = new JedisPool("127.0.0.1", 6379);
 
     public static void main(String[] args) throws Exception {
-        int toCount = 579;
+        int toCount = 1000;
 //        String s = getSet("incr","0");
         CountDownLatch doneSignal = new CountDownLatch(toCount);
-        for (int i = 0;i < toCount;i++) {
+        for (int i = 0; i < toCount; i++) {
             new Thread(() -> {
                 count1++;
                 count2.incrementAndGet();
 //                getRedisLock("block",null,null);
+                getRedisLockS("block", null);
                 count++;
-//                unLock("block");
+                unLock("block");
                 doneSignal.countDown();
             }).start();
         }
@@ -81,82 +83,78 @@ public class RedisUtils {
         //如果锁已经不存在；抛出异常；
     }
 
-    public static void getRedisLock(String key,Long waitSecond,Date endDate) {
+    public static void getRedisLockS(String key, Integer waitSecond) {
         Date now = new Date();
-        if (endDate == null && waitSecond != null) endDate = DateUtils.addSeconds(now,waitSecond.intValue());
-        if (endDate != null && now.after(endDate) && waitSecond != null) {
-            System.out.println("等锁超时；不再等。");
-            return;
+        Date endDate = null;
+        if (waitSecond != null) {
+            endDate = DateUtils.addSeconds(now, waitSecond);
         }
-        String o1 = get(key);
-        //把里面的锁设置为处理的时间
-        Long getLockResult = setnx(key,new Date().getTime() + "");
-        if (1 == getLockResult) {
-            System.out.println("成功得到锁");
-            return;//成功就返回
-        }
-        String oldLock1 = get(key);
-        if (StringUtils.isNotBlank(o1) && !o1.equals(oldLock1)) {
-            System.out.println("getValue is Different. o1 " + o1 + " oldLock1: " + oldLock1);
-        }
-        if (!StringUtils.isNumeric(oldLock1)) {
-            System.out.println("里面的锁是空的；但是还是没有得到锁！oldLock1:" + oldLock1);
-            sleepAndGetLock(key,waitSecond,endDate);
-            return;
-        }
-        Long time;
-        try {
-            time = new Long(oldLock1);
-        } catch (Exception e) {
-            sleepAndGetLock(key,waitSecond,endDate);
-            return;
-        }
-        Date timeOut = new Date(time);
-        //得到这个锁的失效时间；如果没有失效；
-        timeOut = DateUtils.addSeconds(timeOut,10);//添加10秒
-        System.out.println("得到锁失败。里面锁失效的时间" + timeOut.toLocaleString());
-        if (timeOut.after(now)) {
-            //锁还在生效
-            sleepAndGetLock(key,waitSecond,endDate);
-            return;
-        } else {
-            //锁已经过期 ， 执行getset操作 把锁里面的旧值设置为新的
-            String oldLock2 = getSet(key,now.getTime() + "");//
-            System.out.println("判断锁是否过期：==>锁已经过期" + oldLock1 + "--:--" + oldLock2);
-            if (oldLock1.equals(oldLock2)) {
-                //如果返回来的旧值是自己的；那么就是这个操作是成功的；那么代表已经持有锁
-                System.out.println("返回来的旧值是自己的；这个操作成功的；已经持有锁");
-                return;
+        for (; endDate == null || (endDate != null && new Date().after(endDate)); sleep()) {
+            String o1 = get(key);
+            //把里面的锁设置为处理的时间
+            Long getLockResult = setnx(key, new Date().getTime() + "");
+            if (1 == getLockResult) {
+                System.out.println("成功得到锁");
+                return;//成功就返回
+            }
+            String oldLock1 = get(key);
+            if (StringUtils.isNotBlank(o1) && !o1.equals(oldLock1)) {
+                System.out.println("getValue is Different. o1 " + o1 + " oldLock1: " + oldLock1);
+            }
+            if (!StringUtils.isNumeric(oldLock1)) {
+                System.out.println("里面的锁是空的；但是还是没有得到锁！oldLock1:" + oldLock1);
+                continue;
+            }
+            Long time;
+            try {
+                time = new Long(oldLock1);
+            } catch (Exception e) {
+                continue;
+            }
+            Date timeOut = new Date(time);
+            //得到这个锁的失效时间；如果没有失效；
+            timeOut = DateUtils.addSeconds(timeOut, TIME_OUT);//计算redis里面锁失效时间
+            System.out.println("得到锁失败。里面锁失效的时间" + timeOut.toLocaleString());
+            if (timeOut.after(now)) {
+                //锁还在生效
+                continue;
             } else {
-                //返回来的旧值不是自己的；代表已经被别人改了；那么自己再尝试得到锁
-                System.out.println("返回来的旧值不是自己的；代表已经被别人改了；那么自己再尝试得到锁.");
-                sleepAndGetLock(key,waitSecond,endDate);
-                return;
+                //锁已经过期 ， 执行getset操作 把锁里面的旧值设置为新的
+                String oldLock2 = getSet(key, now.getTime() + "");//
+                System.out.println("判断锁是否过期：==>锁已经过期" + oldLock1 + "--:--" + oldLock2);
+                if (oldLock1.equals(oldLock2)) {
+                    //如果返回来的旧值是自己的；那么就是这个操作是成功的；那么代表已经持有锁
+                    System.out.println("返回来的旧值是自己的；这个操作成功的；已经持有锁");
+                    return;
+                } else {
+                    //返回来的旧值不是自己的；代表已经被别人改了；那么自己再尝试得到锁
+                    System.out.println("返回来的旧值不是自己的；代表已经被别人改了；那么自己再尝试得到锁.");
+                    continue;
+                }
             }
         }
     }
 
-    private static void sleepAndGetLock(String key,Long waitSecond,Date endDate) {
+    private static void sleep() {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("之前锁还在生效，睡醒之后再调用本方法");
-            getRedisLock(key,waitSecond,endDate);//睡1秒再试
+            System.out.println("睡醒之后再进入循环");
         }
     }
 
-    public static String getSet(String key,String value) {
+    public static String getSet(String key, String value) {
         Jedis redis = jedisPool.getResource();
-        String result = redis.getSet(key,value);
+        String result = redis.getSet(key, value);
         redis.close();
         return result;
     }
 
-    public static long setnx(String key,String value) {
+    public static long setnx(String key, String value) {
         Jedis redis = jedisPool.getResource();
-        long result = redis.setnx(key,value);
+        long result = redis.setnx(key, value);
         redis.close();
         return result;
     }
@@ -174,6 +172,7 @@ public class RedisUtils {
         redis.close();
         return result;
     }
+
     public static Long incr(String key) {
         Jedis redis = jedisPool.getResource();
         Long result = redis.incr(key);
