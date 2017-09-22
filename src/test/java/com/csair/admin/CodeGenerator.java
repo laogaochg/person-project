@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.util.StreamUtils;
 
 /**
  * laogaochg
@@ -31,7 +30,7 @@ public class CodeGenerator {
         String s = todoFile(d,ms.get("imports"),file);
         File f = new File(path + "/impl/" + name + "Imple.java");
         //生成文件
-        StreamUtils.copy(s,Charset.defaultCharset(),new FileOutputStream(f));
+//        StreamUtils.copy(s,Charset.defaultCharset(),new FileOutputStream(f));
         System.out.println("完成！");
     }
 

@@ -1,59 +1,110 @@
 {
-  "button": [
+  "code": 200,
+  "data": [
     {
-      "name": "扫码",
-      "sub_button": [
-        {
-          "type": "scancode_waitmsg",
-          "name": "扫码带提示",
-          "key": "rselfmenu_0_0",
-          "sub_button": []
-        },
-        {
-          "type": "scancode_push",
-          "name": "扫码推事件",
-          "key": "rselfmenu_0_1",
-          "sub_button": []
-        }
-      ]
+      "activityEndDate": null,
+      "activityStartDate": null,
+      "couponAmount": "1",
+      "couponEndTime": 1505629214000,
+      "couponExplain": "满2元, 减1元",
+      "couponId": "20170916142026198",
+      "couponName": "xmb优惠券",
+      "couponNum": 0,
+      "couponStartTime": 1505543109000,
+      "couponType": 1,
+      "couponUsingRange": 4,
+      "deleted": 0,
+      "id": 375,
+      "info": "",
+      "itemIds": [],
+      "maxGetNum": 0,
+      "meetPrice": 0,
+      "meetPrvice": "2",
+      "receiveState": "3",
+      "receivedNumber": 0,
+      "shopId": 2000000366,
+      "shopName": "航空精品",
+      "state": 1,
+      "usingInfo": "满2使用"
     },
     {
-      "name": "发图",
-      "sub_button": [
-        {
-          "type": "pic_sysphoto",
-          "name": "系统拍照发图",
-          "key": "rselfmenu_1_0",
-          "sub_button": []
-        },
-        {
-          "type": "pic_photo_or_album",
-          "name": "拍照或者相册发图",
-          "key": "rselfmenu_1_1",
-          "sub_button": []
-        },
-        {
-          "type": "pic_weixin",
-          "name": "微信相册发图",
-          "key": "rselfmenu_1_2",
-          "sub_button": []
-        }
-      ]
+      "activityEndDate": null,
+      "activityStartDate": null,
+      "couponAmount": "2",
+      "couponEndTime": 1506482712000,
+      "couponExplain": "满22元, 减2元",
+      "couponId": "20170909112206114",
+      "couponName": "测试优惠卷",
+      "couponNum": 0,
+      "couponStartTime": 1504928052000,
+      "couponType": 1,
+      "couponUsingRange": 4,
+      "deleted": 0,
+      "id": 325,
+      "info": "",
+      "itemIds": [],
+      "maxGetNum": 0,
+      "meetPrice": 0,
+      "meetPrvice": "22",
+      "receiveState": "3",
+      "receivedNumber": 0,
+      "shopId": 2000000366,
+      "shopName": "航空精品",
+      "state": 3,
+      "usingInfo": "满22使用"
     },
     {
-      "name": "发送位置",
-      "type": "location_select",
-      "key": "rselfmenu_2_0"
+      "activityEndDate": null,
+      "activityStartDate": null,
+      "couponAmount": "4",
+      "couponEndTime": 1505563006000,
+      "couponExplain": "满15元, 减4元",
+      "couponId": "20170911195414186",
+      "couponName": "15-3",
+      "couponNum": 0,
+      "couponStartTime": 1505131004000,
+      "couponType": 1,
+      "couponUsingRange": 4,
+      "deleted": 0,
+      "id": 333,
+      "info": "",
+      "itemIds": [],
+      "maxGetNum": 0,
+      "meetPrice": 0,
+      "meetPrvice": "15",
+      "receiveState": "3",
+      "receivedNumber": 0,
+      "shopId": 2000000366,
+      "shopName": "航空精品",
+      "state": 3,
+      "usingInfo": "满15使用"
     },
     {
-      "type": "media_id",
-      "name": "图片",
-      "media_id": "MEDIA_ID1"
-    },
-    {
-      "type": "view_limited",
-      "name": "图文消息",
-      "media_id": "MEDIA_ID2"
+      "activityEndDate": null,
+      "activityStartDate": null,
+      "couponAmount": "1",
+      "couponEndTime": 1540001888000,
+      "couponExplain": "直降1元",
+      "couponId": "20170911101753149",
+      "couponName": "现金券20170911",
+      "couponNum": 0,
+      "couponStartTime": 1540001888000,
+      "couponType": 2,
+      "couponUsingRange": 4,
+      "deleted": 0,
+      "id": 330,
+      "info": "",
+      "itemIds": [],
+      "maxGetNum": 0,
+      "meetPrice": 0,
+      "meetPrvice": "",
+      "receiveState": "3",
+      "receivedNumber": 0,
+      "shopId": 2000000366,
+      "shopName": "航空精品",
+      "state": 0,
+      "usingInfo": "现金券"
     }
-  ]
+  ],
+  "mes": "sucess"
 }
