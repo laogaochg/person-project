@@ -1,4 +1,4 @@
-package com.csair.admin.util.configuration;
+package com.csair.admin.config;
 
 import javax.sql.DataSource;
 

@@ -91,43 +91,45 @@ public class User implements Serializable {
     /**
      * 用户状态有效
      */
-    public static final Integer STATUS_VALID  = 1;
+    public static final Integer STATUS_VALID = 1;
     /**
      * 用户状态无效
      */
     public static final Integer STATUS_INVALID = 0;
 
 
-
     /**
      * '管理员类型 1 平台  ，2 商家',
      */
     public static final Integer PLATFORM = 1;//1 平台
-    public static final Integer MERCHANT  = 2;//2 商家
+    public static final Integer MERCHANT = 2;//2 商家
     private List<Role> roleList; //一个用户拥有多个角色
 
     private static final long serialVersionUID = 1L;
 
-    public Map<String,Object> getUserData(){
+    public Map<String, Object> getUserData() {
 
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("id",getId());
-        map.put("昵称",getNickname());
-        map.put("邮箱|登录账号",getEmail());
-        map.put("创建时间",DateUtil.formatDate(getCreateTime()));
-        map.put("最后登录时间",DateUtil.formatDate(getLastLoginTime()));
-        map.put("登录IP",getLastIp());
-        map.put("备注",getRemark());
-        map.put("状态",getStatusDisPlay());
-        return map ;
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", getId());
+        map.put("昵称", getNickname());
+        map.put("邮箱|登录账号", getEmail());
+        map.put("创建时间", DateUtil.formatDate(getCreateTime()));
+        map.put("最后登录时间", DateUtil.formatDate(getLastLoginTime()));
+        map.put("登录IP", getLastIp());
+        map.put("备注", getRemark());
+        map.put("状态", getStatusDisPlay());
+        return map;
     }
 
     public String getStatusDisPlay() {
-        if(status==1) {
+        if (status == null) {
+            return "未知状态";
+        }
+        if (status == 1) {
             return "有效";
-        }else if(status==2){
+        } else if (status == 2) {
             return "无效";
-        }else{
+        } else {
             return "未知状态";
         }
     }

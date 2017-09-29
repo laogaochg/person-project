@@ -40,9 +40,8 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public int deletePermissionByPid(Long pid) {
-        PermissionQuery ex = new PermissionQuery();
-        ex.createCriteria().andMidEqualTo(pid);//todo 考虑关系表也删除
-        return permissionDao.deleteByExample(ex);
+        //todo 考虑关系表也删除
+        return permissionDao.deleteByPrimaryKey(pid);
     }
 
     @Override
@@ -180,11 +179,14 @@ public class PermissionServiceImpl implements PermissionService {
 
 
     @Override
-    public Long deleteByMenuId(Long mid, String mname) {
+    public Long queryPermissionByMidAndMname(Long mid, String mname) {
         PermissionQuery ex = new PermissionQuery();
         ex.createCriteria().andMidEqualTo(mid).andNameEqualTo(mname);
-        permissionDao.deleteByExample(ex);
-        return 0L;
+        List<Permission> permissions = permissionDao.selectByExample(ex);
+        if (permissions.size() > 0) {
+            return permissions.get(0).getId();
+        }
+        return null;
     }
 
     //考虑到有共同资源所以用了synchronized

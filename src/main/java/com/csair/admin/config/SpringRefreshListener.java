@@ -1,10 +1,11 @@
-package com.csair.admin.util;
+package com.csair.admin.config;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.csair.admin.util.EnvironmentParams;
 import org.springframework.beans.factory.BeanFactoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

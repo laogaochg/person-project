@@ -92,8 +92,9 @@ public class MenuServiceImpl implements MenuService {
         ex.createCriteria().andMidEqualTo(mid);
         int i = menuDao.deleteByExample(ex);
         if (i != 0) {
-            Long pid = permissionService.deleteByMenuId(mid, "查看菜单:" + m.getMname());
-//            operationLogService.log(user.getId(),"删除菜单","菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(),user.getLastIp());
+            Long pid = permissionService.queryPermissionByMidAndMname(mid, "查看菜单:" + m.getMname());
+            if (pid == null) return 0;
+            operationLogService.log(user.getId(), "删除菜单", "菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(), user.getLastIp());
             return permissionService.deletePermissionByPid(pid);
         }
         return 0;

@@ -1,4 +1,4 @@
-package com.csair.admin.util.configuration.shiroConfiguration;
+package com.csair.admin.config;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;

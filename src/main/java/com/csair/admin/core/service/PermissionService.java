@@ -68,7 +68,7 @@ public interface PermissionService {
     /**
      *
      */
-    Long deleteByMenuId(Long mid,String mname);
+    Long queryPermissionByMidAndMname(Long mid, String mname);
 
 
     /**

@@ -1,5 +1,6 @@
-package com.csair.admin.util;
+package com.csair.admin.config;
 
+import com.csair.admin.util.ParamConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

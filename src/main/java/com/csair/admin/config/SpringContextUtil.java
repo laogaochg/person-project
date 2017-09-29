@@ -1,4 +1,4 @@
-package com.csair.admin.util;
+package com.csair.admin.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

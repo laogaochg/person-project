@@ -29,7 +29,7 @@ import com.csair.admin.core.service.UserService;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.PasswordUtils;
-import com.csair.admin.util.PlatformException;
+import com.csair.admin.config.PlatformException;
 import com.csair.admin.util.VerifyCodeUtils;
 
 @Service

@@ -1,4 +1,4 @@
-package com.csair.admin.util.configuration;
+package com.csair.admin.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

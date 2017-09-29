@@ -1,12 +1,11 @@
 package com.csair.admin.weixing.util;
 
 import com.alibaba.fastjson.JSON;
-import com.csair.admin.util.DateUtil;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.HttpClientUtils;
 import com.csair.admin.util.HttpResultDto;
 import com.csair.admin.util.ParamConstants;
-import com.csair.admin.util.PlatformException;
+import com.csair.admin.config.PlatformException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
