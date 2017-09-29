@@ -1,15 +1,13 @@
 package com.test.util;
 
+import com.test.model.JavaBeanInfo;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang.StringUtils;
-
-import com.test.model.JavaBeanInfo;
 
 /**
  * laogaochg
