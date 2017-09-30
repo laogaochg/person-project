@@ -1,4 +1,6 @@
-package com.test.domain;
+package com.thread.threadTest;
+
+import com.test.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;

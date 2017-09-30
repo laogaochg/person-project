@@ -1,4 +1,4 @@
-package com.test.domain;
+package com.thread.threadTest;
 
 import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
