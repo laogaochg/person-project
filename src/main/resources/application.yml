@@ -35,6 +35,7 @@ spring:
     expose-spring-macro-helpers: false
     settings:
       number_format: 0.########
+      template_update_delay: 0
 logging:
   pattern:
     level: DEBUG

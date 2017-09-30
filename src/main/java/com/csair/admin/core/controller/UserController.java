@@ -58,59 +58,50 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private UserDao userDao;
 
-    @RequestMapping(value = "/login1", method = RequestMethod.GET)
-    public Object getAllUser() {
-        UserQuery qo = new UserQuery();
-        List<User> users = userDao.selectByExample(qo);
-        System.out.println(users);
-        return null;
-    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm(Model model) {
-        model.addAttribute(ParamConstants.USER_SESSION,new User());
+        model.addAttribute(ParamConstants.USER_SESSION, new User());
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam String username,@RequestParam String password,@RequestParam String verifyCode,RedirectAttributes attributes,HttpSession httpSession,ModelAndView model,HttpServletRequest request) {
+    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String verifyCode, RedirectAttributes attributes, HttpSession httpSession, ModelAndView model, HttpServletRequest request) {
         //判断验证码是否正确，并在页面提示
         if (!EnvironmentParams.isTestEnvironment()) {//测试环境不用验证验证码
             String code = httpSession.getAttribute("verifyCode") + "";
             if (!StringUtils.hasText(code) || !code.equalsIgnoreCase(verifyCode)) {
-                attributes.addFlashAttribute("message","验证码错误");
+                attributes.addFlashAttribute("message", "验证码错误");
                 return "redirect:/login";
             }
         }
-        UsernamePasswordToken token = new UsernamePasswordToken(username,password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             // 将调用MyShiroRealm.doGetAuthenticationInfo()方法
             currentUser.login(token);
         } catch (Exception e) {
             if (e instanceof UnknownAccountException) {
-                attributes.addFlashAttribute("message","未知账户");
+                attributes.addFlashAttribute("message", "未知账户");
             } else if (e instanceof IncorrectCredentialsException) {
-                attributes.addFlashAttribute("message","密码不正确");
+                attributes.addFlashAttribute("message", "密码不正确");
             } else if (e instanceof LockedAccountException) {
-                attributes.addFlashAttribute("message","账户已锁定");
+                attributes.addFlashAttribute("message", "账户已锁定");
             } else if (e instanceof ExcessiveAttemptsException) {
-                attributes.addFlashAttribute("message","用户名或密码错误次数超限");
+                attributes.addFlashAttribute("message", "用户名或密码错误次数超限");
             } else if (e instanceof PlatformException) {
-                attributes.addFlashAttribute("message",((PlatformException)e).getReturnMsg());
+                attributes.addFlashAttribute("message", ((PlatformException) e).getReturnMsg());
             } else if (e instanceof AuthenticationException) {
-                attributes.addFlashAttribute("message","对不起，你账号已经被禁止登录。");
+                attributes.addFlashAttribute("message", "对不起，你账号已经被禁止登录。");
             } else {
-                attributes.addFlashAttribute("message","用户名或密码不正确");
+                attributes.addFlashAttribute("message", "用户名或密码不正确");
             }
             e.printStackTrace();
             token.clear();
             return "redirect:/login";
         }
-        User user = (User)currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
+        User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
         user.setLastIp(ServletUtils.getIpAddress(request));
         user.setLastLoginTime(new Date());
         //更新用户的登陆信息
@@ -127,22 +118,22 @@ public class UserController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(RedirectAttributes attributes) {
         SecurityUtils.getSubject().logout();
-        attributes.addFlashAttribute("message","您已安全退出");
+        attributes.addFlashAttribute("message", "您已安全退出");
         return "redirect:/login";
     }
 
     //返回用户列表
     @RequestMapping("/user/list")
-    public ModelAndView queryRole(UserQueryObject qo,ModelAndView model) {
+    public ModelAndView queryRole(UserQueryObject qo, ModelAndView model) {
         PageResult pageResult = userService.query(qo);
-        model.addObject("pageResult",pageResult);
+        model.addObject("pageResult", pageResult);
         model.setViewName("user/UserList");
         return model;
     }
 
     //去修改密码页面
     @RequestMapping("/changePassword")
-    public ModelAndView toChangePassword(UserQueryObject qo,ModelAndView model) {
+    public ModelAndView toChangePassword(UserQueryObject qo, ModelAndView model) {
         model.setViewName("user/changePassword");
         return model;
     }
@@ -150,14 +141,14 @@ public class UserController {
     //修改密码
     @RequestMapping("/user/changePassword")
     @ResponseBody
-    public ResponseEntity changePassword(String oldPassword,String newPassword,HttpServletRequest request) {
-        User u = (User)request.getSession().getAttribute(ParamConstants.USER_SESSION);
+    public ResponseEntity changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
+        User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         ResponseEntity e = new ResponseEntity();
-        if (!PasswordUtils.checkPassword(oldPassword,u)) {
+        if (!PasswordUtils.checkPassword(oldPassword, u)) {
             e.setMes("原密码不正确。");
             return e;
         }
-        userService.changePassword(oldPassword,newPassword,u);
+        userService.changePassword(oldPassword, newPassword, u);
         e.setCode(200);
         e.setMes("修改成功！");
         return e;
@@ -165,9 +156,9 @@ public class UserController {
 
     //返回编辑用户页面roleService
     @RequestMapping("/user/toEditUser")
-    public ModelAndView toEditUser(User us,ModelAndView model) {
-        model.addObject("roleList",roleService.queryAllRole());
-        model.addObject("user",SecurityUtils.getSubject().getSession().getAttribute(ParamConstants.USER_SESSION));
+    public ModelAndView toEditUser(User us, ModelAndView model) {
+        model.addObject("roleList", roleService.queryAllRole());
+        model.addObject("user", SecurityUtils.getSubject().getSession().getAttribute(ParamConstants.USER_SESSION));
         model.setViewName("user/EditUser");
         if (null != us.getId()) {
             UserQueryObject qo = new UserQueryObject();
@@ -177,13 +168,13 @@ public class UserController {
                 return model;
             }
             User u = listData.get(0);
-            model.addObject("editUser",u);
+            model.addObject("editUser", u);
             List<Role> roles = roleService.queryRoleByUserId(u.getId());
             List<Long> roleIds = new ArrayList<Long>();
             for (Role role : roles) {
                 roleIds.add(role.getId());
             }
-            model.addObject("roleIds",roleIds);
+            model.addObject("roleIds", roleIds);
         }
         return model;
     }
@@ -210,7 +201,7 @@ public class UserController {
             re.setMes("用户密码不能为空。");
             return re;
         }
-        ReturnMessage message = userService.editUse(user,admin);
+        ReturnMessage message = userService.editUse(user, admin);
         if (!"200".equals(message.getCode())) {
             re.setCode(new Integer(message.getCode()));
             re.setMes(message.getMes());
@@ -231,21 +222,21 @@ public class UserController {
         titles.add("登录IP");
         titles.add("备注");
         titles.add("状态");
-        List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
+        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         UserQueryObject qo = new UserQueryObject();
         qo.setPageSize(-1);
         PageResult query = userService.query(qo);
         for (Object o : query.getListData()) {
-            User u = (User)o;
+            User u = (User) o;
             data.add(u.getUserData());
         }
-        XlsFileUtil.getWorkbook(bos,titles,data);
+        XlsFileUtil.getWorkbook(bos, titles, data);
         byte[] contentBytes = bos.toByteArray();
-        String dfileName = new String(String.format("%s.xls","用户数据下载").getBytes("gb2312"),"iso8859-1");
+        String dfileName = new String(String.format("%s.xls", "用户数据下载").getBytes("gb2312"), "iso8859-1");
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment",dfileName);
-        return new org.springframework.http.ResponseEntity<byte[]>(contentBytes,headers,HttpStatus.CREATED);
+        headers.setContentDispositionFormData("attachment", dfileName);
+        return new org.springframework.http.ResponseEntity<byte[]>(contentBytes, headers, HttpStatus.CREATED);
     }
 
     /**
@@ -265,7 +256,7 @@ public class UserController {
             return result;
         }
         User user = ServletUtils.getUser();
-        return userService.cancelForbidUserLogin(id,user);
+        return userService.cancelForbidUserLogin(id, user);
     }
 
     /**
@@ -285,6 +276,6 @@ public class UserController {
             return result;
         }
         User user = ServletUtils.getUser();
-        return userService.forbidUserLogin(id,user);
+        return userService.forbidUserLogin(id, user);
     }
 }

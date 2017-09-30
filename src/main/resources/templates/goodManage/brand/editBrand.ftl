@@ -13,26 +13,29 @@
 <body>
 <div class="layui-layout layui-layout-admin" style="">
 <#include "../../common/left_mune.ftl" />
-    <div class="layui-body" >
+    <div class="layui-body">
         <div class="headerTxt">
             添加品牌
         </div>
         <div class="addBrand">
-            <form class="" action="/brand/editBrand" method="post" >
+            <form class="" action="/brand/editBrand" method="post">
                 <input name="brandLogo" value="${(brand.brandLogo)!""}" type="hidden">
                 <input name="brandId" value="${(brand.brandId)!""}" type="hidden">
                 <div class="Hitem">
                     <div class="layui-form-item">
                         <div class="txtH1"><i class="start">*</i>品牌名称</div>
-                        <input type="text" value="${(brand.brandName)!""}" name="brandName" class="input-text radius size-L txtInputH">
+                        <input type="text" value="${(brand.brandName)!""}" name="brandName"
+                               class="input-text radius size-L txtInputH">
                     </div>
                     <div class="layui-form-item">
                         <div class="txtH1">品牌官网地址</div>
-                        <input type="text" name="brandWebsite" value="${(brand.brandWebsite)!""}" class="input-text radius size-L txtInputH">
+                        <input type="text" name="brandWebsite" value="${(brand.brandWebsite)!""}"
+                               class="input-text radius size-L txtInputH">
                     </div>
                     <div class="layui-form-item">
                         <div class="txtH1">品牌排序</div>
-                        <input  value="${(brand.brandOrder)!""}" name="brandOrder" class="input-text radius size-L txtInputH">
+                        <input value="${(brand.brandOrder)!""}" name="brandOrder"
+                               class="input-text radius size-L txtInputH">
                     </div>
                     <div class="layui-form-item">
                         <div class="txtH1">状态</div>
@@ -49,16 +52,19 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="txtH1" style="vertical-align: top"><i class="start">*</i>品牌logo</div>
-                        <div class="z_photo upimg-div clear" >
+                        <div class="z_photo upimg-div clear">
                             <section class="z_file fl">
 
                             <#if brand??>
-                                <div style="position: absolute;top: 25%;left: 20%;z-index: 800;color: red;font-size: 20px;margin-top: -13px;" >点击更改图片</div>
+                                <div style="position: absolute;top: 25%;left: 20%;z-index: 800;color: red;font-size: 20px;margin-top: -13px;">
+                                    点击更改图片
+                                </div>
                                 <img class="add-img up-img" src="/image/${(brand.brandLogo)!""}">
                             <#else>
                                 <img src="${context.contextPath}/image/index/a11.png" class="add-img">
                             </#if>
-                                <input type="file" name="file" id="file" class="file" value="" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                                <input type="file" name="file" id="file" class="file" value=""
+                                       accept="image/jpg,image/jpeg,image/png,image/bmp" multiple/>
                             </section>
 
 
@@ -107,7 +113,9 @@
                     </div>
                     <div class="Hitem mb20 mt80" style="text-align: center">
                         <button class="layui-btn layui-btn-big layui-btn-normal btnRuduis">保存</button>
-                        <button type="button" onclick="window.location.href='/brand/list'" class="layui-btn layui-btn-primary layui-btn-big btnRuduis">取消</button>
+                        <button type="button" onclick="window.location.href='/brand/list'"
+                                class="layui-btn layui-btn-primary layui-btn-big btnRuduis">取消
+                        </button>
                     </div>
                 </div>
             </form>
@@ -118,26 +126,24 @@
 </div>
 <!--编辑器-->
 <script>
-    $(function(){
-        layui.use(['form','layedit','laydate'],function() {
-            var form=layui.form()
-                    ,layer=layui.layer
-                    ,layedit=layui.layedit
-                    ,laydate=layui.laydate;
+    $(function () {
+        layui.use([ 'layedit', 'laydate','upload'], function () {
+            var form =  layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
             layedit.set({
                 uploadImage: {
                     url: '/article/ims'
-                    ,type: 'post' //默认post
+                    , type: 'post' //默认post
                 }
             });
             //创建一个编辑器
-            var editIndex=layedit.build('LAY_demo_editor');
+            var editIndex = layedit.build('LAY_demo_editor');
         });
+
     });
 </script>
 <link rel="stylesheet" href="${context.contextPath}/css/index/upimg.css">
 <script src="${context.contextPath}/js/common/imgUp.js"></script>
-<!--layui中的时间插件-->
-<script src="${context.contextPath}/js/common/layuiTime.js"></script>
 </body>
 </html>

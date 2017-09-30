@@ -91,7 +91,7 @@ public class RoleController {
 //    @RequiresPermissions("角色成员查询")
     public ModelAndView queryUserByRole(UserQueryObject qo, ModelAndView model) {
         model.addObject("role", roleService.queryById(qo.getRoleId()));
-        qo.setPageSize(0);
+//        qo.setPageSize(0);
         PageResult pageResult = userService.query(qo);
         model.addObject("pageResult", pageResult);
         model.setViewName("role/roleUserList");

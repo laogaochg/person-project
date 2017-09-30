@@ -32,15 +32,15 @@ public class ServletUtils {
         String os = "";
         String browser = "";
         //=================OS Info=======================
-        if (userAgent.toLowerCase().indexOf("windows") >= 0) {
+        if (userAgent.toLowerCase().contains("windows")) {
             os = "Windows";
-        } else if (userAgent.toLowerCase().indexOf("mac") >= 0) {
+        } else if (userAgent.toLowerCase().contains("mac")) {
             os = "Mac";
-        } else if (userAgent.toLowerCase().indexOf("x11") >= 0) {
+        } else if (userAgent.toLowerCase().contains("x11")) {
             os = "Unix";
-        } else if (userAgent.toLowerCase().indexOf("android") >= 0) {
+        } else if (userAgent.toLowerCase().contains("android")) {
             os = "Android";
-        } else if (userAgent.toLowerCase().indexOf("iphone") >= 0) {
+        } else if (userAgent.toLowerCase().contains("iphone")) {
             os = "IPhone";
         } else {
             os = "UnKnown, More-Info: " + userAgent;

@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class QueryObject {
-    protected String sqlString;
 
     protected String conditionString;
 
-    private Integer currentPage = 1 ;//当前页
+    protected Integer currentPage = 1;//当前页
 
-    private Integer pageSize = 10 ;//总页数
+    protected Integer pageSize = 10;//总页数
 
-    protected List<Object> paramList = new ArrayList<>();
 
     public Integer getStartRow() {
         return (currentPage - 1) * pageSize;

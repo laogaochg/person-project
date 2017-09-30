@@ -27,4 +27,5 @@ public interface MenuDao {
     int updateByPrimaryKeySelective(Menu record);
 
     int updateByPrimaryKey(Menu record);
+
 }

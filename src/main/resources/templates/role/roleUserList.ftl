@@ -1,35 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <script type="text/javascript">
-        $(function() {
-            var removeRoleUserIds=new Array();
-            $(".removeRoleUser").click(function(a) {
-                //点击删除按钮就把用户的ID放到预定的集合；再点保存的时候再提交上去
-                var userId=$(a.currentTarget).attr("userRoleId");
-                if($.inArray(userId,removeRoleUserIds)== -1) {
-                    removeRoleUserIds.push(userId);
-                    $(".userMsg_" + userId).html("");
-                }
-                $("[name=userIds]").val(removeRoleUserIds);
-                $(".deleteMsg").html("当前已经删除" + removeRoleUserIds.length + "个用户。确定点保存按钮。")
-            });
-            $(".saveRoleUser").click(function(a) {
-                //点击删除按钮就把用户的ID放到预定的集合；再点保存的时候再提交上去
-                var userId=$(a.currentTarget).attr("userRoleId");
-                if($.inArray(userId,removeRoleUserIds)== -1) {
-                    removeRoleUserIds.push(userId);
-                }
-            });
-        });
-    </script>
+    <!-- style.css是项目的样式文件  -->
 
 </head>
 <body>
+<div class="layui-layout layui-layout-admin" style="">
 <#include "../common/left_mune.ftl" />
-<div class="container rightContent">
-    <div class="content">
+    <div class="layui-body" >
+        <script type="text/javascript">
+            $(function() {
+                var removeRoleUserIds=new Array();
+                $(".removeRoleUser").click(function(a) {
+                    //点击删除按钮就把用户的ID放到预定的集合；再点保存的时候再提交上去
+                    var userId=$(a.currentTarget).attr("userRoleId");
+                    if($.inArray(userId,removeRoleUserIds)== -1) {
+                        removeRoleUserIds.push(userId);
+                        $(".userMsg_" + userId).html("");
+                    }
+                    $("[name=userIds]").val(removeRoleUserIds);
+                    $(".deleteMsg").html("当前已经删除" + removeRoleUserIds.length + "个用户。确定点保存按钮。")
+                });
+                $(".saveRoleUser").click(function(a) {
+                    //点击删除按钮就把用户的ID放到预定的集合；再点保存的时候再提交上去
+                    var userId=$(a.currentTarget).attr("userRoleId");
+                    if($.inArray(userId,removeRoleUserIds)== -1) {
+                        removeRoleUserIds.push(userId);
+                    }
+                });
+            });
+        </script>
+
         <div class="row">
             <h4>角色下用户列表</h4>
 

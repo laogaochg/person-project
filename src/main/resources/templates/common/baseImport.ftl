@@ -9,7 +9,6 @@
 <script src="${context.contextPath}/js/bootstrap.min.js"></script>
 <script src="${context.contextPath}/js/baseJS.js"></script>
 <script type="text/javascript" src="${context.contextPath}/js/common/pageQuery.js"></script>
-<script src="${context.contextPath}/js/layui/lay/dest/layui.all.js"></script>
 <script src="${context.contextPath}/js/main.js"></script>
 <script src="/js/layui/layui.js" charset="utf-8"></script>
 <script>

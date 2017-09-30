@@ -194,7 +194,7 @@ public class PermissionServiceImpl implements PermissionService {
     public synchronized int addAdminPermission() {
         RoleQueryObject qo = new RoleQueryObject();
         qo.setType(Role.ADMIN);
-        qo.setPageSize(1111);
+        qo.setPageSize(99999999);
         List<Role> listData = roleService.query(qo).getListData();
         for (Role r : listData) {
             List<Long> hasPermission = queryPermissionIdByRoleId(r.getId());
