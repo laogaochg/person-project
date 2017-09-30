@@ -12,6 +12,8 @@ import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.UserQueryObject;
 import com.csair.admin.core.service.UserService;
 
+import javax.annotation.Resource;
+
 /**
  * laogaochg
  * 2017/7/10.
@@ -19,9 +21,9 @@ import com.csair.admin.core.service.UserService;
  */
 @Controller
 public class IndexController {
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     /**

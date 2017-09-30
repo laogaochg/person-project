@@ -14,13 +14,15 @@ import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.util.WorkExecutorService;
 
+import javax.annotation.Resource;
+
 /**
  * laogaochg
  * 2017/7/11.
  */
 @Service
 public class OperationLogServiceImpl implements OperationLogService {
-    @Autowired
+    @Resource
     private OperationLogDao operationLogDao;
 
     @Override

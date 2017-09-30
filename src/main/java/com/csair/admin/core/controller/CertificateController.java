@@ -26,6 +26,8 @@ import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
 
+import javax.annotation.Resource;
+
 /**
  * laogaochg
  * 2017/7/24.
@@ -33,7 +35,7 @@ import com.csair.admin.core.po.core.PageResult;
 @RequestMapping("certificate")
 @Controller
 public class CertificateController {
-    @Autowired
+    @Resource
     private CertificateService certificateService;
 
     @RequestMapping("/editCertificate")

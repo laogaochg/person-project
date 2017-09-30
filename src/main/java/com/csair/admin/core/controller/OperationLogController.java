@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.csair.admin.core.po.core.OperationLogQueryObject;
 import com.csair.admin.core.service.OperationLogService;
 
+import javax.annotation.Resource;
+
 /**
  * laogaochg
  * 2017/7/11.
@@ -15,7 +17,7 @@ import com.csair.admin.core.service.OperationLogService;
 @Controller
 @RequestMapping("log")
 public class OperationLogController {
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     @RequestMapping("list")

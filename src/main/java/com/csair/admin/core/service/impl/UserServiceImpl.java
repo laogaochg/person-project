@@ -32,15 +32,17 @@ import com.csair.admin.util.PasswordUtils;
 import com.csair.admin.config.PlatformException;
 import com.csair.admin.util.VerifyCodeUtils;
 
+import javax.annotation.Resource;
+
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private MenuService menuService;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);

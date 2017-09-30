@@ -1,5 +1,6 @@
 package com.csair.admin.config;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 public class BeanConfig {
-    @Autowired
+    @Resource
     private DataSource dataSource;
 
     //消费者bean

@@ -2,6 +2,7 @@ package com.csair.admin.core.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
@@ -31,11 +32,11 @@ import com.csair.admin.core.service.UserService;
 @Controller
 @RequestMapping("menu")
 public class MenuController {
-    @Autowired
+    @Resource
     private MenuService menuService;
-    @Autowired
+    @Resource
     private PermissionService permissionService;
-    @Autowired
+    @Resource
     private UserService userService;
 
     //返回菜单列表

@@ -20,6 +20,8 @@ import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.ServletUtils;
 
+import javax.annotation.Resource;
+
 /**
  * laogaochg
  * 2017/7/25.
@@ -29,7 +31,7 @@ import com.csair.admin.util.ServletUtils;
 public class BrandController {
     private static Logger logger = LoggerFactory.getLogger(BrandController.class);
 
-    @Autowired
+    @Resource
     private BrandService brandService;
 
     @RequestMapping("/list")

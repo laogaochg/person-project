@@ -23,17 +23,19 @@ import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.PermissionService;
 
+import javax.annotation.Resource;
+
 /**
  * Created by lenovo on 2017/6/27.
  */
 @Service
 public class MenuServiceImpl implements MenuService {
     private static Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
-    @Autowired
+    @Resource
     private MenuDao menuDao;
-    @Autowired
+    @Resource
     private PermissionService permissionService;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     @Override

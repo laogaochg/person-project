@@ -9,6 +9,8 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import com.jagregory.shiro.freemarker.ShiroTags;
 import freemarker.template.Configuration;
 
+import javax.annotation.Resource;
+
 /**
  * freemaker集成shiro标签
  */
@@ -17,10 +19,10 @@ public class FreemarkerShiroConfig implements InitializingBean {
 
 
     @Qualifier("freeMarkerConfiguration")
-    @Autowired
+    @Resource
     private Configuration configuration;
 
-    @Autowired
+    @Resource
     private FreeMarkerViewResolver resolver;
 
     @Override

@@ -21,13 +21,15 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.csair.admin.core.service.PermissionService;
 
+import javax.annotation.Resource;
+
 /**
  * laogaochg
  * 2017/7/6.
  */
 @Component
 public class SpringRefreshListener implements ApplicationListener<ContextRefreshedEvent> {
-    @Autowired
+    @Resource
     private PermissionService permissionService;
     @Value("${upload-path}")
     private String uploadPath;

@@ -19,13 +19,15 @@ import com.csair.admin.core.po.setting.CertificateQueryObject;
 import com.csair.admin.core.service.CertificateService;
 import com.csair.admin.core.service.OperationLogService;
 
+import javax.annotation.Resource;
+
 @Service
 public class CertificateServiceImpl implements CertificateService {
 
     private static Logger logger = LoggerFactory.getLogger(CertificateServiceImpl.class);
-    @Autowired
+    @Resource
     private CertificateDao certificateDao;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     @Override

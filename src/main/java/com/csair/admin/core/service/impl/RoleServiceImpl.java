@@ -23,12 +23,14 @@ import com.csair.admin.core.service.RoleService;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.StringUtil;
 
+import javax.annotation.Resource;
+
 @Service
 public class RoleServiceImpl implements RoleService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
-    @Autowired
+    @Resource
     private RoleDao roleDao;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     @Override

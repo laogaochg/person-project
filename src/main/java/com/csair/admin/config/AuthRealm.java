@@ -27,15 +27,17 @@ import com.csair.admin.core.service.RoleService;
 import com.csair.admin.core.service.impl.UserServiceImpl;
 import com.csair.admin.util.ParamConstants;
 
+import javax.annotation.Resource;
+
 /**
  * shiro认证，授权
  */
 public class AuthRealm extends AuthorizingRealm {
-    @Autowired
+    @Resource
     private UserServiceImpl userService;
-    @Autowired
+    @Resource
     private PermissionService permissionService;
-    @Autowired
+    @Resource
     private RoleService roleService;
 
     //认证.登录

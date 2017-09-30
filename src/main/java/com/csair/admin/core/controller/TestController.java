@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.csair.admin.core.dao.UserDao;
@@ -30,10 +31,10 @@ public class TestController {
     @Value("${application.hello:Hello Angel}")
     private String hello;
 
-    @Autowired
+    @Resource
     private UserDao userDao;
 
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     @RequestMapping("/jsp")

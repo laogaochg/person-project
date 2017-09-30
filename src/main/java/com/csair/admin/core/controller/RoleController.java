@@ -20,6 +20,8 @@ import com.csair.admin.core.po.core.RoleQueryObject;
 import com.csair.admin.core.service.RoleService;
 import com.csair.admin.util.ParamConstants;
 
+import javax.annotation.Resource;
+
 /**
  * 角色操作
  */
@@ -27,11 +29,11 @@ import com.csair.admin.util.ParamConstants;
 @RequestMapping("/role")
 public class RoleController {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private PermissionService permissionService;
 
     /**

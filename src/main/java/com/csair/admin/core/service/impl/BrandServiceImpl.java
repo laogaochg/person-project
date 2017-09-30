@@ -22,13 +22,15 @@ import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.StringUtil;
 
+import javax.annotation.Resource;
+
 @Service
 public class BrandServiceImpl implements BrandService {
 
     private static Logger logger = LoggerFactory.getLogger(BrandServiceImpl.class);
-    @Autowired
+    @Resource
     private BrandDao brandDao;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
 

@@ -28,13 +28,15 @@ import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.core.service.PermissionService;
 import com.csair.admin.core.service.RoleService;
 
+import javax.annotation.Resource;
+
 @Service("permissionService")
 public class PermissionServiceImpl implements PermissionService {
-    @Autowired
+    @Resource
     private PermissionDao permissionDao;
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 

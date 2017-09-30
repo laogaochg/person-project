@@ -19,13 +19,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
+
 /**
  * Created by lenovo on 2017/6/26.
  * 数据库工具类；
  */
 @Component
 public class DataSourceUtils {
-    @Autowired
+    @Resource
     private JdbcTemplate jdbcTemplate;
 
     private static Logger logger = LoggerFactory.getLogger(DataSourceUtils.class);
