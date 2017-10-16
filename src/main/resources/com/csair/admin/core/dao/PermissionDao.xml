@@ -246,4 +246,8 @@
     <update id="removeRolePermission">
         delete from e_admin_role_permission WHERE rid = #{roleId} AND pid = #{permissionId}
     </update>
+
+    <insert id="insertPermission" useGeneratedKeys="true" keyProperty="id" parameterType="com.csair.admin.core.po.core.Permission">
+        insert into permission ( name, url) values (#{name}, #{url})
+    </insert>
 </mapper>

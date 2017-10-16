@@ -280,6 +280,6 @@ public class MD5 {
 		md5Memcpy(buffer, inbuf, index, i, inputLen - i);
 	}
 	public static void main(String[] args) {
-		System.out.println(MD5.encode("1"));
+		System.out.println(MD5.encode("AA@Q!:{+_}@!!"));
 	}
 }

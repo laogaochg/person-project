@@ -1,5 +1,6 @@
 package com.csair.admin.core.controller;
 
+import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.PageResult;
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public class BrandController {
     private BrandService brandService;
 
     @RequestMapping("/list")
+    @PermissionName("查看品牌")
     public String brandList(Model model, BrandQueryObject qo) {
         PageResult<Brand> pageResult = brandService.pageQuery(qo);
         model.addAttribute("pageResult", pageResult);
@@ -45,6 +47,7 @@ public class BrandController {
 
     @RequestMapping("batchDeleteBrand")
     @ResponseBody
+    @PermissionName("删除品牌")
     public ResponseEntity batchDeleteBrand(Long[] ids) {
         if (ids == null || ids.length == 0) {
             ResponseEntity re = new ResponseEntity();
@@ -56,6 +59,7 @@ public class BrandController {
     }
 
     @RequestMapping("/toEditBrand")
+    @PermissionName("编辑品牌")
     public String editCertificate(Long id, Model model) {
         if (id != null) {
             model.addAttribute("brand", brandService.queryById(id));
@@ -64,6 +68,7 @@ public class BrandController {
     }
 
     @RequestMapping("/editBrand")
+    @PermissionName("编辑品牌")
     public String editBrand(Brand brand, String fileName, Model model) {
         ReturnMessage re = new ReturnMessage();
         model.addAttribute("msg", re);

@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.dao.PermissionDao;
 import com.csair.admin.core.po.core.PermissionQuery;
+import com.csair.admin.core.service.MenuService;
 import com.csair.admin.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +40,8 @@ public class PermissionServiceImpl implements PermissionService {
     private RoleService roleService;
     @Resource
     private OperationLogService operationLogService;
+    @Resource
+    private MenuService menuService;
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Override
@@ -262,54 +266,78 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public int reloadPermission(Map<String, Method> urlAndMethod) {
         List<Permission> ps = findAllPermission();
+
+        //把多余的去掉;去掉404和项目外的
+        removeUnnecessary(urlAndMethod);
+
         Set<String> hasPattern = new HashSet<>();
         for (Permission o : ps) {
             //去掉已经有的；
             if (StringUtils.hasText(o.getUrl())) {
                 String[] split = o.getUrl().split("\\|\\|");
                 for (String s : split) {
-                    urlAndMethod.remove(s);
+//                    urlAndMethod.remove(s);
                 }
             }
             //已经有的匹配
             hasPattern.add(o.getUrl());
         }
-        for (String s : hasPattern) {
-            urlAndMethod.remove(s);
-        }
-        Set<String> urls = new HashSet<>(urlAndMethod.keySet());
-        //把多余的去掉
-        for (String temp : urls) {
-            if (temp.contains("{")//
-                    || temp.contains(".json")//
-                    || temp.contains("404")//
-                    || temp.contains("login")//
-                    || temp.contains("logout")//
-                    || temp.contains("index")//
-                    || temp.contains("test")//
-                    || temp.contains("Exception")//
-                    || temp.contains("exception")//
-                    || "/health".equals(temp)//
-                    || "/beans".equals(temp)//
-                    || "/trace".equals(temp)//
-                    || "/error".equals(temp)//
-                    || "/autoconfig".equals(temp)) {
-                urlAndMethod.remove(temp);
-            }
-            Method m = urlAndMethod.get(temp);
-            if (m != null) {
-                //如果不是本项目包里面的
-                if (!(m.getDeclaringClass()).toString().startsWith("class com.csair")) {
-                    urlAndMethod.remove(temp);
-                }
-            }
+//        for (String s : hasPattern) {
+//            urlAndMethod.remove(s);
+//        }
 
+
+        for (String key : urlAndMethod.keySet()) {
+            Method method = urlAndMethod.get(key);
+            PermissionName annotation = method.getAnnotation(PermissionName.class);
+            Permission p = new Permission();
+            String name = null;
+            if (annotation != null) name = annotation.value();
+            p.setName(name);
+            p.setUrl(key);
+            permissionDao.insertPermission(p);
         }
+
         /**
          * 把没有权限的url放到共享变量
          */
         PermissionServiceImpl.noPermissionRequestMapping = urlAndMethod;
         return addAdminPermission();
+    }
+
+    /**
+     * 把多余的去掉
+     */
+    private void removeUnnecessary(Map<String, Method> urlAndMethod) {
+        List<String> removeUrl = new ArrayList<>();
+        for (String url : urlAndMethod.keySet()) {
+            if (url.contains("{")//
+                    || url.contains(".json")//
+                    || url.contains("404")//
+                    || url.contains("login")//
+                    || url.contains("logout")//
+                    || url.contains("index")//
+                    || url.contains("test")//
+                    || url.contains("Exception")//
+                    || url.contains("exception")//
+                    || "/health".equals(url)//
+                    || "/beans".equals(url)//
+                    || "/trace".equals(url)//
+                    || "/error".equals(url)//
+                    || "/autoconfig".equals(url)) {
+                removeUrl.add(url);
+            }
+            Method m = urlAndMethod.get(url);
+            if (m != null) {
+                //如果不是本项目包里面的
+                if (!(m.getDeclaringClass()).toString().startsWith("class com.csair")) {
+                    removeUrl.add(url);
+                }
+            }
+        }
+        for (String s : removeUrl) {
+            urlAndMethod.remove(s);
+        }
     }
 
     @Override

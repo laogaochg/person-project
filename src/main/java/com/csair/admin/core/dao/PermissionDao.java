@@ -36,4 +36,6 @@ public interface PermissionDao {
     int addRolePermission(@Param("roleId")Long roleId, @Param("permissionId")Long permissionId);
 
     int removeRolePermission(@Param("roleId")Long roleId, @Param("permissionId")Long permissionId);
+
+    int insertPermission(Permission p);
 }
