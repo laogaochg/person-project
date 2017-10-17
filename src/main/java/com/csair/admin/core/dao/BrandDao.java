@@ -3,8 +3,8 @@ package com.csair.admin.core.dao;
 import java.util.List;
 
 import com.csair.admin.core.po.Brand;
-import com.csair.admin.core.po.core.BrandQuery;
-import com.csair.admin.core.po.core.BrandQueryObject;
+import com.csair.admin.core.po.core.query.BrandQuery;
+import com.csair.admin.core.po.core.query.BrandQueryObject;
 import org.apache.ibatis.annotations.Param;
 
 public interface BrandDao {

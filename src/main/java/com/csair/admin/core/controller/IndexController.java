@@ -1,15 +1,14 @@
 package com.csair.admin.core.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.csair.admin.core.po.core.OperationLog;
-import com.csair.admin.core.po.core.OperationLogQueryObject;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.UserQueryObject;
+import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.service.UserService;
 
 import javax.annotation.Resource;

@@ -1,7 +1,7 @@
 package com.csair.admin.core.service;
 
 import com.csair.admin.core.po.core.OperationLog;
-import com.csair.admin.core.po.core.OperationLogQueryObject;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import com.csair.admin.core.po.core.PageResult;
 
 /**

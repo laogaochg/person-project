@@ -1,4 +1,4 @@
-package com.csair.admin.core.po.core;
+package com.csair.admin.core.po.core.query;
 
 /**
  * Created by lenovo on 2017/6/27.

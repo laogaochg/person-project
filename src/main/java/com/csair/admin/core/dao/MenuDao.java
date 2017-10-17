@@ -1,7 +1,7 @@
 package com.csair.admin.core.dao;
 
 import com.csair.admin.core.po.core.Menu;
-import com.csair.admin.core.po.core.MenuQuery;
+import com.csair.admin.core.po.core.query.MenuQuery;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

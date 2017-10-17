@@ -1,4 +1,4 @@
-package com.csair.admin.core.po.core;
+package com.csair.admin.core.po.core.query;
 
 /**
  * 角色查询参数封装

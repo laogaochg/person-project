@@ -11,20 +11,19 @@ import java.util.Set;
 
 import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.dao.PermissionDao;
-import com.csair.admin.core.po.core.PermissionQuery;
+import com.csair.admin.core.po.core.query.PermissionQuery;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.Permission;
-import com.csair.admin.core.po.core.PermissionQueryObject;
+import com.csair.admin.core.po.core.query.PermissionQueryObject;
 import com.csair.admin.core.po.core.Role;
-import com.csair.admin.core.po.core.RoleQueryObject;
+import com.csair.admin.core.po.core.query.RoleQueryObject;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.core.service.PermissionService;
@@ -124,7 +123,7 @@ public class PermissionServiceImpl implements PermissionService {
      * 考虑到修改这个共享变量不多
      * 所有为共享变量
      */
-    public static Map<String, Method> noPermissionRequestMapping;
+    public static final Map<String, Method> noPermissionRequestMapping = new HashMap<>();
 
     @Override
     public Map<String, Method> getNoPermissionRequestMapping() {
@@ -195,12 +194,11 @@ public class PermissionServiceImpl implements PermissionService {
         return null;
     }
 
-    //考虑到有共同资源所以用了synchronized
     @Override
     public synchronized int addAdminPermission() {
         RoleQueryObject qo = new RoleQueryObject();
         qo.setType(Role.ADMIN);
-        qo.setPageSize(99999999);
+        qo.setPageSize(99999);
         List<Role> listData = roleService.query(qo).getListData();
         for (Role r : listData) {
             List<Long> hasPermission = queryPermissionIdByRoleId(r.getId());
@@ -259,8 +257,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<Permission> findAllPermission() {
-        PermissionQuery qo = new PermissionQuery();
-        return permissionDao.selectByExample(qo);
+        return permissionDao.selectByExample(new PermissionQuery());
     }
 
     @Override
@@ -269,7 +266,28 @@ public class PermissionServiceImpl implements PermissionService {
 
         //把多余的去掉;去掉404和项目外的
         removeUnnecessary(urlAndMethod);
+        //去掉数据库里面已经有的
+        remvoeHadUrl(ps);
 
+
+        for (String key : urlAndMethod.keySet()) {
+            Method method = urlAndMethod.get(key);
+            PermissionName annotation = method.getAnnotation(PermissionName.class);
+            Permission p = new Permission();
+            String name = null;
+            if (annotation != null) name = annotation.value();
+            p.setName(name);
+            p.setUrl(key);
+            permissionDao.insertPermission(p);
+        }
+
+        //把没有权限的url放到共享变量
+        PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
+        //维护超级管理员权限
+        return addAdminPermission();
+    }
+
+    private void remvoeHadUrl(List<Permission> ps) {
         Set<String> hasPattern = new HashSet<>();
         for (Permission o : ps) {
             //去掉已经有的；
@@ -285,24 +303,6 @@ public class PermissionServiceImpl implements PermissionService {
 //        for (String s : hasPattern) {
 //            urlAndMethod.remove(s);
 //        }
-
-
-        for (String key : urlAndMethod.keySet()) {
-            Method method = urlAndMethod.get(key);
-            PermissionName annotation = method.getAnnotation(PermissionName.class);
-            Permission p = new Permission();
-            String name = null;
-            if (annotation != null) name = annotation.value();
-            p.setName(name);
-            p.setUrl(key);
-            permissionDao.insertPermission(p);
-        }
-
-        /**
-         * 把没有权限的url放到共享变量
-         */
-        PermissionServiceImpl.noPermissionRequestMapping = urlAndMethod;
-        return addAdminPermission();
     }
 
     /**
@@ -344,7 +344,7 @@ public class PermissionServiceImpl implements PermissionService {
     public PageResult<Permission> query(PermissionQueryObject qo) {
         qo.setPageSize(-1);
         List<Permission> list = permissionDao.queryPermission(qo);
-        return new PageResult<Permission>(list, 1, 1, 1);
+        return new PageResult<>(list, 1, 1, 1);
     }
 
 }

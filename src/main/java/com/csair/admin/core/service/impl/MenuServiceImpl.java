@@ -8,16 +8,15 @@ import java.util.List;
 import java.util.Set;
 
 import com.csair.admin.core.dao.MenuDao;
-import com.csair.admin.core.po.core.MenuQuery;
+import com.csair.admin.core.po.core.query.MenuQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.core.po.core.Menu;
-import com.csair.admin.core.po.core.MenuVo;
+import com.csair.admin.core.po.core.resp.MenuVo;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.service.MenuService;
@@ -277,12 +276,6 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.selectByPrimaryKey(mid);
     }
 
-    @Override
-    public List<Menu> getChildMenu(Long parentId) {
-        MenuQuery ex = new MenuQuery();
-        ex.createCriteria().andPidEqualTo(parentId);
-        return menuDao.selectByExample(ex);
-    }
 
     @Override
     public List<Menu> getAllMenu() {

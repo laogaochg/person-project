@@ -5,14 +5,13 @@ import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.PageResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.csair.admin.core.po.core.BrandQueryObject;
+import com.csair.admin.core.po.core.query.BrandQueryObject;
 import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;

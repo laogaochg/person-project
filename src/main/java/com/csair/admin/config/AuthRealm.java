@@ -15,13 +15,12 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
-import com.csair.admin.core.po.core.PermissionQueryObject;
+import com.csair.admin.core.po.core.query.PermissionQueryObject;
 import com.csair.admin.core.service.PermissionService;
 import com.csair.admin.core.service.RoleService;
 import com.csair.admin.core.service.impl.UserServiceImpl;

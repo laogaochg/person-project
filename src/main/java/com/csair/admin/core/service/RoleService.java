@@ -8,7 +8,7 @@ import org.apache.shiro.subject.Subject;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.RoleQueryObject;
+import com.csair.admin.core.po.core.query.RoleQueryObject;
 
 public interface RoleService {
 

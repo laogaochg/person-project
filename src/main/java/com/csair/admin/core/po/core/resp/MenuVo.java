@@ -1,4 +1,6 @@
-package com.csair.admin.core.po.core;
+package com.csair.admin.core.po.core.resp;
+
+import com.csair.admin.core.po.core.Menu;
 
 /**
  * laogaochg

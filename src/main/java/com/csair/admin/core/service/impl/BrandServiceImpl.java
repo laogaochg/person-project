@@ -9,11 +9,10 @@ import com.csair.admin.core.dao.BrandDao;
 import com.csair.admin.core.po.Brand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.HtmlUtils;
 
-import com.csair.admin.core.po.core.BrandQueryObject;
+import com.csair.admin.core.po.core.query.BrandQueryObject;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.User;

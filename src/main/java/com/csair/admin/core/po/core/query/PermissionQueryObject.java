@@ -1,4 +1,4 @@
-package com.csair.admin.core.po.core;
+package com.csair.admin.core.po.core.query;
 
 /**
  * 权限查询参数封装

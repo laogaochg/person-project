@@ -1,11 +1,10 @@
 package com.csair.admin.core.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.csair.admin.core.po.core.OperationLogQueryObject;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import com.csair.admin.core.service.OperationLogService;
 
 import javax.annotation.Resource;

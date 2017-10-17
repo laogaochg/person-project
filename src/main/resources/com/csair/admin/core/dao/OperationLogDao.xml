@@ -83,7 +83,7 @@
     content
   </sql>
     <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
-            parameterType="com.csair.admin.core.po.core.OperationLogQuery">
+            parameterType="com.csair.admin.core.po.core.query.OperationLogQuery">
         select
         <if test="distinct">
             distinct
@@ -99,7 +99,7 @@
             order by ${orderByClause}
         </if>
     </select>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csair.admin.core.po.core.OperationLogQuery">
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csair.admin.core.po.core.query.OperationLogQuery">
         select
         <if test="distinct">
             distinct
@@ -128,7 +128,7 @@
     delete from csair_log_operation
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <delete id="deleteByExample" parameterType="com.csair.admin.core.po.core.OperationLogQuery">
+    <delete id="deleteByExample" parameterType="com.csair.admin.core.po.core.query.OperationLogQuery">
         delete from csair_log_operation
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
@@ -185,7 +185,7 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="com.csair.admin.core.po.core.OperationLogQuery" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.csair.admin.core.po.core.query.OperationLogQuery" resultType="java.lang.Integer">
         select count(*) from csair_log_operation
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>

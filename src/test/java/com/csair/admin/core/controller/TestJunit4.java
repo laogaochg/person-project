@@ -5,20 +5,14 @@ package com.csair.admin.core.controller;
  * @Date : 2017/9/22 15:58
  */
 
-import com.csair.admin.Application;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.User;
-import com.csair.admin.core.po.core.UserQueryObject;
+import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 

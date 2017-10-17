@@ -7,7 +7,7 @@ import java.util.Map;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.PermissionQueryObject;
+import com.csair.admin.core.po.core.query.PermissionQueryObject;
 
 /**
  * Created by lenovo on 2017/6/27.

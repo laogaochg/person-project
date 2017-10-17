@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.core.po.core.Menu;
-import com.csair.admin.core.po.core.MenuVo;
+import com.csair.admin.core.po.core.resp.MenuVo;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;

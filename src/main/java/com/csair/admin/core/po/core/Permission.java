@@ -71,6 +71,7 @@ public class Permission {
         this.roleList = roleList;
     }
 
+
     @Override
     public String toString() {
         return "Permission{" +

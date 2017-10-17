@@ -1,6 +1,6 @@
 package com.csair.admin.core.po.setting;
 
-import com.csair.admin.core.po.core.QueryObject;
+import com.csair.admin.core.po.core.query.QueryObject;
 
 /**
  * laogaochg

@@ -2,11 +2,11 @@ package com.csair.admin.core.dao;
 
 import java.util.List;
 
-import com.csair.admin.core.po.core.UserQueryObject;
+import com.csair.admin.core.po.core.query.UserQueryObject;
 import org.apache.ibatis.annotations.Param;
 
 import com.csair.admin.core.po.core.User;
-import com.csair.admin.core.po.core.UserQuery;
+import com.csair.admin.core.po.core.query.UserQuery;
 
 public interface UserDao {
     int countByExample(UserQuery example);

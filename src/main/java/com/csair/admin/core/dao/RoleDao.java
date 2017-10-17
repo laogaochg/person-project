@@ -1,7 +1,7 @@
 package com.csair.admin.core.dao;
 
 import com.csair.admin.core.po.core.Role;
-import com.csair.admin.core.po.core.RoleQuery;
+import com.csair.admin.core.po.core.query.RoleQuery;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

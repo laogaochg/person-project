@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.csair.admin.core.dao.RoleDao;
-import com.csair.admin.core.po.core.RoleQuery;
+import com.csair.admin.core.po.core.query.RoleQuery;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +17,7 @@ import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.RoleQueryObject;
+import com.csair.admin.core.po.core.query.RoleQueryObject;
 import com.csair.admin.core.service.RoleService;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.StringUtil;

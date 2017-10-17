@@ -5,9 +5,9 @@ import org.apache.shiro.subject.Subject;
 import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;
-import com.csair.admin.core.po.core.UserVo;
+import com.csair.admin.core.po.core.resp.UserVo;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.UserQueryObject;
+import com.csair.admin.core.po.core.query.UserQueryObject;
 
 /**
  * laogaochg

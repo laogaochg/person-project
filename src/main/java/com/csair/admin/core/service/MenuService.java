@@ -7,7 +7,7 @@ package com.csair.admin.core.service;
 import java.util.List;
 
 import com.csair.admin.core.po.core.Menu;
-import com.csair.admin.core.po.core.MenuVo;
+import com.csair.admin.core.po.core.resp.MenuVo;
 import com.csair.admin.core.po.core.User;
 
 /**
@@ -31,13 +31,6 @@ public interface MenuService {
      * @return
      */
     Menu queryMenu(Long mid);
-
-    /**
-     * 查询子菜单
-     * @param parentId
-     * @return
-     */
-    List<Menu> getChildMenu(Long parentId);
 
 
     /**

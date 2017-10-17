@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,7 @@ import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.PermissionQueryObject;
+import com.csair.admin.core.po.core.query.PermissionQueryObject;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.PermissionService;
 import com.csair.admin.core.service.RoleService;

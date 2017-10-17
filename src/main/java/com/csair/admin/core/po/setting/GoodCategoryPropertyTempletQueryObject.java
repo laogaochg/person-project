@@ -2,7 +2,7 @@ package com.csair.admin.core.po.setting;
 
 import java.util.Date;
 
-import com.csair.admin.core.po.core.QueryObject;
+import com.csair.admin.core.po.core.query.QueryObject;
 import com.csair.admin.util.DateUtil;
 
 /**

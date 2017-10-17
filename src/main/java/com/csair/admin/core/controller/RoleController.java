@@ -3,12 +3,11 @@ package com.csair.admin.core.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.csair.admin.core.po.core.UserQueryObject;
+import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.service.PermissionService;
 import com.csair.admin.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.RoleQueryObject;
+import com.csair.admin.core.po.core.query.RoleQueryObject;
 import com.csair.admin.core.service.RoleService;
 import com.csair.admin.util.ParamConstants;
 

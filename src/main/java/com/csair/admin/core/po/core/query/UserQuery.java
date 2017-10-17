@@ -1,4 +1,4 @@
-package com.csair.admin.core.po.core;
+package com.csair.admin.core.po.core.query;
 
 import java.util.ArrayList;
 import java.util.Date;

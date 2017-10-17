@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.csair.admin.core.dao.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseEntity;
-import com.csair.admin.core.po.core.RoleQueryObject;
+import com.csair.admin.core.po.core.query.RoleQueryObject;
 
 @Controller
 @RequestMapping("/test")

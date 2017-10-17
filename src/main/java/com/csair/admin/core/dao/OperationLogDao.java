@@ -1,9 +1,9 @@
 package com.csair.admin.core.dao;
 
 import com.csair.admin.core.po.core.OperationLog;
-import com.csair.admin.core.po.core.OperationLogQuery;
+import com.csair.admin.core.po.core.query.OperationLogQuery;
 import java.util.List;
-import com.csair.admin.core.po.core.OperationLogQueryObject;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import org.apache.ibatis.annotations.Param;
 
 public interface OperationLogDao {

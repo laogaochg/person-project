@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import com.csair.admin.core.dao.OperationLogDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csair.admin.core.po.core.OperationLog;
-import com.csair.admin.core.po.core.OperationLogQueryObject;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.util.WorkExecutorService;

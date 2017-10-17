@@ -1,4 +1,4 @@
-package com.csair.admin.core.po.core;
+package com.csair.admin.core.po.core.resp;
 
 public class UserVo {
     //id=18&email=hgt&nickname=9uh&pswd=888&roleIds=5&state=2&remark=
