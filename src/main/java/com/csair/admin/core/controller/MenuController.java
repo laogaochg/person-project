@@ -5,7 +5,9 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.config.PermissionName;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,12 +42,12 @@ public class MenuController {
 
     //返回菜单列表
     @RequestMapping("/list")
-//    @RequiresPermissions("菜单查询")
+    @PermissionName("菜单查询")
     public ModelAndView queryMenu(ModelAndView model) {
-        List<Menu> menusList = menuService.getAllMenu();
+        List<Menu> menusList = menuService.getAllMenu(true);
         model.addObject("menuList",menusList);
-        List<Permission> permissions = permissionService.queryNoMenuPermission();
-        model.addObject("permissions",permissions);
+//        List<Permission> permissions = permissionService.queryNoMenuPermission();
+//        model.addObject("permissions",permissions);
         model.setViewName("menu/menuList");
         return model;
     }
@@ -69,7 +71,7 @@ public class MenuController {
      * 编辑菜单
      */
     @RequestMapping("/edit")
-//    @RequiresPermissions("管理菜单")
+    @PermissionName("管理菜单")
     public ModelAndView edit(Menu menu,ModelAndView model,HttpServletRequest request) {
         String fileUrl = FileUploadUtils.handlerFile(request);
         menu.setLogoFileName(fileUrl);
@@ -101,6 +103,7 @@ public class MenuController {
      * 删除菜单
      */
     @RequestMapping("/delete")
+    @PermissionName("删除菜单")
     public ModelAndView deleteMenu(Long mid,ModelAndView model) {
         Subject subject = SecurityUtils.getSubject();
         ReturnMessage msg = new ReturnMessage();
@@ -124,7 +127,7 @@ public class MenuController {
      * 添加菜单
      */
     @RequestMapping("/toEdit")
-//    @RequiresPermissions("管理菜单")
+    @PermissionName("管理菜单")
     public ModelAndView toEdit(Menu menu,Integer flag,ModelAndView model) {
         //flag : 1：修改当前菜单 2:添加下级菜单 null:新修菜单
         if (flag == null) {//新建菜单

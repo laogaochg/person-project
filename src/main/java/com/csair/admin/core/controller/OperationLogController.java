@@ -1,5 +1,6 @@
 package com.csair.admin.core.controller;
 
+import com.csair.admin.config.PermissionName;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +21,10 @@ public class OperationLogController {
     private OperationLogService operationLogService;
 
     @RequestMapping("list")
-    public String list(OperationLogQueryObject qo,Model model) {
-        model.addAttribute("pageResult",operationLogService.pageQuery(qo));
-        model.addAttribute("qo",qo);
+    @PermissionName("操作历史查询")
+    public String list(OperationLogQueryObject qo, Model model) {
+        model.addAttribute("pageResult", operationLogService.pageQuery(qo));
+        model.addAttribute("qo", qo);
         return "log/list";
     }
 }

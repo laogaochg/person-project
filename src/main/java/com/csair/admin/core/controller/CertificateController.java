@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.csair.admin.config.PermissionName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class CertificateController {
 
     @RequestMapping("/editCertificate")
     @ResponseBody
+    @PermissionName("编辑证书")
     public ResponseEntity<Object> editCertificate(Certificate c) {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();
@@ -49,12 +51,13 @@ public class CertificateController {
             return result;
         }
         User user = ServletUtils.getUser();
-        certificateService.editCertificate(c,user);
+        certificateService.editCertificate(c, user);
         return result;
     }
 
     @RequestMapping("/batchInsertCertificate")
     @ResponseBody
+    @PermissionName("编辑证书")
     public ResponseEntity<Object> batchInsertCertificate(MultipartFile file) throws IOException {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();
@@ -66,13 +69,13 @@ public class CertificateController {
             result.setCode(ParamConstants.ERROR_PARAM);
             result.setMes("请确定选择的文件是否为提供的模板。");
         }
-        List<Map<Integer,String>> maps = XlsFileUtil.parseWorkbook(file.getInputStream());
+        List<Map<Integer, String>> maps = XlsFileUtil.parseWorkbook(file.getInputStream());
         List<Certificate> list = new ArrayList<>();
         User user = ServletUtils.getUser();
         //解析文件
-        for (int i = 0;i < maps.size();i++) {
+        for (int i = 0; i < maps.size(); i++) {
             if (i == 0) continue;
-            Map<Integer,String> row = maps.get(i);
+            Map<Integer, String> row = maps.get(i);
             Certificate c = new Certificate();
             c.setCreateDate(new Date());
             c.setCreateId(user.getId());
@@ -87,38 +90,41 @@ public class CertificateController {
     }
 
     @RequestMapping("/toEditCertificate")
-    public String editCertificate(Long id,Model model) {
+    @PermissionName("编辑证书")
+    public String editCertificate(Long id, Model model) {
         Certificate certificate = certificateService.queryById(id);
-        model.addAttribute("certificate",certificate);
-        if(id!=null){
+        model.addAttribute("certificate", certificate);
+        if (id != null) {
             List<GoodCategory> goodCategories = new ArrayList<>();
-            model.addAttribute("goodCategories",goodCategories);
+            model.addAttribute("goodCategories", goodCategories);
         }
         return "setting/certificate/edit";
     }
 
     @RequestMapping("/list")
-    public ModelAndView queryCertificate(CertificateQueryObject qo,ModelAndView model) {
+    @PermissionName("查询证书")
+    public ModelAndView queryCertificate(CertificateQueryObject qo, ModelAndView model) {
         PageResult pageResult = certificateService.query(qo);
-        model.addObject("pageResult",pageResult);
-        model.addObject("qo",qo);
+        model.addObject("pageResult", pageResult);
+        model.addObject("qo", qo);
         model.setViewName("setting/certificate/list");
         return model;
     }
 
     @RequestMapping("/batchDelete")
     @ResponseBody
+    @PermissionName("删除证书")
     public ResponseEntity<Object> batchDelete(Long[] ids) {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();
         User user = ServletUtils.getUser();
-        if(ids==null){
+        if (ids == null) {
             result.setCode(ParamConstants.ERROR_PARAM);
             result.setMes("请输入正确的参数。");
             return result;
         }
         for (Long id : ids) {
-            certificateService.deleteCertificate(id,user);
+            certificateService.deleteCertificate(id, user);
         }
         return result;
     }

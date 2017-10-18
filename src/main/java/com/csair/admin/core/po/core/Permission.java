@@ -19,6 +19,10 @@ public class Permission {
      * 对应父菜单的名字
      */
 //    private String menuName;
+    /**
+     * 归属类的类名，用于确定菜单下的权限列表
+     */
+    private String className;
 
     public Long getMid() {
         return mid;
@@ -71,6 +75,13 @@ public class Permission {
         this.roleList = roleList;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
 
     @Override
     public String toString() {

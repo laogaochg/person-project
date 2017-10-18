@@ -8,6 +8,7 @@ import com.csair.admin.core.po.core.User;
  */
 public class TestB {
     public static void main(String[] args) {
-        System.out.println("123456".hashCode());
+        User  u = new User();
+        System.out.println("u".equals(u.getId()));
     }
 }

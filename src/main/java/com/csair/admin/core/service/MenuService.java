@@ -20,10 +20,6 @@ public interface MenuService {
      * 用户的有权限的菜单都查出来；
      */
     List<Menu> queryUserMenu(Long userId );
-    /**
-     * 得到所有菜单
-     */
-    List<Menu> getAllMenu();
 
     /**
      * 根据id查询藤
@@ -62,10 +58,21 @@ public interface MenuService {
      * @return
      */
     List<MenuVo> queryAllMenuVo(Long parentId);
+    /**
+     * 根据URL得到对应的菜单
+     */
+    List<Menu> queryMenuInUrl(List<String> urls);
 
     /**
      * 得到当前菜单的路径
      * @param url 当前菜单的url
      */
     List<Menu> queryParentMenus(String url);
+
+    /**
+     *
+     * @param isTree 是否要树状结构
+     * @return
+     */
+    List<Menu> getAllMenu(boolean isTree);
 }

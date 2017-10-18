@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.config.PermissionName;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class PermissionController {
      * 去权限添加页面
      */
     @RequestMapping("/edit")
+    @PermissionName("权限编辑")
     public String queryPermission(Model model) {
         List<Permission> permissionList = permissionService.findAllPermission();
         model.addAttribute("permissionList",permissionList);
@@ -51,14 +53,15 @@ public class PermissionController {
      */
     @RequestMapping("/addMenu")
     @ResponseBody
+    @PermissionName("权限编辑")
     public ResponseEntity addMenu(Permission l,HttpServletRequest request) {
         ResponseEntity re = new ResponseEntity();
         User u = (User)request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (l.getId() == null) {
-            Long menusList = permissionService.addPermission(l,u);
+//            Long menusList = permissionService.addPermission(l,u);
             re.setMes("添加成功。");
         } else {
-            permissionService.updatePermissByPid(l,u);
+            permissionService.updatePermissionByPid(l,u);
             re.setMes("修改成功。");
         }
         re.setCode(200);
@@ -69,14 +72,14 @@ public class PermissionController {
      * 返回权限列表
      */
     @RequestMapping("/list")
-//    @RequiresPermissions("权限查询")
+    @PermissionName("权限查询")
     public ModelAndView qeuryPremission(ModelAndView model,PermissionQueryObject qo) {
         if (qo.getRoleId() == null) {
             throw new PlatformException(ParamConstants.ERROR_PARAM,"参数不正确");
         }
         //查询没有菜单的权限
-        List<Permission> permissionList = permissionService.queryNoMenuPermission();
-        model.addObject("permissionList",permissionList);
+//        List<Permission> permissionList = permissionService.queryNoMenuPermission();
+//        model.addObject("permissionList",permissionList);
         //查询权限；按菜单的id归类并且查询菜单权限放在数组的第一个
         Map<String,List<Permission>> map = permissionService.queryAllPermissionSort();
         model.addObject("permissionMap",map);
@@ -84,13 +87,13 @@ public class PermissionController {
         model.addObject("role",roleService.queryById(qo.getRoleId()));
         //查询角色下的权限
         PageResult pageResult = permissionService.query(qo);
-        permissionList = pageResult.getListData();
+        List<Permission> permissionList = pageResult.getListData();
         List<Long> ids = new ArrayList<Long>();
         for (Permission p : permissionList) {
             ids.add(p.getId());
         }
         //菜单查询
-        List<Menu> menuList = menuService.getAllMenu();
+        List<Menu> menuList = menuService.getAllMenu(true);
         model.addObject("menuList",menuList);
         model.addObject("havingPermissionIds",ids);
         model.setViewName("role/PermissionList");

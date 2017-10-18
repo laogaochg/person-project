@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.csair.admin.config.PermissionName;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -122,6 +123,7 @@ public class UserController {
 
     //返回用户列表
     @RequestMapping("/user/list")
+    @PermissionName("查询所有用户")
     public ModelAndView queryRole(UserQueryObject qo, ModelAndView model) {
         PageResult pageResult = userService.query(qo);
         model.addObject("pageResult", pageResult);
@@ -131,6 +133,7 @@ public class UserController {
 
     //去修改密码页面
     @RequestMapping("/changePassword")
+    @PermissionName("修改密码")
     public ModelAndView toChangePassword(UserQueryObject qo, ModelAndView model) {
         model.setViewName("user/changePassword");
         return model;
@@ -139,6 +142,7 @@ public class UserController {
     //修改密码
     @RequestMapping("/user/changePassword")
     @ResponseBody
+    @PermissionName("修改密码")
     public ResponseEntity changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         ResponseEntity e = new ResponseEntity();
@@ -154,6 +158,7 @@ public class UserController {
 
     //返回编辑用户页面roleService
     @RequestMapping("/user/toEditUser")
+    @PermissionName("新建用户")
     public ModelAndView toEditUser(User us, ModelAndView model) {
         model.addObject("roleList", roleService.queryAllRole());
         model.addObject("user", SecurityUtils.getSubject().getSession().getAttribute(ParamConstants.USER_SESSION));
@@ -180,6 +185,7 @@ public class UserController {
     //编辑用户
     @RequestMapping("/user/editUser")
     @ResponseBody
+    @PermissionName("编辑用户")
     public ResponseEntity<String> editUser(UserVo user) {
         Subject admin = SecurityUtils.getSubject();
         ResponseEntity<String> re = new ResponseEntity<>();
@@ -209,6 +215,7 @@ public class UserController {
 
     //下载用户数据
     @RequestMapping("/user/downloadUser")
+    @PermissionName("下载用户数据")
     public org.springframework.http.ResponseEntity<byte[]> downloadUser(HttpServletResponse response) throws Exception, WriteException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         List<String> titles = new ArrayList<String>();
@@ -245,6 +252,7 @@ public class UserController {
      */
     @RequestMapping("cancelForbidUserLogin")
     @ResponseBody
+    @PermissionName("解禁用户登陆")
     public ResponseEntity<Object> cancelForbidUserLogin(Long id) {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();
@@ -265,6 +273,7 @@ public class UserController {
      */
     @RequestMapping("forbidUserLogin")
     @ResponseBody
+    @PermissionName("禁止用户登陆")
     public ResponseEntity<Object> forbidUserLogin(Long id) {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();

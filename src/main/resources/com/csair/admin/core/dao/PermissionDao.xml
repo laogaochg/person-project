@@ -1,253 +1,267 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csair.admin.core.dao.PermissionDao">
-    <resultMap id="BaseResultMap" type="com.csair.admin.core.po.core.Permission">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="url" property="url" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="mid" property="mid" jdbcType="BIGINT"/>
-        <result column="type" property="type"/>
-    </resultMap>
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" suffix=")" prefixOverrides="and">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+<mapper namespace="com.csair.admin.core.dao.PermissionDao" >
+  <resultMap id="BaseResultMap" type="com.csair.admin.core.po.core.Permission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="BIT" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" suffix=")" prefixOverrides="and">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Base_Column_List">
-        <if test="fields == null">
-            id, url, name, mid, type
+          </trim>
         </if>
-        <if test="fields != null">
-            ${fields}
-        </if>
-    </sql>
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csair.admin.core.po.core.query.PermissionQuery">
-        select
-        <if test="distinct">
-            distinct
-        </if>
-        <include refid="Base_Column_List"/>
-        from e_admin_permission
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-        <if test="startRow != null">
-            limit #{startRow} , #{pageSize}
-        </if>
-    </select>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, url, name, mid, type, class_name
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.csair.admin.core.po.core.query.PermissionQuery" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from e_admin_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,url,name,mid,type
+    id,url,name,mid,type,class_name
     from e_admin_permission
     where id = #{id,jdbcType=BIGINT}
   </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from e_admin_permission
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <delete id="deleteByExample" parameterType="com.csair.admin.core.po.core.query.PermissionQuery">
-        delete from e_admin_permission
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </delete>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.csair.admin.core.po.core.Permission">
+  <delete id="deleteByExample" parameterType="com.csair.admin.core.po.core.query.PermissionQuery" >
+    delete from e_admin_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.csair.admin.core.po.core.Permission" >
     insert into e_admin_permission (id, url, name, 
-      mid, type)
+      mid, type, class_name)
     values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{mid,jdbcType=BIGINT}, #{type,jdbcType=BIT})
+      #{mid,jdbcType=BIGINT}, #{type,jdbcType=BIT}, #{className,jdbcType=VARCHAR})
   </insert>
-    <insert id="insertSelective" parameterType="com.csair.admin.core.po.core.Permission">
-        insert into e_admin_permission
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="url != null">
-                url,
-            </if>
-            <if test="name != null">
-                name,
-            </if>
-            <if test="mid != null">
-                mid,
-            </if>
-            <if test="type != null">
-                type,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="url != null">
-                #{url,jdbcType=VARCHAR},
-            </if>
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="mid != null">
-                #{mid,jdbcType=BIGINT},
-            </if>
-            <if test="type != null">
-                #{type,jdbcType=BIT},
-            </if>
-        </trim>
-    </insert>
-    <select id="countByExample" parameterType="com.csair.admin.core.po.core.query.PermissionQuery" resultType="java.lang.Integer">
-        select count(*) from e_admin_permission
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        update e_admin_permission
-        <set>
-            <if test="record.id != null">
-                id = #{record.id,jdbcType=BIGINT},
-            </if>
-            <if test="record.url != null">
-                url = #{record.url,jdbcType=VARCHAR},
-            </if>
-            <if test="record.name != null">
-                name = #{record.name,jdbcType=VARCHAR},
-            </if>
-            <if test="record.mid != null">
-                mid = #{record.mid,jdbcType=BIGINT},
-            </if>
-            <if test="record.type != null">
-                type = #{record.type,jdbcType=BIT},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        update e_admin_permission
-        set id = #{record.id,jdbcType=BIGINT},
+  <insert id="insertSelective" parameterType="com.csair.admin.core.po.core.Permission" >
+    insert into e_admin_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="className != null" >
+        class_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.csair.admin.core.po.core.query.PermissionQuery" resultType="java.lang.Integer" >
+    select count(*) from e_admin_permission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update e_admin_permission
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.url != null" >
         url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mid != null" >
         mid = #{record.mid,jdbcType=BIGINT},
-        type = #{record.type,jdbcType=BIT}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.csair.admin.core.po.core.Permission">
-        update e_admin_permission
-        <set>
-            <if test="url != null">
-                url = #{url,jdbcType=VARCHAR},
-            </if>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="mid != null">
-                mid = #{mid,jdbcType=BIGINT},
-            </if>
-            <if test="type != null">
-                type = #{type,jdbcType=BIT},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="com.csair.admin.core.po.core.Permission">
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=BIT},
+      </if>
+      <if test="record.className != null" >
+        class_name = #{record.className,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update e_admin_permission
+    set id = #{record.id,jdbcType=BIGINT},
+      url = #{record.url,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      mid = #{record.mid,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=BIT},
+      class_name = #{record.className,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.csair.admin.core.po.core.Permission" >
+    update e_admin_permission
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="className != null" >
+        class_name = #{className,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.csair.admin.core.po.core.Permission" >
     update e_admin_permission
     set url = #{url,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       mid = #{mid,jdbcType=BIGINT},
-      type = #{type,jdbcType=BIT}
+      type = #{type,jdbcType=BIT},
+      class_name = #{className,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-    <select id="queryPermissionByUserId" resultMap="BaseResultMap">
-       select p.id,p.mid,p.`name`,p.url ,p.type from e_admin_user_role ur
-               join e_admin_role_permission rp on ur.rid = rp.rid
-               join e_admin_permission p on p.id = rp.pid
-                where ur.uid = #{userId} ORDER BY rp.pid
-  </select>
-    <select id="queryPermission" resultMap="BaseResultMap">
-        select p.id,p.mid,p.`name`,p.url ,p.type from
-        e_admin_role_permission rp
-        join e_admin_permission p on p.id = rp.pid
-        <where>
-            <if test="roleId!=null">
-                and rp.rid = #{roleId}
-            </if>
-            <if test="name!=null">
-                and p.name = #{name}
-            </if>
-            <if test="type!=null">
-                and p.type = #{type}
-            </if>
-        </where>
-    </select>
-    <insert id="addRolePermission">
-        insert  into e_admin_role_permission (rid , pid ) values ( #{roleId},#{permissionId} )
-    </insert>
-    <update id="removeRolePermission">
-        delete from e_admin_role_permission WHERE rid = #{roleId} AND pid = #{permissionId}
-    </update>
 
-    <insert id="insertPermission" useGeneratedKeys="true" keyProperty="id" parameterType="com.csair.admin.core.po.core.Permission">
-        insert into permission ( name, url) values (#{name}, #{url})
-    </insert>
+  <select id="queryPermissionByUserId" resultMap="BaseResultMap">
+    select p.id,p.mid,p.`name`,p.url ,p.type , p.class_name from e_admin_user_role ur
+    join e_admin_role_permission rp on ur.rid = rp.rid
+    join e_admin_permission p on p.id = rp.pid
+    where ur.uid = #{userId} ORDER BY rp.pid
+  </select>
+  <select id="queryPermission" resultMap="BaseResultMap">
+    select p.id,p.mid,p.`name`,p.url ,p.type from
+    e_admin_role_permission rp
+    join e_admin_permission p on p.id = rp.pid
+    <where>
+      <if test="roleId!=null">
+        and rp.rid = #{roleId}
+      </if>
+      <if test="name!=null">
+        and p.name = #{name}
+      </if>
+      <if test="type!=null">
+        and p.type = #{type}
+      </if>
+    </where>
+  </select>
+  <insert id="addRolePermission">
+    insert  into e_admin_role_permission (rid , pid ) values ( #{roleId},#{permissionId} )
+  </insert>
+  <update id="removeRolePermission">
+    delete from e_admin_role_permission WHERE rid = #{roleId} AND pid = #{permissionId}
+  </update>
+
+  <insert id="insertPermission" useGeneratedKeys="true" keyProperty="id" parameterType="com.csair.admin.core.po.core.Permission">
+    insert into permission ( name, url) values (#{name}, #{url})
+  </insert>
 </mapper>

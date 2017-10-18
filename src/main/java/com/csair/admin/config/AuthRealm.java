@@ -42,41 +42,37 @@ public class AuthRealm extends AuthorizingRealm {
     //认证.登录
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        UsernamePasswordToken utoken = (UsernamePasswordToken)token;//获取用户输入的token
+        UsernamePasswordToken utoken = (UsernamePasswordToken) token;//获取用户输入的token
         String username = utoken.getUsername();
         User user = userService.userLogin(username);
-        SecurityUtils.getSubject().getSession().setAttribute(ParamConstants.USER_SESSION,user);
-        return new SimpleAuthenticationInfo(user,user.getPswd(),this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
+        SecurityUtils.getSubject().getSession().setAttribute(ParamConstants.USER_SESSION, user);
+        return new SimpleAuthenticationInfo(user, user.getPswd(), this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
     }
 
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        User user = (User)super.getAvailablePrincipal(principals);
+        User user = (User) super.getAvailablePrincipal(principals);
         Set<String> permissions = new HashSet<String>();
         Set<String> roles = new HashSet<String>();
         List<Role> rolesList = roleService.queryRoleByUserId(user.getId());
-        if (rolesList.size() > 0) {
-            for (Role role : rolesList) {
-                //将用户具有的角色存入Set
-                roles.add(role.getType());
-                List<Permission> permissionList;
-                if (Role.ADMIN.equalsIgnoreCase(role.getType())) {
-                    permissionList = permissionService.findAllPermission();
-                } else {
-                    PermissionQueryObject qo = new PermissionQueryObject();
-                    qo.setRoleId(role.getId());
-                    permissionList = permissionService.query(qo).getListData();
-                }
-                if (permissionList.size() > 0) {
-                    for (Permission permission : permissionList) {
-                        //将角色具有的权限存入Set
-                        String url = permission.getUrl();
-                        if (StringUtils.hasText(url)) {
-                            String[] split = url.split("\\|\\|");
-                            Collections.addAll(permissions,split);
-                        }
-                    }
+        for (Role role : rolesList) {
+            //将用户具有的角色存入Set
+            roles.add(role.getType());
+            List<Permission> permissionList;
+            if (Role.ADMIN.equalsIgnoreCase(role.getType())) {
+                permissionList = permissionService.findAllPermission();
+            } else {
+                PermissionQueryObject qo = new PermissionQueryObject();
+                qo.setRoleId(role.getId());
+                permissionList = permissionService.query(qo).getListData();
+            }
+            for (Permission permission : permissionList) {
+                //将角色具有的权限存入Set
+                String url = permission.getUrl();
+                if (StringUtils.hasText(permission.getName())) permissions.add(permission.getName());
+                if (StringUtils.hasText(url)) {
+                    Collections.addAll(permissions, url.split("\\|\\|"));
                 }
             }
         }

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.dao.PermissionDao;
+import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.query.PermissionQuery;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.util.StringUtil;
@@ -43,11 +44,6 @@ public class PermissionServiceImpl implements PermissionService {
     private MenuService menuService;
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
-    @Override
-    public int deletePermissionByPid(Long pid) {
-        //todo 考虑关系表也删除
-        return permissionDao.deleteByPrimaryKey(pid);
-    }
 
     @Override
     public Map<String, Object> editRolePermission(Long roleId, Long[] permissionIds, User user) {
@@ -131,34 +127,36 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     /**
-     * //查询权限；按菜单的id归类并且查询菜单权限放在数组的第一个
-     *
-     * @return
+     * 查询权限；按菜单的id归类并且查询菜单权限放在数组的第一个
      */
     @Override
     public Map<String, List<Permission>> queryAllPermissionSort() {
-        PermissionQuery ex = new PermissionQuery();
-        List<Permission> permissionList = permissionDao.selectByExample(ex);
+        List<Permission> allPermission = permissionDao.selectByExample(new PermissionQuery());
+        Map<String, List<Permission>> ma = new HashMap<>();
+        Set<String> permissionNames = new HashSet<>();
+        for (Permission permission : allPermission) {
+            List<Permission> permissions = ma.computeIfAbsent(permission.getClassName(), k -> new ArrayList<>());
+            if (
+                    StringUtils.hasText(permission.getName())//url有值
+                            && permissionNames.add(permission.getName())//权限名字重复的
+                    ) {
+                permissions.add(permission);
+            }
+        }
+        List<Menu> allMenu = menuService.getAllMenu(false);
         Map<String, List<Permission>> map = new HashMap<String, List<Permission>>();
-        for (Permission p : permissionList) {
-            //如果之前；就新建
-            if (!map.containsKey(p.getMid() + "")) {
-                List<Permission> ps = new ArrayList<Permission>();
-                ps.add(p);
-                map.put(p.getMid() + "", ps);
-            } else {
-                List<Permission> ps = map.get(p.getMid() + "");
-                if (p.getName().startsWith("查看菜单")) {
-                    ps.add(ps.get(0));
+        for (Menu menu : allMenu) {
+            for (Permission permission : allPermission) {
+                if (permission.getUrl() != null && permission.getUrl().equals(menu.getUrl())) {
+                    map.put(String.valueOf(menu.getMid()), ma.get(permission.getClassName()));
                 }
-                ps.add(0, p);
             }
         }
         return map;
     }
 
     @Override
-    public int updatePermissByPid(Permission p, User u) {
+    public int updatePermissionByPid(Permission p, User u) {
         operationLogService.log(u.getId(), "修改权限", "权限的id：" + p.getId() + "权限的名字：" + p.getName() + "  权限的url：" + p.getUrl(), u.getLastIp());
         //维护共享变量
         if (StringUtils.hasText(p.getUrl())) {
@@ -170,29 +168,6 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDao.updateByPrimaryKey(p);
     }
 
-    @Override
-    public Permission findByNameMid(String mname, Long mid) {
-        PermissionQuery qo = new PermissionQuery();
-        qo.createCriteria().andNameEqualTo(mname).andMidEqualTo(mid);
-        List<Permission> permissions = permissionDao.selectByExample(qo);
-        if (permissions.size() > 0) {
-            return permissions.get(0);
-        } else {
-            return null;
-        }
-    }
-
-
-    @Override
-    public Long queryPermissionByMidAndMname(Long mid, String mname) {
-        PermissionQuery ex = new PermissionQuery();
-        ex.createCriteria().andMidEqualTo(mid).andNameEqualTo(mname);
-        List<Permission> permissions = permissionDao.selectByExample(ex);
-        if (permissions.size() > 0) {
-            return permissions.get(0).getId();
-        }
-        return null;
-    }
 
     @Override
     public synchronized int addAdminPermission() {
@@ -215,9 +190,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     /**
      * 添加权限
-     *
-     * @param p
-     * @return
      */
     @Override
     public Long addPermission(Permission p, User u) {
@@ -242,20 +214,6 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<Permission> selectByMenuId(Long mid) {
-        PermissionQuery qo = new PermissionQuery();
-        qo.createCriteria().andMidEqualTo(mid);
-        return permissionDao.selectByExample(qo);
-    }
-
-    @Override
-    public List<Permission> queryNoMenuPermission() {
-        PermissionQuery qo = new PermissionQuery();
-        qo.createCriteria().andMidIsNull();
-        return permissionDao.selectByExample(qo);
-    }
-
-    @Override
     public List<Permission> findAllPermission() {
         return permissionDao.selectByExample(new PermissionQuery());
     }
@@ -266,9 +224,10 @@ public class PermissionServiceImpl implements PermissionService {
 
         //把多余的去掉;去掉404和项目外的
         removeUnnecessary(urlAndMethod);
-        //去掉数据库里面已经有的
-        remvoeHadUrl(ps);
-
+        for (Permission o : ps) {
+            //去掉数据库里面已经有的
+            urlAndMethod.remove(o.getUrl());
+        }
 
         for (String key : urlAndMethod.keySet()) {
             Method method = urlAndMethod.get(key);
@@ -278,7 +237,8 @@ public class PermissionServiceImpl implements PermissionService {
             if (annotation != null) name = annotation.value();
             p.setName(name);
             p.setUrl(key);
-            permissionDao.insertPermission(p);
+            p.setClassName(method.getDeclaringClass().getName());
+            permissionDao.insert(p);
         }
 
         //把没有权限的url放到共享变量
@@ -287,23 +247,6 @@ public class PermissionServiceImpl implements PermissionService {
         return addAdminPermission();
     }
 
-    private void remvoeHadUrl(List<Permission> ps) {
-        Set<String> hasPattern = new HashSet<>();
-        for (Permission o : ps) {
-            //去掉已经有的；
-            if (StringUtils.hasText(o.getUrl())) {
-                String[] split = o.getUrl().split("\\|\\|");
-                for (String s : split) {
-//                    urlAndMethod.remove(s);
-                }
-            }
-            //已经有的匹配
-            hasPattern.add(o.getUrl());
-        }
-//        for (String s : hasPattern) {
-//            urlAndMethod.remove(s);
-//        }
-    }
 
     /**
      * 把多余的去掉
