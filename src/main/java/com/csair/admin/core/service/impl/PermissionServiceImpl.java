@@ -144,7 +144,7 @@ public class PermissionServiceImpl implements PermissionService {
             }
         }
         List<Menu> allMenu = menuService.getAllMenu(false);
-        Map<String, List<Permission>> map = new HashMap<String, List<Permission>>();
+        Map<String, List<Permission>> map = new HashMap<>();
         for (Menu menu : allMenu) {
             for (Permission permission : allPermission) {
                 if (permission.getUrl() != null && permission.getUrl().equals(menu.getUrl())) {
@@ -220,20 +220,35 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public int reloadPermission(Map<String, Method> urlAndMethod) {
-        List<Permission> ps = findAllPermission();
-
         //把多余的去掉;去掉404和项目外的
         removeUnnecessary(urlAndMethod);
+        List<Permission> ps = findAllPermission();
+        List<Permission> update = new ArrayList<>();
         for (Permission o : ps) {
-            //去掉数据库里面已经有的
+            //去掉数据库里面一样的
+            Method method = urlAndMethod.get(o.getUrl());
+            String name = null;
+            PermissionName annotation = method.getAnnotation(PermissionName.class);
+            if (annotation != null) name = annotation.value();
+            if (!(method.getDeclaringClass().getName().equals(o.getClassName())
+                    &&
+                    ((name != null && name.equals(o.getName())) || (name == null && o.getName() == null))
+            )) {
+                o.setClassName(method.getDeclaringClass().getName());
+                o.setName(name);
+                update.add(o);
+            }
             urlAndMethod.remove(o.getUrl());
+        }
+        for (Permission permission : update) {
+            permissionDao.updateByPrimaryKey(permission);
         }
 
         for (String key : urlAndMethod.keySet()) {
             Method method = urlAndMethod.get(key);
-            PermissionName annotation = method.getAnnotation(PermissionName.class);
             Permission p = new Permission();
             String name = null;
+            PermissionName annotation = method.getAnnotation(PermissionName.class);
             if (annotation != null) name = annotation.value();
             p.setName(name);
             p.setUrl(key);

@@ -13,7 +13,7 @@
 <body>
 <div class="layui-layout layui-layout-admin" style="">
 <#include "../../common/left_mune.ftl" />
-    <div class="layui-body" >
+    <div class="layui-body">
         <div class="headerTxt clearfix">
             <div class="fl">品牌列表</div>
             <div class="fr">
@@ -64,6 +64,7 @@
                         </td>
                     </tr>
                     </#list>
+                    <div id="pageQuery"></div>
                     </tbody>
                 </table>
             </div>
@@ -80,27 +81,27 @@
             </div>
         </div>
     </div>
-
-
 </div>
 </body>
 <script type="text/javascript">
     //分页代码
-    layui.use(['laypage', 'layer'], function () {
-        var laypage = layui.laypage
-                , layer = layui.layer;
-        laypage({
-            cont: 'pageQuery'
-            , pages: ${pageResult.totalPage}
-            , curr:${pageResult.currentPage}
-            , first: false
-            , last: false
-            , skin: '#1E9FFF'
-            , jump: function (data) {
+    layui.use('laypage', function () {
+        var laypage = layui.laypage;
+        laypage.render({
+            elem: 'pageQuery'
+            , count: ${pageResult.totalPage} //数据总数，从服务端得到
+            , jump: function (obj, first) {
+                //obj包含了当前分页的所有参数，比如：
+                console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                console.log(obj.limit); //得到每页显示的条数
                 var oldPage = $("[name=currentPage]").val();
-                if (oldPage != data.curr) {
-                    $("[name=currentPage]").val(data.curr);
+                if (oldPage != obj.curr) {
+                    $("[name=currentPage]").val(obj.curr);
                     $("#pageQueryBrand").submit();
+                }
+                //首次不执行
+                if (!first) {
+                    //do something
                 }
             }
         });

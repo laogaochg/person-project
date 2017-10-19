@@ -133,7 +133,7 @@
                     , laydate = layui.laydate;
             layedit.set({
                 uploadImage: {
-                    url: '/article/ims'
+                    url: '/uploadFile'
                     , type: 'post' //默认post
                 }
             });

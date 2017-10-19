@@ -70,8 +70,6 @@ public class ShiroConfig {
 
     /**
      * cache管理
-     *
-     * @return
      */
     @Bean
     public EhCacheManager cacheManager() {

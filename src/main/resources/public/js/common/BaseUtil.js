@@ -66,7 +66,6 @@ function postAjax(url,data,successFunction,errorFunction,updateErrorFunction) {
         }
     });
 }
-
 /**
  *
  * @param url 提交的URL

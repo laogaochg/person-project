@@ -62,7 +62,7 @@ public class BrandServiceImpl implements BrandService {
         if (brand.getBrandId() == null) {
             brand.setAddTime(new Date());
             brand.setAddBy(user.getId());
-            String content = java.lang.String.format("品牌名字：%s", brand.getBrandName());
+            String content = String.format("品牌名字：%s", brand.getBrandName());
             brandDao.insert(brand);
             operationLogService.log(user.getId(), "添加品牌", content, user.getLastIp());
             return result;
@@ -75,7 +75,7 @@ public class BrandServiceImpl implements BrandService {
             oldBrand.setBrandOrder(brand.getBrandOrder());
             oldBrand.setBrandWebsite(brand.getBrandWebsite());
             oldBrand.setStatus(brand.getStatus());
-            String content = java.lang.String.format("品牌ID:%s；品牌名字：%s", brand.getBrandId(), brand.getBrandName());
+            String content = String.format("品牌ID:%s；品牌名字：%s", brand.getBrandId(), brand.getBrandName());
             brandDao.updateByPrimaryKey(brand);
             operationLogService.log(user.getId(), "修改品牌", content, user.getLastIp());
             return null;

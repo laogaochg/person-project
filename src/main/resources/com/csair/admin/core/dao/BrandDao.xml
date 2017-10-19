@@ -338,15 +338,16 @@
   </update>
     <update id="updateByPrimaryKey">
     update csair_brand
-    set brand_name = #{brandName,jdbcType=VARCHAR},
-      brand_logo = #{brandLogo,jdbcType=VARCHAR},
-      brand_logo_thumb = #{brandLogoThumb,jdbcType=VARCHAR},
-      brand_website = #{brandWebsite,jdbcType=VARCHAR},
-      brand_order = #{brandOrder,jdbcType=INTEGER},
-      status = #{status,jdbcType=BIT},
-      add_time = #{addTime,jdbcType=TIMESTAMP},
-      add_by = #{addBy,jdbcType=INTEGER}
-    where brand_id = #{brandId,jdbcType=INTEGER}
+    set brand_name = #{brandName},
+      brand_logo = #{brandLogo},
+      brand_logo_thumb = #{brandLogoThumb},
+      brand_website = #{brandWebsite},
+      brand_order = #{brandOrder},
+      status = #{status},
+      brand_desc = #{brandDesc},
+      add_time = #{addTime},
+      add_by = #{addBy}
+    where brand_id = #{brandId}
   </update>
     <select id="pageQueryList" resultMap="BaseResultMap">
         select

@@ -13,11 +13,11 @@
     错误代码：${(code)!"404"}<br/>
 </h4>
 <div style="text-align: center;">
-    <img style="margin-left: 42%" width="300px" src="/image/a.jpg"><br/>
+    <img style="" width="300px" src="/image/a.jpg"><br/>
     <button class="back btn btn-info" style="width: 100px;">返回</button>
 </div>
 <script type="text/javascript">
-    $(".back").click(function() {
+    $(".back").click(function () {
         window.history.back();
     });
 </script>

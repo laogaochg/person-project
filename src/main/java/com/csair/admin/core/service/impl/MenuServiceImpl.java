@@ -217,6 +217,7 @@ public class MenuServiceImpl implements MenuService {
         for (Permission p : permissionService.queryPermissionByUserId(userId)) {
             if (StringUtils.hasText(p.getUrl())) urls.add(p.getUrl());
         }
+        if(urls.size()==0) return new ArrayList<>();
         MenuQuery qo = new MenuQuery();
         qo.createCriteria().andUrlIn(urls);
         List<Menu> result = menuDao.selectByExample(qo);

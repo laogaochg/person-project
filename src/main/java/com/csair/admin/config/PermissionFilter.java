@@ -89,7 +89,8 @@ public class PermissionFilter extends AccessControlFilter {
             saveRequest(request);
             WebUtils.issueRedirect(request, response, "/login");
         } else {
-            throw new UnauthorizedException();
+            request.getRequestDispatcher("/unauthorizedException").forward(request, response);
+//            throw new UnauthorizedException();
         }
         return Boolean.FALSE;
     }

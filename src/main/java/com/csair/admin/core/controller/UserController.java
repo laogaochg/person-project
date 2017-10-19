@@ -55,8 +55,6 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    @Resource
-    private RoleService roleService;
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -121,15 +119,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    //返回用户列表
-    @RequestMapping("/user/list")
-    @PermissionName("查询所有用户")
-    public ModelAndView queryRole(UserQueryObject qo, ModelAndView model) {
-        PageResult pageResult = userService.query(qo);
-        model.addObject("pageResult", pageResult);
-        model.setViewName("user/UserList");
-        return model;
-    }
 
     //去修改密码页面
     @RequestMapping("/changePassword")
@@ -156,133 +145,5 @@ public class UserController {
         return e;
     }
 
-    //返回编辑用户页面roleService
-    @RequestMapping("/user/toEditUser")
-    @PermissionName("新建用户")
-    public ModelAndView toEditUser(User us, ModelAndView model) {
-        model.addObject("roleList", roleService.queryAllRole());
-        model.addObject("user", SecurityUtils.getSubject().getSession().getAttribute(ParamConstants.USER_SESSION));
-        model.setViewName("user/EditUser");
-        if (null != us.getId()) {
-            UserQueryObject qo = new UserQueryObject();
-            qo.setId(us.getId());
-            List<User> listData = userService.query(qo).getListData();
-            if (listData.size() == 0) {
-                return model;
-            }
-            User u = listData.get(0);
-            model.addObject("editUser", u);
-            List<Role> roles = roleService.queryRoleByUserId(u.getId());
-            List<Long> roleIds = new ArrayList<Long>();
-            for (Role role : roles) {
-                roleIds.add(role.getId());
-            }
-            model.addObject("roleIds", roleIds);
-        }
-        return model;
-    }
 
-    //编辑用户
-    @RequestMapping("/user/editUser")
-    @ResponseBody
-    @PermissionName("编辑用户")
-    public ResponseEntity<String> editUser(UserVo user) {
-        Subject admin = SecurityUtils.getSubject();
-        ResponseEntity<String> re = new ResponseEntity<>();
-        //输入数据检查。
-        if (user == null) {
-            re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户参数不正确。");
-            return re;
-        }
-        if (!StringUtils.hasText(user.getEmail())) {
-            re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户邮箱不能为空。");
-            return re;
-        }
-        if (!StringUtils.hasText(user.getPswd())) {
-            re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户密码不能为空。");
-            return re;
-        }
-        ReturnMessage message = userService.editUse(user, admin);
-        if (!"200".equals(message.getCode())) {
-            re.setCode(new Integer(message.getCode()));
-            re.setMes(message.getMes());
-        }
-        return re;
-    }
-
-    //下载用户数据
-    @RequestMapping("/user/downloadUser")
-    @PermissionName("下载用户数据")
-    public org.springframework.http.ResponseEntity<byte[]> downloadUser(HttpServletResponse response) throws Exception, WriteException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        List<String> titles = new ArrayList<String>();
-        titles.add("id");
-        titles.add("昵称");
-        titles.add("邮箱|登录账号");
-        titles.add("创建时间");
-        titles.add("最后登录时间");
-        titles.add("登录IP");
-        titles.add("备注");
-        titles.add("状态");
-        List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-        UserQueryObject qo = new UserQueryObject();
-        qo.setPageSize(-1);
-        PageResult query = userService.query(qo);
-        for (Object o : query.getListData()) {
-            User u = (User) o;
-            data.add(u.getUserData());
-        }
-        XlsFileUtil.getWorkbook(bos, titles, data);
-        byte[] contentBytes = bos.toByteArray();
-        String dfileName = new String(String.format("%s.xls", "用户数据下载").getBytes("gb2312"), "iso8859-1");
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", dfileName);
-        return new org.springframework.http.ResponseEntity<byte[]>(contentBytes, headers, HttpStatus.CREATED);
-    }
-
-    /**
-     * 取消禁止用户登陆
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping("cancelForbidUserLogin")
-    @ResponseBody
-    @PermissionName("解禁用户登陆")
-    public ResponseEntity<Object> cancelForbidUserLogin(Long id) {
-        //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
-        if (id == null) {
-            result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("id不能为空。");
-            return result;
-        }
-        User user = ServletUtils.getUser();
-        return userService.cancelForbidUserLogin(id, user);
-    }
-
-    /**
-     * 禁止用户登陆
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping("forbidUserLogin")
-    @ResponseBody
-    @PermissionName("禁止用户登陆")
-    public ResponseEntity<Object> forbidUserLogin(Long id) {
-        //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
-        if (id == null) {
-            result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("id不能为空。");
-            return result;
-        }
-        User user = ServletUtils.getUser();
-        return userService.forbidUserLogin(id, user);
-    }
 }

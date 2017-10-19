@@ -84,7 +84,7 @@ $(function() {
 
     function upfiles(data){
         var formData=new FormData();
-        formData.append("myfile",data);
+        formData.append("file",data);
         $.ajax({
             url: "/uploadFile",
             type: "POST",
@@ -99,12 +99,11 @@ $(function() {
              */
             processData: false,
             success: function(data) {
-                if(data.code==200) {
+                if(data.code==0) {
                     $("#selectImg").attr("src","/html/img/" + data.data);
                     $("[name=brandLogo]").val(data.data);
                 } else {
-                    myModal("myModalTest","上传文件失败",data.mes,function() {
-                    });
+                    myModal("myModalTest","上传文件失败",data.mes,function() {});
                 }
             },
             error: function(data) {

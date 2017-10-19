@@ -27,7 +27,8 @@ public class ShiroFilter extends ShiroFilterFactoryBean {
 
     public ShiroFilter() {
         super();
-        ignoreExt = new HashSet<String>();
+        setUnauthorizedUrl("/unauthorizedException");
+        ignoreExt = new HashSet<>();
         ignoreExt.add(".jpg");
         ignoreExt.add(".png");
         ignoreExt.add(".gif");
@@ -68,7 +69,6 @@ public class ShiroFilter extends ShiroFilterFactoryBean {
         protected void doFilterInternal(ServletRequest servletRequest,ServletResponse servletResponse,FilterChain chain) throws ServletException, IOException {
             HttpServletRequest request = (HttpServletRequest)servletRequest;
             String str = request.getRequestURI().toLowerCase();
-            Object user = request.getSession().getAttribute("user");
             boolean flag = true;
             int idx = 0;
             if ((idx = str.lastIndexOf(".")) > 0) {

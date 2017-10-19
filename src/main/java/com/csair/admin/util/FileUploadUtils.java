@@ -35,11 +35,11 @@ public class FileUploadUtils {
             inputStream = myfile.getInputStream();
         } catch (IOException e) {
             logger.info(e.getMessage());
-            throw new PlatformException(ParamConstants.PANDLE_FILE_ERROR ,"处理文件出现异常");
+            throw new PlatformException(ParamConstants.PANDLE_FILE_ERROR, "处理文件出现异常");
         }
         String fileName = myfile.getOriginalFilename();
         String substring = fileName.substring(fileName.lastIndexOf("."));
-        fileName = FileUploadUtils.saveFile(inputStream,substring);
+        fileName = FileUploadUtils.saveFile(inputStream, substring);
         return fileName;
     }
 
@@ -48,7 +48,7 @@ public class FileUploadUtils {
         // 将request变成多部分request
         String realPath = request.getSession().getServletContext().getRealPath("");
         try {
-            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest)request;
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
             // 获取multiRequest 中所有的文件名
             Iterator<?> iter = multiRequest.getFileNames();
             while (iter.hasNext()) {
@@ -59,14 +59,14 @@ public class FileUploadUtils {
                     String substring = fileName.substring(fileName.lastIndexOf("."));
                     if (file != null) {
                         InputStream inputStream = file.getInputStream();
-                        fileName = FileUploadUtils.saveFile(inputStream,substring);
+                        fileName = FileUploadUtils.saveFile(inputStream, substring);
                         return fileName;
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException(000011,"文件上传异常");
+            throw new PlatformException(000011, "文件上传异常");
 
         }
         return "";
@@ -79,8 +79,8 @@ public class FileUploadUtils {
      * @param extName     文件后缀名
      * @return 重新命名的文件名
      */
-    public static String saveFile(InputStream inputStream,String extName) {
-        String fileName = UUID.randomUUID().toString().replace("-","") + extName;
+    public static String saveFile(InputStream inputStream, String extName) {
+        String fileName = UUID.randomUUID().toString().replace("-", "") + extName;
         File file = new File(EnvironmentParams.IMG_PATH);
         if (!file.exists()) {
             file.mkdirs();
@@ -89,12 +89,12 @@ public class FileUploadUtils {
         OutputStream out = null;
         try {
             out = new FileOutputStream(file);
-            StreamUtils.copy(inputStream,out);
+            StreamUtils.copy(inputStream, out);
             out.close();
             inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException(000011,"文件上传异常");
+            throw new PlatformException(000011, "文件上传异常");
         }
         return fileName;
     }
@@ -102,7 +102,7 @@ public class FileUploadUtils {
     public static String reduceImg(String imgName) {
         String s = EnvironmentParams.IMG_PATH + "/" + imgName;
         String s1 = EnvironmentParams.IMG_PATH + "/" + ParamConstants.IMG_THUMBNAIL_PERFIX + imgName;
-        reduceImg(s,s1,EnvironmentParams.IMG_THUMBNAIL_WIDTH,EnvironmentParams.IMG_THUMBNAIL_HIGHT);
+        reduceImg(s, s1, EnvironmentParams.IMG_THUMBNAIL_WIDTH, EnvironmentParams.IMG_THUMBNAIL_HIGHT);
         return ParamConstants.IMG_THUMBNAIL_PERFIX + imgName;
     }
 
@@ -114,23 +114,25 @@ public class FileUploadUtils {
      * @param outputWidth  压缩后图片宽度（当rate==null时，必传）
      * @param outputHeight 压缩后图片高度（当rate==null时，必传）
      */
-    public static void reduceImg(String imgsrc,String imgdist,int outputWidth,int outputHeight) {
+    public static void reduceImg(String imgsrc, String imgdist, int outputWidth, int outputHeight) {
         try {
-            BufferedImage bi2 = ImageIO.read(new File(imgsrc)); // 以上两行解决此处"Unsupported Image Type"
+            File imgFile = new File(imgsrc);
+            if (!imgFile.exists()) return;
+            BufferedImage bi2 = ImageIO.read(imgFile); // 以上两行解决此处"Unsupported Image Type"
             int newWidth;
             int newHeight;
             // 判断是否是等比缩放
             newWidth = outputWidth; // 输出的图片宽度
             newHeight = outputHeight; // 输出的图片高度
-            BufferedImage to = new BufferedImage(newWidth,newHeight,BufferedImage.TYPE_INT_RGB);
+            BufferedImage to = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g2d = to.createGraphics();
-            to = g2d.getDeviceConfiguration().createCompatibleImage(newWidth,newHeight,Transparency.OPAQUE);
+            to = g2d.getDeviceConfiguration().createCompatibleImage(newWidth, newHeight, Transparency.OPAQUE);
             g2d.dispose();
             g2d = to.createGraphics();
-            Image from = bi2.getScaledInstance(newWidth,newHeight,bi2.SCALE_AREA_AVERAGING);
-            g2d.drawImage(from,0,0,null);
+            Image from = bi2.getScaledInstance(newWidth, newHeight, bi2.SCALE_AREA_AVERAGING);
+            g2d.drawImage(from, 0, 0, null);
             g2d.dispose();
-            ImageIO.write(to,"jpg",new File(imgdist));
+            ImageIO.write(to, "jpg", new File(imgdist));
         } catch (IOException e) {
             e.printStackTrace();
             logger.warn("压缩图片文件出错。" + e.getMessage());
@@ -147,7 +149,7 @@ public class FileUploadUtils {
     public static int[] getImgWidth(File file) {
         InputStream is = null;
         BufferedImage src = null;
-        int result[] = {0,0};
+        int result[] = {0, 0};
         try {
             is = new FileInputStream(file);
             src = javax.imageio.ImageIO.read(is);
