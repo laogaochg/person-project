@@ -72,6 +72,15 @@ public class EnvironmentParams {
      * 微信 得到TOKEN的url，已经拼好参数
      */
     public static String GET_TOKEN_URL;
+    /**
+     * 公钥
+     */
+    public static String PUBLIC_KEY;
+    /**
+     * 公钥
+     */
+    public static String PRIVATE_KEY;
+
 
     static {
         property = new Properties();
@@ -87,6 +96,8 @@ public class EnvironmentParams {
             IMG_THUMBNAIL_HIGHT = new Integer("" + property.get("IMG_THUMBNAIL_HIGHT"));
             WEIXING_TOKEN = "" + property.get("WEIXING_TOKEN");
             GET_TOKEN_URL = "" + property.get("GET_TOKEN_URL");
+            PUBLIC_KEY = "" + property.get("PUBLIC_KEY");
+            PRIVATE_KEY = "" + property.get("PRIVATE_KEY");
             GET_TOKEN_URL = String.format(GET_TOKEN_URL, AppID, AppSecret);
             CREATE_MENU_URL = "" + property.get("CREATE_MENU_URL");
         } catch (Exception e) {

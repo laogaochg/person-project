@@ -62,6 +62,7 @@
 </div>
 </body>
 <script type="text/javascript">
+    ${pageResult.totalPage};
     $(function() {
         $('#pagination').twbsPagination({
             first: "首页",

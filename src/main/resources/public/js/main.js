@@ -1,8 +1,51 @@
 /**
  * Created by Administrator on 2017/7/14.
  */
-/*----------------------  抽离出左边的部分和头部   ---------------------*/
+//调用layui的样式
+$(function(){
+    layui.use('element',function() {
+        var element=layui.element;
+    });
+});
+/*  -----------------左边菜单的JS--------------------  */
+$(function () {
+    $(".menu").data("toShow", true);
+    //选中菜单处理 展开当前级列表和父级列表
+    var selectMenuId = $(".selectMenu").data("parentid");
+    console.debug(selectMenuId);
+    var firstSelectMenuParent = $("[data-menuid=" + selectMenuId + "]");
+    showMenu(firstSelectMenuParent);
+    var parentId = firstSelectMenuParent.data("parentid");
+    if (parentId) {
+        showMenu($("[data-menuid=" + parentId + "]"));
+    }
 
+    function showMenu(eleMent) {
+        eleMent.children("span").addClass("glyphicon-triangle-top");
+        eleMent.children("span").removeClass("glyphicon-triangle-bottom");
+        eleMent.next("ul").show(150);
+        eleMent.data("toShow", false);
+    }
+
+    $('.menu').click(function () {
+        var $this = $(this);
+        var toShow = $this.data('toShow');
+        $this.parent("ul").children(".childList").hide(150);
+        $this.parent("ul").children(".menu").data("toShow", true);
+        //图标处理
+        var icon = $this.parent("ul").children("li").children(".stateIcon");
+        icon.addClass("glyphicon-triangle-bottom");
+        icon.removeClass("glyphicon-triangle-top");
+        if (toShow) {//展示
+            showMenu($this);
+        } else {//隐藏
+            $this.next("ul").hide(150);
+            $this.data("toShow", true);
+            $this.children("span").addClass("glyphicon-triangle-bottom");
+            $this.children("span").removeClass("glyphicon-triangle-top");
+        }
+    });
+})
 /* --------------------------       baseMsg.html          --------------------------------*/
 $(function() {
     /*---------------------- 用于左边菜单栏的三级菜单的点击事件   ---------------------*/

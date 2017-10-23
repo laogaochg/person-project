@@ -11,9 +11,3 @@
 <script type="text/javascript" src="${context.contextPath}/js/common/pageQuery.js"></script>
 <script src="${context.contextPath}/js/main.js"></script>
 <script src="/js/layui/layui.js" charset="utf-8"></script>
-<script>
-    layui.use('element',function() {
-        var element=layui.element;
-
-    });
-</script>

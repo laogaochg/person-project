@@ -27,113 +27,15 @@
                 <dd><a href="">安全设置</a></dd>
             </dl>
         </li>
-        <li class="layui-nav-item"><a href="">退了</a></li>
+        <li class="layui-nav-item"><a href="/logout">退了</a></li>
     </ul>
 </div>
 <style>
-    .menu {
-        border-top: 0px none;
-        text-align: left;
-        line-height: 40px;
-        height: 40px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-        padding: 0 10px;
-        font-size: 14px;
-        text-decoration: none;
-        cursor: auto;
-    }
 
-    .menu a {
-        color: #ffffff;
-    }
-
-    .firstMenu:hover {
-        border-left: 5px green solid;
-    }
-
-    .childList {
-        display: none;
-        padding-left: 15px;
-    }
-
-    .childList li {
-        padding-left: 15px;
-    }
-    .selectMenuIcon{
-        /*font-size: 16px;*/
-        /*vertical-align: text-top;*/
-        /*color: #1aff18;*/
-        /*border-bottom: 2px green solid;*/
-    }
-    .selectMenu a{
-        box-shadow: 0 0 3px rgba(0,136,204,.5);
-        background-color: #08c;
-        color: #fff;
-        border-radius: 3px;
-        cursor: pointer;
-        height: 20px;
-        white-space: nowrap;
-        padding-left: 18px;
-        padding-right: 25px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        margin-left: -18px;
-    }
 
 </style>
-<script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
-    });
-    $(function () {
-        $(".menu").data("toShow", true);
-        //选中菜单处理 展开当前级列表和父级列表
-        var selectMenuId = $(".selectMenu").data("parentid");
-        console.debug(selectMenuId);
-        var firstSelectMenuParent = $("[data-menuid=" + selectMenuId + "]");
-        showMenu(firstSelectMenuParent);
-        var parentId = firstSelectMenuParent.data("parentid");
-        if (parentId) {
-            showMenu($("[data-menuid=" + parentId + "]"));
-        }
-        console.debug($("[data-menuid=" + selectMenuId + "]").html());
-
-//        showMenu(selectMenu.parent("ul").parent("ul").parent("ul").children("li"));
-
-        function showMenu(eleMent) {
-            eleMent.children("span").addClass("glyphicon-triangle-top");
-            eleMent.children("span").removeClass("glyphicon-triangle-bottom");
-            eleMent.next("ul").show(150);
-            eleMent.data("toShow", false);
-        }
-
-        $('.menu').click(function () {
-            var $this = $(this);
-            var toShow = $this.data('toShow');
-            $this.parent("ul").children(".childList").hide(150);
-            $this.parent("ul").children(".menu").data("toShow", true);
-            //图标处理
-            var icon = $this.parent("ul").children("li").children(".stateIcon");
-            icon.addClass("glyphicon-triangle-bottom");
-            icon.removeClass("glyphicon-triangle-top");
-            if (toShow) {//展示
-                showMenu($this);
-            } else {//隐藏
-                $this.next("ul").hide(150);
-                $this.data("toShow", true);
-                $this.children("span").addClass("glyphicon-triangle-bottom");
-                $this.children("span").removeClass("glyphicon-triangle-top");
-            }
-        });
-    })
-</script>
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
-        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul style="width: 220px;">
         <#list user.menus as menu>
             <li data-menuid="${menu.mid}"
@@ -167,14 +69,14 @@
                         <#list menu2.menuList as menu3>
                             <li data-menuid="${menu3.mid}"
                                 data-parentid="${menu3.pid}"
-                                class="${(menu3.mid==selectMenuIdForIntropect)?string("selectMenu ","")}menu" style="padding-left: 35px;">
+                                class="${(menu3.mid==selectMenuIdForIntropect)?string("selectMenu ","")}menu"
+                                style="padding-left: 35px;">
                                 <#if (menu3.url)??>
                                 <a href="${menu3.url}?selectMenuIdForIntropect=${menu3.mid}">
                                 <#else>
 
                                 <a href="javascript:;">
                                 </#if>
-                            <#--<span class="selectMenuIcon glyphicon glyphicon-star"></span>&nbsp;-->
                             ${(menu3.mname)!""}
                             </a>
                             </li>

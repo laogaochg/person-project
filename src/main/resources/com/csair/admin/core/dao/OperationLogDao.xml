@@ -300,9 +300,6 @@
             <if test="beginTime!=null">
                 AND l.op_time > #{beginTime}
             </if>
-            <if test="beginTime!=null">
-                AND l.op_time > #{beginTime}
-            </if>
             <if test="endTime!=null">
                 AND #{endTime} > l.op_time
             </if>

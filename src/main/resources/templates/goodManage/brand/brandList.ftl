@@ -15,12 +15,7 @@
 <#include "../../common/left_mune.ftl" />
     <div class="layui-body">
         <div class="headerTxt clearfix">
-            <div class="fl">品牌列表</div>
-            <div class="fr">
-                <button class="layui-btn layui-btn-normal changeBtn mr20 ml32"
-                        onclick="window.location.href='/brand/toEditBrand'"><i class="iconfont  icon-tianjia1"></i>添加品牌
-                </button>
-            </div>
+            <div class="fl title-body">品牌列表</div>
         </div>
         <div class="Popup brandPopup">
             <div class="selBox">
@@ -31,6 +26,10 @@
                     <i class="ico iconfont icon-sousuo"></i>
                     <input name="currentPage" value="${pageResult.currentPage}" type="hidden">
                     <button class="layui-btn layui-btn-normal serchH">搜索</button>
+                    <button class="layui-btn layui-btn-normal changeBtn mr20 ml32"
+                            style="margin-left: 300px;" type="button"
+                            onclick="window.location.href='/brand/toEditBrand'"><i class="iconfont  icon-tianjia1"></i>添加品牌
+                    </button>
                 </form>
             </div>
         </div>
@@ -64,8 +63,6 @@
                         </td>
                     </tr>
                     </#list>
-                    <div id="pageQuery"></div>
-                    </tbody>
                 </table>
             </div>
             <div class="tableFoot">

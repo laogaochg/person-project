@@ -32,7 +32,7 @@ import com.csair.admin.core.service.RoleService;
 
 import javax.annotation.Resource;
 
-@Service("permissionService")
+@Service
 public class PermissionServiceImpl implements PermissionService {
     @Resource
     private PermissionDao permissionDao;

@@ -23,17 +23,20 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-log4j</artifactId>-->
-            <!--<version>RELEASE</version>-->
-        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+        <!--<dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>9.0.0.M17</version>
+        </dependency>-->
+
         <!--监控应用及与应用进行交互-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
