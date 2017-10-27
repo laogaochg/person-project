@@ -72,9 +72,9 @@
                         <th> ${(user.remark)!""}</th>
                         <th> ${(user.lastIp)!""}</th>
                         <th>
-                        ${((user.last_login_time)?string("yyyy-MM-dd HH:mm"))!""}
+                        ${((user.lastLoginTime)?string("yyyy-MM-dd HH:mm"))!""}
                         </th>
-                        <th> ${((user.create_time)?string("yyyy-MM-dd HH:mm"))!""}</th>
+                        <th> ${((user.createTime)?string("yyyy-MM-dd HH:mm"))!""}</th>
                         <th> ${(user.status==1)?string("有效","禁止登录")}</th>
                         <th>
                             <a class="btn btn-info" href="/user/toEditUser?id=${user.id}">

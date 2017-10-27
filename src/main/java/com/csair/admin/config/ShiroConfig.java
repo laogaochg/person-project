@@ -113,9 +113,6 @@ public class ShiroConfig {
 
     /**
      * 配置哪些需要认证
-     *
-     * @param manager
-     * @return
      */
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager) {
