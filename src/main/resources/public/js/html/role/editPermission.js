@@ -53,7 +53,7 @@ $(function() {
         data.id=$("[name=id]").val();
         $.ajax({
             type: "POST",
-            url: "/permission/addMenu",
+            url: contextPath+"/permission/addMenu",
             data: data,
             success: function(data) {
                 if(data.code==200) {

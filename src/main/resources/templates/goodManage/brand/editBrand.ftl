@@ -59,7 +59,7 @@
                                 <div style="position: absolute;top: 25%;left: 20%;z-index: 800;color: red;font-size: 20px;margin-top: -13px;">
                                     点击更改图片
                                 </div>
-                                <img class="add-img up-img" src="/image/${(brand.brandLogo)!""}">
+                                <img class="add-img up-img" src="${context.contextPath}${(brand.brandLogo)!""}">
                             <#else>
                                 <img src="${context.contextPath}/image/index/a11.png" class="add-img">
                             </#if>
@@ -133,7 +133,7 @@
                     , laydate = layui.laydate;
             layedit.set({
                 uploadImage: {
-                    url: '/uploadFile'
+                    url: '${context.contextPath}/uploadFile'
                     , type: 'post' //默认post
                 }
             });

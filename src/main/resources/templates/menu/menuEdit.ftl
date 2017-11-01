@@ -44,7 +44,7 @@
                         <td>已有logo</td>
                     <td>
                     <#if (currentMenu.logoFileName)??>
-                        <img width="50px" src="/image/${(currentMenu.logoFileName)!""}"></td>
+                        <img width="50px" src="${context.contextPath}/image/${(currentMenu.logoFileName)!""}"></td>
                     <#else>
                         暂无
                     </#if>

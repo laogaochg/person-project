@@ -5,7 +5,6 @@ import java.util.Properties;
 
 import com.csair.admin.config.PlatformException;
 import com.csair.admin.config.SpringRefreshListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 
 /**
  * laogaochg
@@ -27,10 +26,6 @@ public class EnvironmentParams {
      */
     public static String PLATFORM_FLAG;
     /**
-     * 平台保存图片的URL目录
-     */
-    public static String IMG_URL_PATH = "/image";
-    /**
      * 平台常用缩略图宽度
      */
     public static int IMG_THUMBNAIL_WIDTH;
@@ -42,11 +37,10 @@ public class EnvironmentParams {
     /**
      * 平台保存图片的真实路径
      * spring启动好了后会自动给这个变量赋量
-     * 具体是配置文件里面upload-path的值+IMG_URL_PATH的值
      *
-     * @see SpringRefreshListener#onApplicationEvent(ContextRefreshedEvent event)
+     * @see SpringRefreshListener#onApplicationEvent(org.springframework.context.event.ContextRefreshedEvent)
      */
-    public static String IMG_PATH;
+    public static String uploadPath;
 
     /**
      * 微信token
@@ -83,26 +77,26 @@ public class EnvironmentParams {
 
 
     static {
-        property = new Properties();
         try {
+            property = new Properties();
             property.load(new InputStreamReader(EnvironmentParams.class.getClassLoader().getResourceAsStream("config.properties"), "UTF-8"));
-            PLATFORM_FLAG = "" + property.get("PLATFORM_FLAG");
-            DAO_URL = "" + property.get("DAO_URL");
-            TEST_ENVIRONMENT = "" + property.get("TEST_ENVIRONMENT");
-            AppSecret = "" + property.get("AppSecret");
-            AppID = "" + property.get("AppID");
-            ENCODING_AESKEY = "" + property.get("EncodingAESKey");
-            IMG_THUMBNAIL_WIDTH = new Integer("" + property.get("IMG_THUMBNAIL_WIDTH"));
-            IMG_THUMBNAIL_HIGHT = new Integer("" + property.get("IMG_THUMBNAIL_HIGHT"));
-            WEIXING_TOKEN = "" + property.get("WEIXING_TOKEN");
-            GET_TOKEN_URL = "" + property.get("GET_TOKEN_URL");
-            PUBLIC_KEY = "" + property.get("PUBLIC_KEY");
-            PRIVATE_KEY = "" + property.get("PRIVATE_KEY");
+            PLATFORM_FLAG = String.valueOf(property.get("PLATFORM_FLAG"));
+            DAO_URL = String.valueOf(property.get("DAO_URL"));
+            TEST_ENVIRONMENT = String.valueOf(property.get("TEST_ENVIRONMENT"));
+            AppSecret = String.valueOf(property.get("AppSecret"));
+            AppID = String.valueOf(property.get("AppID"));
+            ENCODING_AESKEY = String.valueOf(property.get("EncodingAESKey"));
+            IMG_THUMBNAIL_WIDTH = new Integer(String.valueOf(property.get("IMG_THUMBNAIL_WIDTH")));
+            IMG_THUMBNAIL_HIGHT = new Integer(String.valueOf(property.get("IMG_THUMBNAIL_HIGHT")));
+            WEIXING_TOKEN = String.valueOf(property.get("WEIXING_TOKEN"));
+            GET_TOKEN_URL = String.valueOf(property.get("GET_TOKEN_URL"));
+            PUBLIC_KEY = String.valueOf(property.get("PUBLIC_KEY"));
+            PRIVATE_KEY = String.valueOf(property.get("PRIVATE_KEY"));
             GET_TOKEN_URL = String.format(GET_TOKEN_URL, AppID, AppSecret);
-            CREATE_MENU_URL = "" + property.get("CREATE_MENU_URL");
+            CREATE_MENU_URL = String.valueOf(property.get("CREATE_MENU_URL"));
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException(99999,e + "");
+            throw new PlatformException(99999, e + "");
         }
     }
 

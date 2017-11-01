@@ -25,7 +25,7 @@ function myModal(id,title,content,success) {
 function postAjax(url,data,successFunction,errorFunction,updateErrorFunction) {
     $.ajax({
         type: "POST",
-        url: url,
+        url: contextPath+url,
         data: data,
         success: function(data) {
             var msg;
@@ -76,7 +76,7 @@ function postAjax(url,data,successFunction,errorFunction,updateErrorFunction) {
 function ajaxData(url,data,successFunction,errorFunction) {
     $.ajax({
         type: "POST",
-        url: url,
+        url: contextPath+url,
         data: data,
         success: function(data) {
             var msg;

@@ -1,6 +1,6 @@
 #测试环境配置
 #保存图片的目录
-upload-path: D:/test/
+upload-path: D:/usr/local/file/
 #代理地址
 proxyHost: 10.101.1.6
 proxyPort: 80
@@ -16,9 +16,11 @@ spring:
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${upload-path}
   datasource:
+#    url: jdbc:mysql://192.168.19.128:3306/csair_eshop?serverTimezone=UTC&characterEncoding=utf-8&useSSL=true
     url: jdbc:mysql://127.0.0.1:3306/csair_eshop?serverTimezone=UTC&characterEncoding=utf-8&useSSL=true
     username: root
     password: admin
+#    password: laogao520
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -41,6 +43,7 @@ logging:
     level: DEBUG
   level:
     com.csair.admin: DEBUG
+  file: ../log
 #    prefix:
 #    request-context-attribute:
 #    settings.*:

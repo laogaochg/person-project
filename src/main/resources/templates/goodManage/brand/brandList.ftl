@@ -52,9 +52,9 @@
                         <td style="width: 40px"><i data-brandid="${brand.brandId}" class="che js-che tableI"></i></td>
                         <td style="width: 60px">${brand.brandId}</td>
                         <td style="width:280px" class="">${brand.brandName}</td>
-                        <td class=""><img style="width: 40px" src="/image/${(brand.brandLogoThumb)!""}"></td>
+                        <td class=""><img style="width: 40px" src="${context.contextPath}/image/${(brand.brandLogoThumb)!""}"></td>
                         <td class="operation">
-                            <a href="/brand/toEditBrand?id=${brand.brandId}" class="operationA bgColor1">
+                            <a href="${context.contextPath}/brand/toEditBrand?id=${brand.brandId}" class="operationA bgColor1">
                                 <em class="iconfont icon-xiugai"></em>
                             </a>
                             <a onclick="_ajax('ids=${brand.brandId}')" class="operationA bg2">
@@ -124,7 +124,7 @@
             }, function () {
                 $.ajax({
                     type: "POST",
-                    url: "/brand/batchDeleteBrand",
+                    url: "${context.contextPath}/brand/batchDeleteBrand",
                     data: _data,
                     success: function (data) {
                         var msg;

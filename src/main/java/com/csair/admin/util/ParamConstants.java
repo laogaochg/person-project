@@ -26,6 +26,9 @@ public class ParamConstants {
      * 用户不存在。
      */
     public static final int NO_USER = 000005;
+    /**
+     * 图片压缩前缀
+     */
     public static final String IMG_THUMBNAIL_PERFIX = "small_";
     /**
      * 1 => 'No permission to access data',//没有权限访问数据

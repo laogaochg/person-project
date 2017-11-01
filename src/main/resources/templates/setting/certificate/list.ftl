@@ -13,7 +13,7 @@
     <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
     <script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
     <!-- style.css是项目的样式文件  -->
-    <script src="/js/layui/lay/dest/layui.all.js" charset="utf-8"></script>
+    <script src="${context.contextPath}/js/layui/lay/dest/layui.all.js" charset="utf-8"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
         layui.use('upload', function () {
@@ -21,7 +21,7 @@
             //普通图片上传
             var uploadInst = upload.render({
                 elem: '#test1'
-                , url: '/upload/'
+                , url: '${context.contextPath}/upload/'
                 , before: function (obj) {
                     //预读本地文件示例，不支持ie8
                     obj.preview(function (index, file, result) {
@@ -67,7 +67,7 @@
                 var formData = new FormData();
                 formData.append("file", document.getElementById("chooseFile").files[0]);
                 $.ajax({
-                    url: "/certificate/batchInsertCertificate",
+                    url: "${context.contextPath}/certificate/batchInsertCertificate",
                     type: "POST",
                     data: formData,
                     /**
@@ -109,7 +109,7 @@
             function ajaxBathcDelete(_data) {
                 $.ajax({
                     type: "POST",
-                    url: "/certificate/batchDelete",
+                    url: "${context.contextPath}/certificate/batchDelete",
                     data: _data,
                     success: function (data) {
                         if (data.code == 200) {
@@ -185,7 +185,7 @@
                         <th> ${((c.createDate)?string("yyyy-MM-dd HH:mm"))!""}</th>
                         <th> ${((c.updateDate)?string("yyyy-MM-dd HH:mm"))!""}</th>
                         <th>
-                            <a href="/certificate/toEditCertificate?id=${c.id}" class="btn btn-default">修改</a>
+                            <a href="${context.contextPath}/certificate/toEditCertificate?id=${c.id}" class="btn btn-default">修改</a>
                             <button type="button" data-id="${c.id}" class="btn btn-danger editCertificate">删除</button>
                         </th>
                     </tr>

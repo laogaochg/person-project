@@ -1,5 +1,6 @@
 package com.csair.admin.weixing.dto;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ public class TokenController {
     @RequestMapping("weixing")
     @ResponseBody
     public String getToken(HttpServletRequest request) {
+
         String signature = request.getParameter("signature");
         String timestamp = request.getParameter("timestamp");
         String nonce = request.getParameter("nonce");

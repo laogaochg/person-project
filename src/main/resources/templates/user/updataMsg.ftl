@@ -11,7 +11,7 @@
         <div class="content">
             修改信息：${(msg.mes)!""}
             <br/>
-            <a href="/user/list">确定 </a>
+            <a href="${context.contextPath}/user/list">确定 </a>
         </div>
     </div>
 </div>

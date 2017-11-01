@@ -97,11 +97,11 @@ public class BrandServiceImpl implements BrandService {
             //删除LOGO图
             if (brand != null) {
                 String logo = brand.getBrandLogo();
-                File file = new File(EnvironmentParams.IMG_PATH + logo);
+                File file = new File(EnvironmentParams.uploadPath + logo);
                 if (file.exists() && file.isFile()) {
                     file.delete();
                 }
-                file = new File(EnvironmentParams.IMG_PATH + brand.getBrandLogoThumb());
+                file = new File(EnvironmentParams.uploadPath + brand.getBrandLogoThumb());
                 if (file.exists() && file.isFile()) {
                     file.delete();
                 }

@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -80,12 +82,15 @@ public class FileUploadUtils {
      * @return 重新命名的文件名
      */
     public static String saveFile(InputStream inputStream, String extName) {
-        String fileName = UUID.randomUUID().toString().replace("-", "") + extName;
-        File file = new File(EnvironmentParams.IMG_PATH);
+        //对图片进行按天分类
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String fileDate = EnvironmentParams.uploadPath + "/" + format;
+        File file = new File(fileDate);
         if (!file.exists()) {
             file.mkdirs();
         }
-        file = new File(EnvironmentParams.IMG_PATH + "/" + fileName);
+        String fileName = UUID.randomUUID().toString().replace("-", "") + extName;
+        file = new File(fileDate + "/" + fileName);
         OutputStream out = null;
         try {
             out = new FileOutputStream(file);
@@ -96,29 +101,27 @@ public class FileUploadUtils {
             e.printStackTrace();
             throw new PlatformException(000011, "文件上传异常");
         }
-        return fileName;
+        return "/" + format + "/" + fileName;
     }
 
     public static String reduceImg(String imgName) {
-        String s = EnvironmentParams.IMG_PATH + "/" + imgName;
-        String s1 = EnvironmentParams.IMG_PATH + "/" + ParamConstants.IMG_THUMBNAIL_PERFIX + imgName;
-        reduceImg(s, s1, EnvironmentParams.IMG_THUMBNAIL_WIDTH, EnvironmentParams.IMG_THUMBNAIL_HIGHT);
-        return ParamConstants.IMG_THUMBNAIL_PERFIX + imgName;
+        return reduceImg(EnvironmentParams.uploadPath + imgName, EnvironmentParams.IMG_THUMBNAIL_WIDTH, EnvironmentParams.IMG_THUMBNAIL_HIGHT);
     }
 
     /**
      * 采用指定宽度、高度或压缩比例 的方式对图片进行压缩
      *
      * @param imgsrc       源图片地址
-     * @param imgdist      目标图片地址
      * @param outputWidth  压缩后图片宽度（当rate==null时，必传）
      * @param outputHeight 压缩后图片高度（当rate==null时，必传）
+     * @return imgdist      目标图片地址
      */
-    public static void reduceImg(String imgsrc, String imgdist, int outputWidth, int outputHeight) {
+    public static String reduceImg(String imgsrc, int outputWidth, int outputHeight) {
         try {
-            File imgFile = new File(imgsrc);
-            if (!imgFile.exists()) return;
-            BufferedImage bi2 = ImageIO.read(imgFile); // 以上两行解决此处"Unsupported Image Type"
+            File srcFile = new File(imgsrc);
+//            srcFile.getPath()
+            if (!srcFile.exists()) return "";
+            BufferedImage bi2 = ImageIO.read(srcFile); // 以上两行解决此处"Unsupported Image Type"
             int newWidth;
             int newHeight;
             // 判断是否是等比缩放
@@ -132,10 +135,17 @@ public class FileUploadUtils {
             Image from = bi2.getScaledInstance(newWidth, newHeight, bi2.SCALE_AREA_AVERAGING);
             g2d.drawImage(from, 0, 0, null);
             g2d.dispose();
+            //目标文件名
+            String fileName = ParamConstants.IMG_THUMBNAIL_PERFIX + srcFile.getName();
+            //目标全路径
+            String imgdist = srcFile.getParent() + "/" + fileName;
             ImageIO.write(to, "jpg", new File(imgdist));
+            //返回文件的url地址
+            return srcFile.getParent().replace(EnvironmentParams.uploadPath, "") + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
             logger.warn("压缩图片文件出错。" + e.getMessage());
+            return "";
         }
 
     }

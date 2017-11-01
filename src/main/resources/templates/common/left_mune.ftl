@@ -12,8 +12,6 @@
                 <dd><a href="">消息管理</a></dd>
                 <dd><a href="">授权管理</a></dd>
             </dl>
-
-
         </li>
     </ul>
     <ul class="layui-nav layui-layout-right">
@@ -61,7 +59,7 @@
                         <#else>
                             &nbsp;&nbsp;&nbsp;
                         </#if>
-                        <a href="${(menu2.url)!"javascript:;"}">
+                        <a href="${context.contextPath}${(menu2.url)!"javascript:;"}">
                         ${menu2.mname}
                         </a>
                     </li>
@@ -72,7 +70,7 @@
                                 class="${(menu3.mid==selectMenuIdForIntropect)?string("selectMenu ","")}menu"
                                 style="padding-left: 35px;">
                                 <#if (menu3.url)??>
-                                <a href="${menu3.url}?selectMenuIdForIntropect=${menu3.mid}">
+                                <a href="${context.contextPath}${menu3.url}?selectMenuIdForIntropect=${menu3.mid}">
                                 <#else>
 
                                 <a href="javascript:;">

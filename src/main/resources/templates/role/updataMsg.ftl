@@ -16,7 +16,7 @@
     <div class="layui-body" >
     修改信息：${(msg.mes)!""}
     <br/>
-    <a href="/role/list">确定 </a>
+    <a href="${context.contextPath}/role/list">确定 </a>
     <div>
 </body>
 </html>

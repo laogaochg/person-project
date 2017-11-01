@@ -88,7 +88,7 @@
             data.oldPassword=oldPassword;
             $.ajax({
                 type: "POST",
-                url: "/user/changePassword",
+                url: "${context.contextPath}/user/changePassword",
                 data: data,
                 success: function(data) {
                     if(data.code==200) {

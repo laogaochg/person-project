@@ -5,7 +5,7 @@
 #proxyHost: 10.101.1.6
 #proxyPort: 80
 #server:
-#  port: 8080 #服务端口配置
+#  port: 80 #服务端口配置
 #spring:
 ##提供热部署功能
 #  thymeleaf:
@@ -18,10 +18,12 @@
 #  datasource:
 #    url: jdbc:mysql://127.0.0.1:3306/csair_eshop?serverTimezone=UTC&characterEncoding=utf-8&useSSL=true
 #    username: root
-#    password: admin
+##    password: admin
+#    password: laogao520
 #    # 使用druid数据源
 #    type: com.alibaba.druid.pool.DruidDataSource
 #    driver-class-name: com.mysql.jdbc.Driver
+#
 #  #freemarker配置
 #  freemarker:
 #    allow-request-override: false
@@ -34,11 +36,13 @@
 #    expose-spring-macro-helpers: false
 #    settings:
 #      number_format: 0.########
+#      template_update_delay: 0
 #logging:
 #  pattern:
 #    level: DEBUG
 #  level:
 #    com.csair.admin: DEBUG
+#  file: ./logs/core.log
 ##    prefix:
 ##    request-context-attribute:
 ##    settings.*:

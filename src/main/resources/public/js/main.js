@@ -1,6 +1,7 @@
 /**
  * Created by Administrator on 2017/7/14.
  */
+
 //调用layui的样式
 $(function(){
     layui.use('element',function() {

@@ -27,7 +27,7 @@
                 <th>可见</th>
                 <th>操作
                     <button type="button" class="btn btn-default">
-                        <a href="/menu/toEdit?flag=2">添加根菜单</a>
+                        <a href="${context.contextPath}/menu/toEdit?flag=2">添加根菜单</a>
                 </th>
                 </button>
             </tr>
@@ -46,18 +46,18 @@
                         <th>${(menu.url)!""}</th>
                         <th>${(menu.sort)!""}</th>
                         <th>${(menu.state==1)?string("可见","不可见")}</th>
-                        <th><a href="/menu/toEdit?mid=${menu.mid}&flag=2">
+                        <th><a href="${context.contextPath}/menu/toEdit?mid=${menu.mid}&flag=2">
                             <button type="button" class="btn btn-default">
                                 添加下级菜单
                             </button>
                         </a>
-                            <a href="/menu/toEdit?mid=${menu.mid}&flag=1&pid=${(menu.pid)!""}">
+                            <a href="${context.contextPath}/menu/toEdit?mid=${menu.mid}&flag=1&pid=${(menu.pid)!""}">
                                 <button type="button" class="btn btn-default">
                                     修改
                                 </button>
                             </a>
 
-                            <a href="/menu/delete?mid=${menu.mid}&flag=1">
+                            <a href="${context.contextPath}/menu/delete?mid=${menu.mid}&flag=1">
                                 <button type="button" class="btn btn-default">
                                     删除
                                 </button>

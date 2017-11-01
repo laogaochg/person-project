@@ -75,7 +75,7 @@
 				children: "children",
 				name: "name",
 				title: "",
-				url: "url"
+				url: contextPath+"url"
 			},
 			simpleData: {
 				enable: false,

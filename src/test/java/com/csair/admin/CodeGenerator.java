@@ -65,7 +65,7 @@ public class CodeGenerator {
         //调用的url
         String interfaceName = file.getName().substring(0,file.getName().length() - 5);
         String methodName = s.split(" ")[1].substring(0,s.split(" ")[1].indexOf("("));
-        sb.append(" String processUrl = EnvironmentParams.DAO_URL +\"" + interfaceName + "/\"+\"" + methodName + "\";\n");//todo
+        sb.append(" String processUrl = EnvironmentParams.DAO_URL +\"" + interfaceName + "/\"+\"" + methodName + "\";\n");
         //返回类型的写法
         String processResultType = s.split(" ")[0].trim();
 

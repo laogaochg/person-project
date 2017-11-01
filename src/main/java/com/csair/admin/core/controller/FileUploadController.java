@@ -44,7 +44,7 @@ public class FileUploadController {
 //        }
         result.put("code", 0);
         Map<String, Object> map = new HashMap<>();
-        map.put("src", EnvironmentParams.IMG_URL_PATH + "/" + fileName);
+        map.put("src", fileName);
         map.put("title", fileName);
         result.put("data", map);
         return result;

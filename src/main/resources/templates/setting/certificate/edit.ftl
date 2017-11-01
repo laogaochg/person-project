@@ -11,7 +11,7 @@
         $("#editCertificateButton").click(function(){
             $.ajax({
                 type: "POST",
-                url: "/certificate/editCertificate",
+                url: "${context.contextPath}/certificate/editCertificate",
                 data: $("#editCertificate").serialize(),
                 success: function(data) {
                     if(data.code==200) {

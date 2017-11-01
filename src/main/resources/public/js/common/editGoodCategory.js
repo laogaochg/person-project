@@ -14,7 +14,6 @@ $(function() {
             msg="类目名称不能为空。"
             canSubmit=false;
         }
-        //todo 其它验证
         console.debug(data)
         if(canSubmit) {
             ajaxData("/GoodCategory/insertGoodCategory",data,function(data) {

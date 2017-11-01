@@ -13,7 +13,7 @@
     错误代码：${(code)!"404"}<br/>
 </h4>
 <div style="text-align: center;">
-    <img style="" width="300px" src="/image/a.jpg"><br/>
+    <img style="" width="300px" src="${context.contextPath}/image/a.jpg"><br/>
     <button class="back btn btn-info" style="width: 100px;">返回</button>
 </div>
 <script type="text/javascript">
