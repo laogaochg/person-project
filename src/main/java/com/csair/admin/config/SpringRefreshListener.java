@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.csair.admin.util.EnvironmentParams;
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.BeanFactoryUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,8 +20,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.csair.admin.core.service.PermissionService;
-
-import javax.annotation.Resource;
+import com.csair.admin.util.EnvironmentParams;
 
 /**
  * laogaochg
@@ -43,7 +42,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
     public void onApplicationEvent(ContextRefreshedEvent event) {
         EnvironmentParams.uploadPath = uploadPath;
         //重载权限
-        reloadPermission(event);
+//        reloadPermission(event);
         //配置SpringContextUtil的参数
         SpringContextUtil.applicationContext = event.getApplicationContext();
     }
