@@ -74,14 +74,14 @@
             </table>
         </div>
         <div class="row">
-            <form action="/role/removeRoleUser" method="post">
+            <form action="${context.contextPath}/role/removeRoleUser" method="post">
                 <input type="hidden" name="userIds">
                 <input type="hidden" name="roleId" value="${role.id}">
                 <div class="deleteMsg col-md-8"></div>
                 <button class="btn btn-warning saveRoleUser">保存删除纪录</button>
             </form>
         </div>
-        <form action="/role/userList" id="queryRoleUser">
+        <form action="${context.contextPath}role/userList" id="queryRoleUser">
             共找到${pageResult.totalCount}条；当前一页
             共<input style="width: 40px" name="pageSize"
                     value="${pageResult.pageSize}"/>条数据

@@ -40,14 +40,14 @@
         </div>
 
 
-        <form action="/user/list" class="form-inline" method="post" id="queryUser">
+        <form action="${context.contextPath}/user/list" class="form-inline" method="post" id="queryUser">
             <div class="row">
                 <input class="form-control" name="keyWord">
                 <button style="height: 40%" class="btn btn-success">搜索</button>
-                <a class="btn btn-default" href="/user/toEditUser">
+                <a class="btn btn-default" href="${context.contextPath}/user/toEditUser">
                     新建用户
                 </a>
-                <a class="btn btn-default" href="/user/downloadUser">
+                <a class="btn btn-default" href="${context.contextPath}/user/downloadUser">
                     导出用户数据
                 </a>
             </div>
@@ -77,7 +77,7 @@
                         <th> ${((user.createTime)?string("yyyy-MM-dd HH:mm"))!""}</th>
                         <th> ${(user.status==1)?string("有效","禁止登录")}</th>
                         <th>
-                            <a class="btn btn-info" href="/user/toEditUser?id=${user.id}">
+                            <a class="btn btn-info" href="${context.contextPath}/user/toEditUser?id=${user.id}">
                                 修改
                             </a>
                             <#if user.status==1>

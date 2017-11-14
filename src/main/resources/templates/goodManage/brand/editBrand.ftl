@@ -18,7 +18,7 @@
             添加品牌
         </div>
         <div class="addBrand">
-            <form class="" action="/brand/editBrand" method="post">
+            <form class="" action="${context.contextPath}/brand/editBrand" method="post">
                 <input name="brandLogo" value="${(brand.brandLogo)!""}" type="hidden">
                 <input name="brandId" value="${(brand.brandId)!""}" type="hidden">
                 <div class="Hitem">
@@ -113,7 +113,7 @@
                     </div>
                     <div class="Hitem mb20 mt80" style="text-align: center">
                         <button class="layui-btn layui-btn-big layui-btn-normal btnRuduis">保存</button>
-                        <button type="button" onclick="window.location.href='/brand/list'"
+                        <button type="button" onclick="window.location.href='${context.contextPath}/brand/list'"
                                 class="layui-btn layui-btn-primary layui-btn-big btnRuduis">取消
                         </button>
                     </div>

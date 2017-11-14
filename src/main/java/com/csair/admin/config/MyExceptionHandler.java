@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author liuxin
  */
 @Component
-public class MyExceptionHandler implements HandlerExceptionResolver, EmbeddedServletContainerCustomizer {
+public class MyExceptionHandler implements HandlerExceptionResolver {
 
     private static Logger logger = LoggerFactory.getLogger(MyExceptionHandler.class);
 
@@ -57,10 +57,4 @@ public class MyExceptionHandler implements HandlerExceptionResolver, EmbeddedSer
         return model;
     }
 
-    @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
-        container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/404"));
-        container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/404"));
-    }
 }

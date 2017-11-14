@@ -1,11 +1,13 @@
 #测试环境配置
 #保存图片的目录
-upload-path: D:/usr/local/file/
+#upload-path: D:/usr/local/file/
+upload-path: /usr/local/file/
 #代理地址
 proxyHost: 10.101.1.6
 proxyPort: 80
 server:
   port: 80 #服务端口配置
+  contextPath: /my
 spring:
 #提供热部署功能
   thymeleaf:
@@ -40,9 +42,9 @@ spring:
       template_update_delay: 0
 logging:
   pattern:
-    level: DEBUG
-  level:
-    com.csair.admin: DEBUG
+    level: INFO
+#  level:
+#    com.csair.admin: DEBUG
   file: ../log
 #    prefix:
 #    request-context-attribute:

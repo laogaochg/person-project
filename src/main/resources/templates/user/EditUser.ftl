@@ -16,7 +16,7 @@
     <div class="layui-body" >
     <div class="row">
         <div class="col-md-5">
-            <form id="editUserForm" action="/user/editUser" class="" method="post">
+            <form id="editUserForm" action="${context.contextPath}/user/editUser" class="" method="post">
                 用户信息<br/>
                 <input name="id" type="hidden" value="${(editUser.id)!""}">
                 用户名<input name="email" value="${(editUser.email)!""}" class="form-control"><br/>
@@ -78,7 +78,7 @@
                 console.debug(data);
                 var url="/user/editUser";
                 var successFunction=function() {
-                    window.location.href="/user/list";
+                    window.location.href="${context.contextPath}/user/list";
                 };
                 var updateErrorFunction=function() {
                     return;
@@ -88,7 +88,7 @@
                     layer.confirm(data.mes,{
                         btn: ['确定']    //按钮
                     },function() {
-                        window.location.href="/user/list";
+                        window.location.href="${context.contextPath}/user/list";
                     });
                 },function(data) {
                     layer.confirm(data.mes,{

@@ -1,0 +1,65 @@
+package com.csair.admin.config;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+/**
+ * web 层切面
+ */
+@Component
+@Aspect
+public class ControllerAspect {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * 环绕通知
+     */
+    @SuppressWarnings("unused")
+    @Around(value = "execution(* com.csair.admin.core.controller.*Controller.*(..))")
+    public Object controllerAround(ProceedingJoinPoint joinPoint) {
+        Date startDate = new Date();
+        Object[] args = joinPoint.getArgs();
+        String simpleClassName = joinPoint.getTarget().getClass().getSimpleName();
+        String method = joinPoint.getSignature().getName();
+        MDC.put("intf", simpleClassName + "." + method);
+        logger.info("call " + simpleClassName + "." + method + ", PARAMETER: " + getLog(args));
+        Object result = null;
+        try {
+            result = joinPoint.proceed();
+        } catch (Exception ex) {
+            logger.error("unknow error , ", ex);
+        } catch (Throwable throwable) {
+            logger.error("call " + simpleClassName + "." + method + " , error: ", throwable);
+        } finally {
+            Date endDate = new Date();
+            Long time = endDate.getTime() - startDate.getTime();
+            logger.info("call " + simpleClassName + "." + method + ", [" + time + "]ms, RESULT: " + result);
+        }
+        return result;
+    }
+
+    /**
+     * 获取入参日志
+     */
+    private String getLog(Object[] args) {
+        StringBuilder logSb = new StringBuilder("[");
+        for (int i = 0; i < args.length; i++) {
+            Object arg = args[i];
+            logSb.append(arg == null ? null : arg.toString());
+            if (i != args.length - 1) {
+                logSb.append(",");
+            }
+        }
+        logSb.append("]");
+        return logSb.toString();
+    }
+
+}

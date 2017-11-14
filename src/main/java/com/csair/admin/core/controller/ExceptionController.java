@@ -27,6 +27,7 @@ public class ExceptionController {
         return mode;
     }
 
+
     /**
      * 没有权限的重定向
      * 1

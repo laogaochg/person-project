@@ -13,7 +13,7 @@
     <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
     <script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
     <!-- style.css是项目的样式文件  -->
-    <script src="${context.contextPath}/js/layui/lay/dest/layui.all.js" charset="utf-8"></script>
+    <script src="${context.contextPath}/js/layui/layui.all.js" charset="utf-8"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script>
         layui.use('upload', function () {
@@ -144,7 +144,7 @@
             <div class="col-md-4"><h3 style="font-size: 20px;color: #000;    margin-bottom: 10px;">证书管理</h3></div>
         </div>
 
-        <form action="/certificate/list" id="searchForm" class="form-inline" method="post">
+        <form action="${context.contextPath}/certificate/list" id="searchForm" class="form-inline" method="post">
             <div class="form-group">
                 <label>关键字1</label>
                 <input type="text" name="keyword" style="width: 150px;" class="form-control" value="${(qo.keyword)!""}">
@@ -152,9 +152,9 @@
                 <label>批量导入</label>
                 <input type="file" id="chooseFile" name="file" style="width: 150px;" class="form-control btn btn-info"
                        value="${(qo.action)!""}">
-                <a type="file" href="/templateFile/CertificateTemplate.xls" style="width: 150px;"
+                <a type="file" href="${context.contextPath}/templateFile/CertificateTemplate.xls" style="width: 150px;"
                    class="btn btn-info form-control">下载模板</a>
-                <a type="file" href="/certificate/toEditCertificate" style="width: 150px;"
+                <a type="file" href="${context.contextPath}/certificate/toEditCertificate" style="width: 150px;"
                    class="btn btn-info form-control">添加证书</a>
 
                 <div class="layui-upload">

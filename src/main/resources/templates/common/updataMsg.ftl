@@ -23,7 +23,7 @@
         <div class="col-md-5 col-md-offset-2" style="margin-top: 10px;">
             <a class="btn btn-info" style="height: 40px;width: 80px;" onclick="window.history.back()">返回</a>
             <a class="btn btn-info" style="margin-left: 30px;height: 40px;width: 80px;"
-               href="${(msg.toUrl)!"#"}">确定 </a>
+               href="${context.contextPath}${(msg.toUrl)!"#"}">确定 </a>
         </div>
     </div>
 </body>

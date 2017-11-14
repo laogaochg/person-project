@@ -141,7 +141,8 @@ public class FileUploadUtils {
             String imgdist = srcFile.getParent() + "/" + fileName;
             ImageIO.write(to, "jpg", new File(imgdist));
             //返回文件的url地址
-            return srcFile.getParent().replace(EnvironmentParams.uploadPath, "") + "/" + fileName;
+            String url =srcFile.getParent().replace(new File(EnvironmentParams.uploadPath).getPath(),"");
+            return url + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();
             logger.warn("压缩图片文件出错。" + e.getMessage());

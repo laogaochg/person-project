@@ -19,7 +19,7 @@
         </div>
         <div class="Popup brandPopup">
             <div class="selBox">
-                <form id="pageQueryBrand" method="post" action="/brand/list" class="nice-validator n-default"
+                <form id="pageQueryBrand" method="post" action="${context.contextPath}/brand/list" class="nice-validator n-default"
                       novalidate="novalidate">
                     <input type="text" value="${(qo.keyword)!""}" name="keyword" placeholder="关键字"
                            class="input-text radius size-L inputstyle">
@@ -28,7 +28,7 @@
                     <button class="layui-btn layui-btn-normal serchH">搜索</button>
                     <button class="layui-btn layui-btn-normal changeBtn mr20 ml32"
                             style="margin-left: 300px;" type="button"
-                            onclick="window.location.href='/brand/toEditBrand'"><i class="iconfont  icon-tianjia1"></i>添加品牌
+                            onclick="window.location.href='${context.contextPath}/brand/toEditBrand'"><i class="iconfont  icon-tianjia1"></i>添加品牌
                     </button>
                 </form>
             </div>
@@ -52,7 +52,7 @@
                         <td style="width: 40px"><i data-brandid="${brand.brandId}" class="che js-che tableI"></i></td>
                         <td style="width: 60px">${brand.brandId}</td>
                         <td style="width:280px" class="">${brand.brandName}</td>
-                        <td class=""><img style="width: 40px" src="${context.contextPath}/image/${(brand.brandLogoThumb)!""}"></td>
+                        <td class=""><img style="width: 40px" src="${context.contextPath}${(brand.brandLogoThumb)!""}"></td>
                         <td class="operation">
                             <a href="${context.contextPath}/brand/toEditBrand?id=${brand.brandId}" class="operationA bgColor1">
                                 <em class="iconfont icon-xiugai"></em>

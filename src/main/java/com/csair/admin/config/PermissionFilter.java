@@ -1,19 +1,17 @@
 package com.csair.admin.config;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.shiro.authz.UnauthorizedException;
+import com.csair.admin.core.po.core.Role;
+import com.csair.admin.core.service.impl.PermissionServiceImpl;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.csair.admin.core.po.core.Role;
-import com.csair.admin.core.service.impl.PermissionServiceImpl;
 import org.springframework.util.StringUtils;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 权限校验 Filter
