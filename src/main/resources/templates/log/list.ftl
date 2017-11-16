@@ -20,7 +20,7 @@
         <div class="col-md-4"><h3>后台操作记录</h3></div>
     </div>
 
-    <form action="/log/list" id="searchForm" class="form-inline" method="post">
+    <form action="${context.contextPath}/log/list" id="searchForm" class="form-inline" method="post">
         <div class="form-group">
             <label>用户id</label>
             <input type="text" name="authorId" style="width: 150px;" class="form-control" value="${(qo.authorId)!""}">

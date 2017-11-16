@@ -25,7 +25,7 @@
             </h3>
         </div>
     </div>
-    <form class="form-horizontal" method="post" action="/user/changePassword">
+    <form class="form-horizontal" method="post" action="${context.contextPath}/user/changePassword">
         <div class="form-group">
             <label for="oldPassword" class="col-sm-1 control-label">旧密码：</label>
             <div class="col-sm-4">

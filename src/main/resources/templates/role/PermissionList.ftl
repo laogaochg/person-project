@@ -78,7 +78,7 @@
                 <li>当前角色名字：${role.name} | 类型：${role.type}</li>
             </div>
             <div class="row">
-                <form action="/role/editRolePermission" method="post">
+                <form action="${context.contextPath}/role/editRolePermission" method="post">
                     <input type="hidden" name="roleId" value="${role.id}"/>
                     <table class="table">
                         <tr>

@@ -20,25 +20,25 @@
                 <div class="col-md-4"><h3>角色列表</h3></div>
             </div>
             <div class="row">
-                <a class="btn btn-default" href="/role/inputRole">
+                <a class="btn btn-default" href="${context.contextPath}/role/inputRole">
                     新增角色
                 </a>
-                <a class="btn btn-default" href="/role/list">
+                <a class="btn btn-default" href="${context.contextPath}/role/list">
                     角色列表
                 </a>
             <@shiro.hasPermission name="/user/downloadUser">
-                <a class="btn btn-default" href="/user/list">
+                <a class="btn btn-default" href="${context.contextPath}/user/list">
                     用户列表
                 </a>
             </@shiro.hasPermission>
             <@shiro.hasPermission name="/permission/list">
-                <a class="btn btn-default" href="/permission/edit">
+                <a class="btn btn-default" href="${context.contextPath}/permission/edit">
                     权限管理
                 </a>
             </@shiro.hasPermission>
             </div>
             <div class="row">
-                <form action="/role/list" id="queryRole">
+                <form action="${context.contextPath}/role/list" id="queryRole">
                     <table class="table">
                         <tr>
                             <th> id：</th>
@@ -57,16 +57,16 @@
                             <th> ${(role.remark)!""}</th>
                             <th>
                                 <@shiro.hasPermission name="/role/userList">
-                                    <a class="btn btn-default" href="/role/userList?roleId=${role.id}">查看成员账号 </a>
+                                    <a class="btn btn-default" href="${context.contextPath}/role/userList?roleId=${role.id}">查看成员账号 </a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="/role/editRolePermission">
-                                    <a class="btn btn-default" href="/permission/list?roleId=${role.id}">设置权限 </a>
+                                    <a class="btn btn-default" href="${context.contextPath}/permission/list?roleId=${role.id}">设置权限 </a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="/role/inputRole">
-                                    <a class="btn btn-default" href="/role/inputRole?roleId=${role.id}">修改 </a>
+                                    <a class="btn btn-default" href="${context.contextPath}/role/inputRole?roleId=${role.id}">修改 </a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="/role/deleteRole">
-                                    <a class="btn btn-default" href="/role/deleteRole?roleId=${role.id}">删除 </a>
+                                    <a class="btn btn-default" href="${context.contextPath}/role/deleteRole?roleId=${role.id}">删除 </a>
                                 </@shiro.hasPermission>
                             </th>
 

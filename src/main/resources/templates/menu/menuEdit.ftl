@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-sm-5">
             <h3>菜单编辑</h3>
-            <form method="post" action="/menu/edit" class="menuEdit" enctype="multipart/form-data">
+            <form method="post" action="${context.contextPath}/menu/edit" class="menuEdit" enctype="multipart/form-data">
                 <table class="table">
                 <#if (parentMenu.rank)??>
                     <input type="hidden" name="rank" value="${parentMenu.rank+1}">

@@ -16,7 +16,7 @@
                 success: function(data) {
                     if(data.code==200) {
                         myModal("myModalTest","成功",data.mes,function() {
-                            window.location.href="/certificate/list";
+                            window.location.href="${context.contextPath}/certificate/list";
                         });
                     } else {
                         myModal("myModalTest","失败",data.mes,function() {

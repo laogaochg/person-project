@@ -12,8 +12,8 @@ import java.util.Date;
  */
 public class TestB {
     public static void main(String[] args) {
-        File f = new File("D:/a/as/pic.jpg");
-        String s = f.getParent();
+        File f = new File("D:/usr/local/file/");
+        String s = f.getPath();
         System.out.println("s = " + s);
     }
 }
