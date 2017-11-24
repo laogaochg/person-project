@@ -2,9 +2,6 @@
 #保存图片的目录
 #upload-path: D:/usr/local/file/
 upload-path: /usr/local/file/
-#代理地址
-proxyHost: 10.101.1.6
-proxyPort: 80
 server:
   port: 80 #服务端口配置
   contextPath: /my
@@ -12,9 +9,6 @@ spring:
 #提供热部署功能
   thymeleaf:
       cache: false
-  output:
-    ansi:
-      enabled: detect #彩色日志
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${upload-path}
   datasource:
@@ -40,16 +34,3 @@ spring:
     settings:
       number_format: 0.########
       template_update_delay: 0
-logging:
-  pattern:
-    level: INFO
-#  level:
-#    com.csair.admin: DEBUG
-  file: ../log
-#    prefix:
-#    request-context-attribute:
-#    settings.*:
-#    suffix: .ftl
-#    template-loader-path: /templates
-    #comma-separated list
-#    view-names:  # whitelist of view names that can be resolved

@@ -6,8 +6,12 @@ import java.util.Map;
 import java.util.Set;
 
 import com.csair.admin.util.EnvironmentParams;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
+import org.mybatis.spring.SqlSessionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -33,7 +37,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
     private PermissionService permissionService;
     @Value("${upload-path}")
     private String uploadPath;
-
+    private static Logger logger = LoggerFactory.getLogger(SpringRefreshListener.class);
     /**
      * springMVC启动加载权限
      *
@@ -45,6 +49,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
         //重载权限
        // reloadPermission(event);
         //配置SpringContextUtil的参数
+        logger.info("\n----------------spring启动完成--------------------");
         SpringContextUtil.applicationContext = event.getApplicationContext();
     }
 

@@ -79,6 +79,7 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
+
         <!--配置jsp jstl的支持-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -90,12 +91,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <!--<scope>provided</scope>-->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- freeMarker -->
