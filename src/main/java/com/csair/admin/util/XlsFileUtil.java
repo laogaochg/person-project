@@ -10,11 +10,11 @@ import java.util.Map;
 
 import javax.sql.RowSet;
 
-import com.csair.admin.config.PlatformException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
+import com.csair.admin.config.PlatformException;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
@@ -34,8 +34,6 @@ public class XlsFileUtil {
 
     /**
      * 解析xls文件 得到数据
-     * @param inputStream
-     * @return
      */
     public static List<Map<Integer,String>> parseWorkbook(InputStream inputStream) {
         List<Map<Integer,String>> result = new ArrayList<>();
@@ -58,21 +56,20 @@ public class XlsFileUtil {
                 if (row.size() == 0) return result;
                 result.add(row);
             }
+            inputStream.close();
             return result;
         } catch (Exception e) {
             logger.warn("解析文件出错" + e.getMessage());
-            throw new PlatformException(ParamConstants.ERROR_PARAM ,"解析文件出错。");
+            throw new PlatformException(ParamConstants.ERROR_PARAM,"解析文件出错。");
         }
     }
 
     /**
      * 生成表格文件提供下载
      *
-     * @param bos 输出流
+     * @param bos    输出流
      * @param titles 第一行的标题
-     * @param data 数据
-     * @return
-     * @throws Exception
+     * @param data   数据
      */
 
     public static WritableWorkbook getWorkbook(ByteArrayOutputStream bos,List<String> titles,List<Map<String,Object>> data) throws Exception {

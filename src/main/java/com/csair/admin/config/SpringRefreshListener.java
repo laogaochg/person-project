@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
+
 import com.csair.admin.util.EnvironmentParams;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
@@ -24,8 +26,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.csair.admin.core.service.PermissionService;
-
-import javax.annotation.Resource;
+import com.csair.admin.util.EnvironmentParams;
 
 /**
  * laogaochg

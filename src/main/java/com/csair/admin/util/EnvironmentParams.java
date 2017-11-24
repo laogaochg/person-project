@@ -1,5 +1,6 @@
 package com.csair.admin.util;
 
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
@@ -75,11 +76,11 @@ public class EnvironmentParams {
      */
     public static String PRIVATE_KEY;
 
-
     static {
         try {
             property = new Properties();
-            property.load(new InputStreamReader(EnvironmentParams.class.getClassLoader().getResourceAsStream("config.properties"), "UTF-8"));
+            InputStream inputStream = EnvironmentParams.class.getClassLoader().getResourceAsStream("config.properties");
+            property.load(new InputStreamReader(inputStream,"UTF-8"));
             PLATFORM_FLAG = String.valueOf(property.get("PLATFORM_FLAG"));
             DAO_URL = String.valueOf(property.get("DAO_URL"));
             TEST_ENVIRONMENT = String.valueOf(property.get("TEST_ENVIRONMENT"));
@@ -92,11 +93,12 @@ public class EnvironmentParams {
             GET_TOKEN_URL = String.valueOf(property.get("GET_TOKEN_URL"));
             PUBLIC_KEY = String.valueOf(property.get("PUBLIC_KEY"));
             PRIVATE_KEY = String.valueOf(property.get("PRIVATE_KEY"));
-            GET_TOKEN_URL = String.format(GET_TOKEN_URL, AppID, AppSecret);
+            GET_TOKEN_URL = String.format(GET_TOKEN_URL,AppID,AppSecret);
             CREATE_MENU_URL = String.valueOf(property.get("CREATE_MENU_URL"));
+            inputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new PlatformException(99999, e + "");
+            throw new PlatformException(99999,e + "");
         }
     }
 
