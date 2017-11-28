@@ -74,5 +74,5 @@ public interface MenuService {
      * @param isTree 是否要树状结构
      * @return
      */
-    List<Menu> getAllMenu(boolean isTree);
+    List<Menu> getAllMenu(boolean isTree,boolean getPermission);
 }

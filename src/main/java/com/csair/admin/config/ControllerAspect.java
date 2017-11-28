@@ -13,8 +13,8 @@ import java.util.Date;
 /**
  * web 层切面
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class ControllerAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -22,7 +22,6 @@ public class ControllerAspect {
     /**
      * 环绕通知
      */
-    @SuppressWarnings("unused")
     @Around(value = "execution(* com.csair.admin.core.controller.*Controller.*(..))")
     public Object controllerAround(ProceedingJoinPoint joinPoint) {
         Date startDate = new Date();
@@ -30,7 +29,7 @@ public class ControllerAspect {
         String simpleClassName = joinPoint.getTarget().getClass().getSimpleName();
         String method = joinPoint.getSignature().getName();
         MDC.put("intf", simpleClassName + "." + method);
-        logger.info("call " + simpleClassName + "." + method + ", PARAMETER: " + getLog(args));
+//        logger.debug("call " + simpleClassName + "." + method + ", PARAMETER: " + getLog(args));
         Object result = null;
         try {
             result = joinPoint.proceed();
@@ -41,7 +40,7 @@ public class ControllerAspect {
         } finally {
             Date endDate = new Date();
             Long time = endDate.getTime() - startDate.getTime();
-            logger.info("call " + simpleClassName + "." + method + ", [" + time + "]ms, RESULT: " + result);
+            logger.debug("call " + simpleClassName + "." + method + ", [" + time + "]ms, RESULT: " + result);
         }
         return result;
     }

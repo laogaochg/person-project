@@ -44,7 +44,7 @@ public class MenuController {
     @RequestMapping("/list")
     @PermissionName("菜单查询")
     public ModelAndView queryMenu(ModelAndView model) {
-        List<Menu> menusList = menuService.getAllMenu(true);
+        List<Menu> menusList = menuService.getAllMenu(true,false);
         model.addObject("menuList",menusList);
 //        List<Permission> permissions = permissionService.queryNoMenuPermission();
 //        model.addObject("permissions",permissions);

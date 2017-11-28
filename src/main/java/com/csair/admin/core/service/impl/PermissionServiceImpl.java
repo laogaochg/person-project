@@ -143,7 +143,7 @@ public class PermissionServiceImpl implements PermissionService {
                 permissions.add(permission);
             }
         }
-        List<Menu> allMenu = menuService.getAllMenu(false);
+        List<Menu> allMenu = menuService.getAllMenu(false, false);
         Map<String, List<Permission>> map = new HashMap<>();
         for (Menu menu : allMenu) {
             for (Permission permission : allPermission) {
@@ -168,7 +168,10 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDao.updateByPrimaryKey(p);
     }
 
-
+    /**
+     * 维护超级管理员的权限
+     * 给超级管理员添加对应的权限
+     */
     @Override
     public synchronized int addAdminPermission() {
         RoleQueryObject qo = new RoleQueryObject();
@@ -220,6 +223,13 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public int reloadPermission(Map<String, Method> urlAndMethod) {
+        //给共享变量赋值
+//        updatePermissionMap(urlAndMethod);
+        //维护超级管理员权限
+        return addAdminPermission();
+    }
+
+    private void updatePermissionMap(Map<String, Method> urlAndMethod) {
         //把多余的去掉;去掉404和项目外的
         removeUnnecessary(urlAndMethod);
         List<Permission> ps = findAllPermission();
@@ -258,8 +268,6 @@ public class PermissionServiceImpl implements PermissionService {
 
         //把没有权限的url放到共享变量
         PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
-        //维护超级管理员权限
-        return addAdminPermission();
     }
 
 
@@ -300,9 +308,11 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public PageResult<Permission> query(PermissionQueryObject qo) {
-        qo.setPageSize(-1);
-        List<Permission> list = permissionDao.queryPermission(qo);
-        return new PageResult<>(list, 1, 1, 1);
+        if (qo.getPageSize() == -1) {
+            return new PageResult<>(permissionDao.queryPermission(qo), 1, 1, 1);
+        } else {
+            return new PageResult<>(permissionDao.queryPermission(qo), permissionDao.queryCountPermission(qo), qo.getCurrentPage(), qo.getPageSize());
+        }
     }
 
 }

@@ -15,7 +15,7 @@ import com.csair.admin.core.po.core.query.PermissionQueryObject;
 public interface PermissionService {
     /**
      * 查询角色下的权限
-     * 不支持分页
+     * 支持分页
      */
     PageResult<Permission> query(PermissionQueryObject qo);
 

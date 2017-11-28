@@ -19,22 +19,17 @@ $(function() {
         return "<%=request.getContextPath()%>/auth/permission/getTreeSubNode";
     }
 
-    $(document).ready(function() {
-        var id=$("[name=parentMenuId]").val();
-        $.post("/menu/menuChild?parentId=" + id,{},function(jsonResult) {
-            $.fn.zTree.init($("#treePermission"),setting,jsonResult);
-        });
-    });
+    // $(document).ready(function() {
+    //     var id=$("[name=parentMenuId]").val();
+    //     $.post(contextPath+"/menu/menuChild?parentId=" + id,{},function(jsonResult) {
+    //         $.fn.zTree.init($("#treePermission"),setting,jsonResult);
+    //     });
+    // });
 
     $("#savePermission").click(function() {
         var self=$(this);
         var menuId=$("[name=menuId]").val();
         var permissionId=$("[name=permissionId]").val();
-        if(!menuId>0) {
-            myModal("myModalTest","错误","请选择菜单。",function() {
-            });
-            return;
-        }
         var url=$("[name=url]").val();
         var name=$("[name=name]").val();
         if(!name) {

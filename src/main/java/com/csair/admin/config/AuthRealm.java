@@ -65,6 +65,7 @@ public class AuthRealm extends AuthorizingRealm {
             } else {
                 PermissionQueryObject qo = new PermissionQueryObject();
                 qo.setRoleId(role.getId());
+                qo.setPageSize(-1);
                 permissionList = permissionService.query(qo).getListData();
             }
             for (Permission permission : permissionList) {

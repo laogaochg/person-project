@@ -5,7 +5,6 @@ import java.util.List;
 
 public abstract class QueryObject {
 
-    protected String conditionString;
 
     protected Integer currentPage = 1;//当前页
 

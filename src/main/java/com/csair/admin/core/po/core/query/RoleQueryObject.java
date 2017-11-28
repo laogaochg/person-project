@@ -7,19 +7,8 @@ public class RoleQueryObject extends QueryObject {
     private String name;
     private String type;
 
-    public String getSqlString() {
-        return " select r.* from e_admin_role r ";
-    }
 
-    public String getCountSqlString() {
-        return " select count(1) from e_admin_role r ";
-    }
 
-    public String getConditionString() {
-        StringBuilder sb = new StringBuilder(" where 1=1 ");
-        conditionString = sb.toString();
-        return sb.toString();
-    }
 
     public String getName() {
         return name;

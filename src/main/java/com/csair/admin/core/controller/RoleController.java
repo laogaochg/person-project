@@ -41,7 +41,6 @@ public class RoleController {
      * 编辑角色的权限
      */
     @RequestMapping("/editRolePermission")
-    @PermissionName("角色权限编辑")
     public ModelAndView editRolePermission(Long roleId, Long[] permissionIds, ModelAndView model) {
         Map<String, Object> map = new HashMap<String, Object>();
         Subject subject = SecurityUtils.getSubject();
@@ -60,7 +59,6 @@ public class RoleController {
 
     //删除角色成员
     @RequestMapping("/removeRoleUser")
-    @PermissionName("删除角色成员")
     public ModelAndView removeRoleUser(Long[] userIds, Long roleId, ModelAndView model) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (roleId != null && userIds.length != 0) {
@@ -77,7 +75,6 @@ public class RoleController {
 
     //返回角色列表
     @RequestMapping("/list")
-    @PermissionName("角色查询")
     public ModelAndView queryRole(RoleQueryObject qo, ModelAndView model) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute(ParamConstants.USER_SESSION);
@@ -91,7 +88,6 @@ public class RoleController {
      * 查看角色成员账号
      */
     @RequestMapping("/userList")
-    @PermissionName("角色成员查询")
     public ModelAndView queryUserByRole(UserQueryObject qo, ModelAndView model) {
         model.addObject("role", roleService.queryById(qo.getRoleId()));
 //        qo.setPageSize(0);
@@ -103,7 +99,6 @@ public class RoleController {
 
     //去编辑角色页面
     @RequestMapping("/inputRole")
-    @PermissionName("角色编辑")
     public ModelAndView inputRole(Long roleId, ModelAndView model) {
         if (roleId != null) {
             model.addObject("role", roleService.queryById(roleId));
@@ -114,7 +109,6 @@ public class RoleController {
 
     //添加或者修改角色
     @RequestMapping("/addOrUpdataRole")
-    @PermissionName("角色编辑")
     public ModelAndView addOrUpdataRole(Role role, ModelAndView model) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute(ParamConstants.USER_SESSION);
@@ -126,7 +120,6 @@ public class RoleController {
 
     //删除角色
     @RequestMapping("/deleteRole")
-    @PermissionName("删除角色")
     public ModelAndView deleteRole(Long roleId, ModelAndView model) {
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute(ParamConstants.USER_SESSION);

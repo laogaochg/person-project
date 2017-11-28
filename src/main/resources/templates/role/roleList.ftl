@@ -31,7 +31,7 @@
                     用户列表
                 </a>
             </@shiro.hasPermission>
-            <@shiro.hasPermission name="/permission/list">
+            <@shiro.hasPermission name="/permission/menuPermissionlist">
                 <a class="btn btn-default" href="${context.contextPath}/permission/edit">
                     权限管理
                 </a>
@@ -60,7 +60,7 @@
                                     <a class="btn btn-default" href="${context.contextPath}/role/userList?roleId=${role.id}">查看成员账号 </a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="/role/editRolePermission">
-                                    <a class="btn btn-default" href="${context.contextPath}/permission/list?roleId=${role.id}">设置权限 </a>
+                                    <a class="btn btn-default" href="${context.contextPath}/permission/menuPermission?roleId=${role.id}">设置权限 </a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="/role/inputRole">
                                     <a class="btn btn-default" href="${context.contextPath}/role/inputRole?roleId=${role.id}">修改 </a>

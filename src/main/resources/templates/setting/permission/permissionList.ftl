@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <title>平面运营后台</title>
 <#include "../../common/baseImport.ftl" />
+<#--bookstrap 分页插件-->
+    <script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin" style="">
@@ -17,7 +19,7 @@
         </div>
         <div class="Popup brandPopup">
             <div class="selBox">
-                <form id="pageQueryBrand" method="post" action="${context.contextPath}/brand/list"
+                <form id="searchForm" method="post" action="${context.contextPath}/permission/list"
                       class="nice-validator n-default"
                       novalidate="novalidate">
                     <input type="text" value="${(qo.keyword)!""}" name="keyword" placeholder="关键字"
@@ -27,8 +29,8 @@
                     <button class="layui-btn layui-btn-normal serchH">搜索</button>
                     <button class="layui-btn layui-btn-normal changeBtn mr20 ml32"
                             style="margin-left: 300px;" type="button"
-                            onclick="window.location.href='${context.contextPath}/brand/toEditBrand'">
-                        <i class="iconfont  icon-tianjia1"></i>添加品牌
+                            onclick="window.location.href='${context.contextPath}/brand/toEditBrand'"><i
+                            class="iconfont  icon-tianjia1"></i>添加品牌
                     </button>
                 </form>
             </div>
@@ -39,27 +41,33 @@
                 <table class="layui-table mytable">
                     <thead>
                     <tr>
-                        <th style="width: 60px"><i class="che tableI"></i></th>
+                        <th style="width: 60px">
+                            <input type="checkbox" name="selectAll" lay-skin="primary">
+                        </th>
                         <th style="width: 100px">ID</th>
-                        <th style="width:280px">品牌名称</th>
-                        <th>logo</th>
+                        <th style="width:280px">权限名称</th>
+                        <th>url</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <#list pageResult.listData as brand>
                     <tr class="js-item">
-                        <td style="width: 40px"><i data-brandid="${brand.brandId}" class="che js-che tableI"></i></td>
-                        <td style="width: 60px">${brand.brandId}</td>
-                        <td style="width:280px" class="">${brand.brandName}</td>
-                        <td class=""><img style="width: 40px" src="${context.contextPath}${(brand.brandLogoThumb)!""}">
+                        <td style="width: 40px">
+                            <div class="layui-form-item">
+                                <input data-brandid="${brand.id}" type="checkbox" name="deletePermissionId"
+                                       lay-skin="primary">
+                            </div>
                         </td>
+                        <td style="width: 60px">${brand.id}</td>
+                        <td style="width:280px" class="">${(brand.name)!""}</td>
+                        <td style="width:280px" class="">${(brand.url)!""}</td>
                         <td class="operation">
-                            <a href="${context.contextPath}/brand/toEditBrand?id=${brand.brandId}"
+                            <a href="${context.contextPath}/brand/toEditBrand?id=${brand.id}"
                                class="operationA bgColor1">
                                 <em class="iconfont icon-xiugai"></em>
                             </a>
-                            <a onclick="_ajax('ids=${brand.brandId}')" class="operationA bg2">
+                            <a onclick="_ajax('ids=${brand.id}')" class="operationA bg2">
                                 <em class="iconfont icon-shanchu"></em>
                             </a>
                         </td>
@@ -76,32 +84,49 @@
                         style="border-radius: 6px">
                     批量删除
                 </button>
-                <div id="pageQuery" class="demo4"></div>
+                共${pageResult.totalCount}条
+                <div id="pagination" class="demo4"></div>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
-    //分页代码
-    layui.use('laypage', function () {
-        var laypage = layui.laypage;
-        laypage.render({
-            elem: 'pageQuery'
-            , count: ${pageResult.totalPage} //数据总数，从服务端得到
-            , jump: function (obj, first) {
-                //obj包含了当前分页的所有参数，比如：
-                var oldPage = $("[name=currentPage]").val();
-                if (oldPage != obj.curr) {
-                    $("[name=currentPage]").val(obj.curr);
-                    $("#pageQueryBrand").submit();
-                }
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+                , layer = layui.layer
+        ;
+
+        //监听提交
+        form.on('submit(searchForm)', function (data) {
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+    });
+
+    $(function () {
+        //分页代码
+        $('#pagination').twbsPagination({
+            first: "首页",
+            prev: "上一页",
+            next: "下一页",
+            last: "未页",
+            startPage:${qo.currentPage},
+            totalPages: ${pageResult.totalPage},
+            visiblePages: ${qo.pageSize},
+            onPageClick: function (event, page) {
+                $("[name=currentPage]").val(page);
+                $("#searchForm").submit();
             }
         });
     });
     $(function () {
         //删除
         $("#batchDeleteBrand").click(function () {
+            console.debug($(".layui-form-checked"));
             var selectHovers = $("tr .hover1");
             var _data = "1=1";
             for (var i = 0; i < selectHovers.length; i++) {
@@ -133,14 +158,14 @@
                             btn: ['确定']    //按钮
                         }, function () {
                             $("[name=currentPage]").val(1);
-                            $("#pageQueryBrand").submit();
+                            $("#searchForm").submit();
                         });
                     }, error: function () {
                         layer.confirm('发送请求失败！请联系相关客服。', {
                             btn: ['确定']    //按钮
                         }, function () {
                             $("[name=currentPage]").val(1);
-                            $("#pageQueryBrand").submit();
+                            $("#searchForm").submit();
                         });
                     }
                 });

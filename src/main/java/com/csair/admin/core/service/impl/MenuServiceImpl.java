@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.csair.admin.core.dao.MenuDao;
+import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.query.MenuQuery;
+import com.csair.admin.util.ParamConstants;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -80,8 +83,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuVo> queryAllMenuVo(Long parentId) {
-        MenuQuery ex = new MenuQuery();
-        List<Menu> menus = menuDao.selectByExample(ex);
+        List<Menu> menus = getAllMenu(false, false);
         List<MenuVo> vo = new ArrayList<MenuVo>();
         for (Menu m : menus) {
             MenuVo v = new MenuVo(m);
@@ -184,7 +186,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> menuList = getChildMenuLimit(pm.getMid(), list);
         pm.setMenuList(menuList);
         for (Menu m : menuList) {
-            List<Menu> childMenu = getChildMenuByLimit(m, list);
+            getChildMenuByLimit(m, list);
         }
         return menuList;
     }
@@ -215,9 +217,12 @@ public class MenuServiceImpl implements MenuService {
     private List<Menu> getMenuIds(Long userId) {
         List<String> urls = new ArrayList<>();
         for (Permission p : permissionService.queryPermissionByUserId(userId)) {
-            if (StringUtils.hasText(p.getUrl())) urls.add(p.getUrl());
+            if (StringUtils.hasText(p.getUrl())) {
+                //一个权限可能对应多个URL
+                Collections.addAll(urls, (p.getUrl().split("\\|\\|")));
+            }
         }
-        if(urls.size()==0) return new ArrayList<>();
+        if (urls.size() == 0) return new ArrayList<>();
         MenuQuery qo = new MenuQuery();
         qo.createCriteria().andUrlIn(urls);
         List<Menu> result = menuDao.selectByExample(qo);
@@ -250,43 +255,54 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.selectByPrimaryKey(mid);
     }
 
-
+    /**
+     * @param isTree 是否要树状结构
+     */
     @Override
-    public List<Menu> getAllMenu(boolean isTree) {
-        if (!isTree) {
-            return menuDao.selectByExample(new MenuQuery());
-        }
+    public List<Menu> getAllMenu(boolean isTree, boolean getPermission) {
         MenuQuery ex = new MenuQuery();
         List<Menu> menus = menuDao.selectByExample(ex);
         ex.createCriteria().andPidIsNull();
         List<Menu> root = menuDao.selectByExample(ex);
-        List<Permission> allPermission = permissionService.findAllPermission();
+        List<Permission> allPermission = getPermission ? permissionService.findAllPermission() : null;
         //排序
         sortMenuList(root);
+        List<Menu> result = new ArrayList<>();
         for (Menu m : root) {
-            getChildMenu(m, menus, allPermission);
+            getChildMenu(m, menus, allPermission, result);
         }
-        return root;
+        if (isTree) {
+            return root;
+        } else {
+            result.addAll(root);
+            return result;
+        }
     }
 
-    private List<Menu> getChildMenu(Menu pm, List<Menu> allMenu, List<Permission> allPermission) {
+    /**
+     * 递归得到所有子菜单
+     * 给父菜单的子菜单赋值
+     *
+     * @param pm            父菜单 会给这个菜单的子菜单赋值
+     * @param allMenu       所有菜单（缓存）
+     * @param allPermission 所有权限可以为NULL
+     */
+    private void getChildMenu(Menu pm, List<Menu> allMenu, List<Permission> allPermission, List<Menu> addMenu) {
         List<Menu> menuList = new ArrayList<>();
         for (Menu m : allMenu) {
-            if (pm.getMid().equals(m.getPid())) {
-                menuList.add(m);
-            }
+            if (pm.getMid().equals(m.getPid())) menuList.add(m);
         }
         sortMenuList(menuList);
         pm.getMenuList().addAll(menuList);
-        for (Permission p : allPermission) {
-            if (pm.getMid().equals(p.getMid())) {
-                pm.getPermissionList().add(p);
+        addMenu.addAll(menuList);
+        if (allPermission != null) {
+            for (Permission p : allPermission) {
+                if (pm.getMid().equals(p.getMid())) pm.getPermissionList().add(p);
             }
         }
         for (Menu m : menuList) {
-            List<Menu> childMenu = getChildMenu(m, allMenu, allPermission);
+            getChildMenu(m, allMenu, allPermission, addMenu);
         }
-        return menuList;
     }
 
 }

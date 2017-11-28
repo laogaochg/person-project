@@ -21,7 +21,6 @@ public class OperationLogController {
     private OperationLogService operationLogService;
 
     @RequestMapping("list")
-    @PermissionName("操作历史查询")
     public String list(OperationLogQueryObject qo, Model model) {
         model.addAttribute("pageResult", operationLogService.pageQuery(qo));
         model.addAttribute("qo", qo);

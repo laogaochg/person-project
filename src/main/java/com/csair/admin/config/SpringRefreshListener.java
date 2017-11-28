@@ -48,7 +48,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
     public void onApplicationEvent(ContextRefreshedEvent event) {
         EnvironmentParams.uploadPath = uploadPath;
         //重载权限
-       // reloadPermission(event);
+        reloadPermission(event);
         //配置SpringContextUtil的参数
         logger.info("\n----------------spring启动完成--------------------");
         SpringContextUtil.applicationContext = event.getApplicationContext();
