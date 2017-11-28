@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                     <#list pageResult.listData as brand>
-                    <tr class="js-item">
+                    <tr class="js-item" data-itemid="${brand.id}" >
                         <td style="width: 40px">
                             <div class="layui-form-item">
                                 <input data-brandid="${brand.id}" type="checkbox" name="deletePermissionId"
@@ -102,7 +102,7 @@
         form.on('submit(searchForm)', function (data) {
             layer.alert(JSON.stringify(data.field), {
                 title: '最终的提交信息'
-            })
+            });
             return false;
         });
     });
@@ -127,12 +127,18 @@
         //删除
         $("#batchDeleteBrand").click(function () {
             console.debug($(".layui-form-checked"));
+            var selectClass = $(".layui-form-checked");
+            for (var i = 0; i < selectClass.length; i++) {
+                var selectId = $(selectClass[i]).parents("tr").data("itemid");
+                console.debug(selectId);
+            }
             var selectHovers = $("tr .hover1");
             var _data = "1=1";
             for (var i = 0; i < selectHovers.length; i++) {
                 _data += "&ids=" + $(selectHovers[i]).data("brandid");
             }
-            _ajax(_data);
+            console.debug(_data);
+//            _ajax(_data);
 
         });
     });

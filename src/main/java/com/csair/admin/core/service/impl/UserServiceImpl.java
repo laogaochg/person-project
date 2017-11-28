@@ -5,34 +5,34 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import com.csair.admin.core.dao.UserDao;
-import com.csair.admin.core.po.core.query.UserQuery;
-import com.csair.admin.core.service.RoleService;
+import javax.annotation.Resource;
+
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.csair.admin.config.PlatformException;
+import com.csair.admin.core.dao.UserDao;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
+import com.csair.admin.core.po.core.query.UserQuery;
 import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.po.core.resp.UserVo;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.OperationLogService;
+import com.csair.admin.core.service.RoleService;
 import com.csair.admin.core.service.UserService;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.PasswordUtils;
-import com.csair.admin.config.PlatformException;
 import com.csair.admin.util.VerifyCodeUtils;
-
-import javax.annotation.Resource;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
             logger.warn("查出来两个用户；数据出现异常。email:" + email + "platFormFlag:" + platFormFlag);
             throw new AuthenticationException("数据异常");
         } else if (userList.size() == 0) {
-            throw new PlatformException(ParamConstants.NO_USER, "用户不存在");
+            throw new UnknownAccountException("用户不存在");
         } else {
             User user = userList.get(0);
             if (User.STATUS_INVALID.equals(user.getStatus())) {
