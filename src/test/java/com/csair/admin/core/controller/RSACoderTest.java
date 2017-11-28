@@ -29,7 +29,7 @@ public class RSACoderTest {
         System.err.println("私钥： \n\r" + privateKey);
     }
 
-    @Test
+//    @Test
     public void testPub2Pri() throws Exception {
         System.err.println("公钥加密——私钥解密");
         String inputStr = "abc";
@@ -46,7 +46,7 @@ public class RSACoderTest {
 
     }
 
-    @Test
+//    @Test
     public void testPri2Pub() throws Exception {
         System.err.println("私钥加密——公钥解密");
         String inputStr = "111111111111111111111";

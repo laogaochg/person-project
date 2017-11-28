@@ -8,7 +8,8 @@
         <result column="op_time" property="opTime" jdbcType="TIMESTAMP"/>
         <result column="op_ip" property="opIp" jdbcType="VARCHAR"/>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="com.csair.admin.core.po.core.OperationLog" extends="BaseResultMap">
+    <resultMap id="ResultMapWithBLOBs" type="com.csair.admin.core.po.core.OperationLog"
+               extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
     </resultMap>
     <sql id="Example_Where_Clause">

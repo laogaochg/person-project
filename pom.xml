@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.csair.xxx</groupId>
     <artifactId>spring-boot-weixing</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-boot-weixing</name>
     <url>http://maven.apache.org</url>
@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freeMarker</artifactId>
-            <version>1.5.3.RELEASE</version>
+            <version>1.5.1.RELEASE</version>
             <type>pom</type>
         </dependency>
 
