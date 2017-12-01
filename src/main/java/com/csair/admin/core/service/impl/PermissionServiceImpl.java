@@ -46,6 +46,24 @@ public class PermissionServiceImpl implements PermissionService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Override
+    public int editPermission(Permission permission, User u) {
+        int i = 0;
+        String action;
+        if (permission.getId() == null) {
+            i = permissionDao.insert(permission);
+            action = "添加权限";
+        } else {
+            i = permissionDao.updateByPrimaryKey(permission);
+            action = "修改权限";
+        }
+        if (i > 0) {
+            String content = "权限名字：" + permission.getName() + " ,URL: " + permission.getUrl();
+            operationLogService.log(u.getId(), action, content, u.getLastIp());
+        }
+        return i;
+    }
+
+    @Override
     public Permission queryById(Long id) {
         return permissionDao.selectByPrimaryKey(id);
     }
@@ -150,27 +168,21 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public Map<String, List<Permission>> queryAllPermissionSort() {
         List<Permission> allPermission = permissionDao.selectByExample(new PermissionQuery());
-        Map<String, List<Permission>> ma = new HashMap<>();
-        Set<String> permissionNames = new HashSet<>();
-        for (Permission permission : allPermission) {
-            List<Permission> permissions = ma.computeIfAbsent(permission.getClassName(), k -> new ArrayList<>());
-            if (
-                    StringUtils.hasText(permission.getName())//url有值
-                            && permissionNames.add(permission.getName())//权限名字重复的
-                    ) {
-                permissions.add(permission);
-            }
-        }
         List<Menu> allMenu = menuService.getAllMenu(false, false);
-        Map<String, List<Permission>> map = new HashMap<>();
+        Map<String, List<Permission>> result = new HashMap<>();
         for (Menu menu : allMenu) {
+            List<Permission> ps = new ArrayList<>();
             for (Permission permission : allPermission) {
-                if (permission.getUrl() != null && permission.getUrl().equals(menu.getUrl())) {
-                    map.put(String.valueOf(menu.getMid()), ma.get(permission.getClassName()));
+                String[] split = permission.getUrl().split("\\|\\|");
+                for (String url : split) {
+                    if (url.equals(menu.getUrl())) {
+                        ps.add(permission);
+                        result.put(String.valueOf(menu.getMid()), ps);
+                    }
                 }
             }
         }
-        return map;
+        return result;
     }
 
     @Override

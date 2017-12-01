@@ -83,4 +83,10 @@ public interface PermissionService {
     int batchDelete(Long[] ids, User u);
 
     Permission queryById(Long id);
+
+    /**
+     * 没有id就添加
+     * 有就修改
+     */
+    int editPermission(Permission permission, User u);
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -20,17 +21,8 @@ import java.util.Map;
 public class CodeGenerator {
 
     public static void main(String[] args) throws Exception {
-        String path = "D:\\F\\NH-idea\\admin1\\src\\main\\java\\com\\csair\\admin\\cms\\dao/";
-        String name = "ArticleClassifyDao";
-        File file = new File(path + name + ".java");
-        Map<String,List<String>> ms = getMethods(file);
-        //所有的方法
-        List<String> d = ms.get("methods");
-        //文件的字符串
-        String s = todoFile(d,ms.get("imports"),file);
-        File f = new File(path + "/impl/" + name + "Imple.java");
-        //生成文件
-//        StreamUtils.copy(s,Charset.defaultCharset(),new FileOutputStream(f));
+        Map<String,String> map = new HashMap<>();
+        Set<Map.Entry<String, String>> entries = map.entrySet();
         System.out.println("完成！");
     }
 

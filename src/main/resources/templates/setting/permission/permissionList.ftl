@@ -27,8 +27,8 @@
                     <button class="layui-btn layui-btn-normal serchH " lay-submit lay-filter="go">搜索</button>
                     <button class="layui-btn layui-btn-normal changeBtn mr20 ml32"
                             style="margin-left: 300px;" type="button"
-                            onclick="window.location.href='${context.contextPath}/brand/toEditBrand'"><i
-                            class="iconfont  icon-tianjia1"></i>添加品牌
+                            onclick="window.location.href='${context.contextPath}/permission/toEditPermission'"><i
+                            class="iconfont  icon-tianjia1"></i>添加权限
                     </button>
                 </form>
             </div>
@@ -57,7 +57,7 @@
                         <td style="width:280px" class="">${(brand.name)!""}</td>
                         <td style="width:280px" class="">${(brand.url)!""}</td>
                         <td class="operation">
-                            <a href="${context.contextPath}/permission/toEditBrand?id=${brand.id}"
+                            <a href="${context.contextPath}/permission/toEditPermission?id=${brand.id}"
                                class="operationA bgColor1">
                                 <em class="iconfont icon-xiugai"></em>
                             </a>
@@ -191,7 +191,6 @@
                 });
             });
         });
-
     }
 </script>
 </html>

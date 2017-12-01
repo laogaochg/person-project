@@ -53,7 +53,22 @@ public class PermissionController {
         return re;
     }
 
-    @RequestMapping("/toEditBrand")
+    @RequestMapping("/editPermission")
+    @ResponseBody
+    public ResponseEntity editPermission(Model model, Permission permission, HttpServletRequest request) {
+        ResponseEntity re = new ResponseEntity();
+        User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
+        if (permission == null) {
+            re.setCode(1);
+            re.setMes("请选择要操作的数据");
+        }
+        permissionService.editPermission(permission, u);
+        re.setCode(200);
+        re.setMes("删除成功");
+        return re;
+    }
+
+    @RequestMapping("/toEditPermission")
     public String toEditBrand(Model model, Long id) {
         if (id != null) model.addAttribute("item", permissionService.queryById(id));
         return "setting/permission/editPermission";

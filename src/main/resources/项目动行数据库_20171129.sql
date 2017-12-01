@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50631
 File Encoding         : 65001
 
-Date: 2017-11-29 10:47:07
+Date: 2017-12-01 16:03:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -77,7 +77,7 @@ CREATE TABLE `csair_log_operation` (
   `op_time` datetime NOT NULL COMMENT '操作时间',
   `op_ip` varchar(255) DEFAULT NULL COMMENT '操作的ip地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3013 DEFAULT CHARSET=utf8 COMMENT='后台操作记录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=3025 DEFAULT CHARSET=utf8 COMMENT='后台操作记录日志';
 
 -- ----------------------------
 -- Records of csair_log_operation
@@ -731,6 +731,18 @@ INSERT INTO `csair_log_operation` VALUES ('3009', '3', '批量删除品牌', '�
 INSERT INTO `csair_log_operation` VALUES ('3010', '3', '删除菜单', '菜单id:147；菜单名：121221；菜单的url：2112', '2017-11-28 15:27:18', '0:0:0:0:0:0:0:1');
 INSERT INTO `csair_log_operation` VALUES ('3011', '3', '批量删除品牌', '品牌ID：（75）。', '2017-11-28 15:46:48', '0:0:0:0:0:0:0:1');
 INSERT INTO `csair_log_operation` VALUES ('3012', '3', '添加菜单', '菜单id:148；菜单名：管理权限；菜单的url：/permission/list', '2017-11-28 16:11:04', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3013', '3', '删除权限', '权限id：[[461, 462]]', '2017-11-29 15:57:18', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3014', '3', '删除权限', '权限id：[[453]]', '2017-11-29 15:58:38', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3015', '3', '删除权限', '权限id：[[470]]', '2017-11-29 16:00:55', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3016', '3', '删除权限', '权限id：[487]', '2017-11-29 16:24:34', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3017', '3', '添加权限', '权限名字：null ,URL: null', '2017-12-01 14:42:11', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3018', '3', '添加权限', '权限名字：12 ,URL: 12', '2017-12-01 14:47:05', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3019', '3', '删除权限', '权限id：[491]', '2017-12-01 14:47:19', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3020', '3', '添加权限', '权限名字：编辑权限 ,URL: /permission/toEditPermission||/permission/editPermission||', '2017-12-01 14:52:11', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3021', '3', '修改权限', '权限名字：编辑权限 ,URL: /permission/toEditPermission||/permission/editPermission', '2017-12-01 14:54:55', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3022', '3', '删除权限', '权限id：[490]', '2017-12-01 14:58:21', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3023', '3', '修改权限', '权限名字：编辑权限 ,URL: /permission/toEditPermission||/permission/editPermission||/permission/list', '2017-12-01 14:59:18', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3024', '3', '添加权限', '权限名字：类目列表 ,URL: /GoodCategory/queryAllGoodCategory', '2017-12-01 15:59:46', '0:0:0:0:0:0:0:1');
 
 -- ----------------------------
 -- Table structure for csair_user_info
@@ -878,12 +890,11 @@ CREATE TABLE `e_admin_permission` (
   `type` tinyint(1) DEFAULT NULL COMMENT 'NULL为管理平台的权限；2为商家权限',
   `class_name` varchar(255) DEFAULT NULL COMMENT '归属类的类名，用于确定菜单下的权限列表',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=490 DEFAULT CHARSET=utf8 COMMENT='后台管理权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=494 DEFAULT CHARSET=utf8 COMMENT='后台管理权限表';
 
 -- ----------------------------
 -- Records of e_admin_permission
 -- ----------------------------
-INSERT INTO `e_admin_permission` VALUES ('453', '/weixing', null, null, null, 'com.csair.admin.weixing.dto.TokenController');
 INSERT INTO `e_admin_permission` VALUES ('454', '/certificate/batchDelete', '删除证书', null, null, 'com.csair.admin.core.controller.CertificateController');
 INSERT INTO `e_admin_permission` VALUES ('455', '/user/list', '查询所有用户', null, null, 'com.csair.admin.core.controller.ManageUserController');
 INSERT INTO `e_admin_permission` VALUES ('456', '/user/toEditUser', '新建用户', null, null, 'com.csair.admin.core.controller.ManageUserController');
@@ -891,8 +902,6 @@ INSERT INTO `e_admin_permission` VALUES ('457', '/role/userList', '角色成员�
 INSERT INTO `e_admin_permission` VALUES ('458', '/role/addOrUpdataRole', '角色编辑', null, null, 'com.csair.admin.core.controller.RoleController');
 INSERT INTO `e_admin_permission` VALUES ('459', '/brand/editBrand', '编辑品牌', null, null, 'com.csair.admin.core.controller.BrandController');
 INSERT INTO `e_admin_permission` VALUES ('460', '/user/editUser', '编辑用户', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('461', '/authImage', null, null, null, 'com.csair.admin.core.controller.AuthImage');
-INSERT INTO `e_admin_permission` VALUES ('462', '/menu/menuChild', null, null, null, 'com.csair.admin.core.controller.MenuController');
 INSERT INTO `e_admin_permission` VALUES ('463', '/role/editRolePermission', '角色权限编辑', null, null, 'com.csair.admin.core.controller.RoleController');
 INSERT INTO `e_admin_permission` VALUES ('464', '/brand/toEditBrand', '编辑品牌', null, null, 'com.csair.admin.core.controller.BrandController');
 INSERT INTO `e_admin_permission` VALUES ('465', '/role/list', '角色查询', null, null, 'com.csair.admin.core.controller.RoleController');
@@ -900,26 +909,24 @@ INSERT INTO `e_admin_permission` VALUES ('466', '/changePassword', '修改密码
 INSERT INTO `e_admin_permission` VALUES ('467', '/user/downloadUser', '下载用户数据', null, null, 'com.csair.admin.core.controller.ManageUserController');
 INSERT INTO `e_admin_permission` VALUES ('468', '/brand/batchDeleteBrand', '删除品牌', null, null, 'com.csair.admin.core.controller.BrandController');
 INSERT INTO `e_admin_permission` VALUES ('469', '/certificate/toEditCertificate', '编辑证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('470', '/menu/queryParentMenus', null, null, null, 'com.csair.admin.core.controller.MenuController');
 INSERT INTO `e_admin_permission` VALUES ('471', '/menu/edit', '管理菜单', null, null, 'com.csair.admin.core.controller.MenuController');
 INSERT INTO `e_admin_permission` VALUES ('472', '/certificate/batchInsertCertificate', '编辑证书', null, null, 'com.csair.admin.core.controller.CertificateController');
 INSERT INTO `e_admin_permission` VALUES ('473', '/menu/list', '菜单查询', null, null, 'com.csair.admin.core.controller.MenuController');
 INSERT INTO `e_admin_permission` VALUES ('474', '/permission/list', '权限查询', null, null, 'com.csair.admin.core.controller.PermissionController');
 INSERT INTO `e_admin_permission` VALUES ('475', '/role/inputRole', '角色编辑', null, null, 'com.csair.admin.core.controller.RoleController');
 INSERT INTO `e_admin_permission` VALUES ('476', '/menu/delete', '删除菜单', null, null, 'com.csair.admin.core.controller.MenuController');
-INSERT INTO `e_admin_permission` VALUES ('477', '/permission/addMenu', '权限编辑', null, null, 'com.csair.admin.core.controller.PermissionController');
 INSERT INTO `e_admin_permission` VALUES ('478', '/user/changePassword', '修改密码', null, null, 'com.csair.admin.core.controller.UserController');
 INSERT INTO `e_admin_permission` VALUES ('479', '/role/deleteRole', '删除角色', null, null, 'com.csair.admin.core.controller.RoleController');
 INSERT INTO `e_admin_permission` VALUES ('480', '/role/removeRoleUser', '删除角色成员', null, null, 'com.csair.admin.core.controller.RoleController');
 INSERT INTO `e_admin_permission` VALUES ('481', '/forbidUserLogin', '禁止用户登陆', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('482', '/permission/edit', '权限编辑', null, null, 'com.csair.admin.core.controller.PermissionController');
 INSERT INTO `e_admin_permission` VALUES ('483', '/brand/list', '查看品牌', null, null, 'com.csair.admin.core.controller.BrandController');
 INSERT INTO `e_admin_permission` VALUES ('484', '/cancelForbidUserLogin', '解禁用户登陆', null, null, 'com.csair.admin.core.controller.ManageUserController');
 INSERT INTO `e_admin_permission` VALUES ('485', '/log/list', '操作历史查询', null, null, 'com.csair.admin.core.controller.OperationLogController');
 INSERT INTO `e_admin_permission` VALUES ('486', '/certificate/list', '查询证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('487', '/uploadFile', null, null, null, 'com.csair.admin.core.controller.FileUploadController');
 INSERT INTO `e_admin_permission` VALUES ('488', '/certificate/editCertificate', '编辑证书', null, null, 'com.csair.admin.core.controller.CertificateController');
 INSERT INTO `e_admin_permission` VALUES ('489', '/menu/toEdit', '管理菜单', null, null, 'com.csair.admin.core.controller.MenuController');
+INSERT INTO `e_admin_permission` VALUES ('492', '/permission/toEditPermission||/permission/editPermission||/permission/list', '编辑权限', null, null, null);
+INSERT INTO `e_admin_permission` VALUES ('493', '/GoodCategory/queryAllGoodCategory', '类目列表', null, null, null);
 
 -- ----------------------------
 -- Table structure for e_admin_role
@@ -1125,6 +1132,87 @@ INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
 INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
 INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
 INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
 
 -- ----------------------------
 -- Table structure for e_admin_user
@@ -1154,7 +1242,7 @@ CREATE TABLE `e_admin_user` (
 -- ----------------------------
 INSERT INTO `e_admin_user` VALUES ('1', 'julice', 'julice@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-03-29 08:49:00', '1', '222', '222', '222', '2222', '1', '222', 'csair_admin', 'aaaaaa');
 INSERT INTO `e_admin_user` VALUES ('2', 'bob', 'bob@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-10-26 17:23:28', '1', null, null, '0:0:0:0:0:0:0:1', null, null, null, 'csair_admin', 'aaaaaa');
-INSERT INTO `e_admin_user` VALUES ('3', 'alice1', 'alice@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-11-29 10:46:41', '1', null, null, '0:0:0:0:0:0:0:1', null, null, null, 'csair_admin', 'aaaaaa');
+INSERT INTO `e_admin_user` VALUES ('3', 'alice1', 'alice@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-12-01 14:40:32', '1', null, null, '0:0:0:0:0:0:0:1', null, null, null, 'csair_admin', 'aaaaaa');
 INSERT INTO `e_admin_user` VALUES ('23', '123', '2112211221', '783ED423A9D32A96DD84135D8F7EF87A', '2017-07-18 10:02:02', null, '1', null, null, '111', '1221', '1', null, 'csair_admin', 'aaaaaa');
 INSERT INTO `e_admin_user` VALUES ('24', 'testCreate', 'testCerate@test.com', '685228DC8CB1074BD2E9A87F69F103A3', '2017-07-18 11:57:17', null, '0', null, null, '111', '12', '1', null, 'csair_admin', 'kT0OpD');
 INSERT INTO `e_admin_user` VALUES ('25', 'dsgfsad ', 'ateate', '5CED7152440C7125D028EF8CF6389334', '2017-07-26 09:19:33', null, '0', null, null, '111', '', '1', null, 'csair_admin', 'Nfio2Y');
