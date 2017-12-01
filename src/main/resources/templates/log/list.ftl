@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
+    <script src="${context.contextPath}/js/common/datetimepicker.js"></script>
     <!-- style.css是项目的样式文件  -->
 
 </head>
@@ -79,10 +80,10 @@
         });
     });
 </script>
-<script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="${context.contextPath}/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/bootstrap/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="${context.contextPath}/js/common/timepick.js"></script>
 <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
-<script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/query/jquery.twbsPagination.min.js"></script>
 
 </html>

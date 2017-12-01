@@ -7,26 +7,24 @@
     <meta name="description" content="">
     <title>平面运营后台</title>
 <#include "../../common/baseImport.ftl" />
-<#--bookstrap 分页插件-->
-    <script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin" style="">
 <#include "../../common/left_mune.ftl" />
     <div class="layui-body">
         <div class="headerTxt clearfix">
-            <div class="fl title-body">品牌列表</div>
+            <div class="fl title-body">权限列表</div>
         </div>
         <div class="Popup brandPopup">
             <div class="selBox">
                 <form id="searchForm" method="post" action="${context.contextPath}/permission/list"
-                      class="nice-validator n-default"
+                      class="nice-validator n-default layui-form"
                       novalidate="novalidate">
                     <input type="text" value="${(qo.keyword)!""}" name="keyword" placeholder="关键字"
                            class="input-text radius size-L inputstyle">
                     <i class="ico iconfont icon-sousuo"></i>
                     <input name="currentPage" value="${pageResult.currentPage}" type="hidden">
-                    <button class="layui-btn layui-btn-normal serchH">搜索</button>
+                    <button class="layui-btn layui-btn-normal serchH " lay-submit lay-filter="go">搜索</button>
                     <button class="layui-btn layui-btn-normal changeBtn mr20 ml32"
                             style="margin-left: 300px;" type="button"
                             onclick="window.location.href='${context.contextPath}/brand/toEditBrand'"><i
@@ -36,14 +34,12 @@
             </div>
         </div>
         <!--  表格S  -->
-        <div class="comTable">
-            <div class="layui-form">
+        <div class="comTable layui-form">
+            <form class="layui-form" lay-filter="item_table_form">
                 <table class="layui-table mytable">
                     <thead>
                     <tr>
-                        <th style="width: 60px">
-                            <input type="checkbox" name="selectAll" lay-skin="primary">
-                        </th>
+                        <th style="width: 60px"></th>
                         <th style="width: 100px">ID</th>
                         <th style="width:280px">权限名称</th>
                         <th>url</th>
@@ -52,18 +48,16 @@
                     </thead>
                     <tbody>
                     <#list pageResult.listData as brand>
-                    <tr class="js-item" data-itemid="${brand.id}" >
+                    <tr class="js-item item_tr" data-itemid="${brand.id}">
                         <td style="width: 40px">
-                            <div class="layui-form-item">
-                                <input data-brandid="${brand.id}" type="checkbox" name="deletePermissionId"
-                                       lay-skin="primary">
-                            </div>
+                            <input data-itemid="${brand.id}" lay-skin="primary" lay-filter="selectAll"
+                                   class="selectItemInput" type="checkbox">
                         </td>
                         <td style="width: 60px">${brand.id}</td>
                         <td style="width:280px" class="">${(brand.name)!""}</td>
                         <td style="width:280px" class="">${(brand.url)!""}</td>
                         <td class="operation">
-                            <a href="${context.contextPath}/brand/toEditBrand?id=${brand.id}"
+                            <a href="${context.contextPath}/permission/toEditBrand?id=${brand.id}"
                                class="operationA bgColor1">
                                 <em class="iconfont icon-xiugai"></em>
                             </a>
@@ -74,41 +68,61 @@
                     </tr>
                     </#list>
                 </table>
-            </div>
-            <div class="tableFoot">
-                <div class="footTxt" style="margin-left: 15px">
-                    <i class="allChe tableI" id="allChe"></i><label>全选</label>
+                <div class="tableFoot">
+                    <div class="footTxt" style="margin-left: 15px">
+                        <input type="checkbox" name="selectAll" lay-skin="primary" lay-filter="selectAll">
+                        <i class="allChe tableI" id="allChe"></i><label>全选</label>
+                    </div>
+                    <button type="button" id="batchDeleteBrand"
+                            class="ml40 layui-btn layui-btn-primary layui-btn-big layuiBtn"
+                            style="border-radius: 6px">
+                        批量删除
+                    </button>
+                    共${pageResult.totalCount}条
+                    <div id="pagination" class="demo4"></div>
                 </div>
-                <button type="button" id="batchDeleteBrand"
-                        class="ml40 layui-btn layui-btn-primary layui-btn-big layuiBtn"
-                        style="border-radius: 6px">
-                    批量删除
-                </button>
-                共${pageResult.totalCount}条
-                <div id="pagination" class="demo4"></div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 </body>
 <script type="text/javascript">
-
-    layui.use(['form', 'layedit', 'laydate'], function () {
-        var form = layui.form
-                , layer = layui.layer
-        ;
-
+    <#--layui-->
+    layui.use(['form', 'laydate'], function () {
+        var form = layui.form, layer = layui.layer;
         //监听提交
-        form.on('submit(searchForm)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            });
-            return false;
+        form.on('submit(go)', function (data) {
+            return verifyForm(data);
+        });
+        //监听checkbox
+        form.on('checkbox(selectAll)', function (data) {
+            // 全选事件
+            var selectInputs = $(".selectItemInput");
+            if (data.elem.name == "selectAll") {
+                selectInputs.prop("checked", data.elem.checked);
+            } else {
+                var selectCount = 0;
+                for (i = 0; i < selectInputs.length; i++) {
+                    if (selectInputs[i].checked) {
+                        selectCount++;
+                    }
+                }
+                $("[name=selectAll]").prop("checked", selectInputs.length == selectCount);
+            }
+            form.render("checkbox"); //更新checkbox的渲染
         });
     });
 
+    //表单校验
+    function verifyForm(data) {
+//        layer.alert(JSON.stringify(data.field), {
+//            title: '最终的提交信息'
+//        });
+        return true;
+    }
+
+    //分页代码
     $(function () {
-        //分页代码
         $('#pagination').twbsPagination({
             first: "首页",
             prev: "上一页",
@@ -123,35 +137,35 @@
             }
         });
     });
+    //批量删除按钮
     $(function () {
-        //删除
         $("#batchDeleteBrand").click(function () {
-            console.debug($(".layui-form-checked"));
-            var selectClass = $(".layui-form-checked");
+            var selectClass = $(".selectItemInput:checked");
+            if (selectClass.length < 1) {
+                layer.confirm('请选择要删除的权限', {
+                    btn: ['确定']    //按钮
+                })
+                return;
+            }
+            var _data = "1=1";
             for (var i = 0; i < selectClass.length; i++) {
                 var selectId = $(selectClass[i]).parents("tr").data("itemid");
-                console.debug(selectId);
-            }
-            var selectHovers = $("tr .hover1");
-            var _data = "1=1";
-            for (var i = 0; i < selectHovers.length; i++) {
-                _data += "&ids=" + $(selectHovers[i]).data("brandid");
+                _data += "&ids=" + selectId;
             }
             console.debug(_data);
-//            _ajax(_data);
-
+            _ajax(_data);
         });
     });
 
+    //删除请求事件
     function _ajax(_data) {
-        //批量删除
         layui.use('layer', function () {
             layer.confirm('您确定要删除吗？', {
                 btn: ['确定删除', '取消']    //按钮
             }, function () {
                 $.ajax({
                     type: "POST",
-                    url: "${context.contextPath}/brand/batchDeleteBrand",
+                    url: "${context.contextPath}/permission/batchDelete",
                     data: _data,
                     success: function (data) {
                         var msg;

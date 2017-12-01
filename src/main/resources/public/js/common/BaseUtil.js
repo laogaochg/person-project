@@ -1,3 +1,4 @@
+// 模态框
 function myModal(id,title,content,success) {
     var _id='#' + id;
     $(_id).modal('show');

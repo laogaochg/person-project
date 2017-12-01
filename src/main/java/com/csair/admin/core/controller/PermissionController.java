@@ -38,6 +38,27 @@ public class PermissionController {
     @Resource
     private MenuService menuService;
 
+    @RequestMapping("/batchDelete")
+    @ResponseBody
+    public ResponseEntity batchDelete(Model model, Long[] ids, HttpServletRequest request) {
+        ResponseEntity re = new ResponseEntity();
+        User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
+        if (ids == null || ids.length == 0) {
+            re.setCode(1);
+            re.setMes("请选择要操作的数据");
+        }
+        permissionService.batchDelete(ids, u);
+        re.setCode(200);
+        re.setMes("删除成功");
+        return re;
+    }
+
+    @RequestMapping("/toEditBrand")
+    public String toEditBrand(Model model, Long id) {
+        if (id != null) model.addAttribute("item", permissionService.queryById(id));
+        return "setting/permission/editPermission";
+    }
+
     @RequestMapping("/list")
     public String brandList(Model model, PermissionQueryObject qo) {
         PageResult<Permission> pageResult = permissionService.query(qo);
@@ -52,8 +73,8 @@ public class PermissionController {
     @RequestMapping("/edit")
     public String queryPermission(Model model) {
         List<Permission> permissionList = permissionService.findAllPermission();
-        model.addAttribute("permissionList",permissionList);
-        model.addAttribute("p",permissionService.getNoPermissionRequestMapping());
+        model.addAttribute("permissionList", permissionList);
+        model.addAttribute("p", permissionService.getNoPermissionRequestMapping());
         return "/role/editPermission";
     }
 
@@ -62,14 +83,14 @@ public class PermissionController {
      */
     @RequestMapping("/addMenu")
     @ResponseBody
-    public ResponseEntity addMenu(Permission l,HttpServletRequest request) {
+    public ResponseEntity addMenu(Permission l, HttpServletRequest request) {
         ResponseEntity re = new ResponseEntity();
-        User u = (User)request.getSession().getAttribute(ParamConstants.USER_SESSION);
+        User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (l.getId() == null) {
 //            Long menusList = permissionService.addPermission(l,u);
             re.setMes("添加成功。");
         } else {
-            permissionService.updatePermissionByPid(l,u);
+            permissionService.updatePermissionByPid(l, u);
             re.setMes("修改成功。");
         }
         re.setCode(200);
@@ -82,16 +103,16 @@ public class PermissionController {
     @RequestMapping("/menuPermission")
     public String qeuryPremission(Model model, PermissionQueryObject qo) {
         if (qo.getRoleId() == null) {
-            throw new PlatformException(ParamConstants.ERROR_PARAM,"参数不正确");
+            throw new PlatformException(ParamConstants.ERROR_PARAM, "参数不正确");
         }
         //查询没有菜单的权限
 //        List<Permission> permissionList = permissionService.queryNoMenuPermission();
 //        model.addObject("permissionList",permissionList);
         //查询权限；按菜单的id归类并且查询菜单权限放在数组的第一个
-        Map<String,List<Permission>> map = permissionService.queryAllPermissionSort();
-        model.addAttribute("permissionMap",map);
+        Map<String, List<Permission>> map = permissionService.queryAllPermissionSort();
+        model.addAttribute("permissionMap", map);
         //查询角色
-        model.addAttribute("role",roleService.queryById(qo.getRoleId()));
+        model.addAttribute("role", roleService.queryById(qo.getRoleId()));
         //查询角色下的权限
         qo.setPageSize(-1);
         PageResult pageResult = permissionService.query(qo);
@@ -101,9 +122,9 @@ public class PermissionController {
             ids.add(p.getId());
         }
         //菜单查询
-        List<Menu> menuList = menuService.getAllMenu(true,true);
-        model.addAttribute("menuList",menuList);
-        model.addAttribute("havingPermissionIds",ids);
+        List<Menu> menuList = menuService.getAllMenu(true, true);
+        model.addAttribute("menuList", menuList);
+        model.addAttribute("havingPermissionIds", ids);
         return "role/PermissionList";
     }
 

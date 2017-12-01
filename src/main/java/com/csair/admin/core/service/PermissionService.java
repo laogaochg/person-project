@@ -76,4 +76,11 @@ public interface PermissionService {
      */
     Map<String, Object> editRolePermission(Long roleId, Long[] permissionIds, User user);
 
+    /**
+     *
+     * @return 受影响的行数
+     */
+    int batchDelete(Long[] ids, User u);
+
+    Permission queryById(Long id);
 }

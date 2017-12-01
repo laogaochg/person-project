@@ -2,6 +2,7 @@ package com.csair.admin.core.service.impl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,6 +45,23 @@ public class PermissionServiceImpl implements PermissionService {
     private MenuService menuService;
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
+    @Override
+    public Permission queryById(Long id) {
+        return permissionDao.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int batchDelete(Long[] ids, User u) {
+        PermissionQuery qo = new PermissionQuery();
+        qo.createCriteria().andIdIn(Arrays.asList(ids));
+        int i = permissionDao.deleteByExample(qo);
+        if (i > 0) {
+            String content = "权限id：" + Arrays.toString(ids);
+            String action = "删除权限";
+            operationLogService.log(u.getId(), action, content, u.getLastIp());
+        }
+        return 0;
+    }
 
     @Override
     public Map<String, Object> editRolePermission(Long roleId, Long[] permissionIds, User user) {

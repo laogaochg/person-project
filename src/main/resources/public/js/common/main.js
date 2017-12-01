@@ -80,28 +80,6 @@ $(function() {
 
 });
 
-/*---------------------       baseMsg中的添加航班      ----------------------*/
-$('#plugsFight').on('click', function(){
-    layer.open({
-        type: 1,
-        area: ['770px', '602px'],
-        title: false,
-        shadeClose: true,        //点击遮罩关闭
-        content:$("#Popup")
-    });
-});
-
-/*---------------------       baseMsg中的选择商品      ----------------------*/
-$('#selectGoods').on('click', function(){
-    layer.open({
-        type: 1,
-        area: ['700px', '602px'],
-        title: false,
-        shadeClose: true,        //点击遮罩关闭
-        content:$("#PopupGoods")
-    });
-});
-
 /*----------------------   bussinness.html    -----------------------------*/
 $('#plugNews').on('click', function(){
     layer.open({
@@ -313,39 +291,6 @@ $(document).ready(function () {
         });
     }();
 });
-
-
-//获取到当前页面的路径
-function getRootPath_web() {
-    var pathName = window.document.location.pathname;                         // admin_/src/Html/page/index.html
-    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  // admin_
-    pathName=pathName.replace(projectName,"");
-    return (pathName);
-};
-
-var result=getRootPath_web();
-console.log(result);
-
-
-/*-------------------   ArticleClassList.html  --------------------------*/
-~function () {
-    var $icon = $(".iconDelete"),         //拿到点击的元素
-        iconNum = $icon.length;
-    for (var i = 0; i < iconNum; i++) {
-        $icon.eq(i).on("click",function () {
-            layer.confirm('你确定要删除吗？', {
-                btn: ['确定','取消'] //按钮
-                ,title: false
-            }, function(){
-                layer.msg('删除成功', {icon: 1});
-            });
-        })
-    }
-}();
-
-
-
-
 
 
 

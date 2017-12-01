@@ -1,4 +1,4 @@
-//分页查询js
+//时间选择控件
 $(function() {
     $(".selectTime").datetimepicker({
         format: 'yyyy-mm-dd',

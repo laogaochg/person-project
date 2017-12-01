@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wangEditor demo</title>
+</head>
+<body>
+<div id="editor">
+    <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+</div>
+<button id="btn1">获取html</button>
+<button id="btn2">获取text</button>
+<div><p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p><p>1212121212<b><i>1212<font color="#c24f4a">121221</font></i></b><img src="http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/af/kl_org.gif" alt="[可怜]" data-w-e="1"></p></div>
+<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+<script type="text/javascript" src="/my/js/plugin/wangEditor/wangEditor.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('#editor')
+    // 或者 var editor = new E( document.getElementById('#editor') )
+    // 隐藏“网络图片”tab
+    editor.customConfig.showLinkImg = false
+    // 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+    // editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+    editor.customConfig.uploadImgServer = '/upload'  // 上传图片到服务器
+    //要求服务器返回数据格式如下：
+    /*{
+        // errno 即错误代码，0 表示没有错误。
+        //       如果有错误，errno != 0，可通过下文中的监听函数 fail 拿到该错误码进行自定义处理
+        errno: 0,
+
+            // data 是一个数组，返回若干图片的线上地址
+            data: [
+        '图片1地址',
+        '图片2地址',
+        '……'
+    ]
+    }*/
+    editor.create()
+
+    document.getElementById('btn1').addEventListener('click', function () {
+        // 读取 html
+        alert(editor.txt.html())
+    }, false)
+
+    document.getElementById('btn2').addEventListener('click', function () {
+        // 读取 text
+        alert(editor.txt.text())
+    }, false)
+</script>
+</body>
+</html>

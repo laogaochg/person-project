@@ -107,9 +107,9 @@
         </div>
     </div>
 </div>
-<link rel="stylesheet" href="${context.contextPath}/js/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="${context.contextPath}/js/ztree/js/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="${context.contextPath}/js/html/role/editPermission.js"></script>
+<link rel="stylesheet" href="${context.contextPath}/js/plugin/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="${context.contextPath}/js/plugin/ztree/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/common/editPermission.js"></script>
 <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
 <script type="text/javascript">
     $(function() {
