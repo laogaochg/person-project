@@ -26,7 +26,8 @@
     </appender>
     <!--第三方 jar 日志输出配置 -->
     <logger name="com.csair.admin.core" level="DEBUG"/>
-    <logger name="org.apache.commons" level="INFO"/>
+    <logger name="org.springframework.core.env" level="INFO"/>
+    <logger name="org.springframework.beans" level="INFO"/>
     <logger name="org.springframework" level="INFO"/>
     <logger name="org.mybatis.spring" level="INFO"/>
     <!-- 日志输出适配器配置 -->

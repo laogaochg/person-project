@@ -17,7 +17,6 @@
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 贤心
             </a>
             <dl class="layui-nav-child">
@@ -59,9 +58,13 @@
                         <#else>
                             &nbsp;&nbsp;&nbsp;
                         </#if>
-                        <a href="${context.contextPath}${(menu2.url)!"javascript:;"}">
-                        ${menu2.mname}
-                        </a>
+                        <#if (menu2.url)??>
+                        <a href="${context.contextPath}${menu2.url}?selectMenuIdForIntropect=${menu2.mid}">
+                        <#else>
+                        <a href="javascript:;">
+                        </#if>
+                    ${menu2.mname}
+                    </a>
                     </li>
                     <ul class="childList">
                         <#list menu2.menuList as menu3>

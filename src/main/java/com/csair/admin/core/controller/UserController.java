@@ -73,7 +73,8 @@ public class UserController {
                 return "redirect:/login";
             }
         }
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        boolean rememberMe = true;
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             // 将调用MyShiroRealm.doGetAuthenticationInfo()方法

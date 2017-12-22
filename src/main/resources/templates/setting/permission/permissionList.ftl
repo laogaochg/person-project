@@ -20,6 +20,11 @@
             height: 70px;
             display: block;
         }
+
+        #pagination {
+            margin-top: -4px;
+            margin-left: 2px;
+        }
     </style>
 </head>
 <body>
@@ -32,14 +37,14 @@
         <div class="Popup">
             <div class="selBox">
                 <form id="searchForm" method="post" action="${context.contextPath}/permission/list" class="layui-form">
-                    <input type="text" value="${(qo.keyword)!""}" name="keyword" placeholder="关键字"
+                    <input value="${(qo.keyword)!""}" name="keyword" placeholder="关键字"
                            class="input-text radius size-L inputstyle">
-                    <i class="ico iconfont icon-sousuo"></i>
                     <input name="currentPage" value="${pageResult.currentPage}" type="hidden">
+                    <input name="pageSize" value="${pageResult.pageSize}" type="hidden">
                     <button class="layui-btn layui-btn-normal searchBtn " lay-submit lay-filter="go">搜索</button>
                     <button class="layui-btn layui-btn-normal addItemBtn" type="button"
                             onclick="window.location.href='${context.contextPath}/permission/toEditPermission'">
-                        <i class="iconfont  icon-tianjia1"></i>添加权限
+                        添加权限
                     </button>
                 </form>
             </div>
@@ -68,28 +73,36 @@
                     <td style="" class="">${(item.url)!""}</td>
                     <td class="operation">
                         <a href="${context.contextPath}/permission/toEditPermission?id=${item.id}"
-                           class="operationA bgColor1">
-                            <em class="iconfont icon-xiugai"></em>
+                           class="layui-btn layui-btn-sm layui-btn-normal">
+                            修改
                         </a>
-                        <a onclick="_ajax('ids=${item.id}')" class="operationA bg2">
-                            <em class="iconfont icon-shanchu"></em>
+                        <a onclick="_ajax('ids=${item.id}')" class="layui-btn layui-btn-sm layui-btn-warm">
+                            删除
                         </a>
                     </td>
                 </tr>
                 </#list>
             </table>
-            <div class="tableFoot">
-                <div class="footTxt" style="margin-left: 15px">
+            <div class="tableFoot layui-row">
+                <div class="footTxt layui-col-md4" style="margin-left: 15px">
                     <input type="checkbox" name="selectAll" lay-skin="primary" lay-filter="selectAll">
-                    <i class="allChe tableI" id="allChe"></i><label>全选</label>
-                <button type="button" id="batchDeleteItem"
-                        class="ml40 layui-btn layui-btn-primary layui-btn-big layuiBtn"
-                        style="border-radius: 6px">
-                    批量删除
-                </button>
-                    共${pageResult.totalCount}条
+                    <button type="button" id="batchDeleteItem"
+                            class="ml40 layui-btn layui-btn-primary layui-btn-big layuiBtn"
+                            style="border-radius: 6px">
+                        批量删除
+                    </button>
+                    共${pageResult.totalCount}条，
+                    每页
+                    <select lay-ignore name="pageSizeSelect" class="form-control" style="width: 88px;">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>1000</option>
+                    </select>
+                    条数据
                 </div>
-                <div id="pagination"></div>
+                <div id="pagination" class="layui-col-md4"></div>
             </div>
         </div>
     </div>
@@ -130,6 +143,16 @@
         return true;
     }
 
+    $(function () {
+        //初始化每页多少条数据下拉框
+        $("[name=pageSizeSelect]").val(${qo.pageSize});
+        $("[name=pageSizeSelect]").change(function () {
+            $("[name=currentPage]").val(1);
+            $("[name=pageSize]").val(this.value);
+            $("#searchForm").submit();
+        });
+    })
+
     //分页代码
     $(function () {
         $('#pagination').twbsPagination({
@@ -161,7 +184,6 @@
                 var selectId = $(selectClass[i]).parents("tr").data("itemid");
                 _data += "&ids=" + selectId;
             }
-            console.debug(_data);
             _ajax(_data);
         });
     });

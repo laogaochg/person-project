@@ -36,6 +36,7 @@ public class ShiroFilter extends ShiroFilterFactoryBean {
         ignoreExt.add(".js");
         ignoreExt.add(".css");
         ignoreExt.add(".html");
+        ignoreExt.add(".ico");
     }
 
     @Override

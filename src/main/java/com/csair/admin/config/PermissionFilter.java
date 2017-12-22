@@ -12,18 +12,50 @@ import org.springframework.util.StringUtils;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * 权限校验 Filter
  */
 public class PermissionFilter extends AccessControlFilter {
     private static Logger logger = LoggerFactory.getLogger(PermissionFilter.class);
+    private ShiroFilter shiroFilter;
+
+    public void setShiroFilter(ShiroFilter shiroFilter) {
+        this.shiroFilter = shiroFilter;
+    }
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
 
+
+        //修改过滤的东西
+        HttpServletRequest httpRequest = ((HttpServletRequest) request);
+        String uri = httpRequest.getRequestURI();//获取URI
+        String basePath = httpRequest.getContextPath();//获取basePath
+        if (null != uri && uri.startsWith(basePath)) {
+            uri = uri.replace(basePath, "");
+        }
+        //编写不用授权的url
+        if ("/404".equals(uri) || "/unauthorizedException".equals(uri)) {
+            return Boolean.TRUE;
+        }
+        //匿名访问处理
+        Map<String, String> filterMap = shiroFilter.getFilterChainDefinitionMap();
+        if ("anon".equals(filterMap.get(uri))) {
+            return Boolean.TRUE;
+        }
+        System.out.println("------------------------");
+
+
         //先判断带参数的权限判断
         Subject subject = getSubject(request, response);
+        //没有登陆就查看记住我功能
+        if (!subject.isAuthenticated() && subject.isRemembered() && subject.getSession().getAttribute("user") == null) {
+            Object principal = subject.getPrincipal();
+            System.out.println("principal = " + principal);
+            return Boolean.FALSE;
+        }
         //没有登陆就不通过
         if (!subject.isAuthenticated()) {
             return Boolean.FALSE;
@@ -36,7 +68,7 @@ public class PermissionFilter extends AccessControlFilter {
                 }
             }
         }
-        HttpServletRequest httpRequest = ((HttpServletRequest) request);
+
         //处理选中的菜单         selectMenuIdForIntropect
         String menuId = httpRequest.getParameter("selectMenuIdForIntropect");
         if (StringUtils.hasText(menuId)) {
@@ -46,21 +78,7 @@ public class PermissionFilter extends AccessControlFilter {
                 httpRequest.getSession().setAttribute("selectMenuIdForIntropect", 0);
             }
         }
-        /**
-         * 此处是改版后，为了兼容项目不需要部署到root下，也可以正常运行，但是权限没设置目前必须到root 的URI，
-         * 原因：如果你把这个项目叫 ShiroDemo，那么路径就是 /ShiroDemo/xxxx.shtml ，那另外一个人使用，又叫Shiro_Demo,那么就要这么控制/Shiro_Demo/xxxx.shtml
-         * 理解了吗？
-         * 所以这里替换了一下，使用根目录开始的URI
-         */
-        String uri = httpRequest.getRequestURI();//获取URI
-        String basePath = httpRequest.getContextPath();//获取basePath
-        //编写不用授权的url
-        if ("/404".equals(uri) || "/unauthorizedException".equals(uri)) {
-            return Boolean.TRUE;
-        }
-        if (null != uri && uri.startsWith(basePath)) {
-            uri = uri.replace(basePath, "");
-        }
+
         try {
             //如果是超级管理员角色就过！
             subject.checkRole(Role.ADMIN);

@@ -294,4 +294,8 @@
             parameterType="com.csair.admin.core.po.core.Permission">
     insert into permission ( name, url) values (#{name}, #{url})
   </insert>
+
+    <select id="queryRolePermission" resultType="long" >
+      select pid from e_admin_role_permission where rid =  #{id}
+    </select>
 </mapper>

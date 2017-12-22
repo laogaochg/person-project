@@ -17,6 +17,5 @@
 <#--项目自定义-->
 <link rel="stylesheet" href="${context.contextPath}/css/index/mybase.css">
 <link rel="stylesheet" href="${context.contextPath}/css/index/style.css">
+<#--左边菜单选中事件-->
 <script src="${context.contextPath}/js/common/main.js"></script>
-<#--未知-->
-<link rel="stylesheet" href="//at.alicdn.com/t/font_b8dkz40n5ffuhaor.css">
