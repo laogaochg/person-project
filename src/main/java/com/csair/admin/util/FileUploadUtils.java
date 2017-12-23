@@ -105,7 +105,7 @@ public class FileUploadUtils {
     }
 
     public static String reduceImg(String imgName) {
-        return reduceImg(EnvironmentParams.uploadPath + imgName, EnvironmentParams.IMG_THUMBNAIL_WIDTH, EnvironmentParams.IMG_THUMBNAIL_HIGHT);
+        return reduceImg(EnvironmentParams.uploadPath + imgName, 100, 100);
     }
 
     /**
@@ -141,7 +141,7 @@ public class FileUploadUtils {
             String imgdist = srcFile.getParent() + "/" + fileName;
             ImageIO.write(to, "jpg", new File(imgdist));
             //返回文件的url地址
-            String url =srcFile.getParent().replace(new File(EnvironmentParams.uploadPath).getPath(),"");
+            String url = srcFile.getParent().replace(new File(EnvironmentParams.uploadPath).getPath(), "");
             return url + "/" + fileName;
         } catch (IOException e) {
             e.printStackTrace();

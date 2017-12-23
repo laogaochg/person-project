@@ -26,14 +26,6 @@ public class EnvironmentParams {
      * 平台标识
      */
     public static String PLATFORM_FLAG;
-    /**
-     * 平台常用缩略图宽度
-     */
-    public static int IMG_THUMBNAIL_WIDTH;
-    /**
-     * 平台常用缩略图宽度
-     */
-    public static int IMG_THUMBNAIL_HIGHT;
 
     /**
      * 平台保存图片的真实路径
@@ -87,8 +79,6 @@ public class EnvironmentParams {
             AppSecret = String.valueOf(property.get("AppSecret"));
             AppID = String.valueOf(property.get("AppID"));
             ENCODING_AESKEY = String.valueOf(property.get("EncodingAESKey"));
-            IMG_THUMBNAIL_WIDTH = new Integer(String.valueOf(property.get("IMG_THUMBNAIL_WIDTH")));
-            IMG_THUMBNAIL_HIGHT = new Integer(String.valueOf(property.get("IMG_THUMBNAIL_HIGHT")));
             WEIXING_TOKEN = String.valueOf(property.get("WEIXING_TOKEN"));
             GET_TOKEN_URL = String.valueOf(property.get("GET_TOKEN_URL"));
             PUBLIC_KEY = String.valueOf(property.get("PUBLIC_KEY"));

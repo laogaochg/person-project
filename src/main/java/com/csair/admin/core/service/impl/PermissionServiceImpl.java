@@ -140,14 +140,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     private List<Long> queryPermissionIdByRoleId(Long roleId) {
-        PermissionQueryObject qo = new PermissionQueryObject();
-        qo.setRoleId(roleId);
-        List<Permission> list = permissionDao.queryPermission(qo);
-        List<Long> result = new ArrayList<>();
-        for (Permission p : list) {
-            result.add(p.getId());
-        }
-        return result;
+        return permissionDao.queryRolePermission(roleId);
     }
 
     /**

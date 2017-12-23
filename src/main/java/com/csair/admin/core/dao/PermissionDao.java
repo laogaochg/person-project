@@ -42,4 +42,6 @@ public interface PermissionDao {
     int removeRolePermission(@Param("roleId") Long roleId, @Param("permissionId") Long permissionId);
 
     int insertPermission(Permission p);
+
+    List<Long> queryRolePermission(Long id);
 }

@@ -46,7 +46,7 @@ public class AuthRealm extends AuthorizingRealm {
         String username = utoken.getUsername();
         User user = userService.userLogin(username);
         SecurityUtils.getSubject().getSession().setAttribute(ParamConstants.USER_SESSION, user);
-        return new SimpleAuthenticationInfo(user, user.getPswd(), this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
+        return new SimpleAuthenticationInfo(user, user.getPswd(), this.getClass().getName());//放入shiro.调用 CredentialsMatcher 检验密码
     }
 
     //授权

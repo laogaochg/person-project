@@ -1,5 +1,7 @@
 package com.csair.admin.config;
 
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
@@ -18,13 +20,8 @@ import javax.sql.DataSource;
 @Configuration
 public class BeanConfig {
 
-    //消费者bean
-    // 可以自己订制
-    @Bean
-    public RestTemplate getRestTemplate() {
-        RestTemplate ds = new RestTemplate();
-        return ds;
-    }
+
+
 
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer(){

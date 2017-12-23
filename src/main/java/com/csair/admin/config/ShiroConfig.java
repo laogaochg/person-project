@@ -5,11 +5,15 @@ import java.util.LinkedHashMap;
 import javax.servlet.DispatcherType;
 
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -49,24 +53,12 @@ public class ShiroConfig {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(authRealm);
         manager.setCacheManager(cacheManager());
+        //注入记住我管理器
+        manager.setRememberMeManager(rememberMeManager());
 //        manager.setSessionManager(defaultWebSessionManager());
         return manager;
     }
 
-//    /**
-//     * session管理器
-//     * @return
-//     */
-//    @Bean(name="sessionManager")
-//    public DefaultWebSessionManager defaultWebSessionManager() {
-//        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-//        sessionManager.setCacheManager(cacheManager());
-//        sessionManager.setGlobalSessionTimeout(1800000);
-//        sessionManager.setDeleteInvalidSessions(true);
-//        sessionManager.setSessionValidationSchedulerEnabled(true);
-//        sessionManager.setDeleteInvalidSessions(true);
-//        return sessionManager;
-//    }
 
     /**
      * cache管理
@@ -111,6 +103,7 @@ public class ShiroConfig {
         return advisor;
     }
 
+
     /**
      * 配置哪些需要认证
      */
@@ -118,44 +111,71 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean bean = new ShiroFilter();
         bean.setSecurityManager(manager);
+//        //把权限拦截器放进去
+        PermissionFilter filter = new PermissionFilter();
+        filter.setShiroFilter((ShiroFilter) bean);
+        bean.getFilters().put("permissionFilter", filter);
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
         bean.setSuccessUrl("/home");
         bean.setUnauthorizedUrl("/404");
         //配置访问权限
-        LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-        filterChainDefinitionMap.put("/login", "anon"); //表示可以匿名访问
-        filterChainDefinitionMap.put("/404", "anon"); //表示可以匿名访问
-        filterChainDefinitionMap.put("/uploadFile", "anon"); //表示可以匿名访问
-        filterChainDefinitionMap.put("/authImage", "anon"); //表示可以匿名访问
-        filterChainDefinitionMap.put("/logout*", "anon");
-        filterChainDefinitionMap.put("/weixing*", "anon");//微信路径可以匿名
-        filterChainDefinitionMap.put("/test/**", "anon");
-        filterChainDefinitionMap.put("/flat_ui/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/error", "anon");
-        filterChainDefinitionMap.put("/index*", "authc");
-        filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
-        filterChainDefinitionMap.put("/*", "permission");//权限认证
-        filterChainDefinitionMap.put("/**", "permission");//权限认证
-        filterChainDefinitionMap.put("/*.*", "authc");
-        bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        //把权限拦截器放进去
-        PermissionFilter f = new PermissionFilter();
-        bean.getFilters().put("permission", f);
+        LinkedHashMap<String, String> filterChainMap = new LinkedHashMap<String, String>();
+        filterChainMap.put("/login", "anon"); //表示可以匿名访问
+        filterChainMap.put("/404", "anon"); //表示可以匿名访问
+        filterChainMap.put("/uploadFile", "anon"); //表示可以匿名访问
+        filterChainMap.put("/authImage", "anon"); //表示可以匿名访问
+        filterChainMap.put("/logout*", "anon");
+        filterChainMap.put("/weixing*", "anon");//微信路径可以匿名
+        filterChainMap.put("/test/**", "anon");
+        filterChainMap.put("/**.js", "anon");
+        filterChainMap.put("/**.css", "anon");
+        filterChainMap.put("/**.gif", "anon");
+        filterChainMap.put("/flat_ui/**", "anon");
+        filterChainMap.put("/js/**", "anon");
+        filterChainMap.put("/error", "anon");
+        filterChainMap.put("/index*", "authc");
+        filterChainMap.put("/*", "authc");//表示需要认证才可以访问
+        filterChainMap.put("/**", "authc");//表示需要认证才可以访问
+        filterChainMap.put("/*", "permissionFilter");//权限认证
+        filterChainMap.put("/**", "permissionFilter");//权限认证
+        bean.setFilterChainDefinitionMap(filterChainMap);
         return bean;
     }
 
-//    /**
-//     * 加载ShiroFilter权限控制规则
-//     */
-//    private void loadShiroFilterChain(ShiroFilterFactoryBean factoryBean) {
-//        /**下面这些规则配置最好配置到配置文件中*/
-//        Map<String, String> filterChainMap = new LinkedHashMap<String, String>();
-//        filterChainMap.put("/user", "authc");
-//        filterChainMap.put("/user/edit/**", "authc,perms[user:edit]");
-//        filterChainMap.put("/**", "anon");
-//        factoryBean.setFilterChainDefinitionMap(filterChainMap);
-//    }
+
+    /**
+     * cookie对象;
+     * rememberMeCookie()方法是设置Cookie的生成模版，比如cookie的name，cookie的有效时间等等。
+     *
+     * @return
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie() {
+        //System.out.println("ShiroConfiguration.rememberMeCookie()");
+        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        //<!-- 记住我cookie生效时间30天 ,单位秒;-->
+        simpleCookie.setMaxAge(259200);
+        return simpleCookie;
+    }
+
+
+    /**
+     * cookie管理对象;
+     * rememberMeManager()方法是生成rememberMe管理器，
+     * 而且要将这个rememberMe管理器设置到securityManager中
+     *
+     * @return
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager() {
+        //System.out.println("ShiroConfiguration.rememberMeManager()");
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        //rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度(128 256 512 位)
+        cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
+        return cookieRememberMeManager;
+    }
+
 }
