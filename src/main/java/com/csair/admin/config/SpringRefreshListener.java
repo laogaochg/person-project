@@ -7,10 +7,6 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import com.csair.admin.util.EnvironmentParams;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
-import org.mybatis.spring.SqlSessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -50,7 +46,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
         //重载权限
 //        reloadPermission(event);
         //配置SpringContextUtil的参数
-        logger.info("\n----------------spring启动完成--------------------");
+        logger.info("---------------- spring start complete --------------------");
         SpringContextUtil.applicationContext = event.getApplicationContext();
     }
 

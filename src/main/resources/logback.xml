@@ -4,20 +4,20 @@
     <!-- 控制台输出配置 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="com.csair.admin.util.LocalPatternLayoutEncoder">
-            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%p][%userId] %c:%msg%n</Pattern>
+            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%p][%userId] %c %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
     <!-- 日志文件输出配置 -->
     <appender name="logInfoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.filePath}/weixing.log</file>
+        <file>${log.filePath}/${log.fileName}</file>
         <encoder class="com.csair.admin.util.LocalPatternLayoutEncoder">
-            <Pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%p][%userId] %c:%msg%n</Pattern>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %p - %userId - %c - %msg%n</Pattern>
             <charset>UTF-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.file}-%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <fileNamePattern>${log.fileName}-%d{yyyyMMdd}.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>500MB</maxFileSize>
@@ -34,6 +34,6 @@
         <!--输出到控制台-->
         <appender-ref ref="stdout"/>
         <!--输出到日志文件-->
-        <!--<appender-ref ref="logInfoFile"/>-->
+        <appender-ref ref="logInfoFile"/>
     </root>
 </configuration>

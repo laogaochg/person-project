@@ -1,20 +1,10 @@
 package com.csair.admin.core.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.csair.admin.core.po.core.User;
-import org.springframework.util.StreamUtils;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 /**
  * @Author: LaoGaoChuang
@@ -22,16 +12,22 @@ import java.util.List;
  */
 public class TestB {
     public static void main(String[] args) throws IOException {
-        File f = new File("g:/机场三字码.js");
-        String s = StreamUtils.copyToString(new FileInputStream(f), Charset.forName("utf-8"));
-        List<Object> objects = JSON.parseArray(s);
-        List<AAAA> a = new ArrayList<>(objects.size());
-        for (Object object : objects) {
-            JSONObject o = (JSONObject) object;
-            String text  = (String) o.values().toArray()[0];
-            o.put("text",text);
+        Enumeration allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+        InetAddress ip = null;
+        while (allNetInterfaces.hasMoreElements())
+        {
+            NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
+            System.out.println(netInterface.getName());
+            Enumeration addresses = netInterface.getInetAddresses();
+            while (addresses.hasMoreElements())
+            {
+                ip = (InetAddress) addresses.nextElement();
+                if (ip != null && ip instanceof Inet4Address)
+                {
+                    System.out.println("本机的IP = " + ip.getHostAddress());
+                }
+            }
         }
-        System.out.println(objects);
     }
 
     private static class AAAA {
