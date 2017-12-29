@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.csair.admin.config.PermissionName;
+import com.csair.admin.core.po.core.OperationLog;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
+import com.csair.admin.core.service.OperationLogService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -19,7 +22,9 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -64,7 +69,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String verifyCode, RedirectAttributes attributes, HttpSession httpSession, ModelAndView model, HttpServletRequest request) {
+    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String verifyCode, RedirectAttributes attributes, HttpSession httpSession, Model model, HttpServletRequest request) {
         //判断验证码是否正确，并在页面提示
         if (!EnvironmentParams.isTestEnvironment()) {//测试环境不用验证验证码
             String code = httpSession.getAttribute("verifyCode") + "";
@@ -74,11 +79,12 @@ public class UserController {
             }
         }
         boolean rememberMe = true;
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             // 将调用MyShiroRealm.doGetAuthenticationInfo()方法
             currentUser.login(token);
+            // 用户是自动登录，首先清一下用户权限缓存，让重新加载
         } catch (Exception e) {
             if (e instanceof UnknownAccountException) {
                 attributes.addFlashAttribute("message", "未知账户");
@@ -106,12 +112,23 @@ public class UserController {
         userService.editUser(user);
         //验证
         if (currentUser.isAuthenticated()) {
-            return "redirect:/index";
+//            return "redirect:/index";
+            //把当前用户放入session
+            PageResult pageResult = userService.query(new UserQueryObject());
+            model.addAttribute("pageResult", pageResult);
+            OperationLogQueryObject oqo = new OperationLogQueryObject();
+            PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
+            model.addAttribute("logResult", operationLogPageResult);
+            model.addAttribute("selectMenuIdForIntropect", 0);
+            return "index";
         } else {
             token.clear();
             return "redirect:/login";
         }
     }
+
+    @Autowired
+    private OperationLogService operationLogService;
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(RedirectAttributes attributes) {
