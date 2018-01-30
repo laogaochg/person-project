@@ -45,8 +45,6 @@ public class PermissionFilter extends AuthorizationFilter {
         if ("/404".equals(uri) || "/unauthorizedException".equals(uri)) {
             return Boolean.TRUE;
         }
-        System.out.println("-----------------请求的URL-----------------");
-        System.out.println(uri);
 
         //先判断带参数的权限判断
         Subject subject = getSubject(request, response);

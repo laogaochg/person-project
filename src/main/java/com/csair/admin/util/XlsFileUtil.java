@@ -34,6 +34,42 @@ public class XlsFileUtil {
 
     /**
      * 解析xls文件 得到数据
+     *
+     * @param inputStream
+     * @return
+     */
+    public static List<List<String>> parseXlsFile(InputStream inputStream) {
+        List<List<String>> result = new ArrayList<>();
+        try {
+            Workbook book = Workbook.getWorkbook(inputStream);       //0代表第一个工作表对象}
+            Sheet sheet = book.getSheet(0);
+            int cols = sheet.getColumns();
+            int rows = sheet.getRows();
+            for (int z = 0; z < rows; z++) {
+                List<String> row = new ArrayList<>(rows);
+                for (int c = 0; c < cols; c++) {
+                    Cell cell = sheet.getCell(c, z);
+                    String contents = cell.getContents();
+                    if (StringUtils.hasText(contents)) {
+//                        row.put(c,contents);
+                        row.add(contents);
+                    } else {
+                        row.add("");
+                    }
+                }
+                //如果一列都是空值的；那么代表结果
+                if (row.size() == 0) return result;
+                result.add(row);
+            }
+            return result;
+        } catch (Exception e) {
+            logger.warn("解析文件出错" + e.getMessage());
+            throw new PlatformException(1, "解析文件出错。");
+        }
+    }
+
+    /**
+     * 解析xls文件 得到数据
      */
     public static List<Map<Integer,String>> parseWorkbook(InputStream inputStream) {
         List<Map<Integer,String>> result = new ArrayList<>();
