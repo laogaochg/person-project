@@ -6,6 +6,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.csair.admin.core.po.core.OperationLog;
+import com.csair.admin.core.po.core.PageResult;
+import com.csair.admin.core.po.core.query.OperationLogQueryObject;
+import com.csair.admin.core.service.OperationLogService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -16,6 +20,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -43,6 +48,8 @@ public class UserController {
     @Resource
     private UserService userService;
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
+    @Autowired
+    private OperationLogService operationLogService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm(Model model) {
@@ -51,7 +58,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String verifyCode, RedirectAttributes attributes, HttpSession httpSession, ModelAndView model, HttpServletRequest request) {
+    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String verifyCode,
+                        RedirectAttributes attributes, HttpSession httpSession, Model model, HttpServletRequest request) {
         //判断验证码是否正确，并在页面提示
         if (!EnvironmentParams.isTestEnvironment()) {//测试环境不用验证验证码
             String code = httpSession.getAttribute("verifyCode") + "";
@@ -61,7 +69,7 @@ public class UserController {
             }
         }
         boolean rememberMe = true;
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             // 将调用MyShiroRealm.doGetAuthenticationInfo()方法
@@ -94,7 +102,13 @@ public class UserController {
         userService.editUser(user);
         //验证
         if (currentUser.isAuthenticated()) {
-            return "redirect:/index";
+            PageResult pageResult = userService.query(new UserQueryObject());
+            model.addAttribute("pageResult", pageResult);
+            OperationLogQueryObject oqo = new OperationLogQueryObject();
+            PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
+            model.addAttribute("logResult", operationLogPageResult);
+            model.addAttribute("selectMenuIdForIntropect", 0);
+            return "index";
         } else {
             token.clear();
             return "redirect:/login";

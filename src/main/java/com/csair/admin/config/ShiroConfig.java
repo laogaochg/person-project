@@ -109,11 +109,10 @@ public class ShiroConfig {
      */
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager) {
-        ShiroFilterFactoryBean bean = new ShiroFilter();
+        ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
 //        //把权限拦截器放进去
         PermissionFilter filter = new PermissionFilter();
-        filter.setShiroFilter((ShiroFilter) bean);
         bean.getFilters().put("permissionFilter", filter);
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
@@ -121,24 +120,23 @@ public class ShiroConfig {
         bean.setUnauthorizedUrl("/404");
         //配置访问权限
         LinkedHashMap<String, String> filterChainMap = new LinkedHashMap<String, String>();
-        filterChainMap.put("/login", "anon"); //表示可以匿名访问
-        filterChainMap.put("/404", "anon"); //表示可以匿名访问
+        /** ------------------------------------------------------------- */
+        filterChainMap.put("/test/**", "anon");
+        filterChainMap.put("/js/**", "anon");
+        filterChainMap.put("/fonts/**", "anon");
+        filterChainMap.put("/image/**", "anon");
+        filterChainMap.put("/css/**", "anon");
+        /** ------------------------------------------------------------- */
+//        filterChainMap.put("/login", "anon"); //表示可以匿名访问
+//        filterChainMap.put("/404", "anon"); //表示可以匿名访问
         filterChainMap.put("/uploadFile", "anon"); //表示可以匿名访问
         filterChainMap.put("/authImage", "anon"); //表示可以匿名访问
-        filterChainMap.put("/logout*", "anon");
-        filterChainMap.put("/weixing*", "anon");//微信路径可以匿名
-        filterChainMap.put("/test/**", "anon");
-        filterChainMap.put("/**.js", "anon");
-        filterChainMap.put("/**.css", "anon");
-        filterChainMap.put("/**.gif", "anon");
-        filterChainMap.put("/flat_ui/**", "anon");
-        filterChainMap.put("/js/**", "anon");
-        filterChainMap.put("/error", "anon");
-        filterChainMap.put("/index*", "authc");
-        filterChainMap.put("/*", "authc");//表示需要认证才可以访问
-        filterChainMap.put("/**", "authc");//表示需要认证才可以访问
-        filterChainMap.put("/*", "permissionFilter");//权限认证
-        filterChainMap.put("/**", "permissionFilter");//权限认证
+        filterChainMap.put("/logout**", "anon");
+        filterChainMap.put("/error**", "anon");
+        filterChainMap.put("/weixing**", "anon");//微信路径可以匿名
+        /** ------------------------------------------------------------- */
+        filterChainMap.put("/**", "user,permissionFilter");//表示需要认证才可以访问
+//        filterChainMap.put("/**", "permissionFilter");//权限认证
         bean.setFilterChainDefinitionMap(filterChainMap);
         return bean;
     }
