@@ -4,14 +4,20 @@ import java.util.LinkedHashMap;
 
 import javax.servlet.DispatcherType;
 
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.mgt.RememberMeManager;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.ShiroFilter;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,12 +33,7 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 @Configuration
 public class ShiroConfig {
 
-
-    /**
-     * 过滤器配置，相当于web.xml里的过滤器设置
-     *
-     * @return
-     */
+    /*** 过滤器配置，相当于web.xml里的过滤器设置 */
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
@@ -43,19 +44,17 @@ public class ShiroConfig {
         return filterRegistration;
     }
 
-
     /**
      * 配置核心安全事务管理器
      */
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager defaultWebSecurityManager(AuthRealm authRealm) {
-        System.err.println("--------------shiro已经加载----------------");
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(authRealm);
         manager.setCacheManager(cacheManager());
         //注入记住我管理器
+        System.err.println("--------------shiro已经加载----------------");
         manager.setRememberMeManager(rememberMeManager());
-//        manager.setSessionManager(defaultWebSessionManager());
         return manager;
     }
 
@@ -116,7 +115,7 @@ public class ShiroConfig {
         bean.getFilters().put("permissionFilter", filter);
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
-        bean.setSuccessUrl("/home");
+        bean.setSuccessUrl("/index");
         bean.setUnauthorizedUrl("/404");
         //配置访问权限
         LinkedHashMap<String, String> filterChainMap = new LinkedHashMap<String, String>();
@@ -143,18 +142,15 @@ public class ShiroConfig {
 
 
     /**
-     * cookie对象;
-     * rememberMeCookie()方法是设置Cookie的生成模版，比如cookie的name，cookie的有效时间等等。
-     *
-     * @return
+     * cookie对象;* rememberMeCookie()方法是设置Cookie的生成模版，比如cookie的name，cookie的有效时间等等。
      */
     @Bean
     public SimpleCookie rememberMeCookie() {
-        //System.out.println("ShiroConfiguration.rememberMeCookie()");
         //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //<!-- 记住我cookie生效时间30天 ,单位秒;-->
-        simpleCookie.setMaxAge(259200);
+        simpleCookie.setMaxAge(2592000);
+        simpleCookie.setHttpOnly(true);
         return simpleCookie;
     }
 
@@ -163,10 +159,8 @@ public class ShiroConfig {
      * cookie管理对象;
      * rememberMeManager()方法是生成rememberMe管理器，
      * 而且要将这个rememberMe管理器设置到securityManager中
-     *
-     * @return
      */
-    @Bean
+    @Bean(name = "rememberMeManager")
     public CookieRememberMeManager rememberMeManager() {
         //System.out.println("ShiroConfiguration.rememberMeManager()");
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();

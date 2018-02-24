@@ -6,13 +6,13 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <title>平面运营后台</title>
-<#include "../../common/baseImport.ftl" />
+<#include "common/baseImport.ftl" />
     <!-- style.css是项目的样式文件  -->
 
 </head>
 <body>
 <div class="layui-layout layui-layout-admin" style="">
-<#include "../../common/left_mune.ftl" />
+<#include "common/left_mune.ftl" />
     <div class="layui-body">
         <!--头部的展示块-->
         <div class="viewHeader clearfix">
