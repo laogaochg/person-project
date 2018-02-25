@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.core;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +10,6 @@ import com.csair.admin.util.ParamConstants;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.web.servlet.ErrorPage;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;

@@ -6,8 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.csair.admin.config.PermissionName;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.csair.admin.config.core.PermissionName;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;

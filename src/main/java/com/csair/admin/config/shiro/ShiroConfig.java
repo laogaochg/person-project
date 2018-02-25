@@ -1,25 +1,22 @@
-package com.csair.admin.config;
+package com.csair.admin.config.shiro;
 
 import java.util.LinkedHashMap;
 
 import javax.servlet.DispatcherType;
 
-import org.apache.shiro.cache.CacheManager;
+import com.csair.admin.config.shiro.AuthRealm;
+import com.csair.admin.config.shiro.CredentialsMatcher;
+import com.csair.admin.config.shiro.PermissionFilter;
+import com.csair.admin.core.service.UserService;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
-import org.apache.shiro.mgt.RememberMeManager;
-import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.servlet.ShiroFilter;
 import org.apache.shiro.web.servlet.SimpleCookie;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -33,16 +30,6 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 @Configuration
 public class ShiroConfig {
 
-    /*** 过滤器配置，相当于web.xml里的过滤器设置 */
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
-        filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
-        filterRegistration.setEnabled(true);
-        filterRegistration.addUrlPatterns("/*");
-        filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
-        return filterRegistration;
-    }
 
     /**
      * 配置核心安全事务管理器
@@ -107,11 +94,12 @@ public class ShiroConfig {
      * 配置哪些需要认证
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager) {
+    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager,UserService userService) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
 //        //把权限拦截器放进去
         PermissionFilter filter = new PermissionFilter();
+        filter.setUserService(userService);
         bean.getFilters().put("permissionFilter", filter);
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
@@ -119,23 +107,22 @@ public class ShiroConfig {
         bean.setUnauthorizedUrl("/404");
         //配置访问权限
         LinkedHashMap<String, String> filterChainMap = new LinkedHashMap<String, String>();
-        /** ------------------------------------------------------------- */
+        /** -------------------静态文件------------------------------------------ */
         filterChainMap.put("/test/**", "anon");
         filterChainMap.put("/js/**", "anon");
         filterChainMap.put("/fonts/**", "anon");
         filterChainMap.put("/image/**", "anon");
         filterChainMap.put("/css/**", "anon");
         /** ------------------------------------------------------------- */
-//        filterChainMap.put("/login", "anon"); //表示可以匿名访问
-//        filterChainMap.put("/404", "anon"); //表示可以匿名访问
+        filterChainMap.put("/login", "anon"); //表示可以匿名访问
+        filterChainMap.put("/404", "anon"); //表示可以匿名访问
         filterChainMap.put("/uploadFile", "anon"); //表示可以匿名访问
         filterChainMap.put("/authImage", "anon"); //表示可以匿名访问
         filterChainMap.put("/logout**", "anon");
         filterChainMap.put("/error**", "anon");
         filterChainMap.put("/weixing**", "anon");//微信路径可以匿名
         /** ------------------------------------------------------------- */
-        filterChainMap.put("/**", "user,permissionFilter");//表示需要认证才可以访问
-//        filterChainMap.put("/**", "permissionFilter");//权限认证
+        filterChainMap.put("/**", "permissionFilter,user");//表示需要认证才可以访问
         bean.setFilterChainDefinitionMap(filterChainMap);
         return bean;
     }
@@ -169,5 +156,18 @@ public class ShiroConfig {
         cookieRememberMeManager.setCipherKey(Base64.decode("2AvVhdsgUs0FSA3SDFAdag=="));
         return cookieRememberMeManager;
     }
+
+
+    /*** 过滤器配置，相当于web.xml里的过滤器设置 */
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+        filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
+        filterRegistration.setEnabled(true);
+        filterRegistration.addUrlPatterns("/*");
+        filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
+        return filterRegistration;
+    }
+
 
 }

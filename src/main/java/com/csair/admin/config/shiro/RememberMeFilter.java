@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.shiro;
 
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;

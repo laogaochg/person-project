@@ -7,16 +7,12 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.csair.admin.config.PermissionName;
-import com.csair.admin.core.po.Brand;
-import com.csair.admin.core.po.core.query.BrandQueryObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.csair.admin.config.PlatformException;
+import com.csair.admin.config.core.PlatformException;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseEntity;

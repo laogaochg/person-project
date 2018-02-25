@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.core;
 
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.servlet.SimpleCookie;

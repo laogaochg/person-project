@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.csair.admin.config.PlatformException;
+import com.csair.admin.config.core.PlatformException;
 import com.csair.admin.core.dao.UserDao;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseEntity;
@@ -133,7 +133,6 @@ public class UserServiceImpl implements UserService {
             if (User.STATUS_INVALID.equals(user.getStatus())) {
                 throw new PlatformException(ParamConstants.FORDI_LOGIN, "对不起，你账号已经被禁止登录。");
             }
-            user.setMenus(menuService.queryUserMenu(user.getId()));
             return user;
         }
     }

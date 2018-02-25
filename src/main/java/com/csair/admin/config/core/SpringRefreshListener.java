@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.core;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

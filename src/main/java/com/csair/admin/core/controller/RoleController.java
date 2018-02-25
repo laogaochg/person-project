@@ -3,12 +3,10 @@ package com.csair.admin.core.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.service.PermissionService;
 import com.csair.admin.core.service.UserService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

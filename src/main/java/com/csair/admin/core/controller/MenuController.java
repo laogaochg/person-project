@@ -5,9 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.csair.admin.config.PermissionName;
+import com.csair.admin.config.core.PermissionName;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,6 @@ import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.resp.MenuVo;
-import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.service.MenuService;
