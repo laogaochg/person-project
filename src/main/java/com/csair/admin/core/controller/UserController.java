@@ -74,7 +74,7 @@ public class UserController {
                 return "redirect:/login";
             }
         }
-        boolean rememberMe = false;
+        boolean rememberMe = true;
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
         Subject currentUser = SecurityUtils.getSubject();
         try {
@@ -112,6 +112,7 @@ public class UserController {
             OperationLogQueryObject oqo = new OperationLogQueryObject();
             PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
             model.addAttribute("logResult", operationLogPageResult);
+            model.addAttribute("userMenus", menuService.queryUserMenu(user.getId()));
             model.addAttribute("selectMenuIdForIntropect", 0);
             return "index";
         } else {
@@ -145,6 +146,7 @@ public class UserController {
     @PermissionName("修改密码")
     public ModelAndView toChangePassword(UserQueryObject qo, ModelAndView model) {
         model.setViewName("user/changePassword");
+        model.addObject("userMenus", menuService.queryUserMenu());
         return model;
     }
 

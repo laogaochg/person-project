@@ -2,15 +2,22 @@ package com.csair.admin.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.core.po.core.Menu;
+import com.csair.admin.core.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 
 import com.csair.admin.core.po.core.User;
+
+import java.util.List;
 
 /**
  * laogaochg
  * 2017/7/11.
  */
 public class ServletUtils {
+
+    private static MenuService menuService;
+
     /**
      * 请到当前session里面的用户
      *
@@ -18,6 +25,26 @@ public class ServletUtils {
      */
     public static User getUser() {
         return (User) SecurityUtils.getSubject().getSession().getAttribute(ParamConstants.USER_SESSION);
+    }
+
+    public static List<Menu> queryUserMenu() {
+        if (menuService == null) {
+            menuService = (MenuService) SpringContextUtil.getBean("menuService");
+        }
+        return menuService.queryUserMenu();
+    }
+
+    public static Long getSelectMenuId(HttpServletRequest httpRequest) {
+        String uri = httpRequest.getRequestURI();//获取URI
+        String basePath = httpRequest.getContextPath();//获取basePath
+        if (null != uri && uri.startsWith(basePath)) {
+            uri = uri.replaceFirst(basePath, "");
+        }
+        if (menuService == null) {
+            menuService = (MenuService) SpringContextUtil.getBean("menuService");
+        }
+        Menu menu = menuService.queryMenuByUrl(uri);
+        return menu == null ? -1L : menu.getMid();
     }
 
     /**
@@ -119,4 +146,6 @@ public class ServletUtils {
         }
         return ip;
     }
+
+
 }

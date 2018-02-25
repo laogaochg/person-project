@@ -1,4 +1,4 @@
-package com.csair.admin.util;
+package com.csair.admin.core.po;
 
 /**
  * http请求返回结果

@@ -4,7 +4,7 @@ package com.csair.admin.core.controller;
 import com.alibaba.fastjson.JSON;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.HttpClientUtils;
-import com.csair.admin.util.HttpResultDto;
+import com.csair.admin.core.po.HttpResultDto;
 import com.csair.admin.weixing.dto.WeiXingButton;
 import com.csair.admin.weixing.util.AccessTokenUtil;
 

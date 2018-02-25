@@ -99,7 +99,6 @@ public class ShiroConfig {
         bean.setSecurityManager(manager);
 //        //把权限拦截器放进去
         PermissionFilter filter = new PermissionFilter();
-        filter.setUserService(userService);
         bean.getFilters().put("permissionFilter", filter);
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
@@ -121,8 +120,9 @@ public class ShiroConfig {
         filterChainMap.put("/logout**", "anon");
         filterChainMap.put("/error**", "anon");
         filterChainMap.put("/weixing**", "anon");//微信路径可以匿名
-        /** ------------------------------------------------------------- */
-        filterChainMap.put("/**", "permissionFilter,user");//表示需要认证才可以访问
+        /** ------故我们用 authc 来校验一些关键操作，比如购买，我们可以采用user校验即可。而支付的时候，我们需要认证的用户，那就需要authc了。----------------------------------------------- */
+        filterChainMap.put("/toPay**", "authc");//表示需要认证才可以访问
+        filterChainMap.put("/**", "permissionFilter,user");//表示需要登陆才可以访问
         bean.setFilterChainDefinitionMap(filterChainMap);
         return bean;
     }

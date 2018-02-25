@@ -3,7 +3,7 @@ package com.csair.admin.weixing.util;
 import com.alibaba.fastjson.JSON;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.HttpClientUtils;
-import com.csair.admin.util.HttpResultDto;
+import com.csair.admin.core.po.HttpResultDto;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.config.core.PlatformException;
 import org.apache.commons.lang3.StringUtils;

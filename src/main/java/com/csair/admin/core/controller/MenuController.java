@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.csair.admin.config.core.PermissionName;
+import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -41,20 +42,20 @@ public class MenuController {
     //返回菜单列表
     @RequestMapping("/list")
     @PermissionName("菜单查询")
-    public ModelAndView queryMenu(ModelAndView model) {
+    public ModelAndView queryMenu(ModelAndView model,HttpServletRequest httpRequest) {
         List<Menu> menusList = menuService.getAllMenu(true,false);
         model.addObject("menuList",menusList);
-//        List<Permission> permissions = permissionService.queryNoMenuPermission();
-//        model.addObject("permissions",permissions);
         model.setViewName("menu/menuList");
+        model.addObject("userMenus", ServletUtils.queryUserMenu());
+        model.addObject("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return model;
     }
 
     //返回菜单子列表
     @RequestMapping("/menuChild")
     @ResponseBody
-    public List<MenuVo> queryChild(Long parentId,ModelAndView model) {
-        List<MenuVo> allMenu = menuService.queryAllMenuVo(parentId);
+    public List<MenuVo> queryChild(Long selectId,ModelAndView model) {
+        List<MenuVo> allMenu = menuService.queryAllMenuVo(selectId);
         return allMenu;
     }
     //返回当前菜单的路径列表
@@ -126,7 +127,7 @@ public class MenuController {
      */
     @RequestMapping("/toEdit")
     @PermissionName("管理菜单")
-    public ModelAndView toEdit(Menu menu,Integer flag,ModelAndView model) {
+    public ModelAndView toEdit(Menu menu,Integer flag,ModelAndView model,HttpServletRequest httpRequest) {
         //flag : 1：修改当前菜单 2:添加下级菜单 null:新修菜单
         if (flag == null) {//新建菜单
             model.addObject("parentMenu",menuService.queryMenu(menu.getMid()));
@@ -148,6 +149,8 @@ public class MenuController {
         Subject subject = SecurityUtils.getSubject();
         User user = (User)subject.getSession().getAttribute(ParamConstants.USER_SESSION);
         user.setMenus(menuService.queryUserMenu(user.getId()));
+        model.addObject("userMenus", ServletUtils.queryUserMenu());
+        model.addObject("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return model;
     }
 

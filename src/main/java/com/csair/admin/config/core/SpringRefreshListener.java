@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import com.csair.admin.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -44,7 +45,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
     public void onApplicationEvent(ContextRefreshedEvent event) {
         EnvironmentParams.uploadPath = uploadPath;
         //重载权限
-//        reloadPermission(event);
+        reloadPermission(event);
         //配置SpringContextUtil的参数
         logger.info("---------------- spring start complete --------------------");
         SpringContextUtil.applicationContext = event.getApplicationContext();

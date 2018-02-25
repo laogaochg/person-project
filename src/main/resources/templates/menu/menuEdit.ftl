@@ -87,9 +87,10 @@
             </form>
         </div>
         <!-- ztree start -->
-    <#if !(currentMenu.mid)??>
+    <#--<#if !(currentMenu.mid)??>-->
 
-
+        <link rel="stylesheet" href="${context.contextPath}/js/plugin/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+        <script type="text/javascript" src="${context.contextPath}/js/plugin/ztree/js/jquery.ztree.core-3.5.js"></script>
         <div class="col-sm-5">
             <h3>选择父级菜单</h3>
             <div class="zTreeDemoBackground left">
@@ -98,11 +99,12 @@
 
             <script type="text/javascript">
                 var setting={
+                    check:{enable :true},
                     data: {
                         simpleData: {
                             enable: true,
                             idKey: "id",
-                            pIdKey: "pId",
+                            pIdKey: "parentId",
                             rootPId: 0
                         }
                     },callback: {
@@ -118,13 +120,13 @@
                     return "<%=request.getContextPath()%>/auth/permission/getTreeSubNode";
                 }
                 $(document).ready(function() {
-                    $.post("/menu/menuChild?parentId=${(parentMenu.mid)!""}",{},function(jsonResult) {
+                    $.post(contextPath+"/menu/menuChild?parentId=${(parentMenu.mid)!""}",{},function(jsonResult) {
                         $.fn.zTree.init($("#treePermission"),setting,jsonResult);
                     });
                 });
             </script>
         </div>
-    </#if>
+    <#--</#if>-->
     </div>
 </div>
 
