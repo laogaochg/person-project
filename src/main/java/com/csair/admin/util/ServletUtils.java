@@ -1,5 +1,6 @@
 package com.csair.admin.util;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import com.csair.admin.core.po.core.Menu;
@@ -17,6 +18,15 @@ import java.util.List;
 public class ServletUtils {
 
     private static MenuService menuService;
+
+    /**
+     * 是否是Ajax请求
+     * @param request
+     * @return
+     */
+    public static boolean isAjax(ServletRequest request){
+        return "XMLHttpRequest".equalsIgnoreCase(((HttpServletRequest) request).getHeader("X-Requested-With"));
+    }
 
     /**
      * 请到当前session里面的用户

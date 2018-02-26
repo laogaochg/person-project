@@ -5,7 +5,12 @@
 </head>
 <body>
 <#include "../../common/left_mune.ftl" />
-
+<style>
+    .modal-dialog{
+        width: 70%;
+        height: 70%;
+    }
+</style>
 <script type="text/javascript">
     $(function(){
         $("#editCertificateButton").click(function(){

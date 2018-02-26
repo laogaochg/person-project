@@ -7,7 +7,6 @@
 <script src="${context.contextPath}/js/jquery/jquery.js"></script>
 <#--bootstrap-->
 <link href="${context.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="${context.contextPath}/css/bootstrap-theme.css">
 <script src="${context.contextPath}/js/bootstrap/bootstrap.min.js"></script>
 <#--bookstrap 分页插件-->
 <script src="${context.contextPath}/js/jquery/jquery.twbsPagination.min.js"></script>
