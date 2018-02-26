@@ -21,6 +21,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import com.csair.admin.core.po.HttpResultDto;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
@@ -95,7 +96,7 @@ public class HttpClientUtils {
         return null;
     }
 
-    public static HttpResultDto sendHttpPostMsg(HttpPost httpPost,Map<String,Object> params) {
+    public static HttpResultDto sendHttpPostMsg(HttpPost httpPost, Map<String,Object> params) {
         setPostParams(httpPost,params);
         return sendHttpMsg(httpPost,encoding,defaultConnectTimeout,defaultSocketTimeout);
     }

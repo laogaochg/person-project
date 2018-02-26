@@ -1,5 +1,6 @@
-package com.csair.admin.config;
+package com.csair.admin.util;
 
+import com.csair.admin.config.core.ExceptionInterceptor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;

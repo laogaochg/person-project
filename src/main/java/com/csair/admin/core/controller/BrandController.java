@@ -1,6 +1,6 @@
 package com.csair.admin.core.controller;
 
-import com.csair.admin.config.PermissionName;
+import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseEntity;
@@ -8,6 +8,7 @@ import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.query.BrandQueryObject;
 import com.csair.admin.core.service.BrandService;
+import com.csair.admin.core.service.MenuService;
 import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.ServletUtils;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * laogaochg
@@ -32,13 +34,17 @@ public class BrandController {
 
     @Resource
     private BrandService brandService;
+    @Resource
+    private MenuService menuService;
 
     @RequestMapping("/list")
     @PermissionName("查看品牌")
-    public String brandList(Model model, BrandQueryObject qo) {
+    public String brandList(Model model, BrandQueryObject qo, HttpServletRequest httpRequest) {
         PageResult<Brand> pageResult = brandService.pageQuery(qo);
         model.addAttribute("pageResult", pageResult);
         model.addAttribute("qo", qo);
+        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
+        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return "goodManage/brand/brandList";
     }
 

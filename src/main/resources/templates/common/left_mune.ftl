@@ -34,7 +34,7 @@
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
         <ul style="width: 220px;">
-        <#list user.menus as menu>
+        <#list userMenus as menu>
             <li data-menuid="${menu.mid}"
                 data-parentid=""
                 class="menu text-center firstMenu">
@@ -59,7 +59,7 @@
                             &nbsp;&nbsp;&nbsp;
                         </#if>
                         <#if (menu2.url)??>
-                        <a href="${context.contextPath}${menu2.url}?selectMenuIdForIntropect=${menu2.mid}">
+                        <a href="${context.contextPath}${menu2.url}">
                         <#else>
                         <a href="javascript:;">
                         </#if>
@@ -73,7 +73,7 @@
                                 class="${(menu3.mid==selectMenuIdForIntropect)?string("selectMenu ","")}menu"
                                 style="padding-left: 35px;">
                                 <#if (menu3.url)??>
-                                <a href="${context.contextPath}${menu3.url}?selectMenuIdForIntropect=${menu3.mid}">
+                                <a href="${context.contextPath}${menu3.url}">
                                 <#else>
 
                                 <a href="javascript:;">

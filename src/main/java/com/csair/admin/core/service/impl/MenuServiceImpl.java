@@ -12,6 +12,7 @@ import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.query.MenuQuery;
 import com.csair.admin.util.ParamConstants;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ import javax.annotation.Resource;
 /**
  * Created by lenovo on 2017/6/27.
  */
-@Service
+@Service("menuService")
 public class MenuServiceImpl implements MenuService {
     private static Logger logger = LoggerFactory.getLogger(MenuServiceImpl.class);
     @Resource
@@ -60,6 +61,17 @@ public class MenuServiceImpl implements MenuService {
         Collections.reverse(ms);
         return ms;
     }
+    @Override
+    public Menu queryMenuByUrl(String url) {
+        MenuQuery ex = new MenuQuery();
+        ex.createCriteria().andUrlEqualTo(url);
+        List<Menu> menus = menuDao.selectByExample(ex);
+        if (menus.size() > 0) {
+            return menus.get(0);
+        }else{
+            return null;
+        }
+    }
 
     private List<Menu> queryRootMenu(Menu menu, List<Menu> ms) {
         Long pid = menu.getPid();
@@ -82,14 +94,33 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuVo> queryAllMenuVo(Long parentId) {
+    public List<MenuVo> queryAllMenuVo(Long selectId) {
         List<Menu> menus = getAllMenu(false, false);
-        List<MenuVo> vo = new ArrayList<MenuVo>();
+        List<MenuVo> vo = new ArrayList<>();
+        //选中节点的父id
+        Long id =null;
         for (Menu m : menus) {
             MenuVo v = new MenuVo(m);
             vo.add(v);
-            if (v.getId().equals(parentId)) {
+            if(selectId!=null && selectId.equals(m.getMid())){
                 v.setChecked(true);
+                id=m.getPid();
+            }
+        }
+        //选中节点的父父id
+        Long ppId=null;
+        for (Menu menu : menus) {
+            if(id!=null && id.equals(menu.getMid())){
+                ppId=menu.getPid();
+            }
+        }
+        //父节点展开处理
+        for (MenuVo menuVo : vo) {
+            if(id!=null && menuVo.getId().equals(id)){
+                menuVo.setOpen(true);
+            }
+            if(ppId!=null && menuVo.getId().equals(ppId)){
+                menuVo.setOpen(true);
             }
         }
         return vo;
@@ -130,7 +161,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public List<Menu> queryUserMenu() {
+        return queryUserMenu(null);
+    }
+
+    @Override
     public List<Menu> queryUserMenu(Long userId) {
+        if (userId == null) {
+            Subject currentUser = SecurityUtils.getSubject();
+            User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
+            userId = user.getId();
+        }
         //已经去重的菜单 权限直接对应的菜单
         List<Menu> permissionMenuIds = getMenuIds(userId);
         //记录根菜单

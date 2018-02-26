@@ -45,20 +45,20 @@
                     var item = $(childMenus[i]);
                     if (item.data("toShow")) {
                         item.show(200);
-                        item.data("toShow",false);
+                        item.data("toShow", false);
                     } else {
                         item.hide(200);
-                        item.data("toShow",true);
+                        item.data("toShow", true);
                     }
                     var thirds = $("tr[data-pid=" + item.data("mid") + "]")
                     for (j = 0; j < thirds.length; j++) {
                         var third = $(thirds[j]);
                         if (!item.data("toShow")) {
                             third.show(200);
-                            third.data("toShow",false);
+                            third.data("toShow", false);
                         } else {
                             third.hide(200);
-                            third.data("toShow",true);
+                            third.data("toShow", true);
                         }
                     }
                 }
@@ -122,9 +122,11 @@
                                     <th class="">
                                         <#if (permissionMap[menu.mid+""])??>
                                             <#list permissionMap[menu.mid+""] as permission >
-                                                <input type="checkbox" name="permissionIds"
-                                                       <#if havingPermissionIds?seq_contains(permission.id)>checked="checked"</#if>
-                                                       value="${permission.id}">${permission.name}<br/>
+                                                <#if (permission.name)??>
+                                                    <input type="checkbox" name="permissionIds"
+                                                           <#if havingPermissionIds?seq_contains(permission.id)>checked="checked"</#if>
+                                                           value="${permission.id}">${permission.name}<br/>
+                                                </#if>
                                             </#list>
                                         </#if>
                                     </th>

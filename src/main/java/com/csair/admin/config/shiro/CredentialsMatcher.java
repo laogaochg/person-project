@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.shiro;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

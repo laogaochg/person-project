@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.shiro;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

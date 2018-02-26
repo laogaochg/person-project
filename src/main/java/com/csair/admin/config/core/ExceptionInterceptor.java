@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @Author: LaoGaoChuang
  * @Date : 2017/11/1 11:47
+ * 异常拦截器
  */
 public class ExceptionInterceptor extends HandlerInterceptorAdapter {
 

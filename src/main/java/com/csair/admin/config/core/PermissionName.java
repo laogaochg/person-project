@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.core;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

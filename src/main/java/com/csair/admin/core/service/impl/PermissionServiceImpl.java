@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import com.csair.admin.config.PermissionName;
+import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.core.dao.PermissionDao;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.query.PermissionQuery;
@@ -43,6 +41,14 @@ public class PermissionServiceImpl implements PermissionService {
     private OperationLogService operationLogService;
     @Resource
     private MenuService menuService;
+
+    /**
+     * 没有建立对应权限的url集合。
+     * 考虑到修改这个共享变量不多
+     * 所有为共享变量
+     */
+    public static final Map<String, Method> noPermissionRequestMapping = new HashMap<>();
+
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Override
@@ -143,12 +149,7 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDao.queryRolePermission(roleId);
     }
 
-    /**
-     * 没有建立对应权限的url集合。
-     * 考虑到修改这个共享变量不多
-     * 所有为共享变量
-     */
-    public static final Map<String, Method> noPermissionRequestMapping = new HashMap<>();
+
 
     @Override
     public Map<String, Method> getNoPermissionRequestMapping() {
@@ -247,7 +248,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public int reloadPermission(Map<String, Method> urlAndMethod) {
         //给共享变量赋值
-//        updatePermissionMap(urlAndMethod);
+        updatePermissionMap(urlAndMethod);
         //维护超级管理员权限
         return addAdminPermission();
     }
@@ -259,36 +260,37 @@ public class PermissionServiceImpl implements PermissionService {
         List<Permission> update = new ArrayList<>();
         for (Permission o : ps) {
             //去掉数据库里面一样的
-            Method method = urlAndMethod.get(o.getUrl());
-            String name = null;
-            PermissionName annotation = method.getAnnotation(PermissionName.class);
-            if (annotation != null) name = annotation.value();
-            if (!(method.getDeclaringClass().getName().equals(o.getClassName())
-                    &&
-                    ((name != null && name.equals(o.getName())) || (name == null && o.getName() == null))
-            )) {
-                o.setClassName(method.getDeclaringClass().getName());
-                o.setName(name);
-                update.add(o);
-            }
             urlAndMethod.remove(o.getUrl());
+//            Method method = urlAndMethod.get(o.getUrl());
+//            String name = null;
+//            if(method==null) continue;
+//            PermissionName annotation = method.getAnnotation(PermissionName.class);
+//            if (annotation != null) name = annotation.value();
+//            if (!(method.getDeclaringClass().getName().equals(o.getClassName())
+//                    &&
+//                    ((name != null && name.equals(o.getName())) || (name == null && o.getName() == null))
+//            )) {
+//                o.setClassName(method.getDeclaringClass().getName());
+//                o.setName(name);
+//                update.add(o);
+//            }
         }
-        for (Permission permission : update) {
-            permissionDao.updateByPrimaryKey(permission);
-        }
-
-        for (String key : urlAndMethod.keySet()) {
-            Method method = urlAndMethod.get(key);
-            Permission p = new Permission();
-            String name = null;
-            PermissionName annotation = method.getAnnotation(PermissionName.class);
-            if (annotation != null) name = annotation.value();
-            p.setName(name);
-            p.setUrl(key);
-            p.setClassName(method.getDeclaringClass().getName());
-            permissionDao.insert(p);
-        }
-
+//        for (Permission permission : update) {
+//            permissionDao.updateByPrimaryKey(permission);
+//        }
+//
+//        for (String key : urlAndMethod.keySet()) {
+//            Method method = urlAndMethod.get(key);
+//            Permission p = new Permission();
+//            String name = null;
+//            PermissionName annotation = method.getAnnotation(PermissionName.class);
+//            if (annotation != null) name = annotation.value();
+//            p.setName(name);
+//            p.setUrl(key);
+//            p.setClassName(method.getDeclaringClass().getName());
+//            permissionDao.insert(p);
+//        }
+        logger.debug("没有权限的url:"+urlAndMethod.keySet().toString());
         //把没有权限的url放到共享变量
         PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
     }
@@ -309,10 +311,10 @@ public class PermissionServiceImpl implements PermissionService {
                     || url.contains("test")//
                     || url.contains("Exception")//
                     || url.contains("exception")//
-                    || "/health".equals(url)//
+                    || "/health".equals(url)//健康检查不算
                     || "/beans".equals(url)//
                     || "/trace".equals(url)//
-                    || "/error".equals(url)//
+                    || "/error".equals(url)//错误页面不算
                     || "/autoconfig".equals(url)) {
                 removeUrl.add(url);
             }

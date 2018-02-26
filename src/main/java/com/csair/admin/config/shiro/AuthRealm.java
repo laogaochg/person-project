@@ -1,4 +1,4 @@
-package com.csair.admin.config;
+package com.csair.admin.config.shiro;
 
 import java.util.Collections;
 import java.util.HashSet;

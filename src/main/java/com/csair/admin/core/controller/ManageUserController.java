@@ -1,6 +1,6 @@
 package com.csair.admin.core.controller;
 
-import com.csair.admin.config.PermissionName;
+import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseEntity;
 import com.csair.admin.core.po.core.ReturnMessage;

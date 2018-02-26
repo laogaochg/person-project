@@ -51,7 +51,7 @@
                                 添加下级菜单
                             </button>
                         </a>
-                            <a href="${context.contextPath}/menu/toEdit?mid=${menu.mid}&flag=1&pid=${(menu.pid)!""}">
+                            <a href="${context.contextPath}/menu/toEdit?mid=${menu.mid}&flag=1&selectId=${(menu.mid)!""}">
                                 <button type="button" class="btn btn-default">
                                     修改
                                 </button>

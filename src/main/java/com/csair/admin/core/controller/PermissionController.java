@@ -7,16 +7,13 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.csair.admin.config.PermissionName;
-import com.csair.admin.core.po.Brand;
-import com.csair.admin.core.po.core.query.BrandQueryObject;
+import com.csair.admin.util.ServletUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.csair.admin.config.PlatformException;
+import com.csair.admin.config.core.PlatformException;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseEntity;
@@ -69,16 +66,20 @@ public class PermissionController {
     }
 
     @RequestMapping("/toEditPermission")
-    public String toEditBrand(Model model, Long id) {
+    public String toEditBrand(Model model, Long id, HttpServletRequest httpRequest) {
         if (id != null) model.addAttribute("item", permissionService.queryById(id));
+        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
+        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return "setting/permission/editPermission";
     }
 
     @RequestMapping("/list")
-    public String brandList(Model model, PermissionQueryObject qo) {
+    public String brandList(Model model, PermissionQueryObject qo, HttpServletRequest httpRequest) {
         PageResult<Permission> pageResult = permissionService.query(qo);
         model.addAttribute("pageResult", pageResult);
         model.addAttribute("qo", qo);
+        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
+        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return "setting/permission/permissionList";
     }
 
@@ -116,7 +117,7 @@ public class PermissionController {
      * 返回菜单权限列表
      */
     @RequestMapping("/menuPermission")
-    public String qeuryPremission(Model model, PermissionQueryObject qo) {
+    public String qeuryPremission(Model model, PermissionQueryObject qo, HttpServletRequest httpRequest) {
         if (qo.getRoleId() == null) {
             throw new PlatformException(ParamConstants.ERROR_PARAM, "参数不正确");
         }
@@ -139,6 +140,8 @@ public class PermissionController {
         //菜单查询
         List<Menu> menuList = menuService.getAllMenu(true, true);
         model.addAttribute("menuList", menuList);
+        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
+        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         model.addAttribute("havingPermissionIds", ids);
         return "role/PermissionList";
     }

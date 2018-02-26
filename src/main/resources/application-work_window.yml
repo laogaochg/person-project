@@ -3,7 +3,7 @@
 upload-path: /usr/local/file/
 server:
   port: 8080 #服务端口配置
-#  contextPath: /my
+  contextPath: /my
 spring:
 #提供热部署功能
   thymeleaf:
