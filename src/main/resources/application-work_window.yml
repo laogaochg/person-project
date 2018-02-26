@@ -1,22 +1,19 @@
 #测试环境配置
 #保存图片的目录
-#upload-path: D:/usr/local/file/
 upload-path: /usr/local/file/
 server:
-  port: 80 #服务端口配置
+  port: 8080 #服务端口配置
 #  contextPath: /my
 spring:
 #提供热部署功能
   thymeleaf:
       cache: false
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${upload-path}
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/templates/,file:${upload-path},D:\nanhang\管理后台1.0版\springboot-weixing\src\main\html
   datasource:
-#    url: jdbc:mysql://192.168.19.128:3306/csair_eshop?serverTimezone=UTC&characterEncoding=utf-8&useSSL=true
     url: jdbc:mysql://127.0.0.1:3306/csair_eshop?serverTimezone=UTC&characterEncoding=utf-8&useSSL=true
     username: root
     password: admin
-#    password: laogao520
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
