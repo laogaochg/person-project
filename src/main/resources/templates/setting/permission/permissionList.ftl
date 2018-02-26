@@ -7,7 +7,7 @@
     <style>
         .addItemBtn {
             border-radius: 8px;
-            margin-left: 300px !important;
+            margin-left: 100px !important;
         }
 
         .searchBtn {
@@ -36,7 +36,8 @@
         </div>
         <div class="Popup">
             <div class="selBox">
-                <form id="searchForm" method="post" action="${context.contextPath}/permission/list" class="layui-form">
+                <form id="searchForm" method="post" action="${context.contextPath}/permission/list"
+                      class="layui-form">
                     <input value="${(qo.keyword)!""}" name="keyword" placeholder="关键字"
                            class="input-text radius size-L inputstyle">
                     <input name="currentPage" value="${pageResult.currentPage}" type="hidden">
@@ -91,8 +92,7 @@
                             style="border-radius: 6px">
                         批量删除
                     </button>
-                    共${pageResult.totalCount}条，
-                    每页
+                    共${pageResult.totalCount}条，每页
                     <select lay-ignore name="pageSizeSelect" class="form-control" style="width: 88px;">
                         <option>10</option>
                         <option>20</option>

@@ -1,49 +1,49 @@
-//package com.csair.admin.kafka;
-//
-//import org.apache.kafka.clients.producer.KafkaProducer;
-//import org.apache.kafka.clients.producer.Producer;
-//import org.apache.kafka.clients.producer.ProducerRecord;
-//
-//import java.util.Properties;
-//
-///**
-// * @Author: LaoGaoChuang
-// * @Date : 2018/1/8 14:52
-// */
-//public class TestKafkaProducer {
-//    public static void main(String[] args) {
-//        Properties properties = new Properties();
-//        properties.put("bootstrap.servers", "127.0.0.1:9092");
-//        //The "all" setting we have specified will result in blocking on the full commit of the record, the slowest but most durable setting.
-//        //“所有”设置将导致记录的完整提交阻塞，最慢的，但最持久的设置。
-//        properties.put("acks", "1");//acks=all 这意味着leader将等待所有副本同步后应答消息。此配置保障消息不会丢失（只要至少有一个同步的副本或者）。这是最强壮的可用性保障。等价于acks=-1
-//        //如果请求失败，生产者也会自动重试，即使设置成0 the producer can automatically retry.
-//        properties.put("retries", 0);
-//        //尝试重试指定topic分区的失败请求之前等待的时间。这样可以避免在某些故障情况下高频次的重复发送请求。100 long
-//        properties.put("retry.backoff.ms", 100);
-//
-//        //The producer maintains buffers of unsent records for each partition.
-//        properties.put("batch.size", 16384);
-//        //默认立即发送，这里这是延时毫秒数
-//        properties.put("linger.ms", 1);
-//        //生产者缓冲大小，当缓冲区耗尽后，额外的发送调用将被阻塞。时间超过max.block.ms将抛出TimeoutException
-//        properties.put("buffer.memory", 33554432);
-//        //The key.serializer and value.serializer instruct how to turn the key and value objects the user provides with their ProducerRecord into bytes.
-//        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-//        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-//
-//        //创建kafka的生产者类
-//        Producer<String, String> producer = new KafkaProducer<String, String>(properties);
-//        //生产者的主要方法
-//        // close();//Close this producer.
-//        //   close(long timeout, TimeUnit timeUnit); //This method waits up to timeout for the producer to complete the sending of all incomplete requests.
-//        //  flush() ;所有缓存记录被立刻发送
-//        for (int i = 0; i < 100; i++) {
-//            //这里平均写入４个分区
-////        int i=1;
-//            producer.send(new ProducerRecord<String, String>("foo", 0, Integer.toString(i), Integer.toString(i)));
-//        }
-//            producer.close();
-//        producer.flush() ;//所有缓存记录被立刻发送
-//    }
-//}
+package com.csair.admin.kafka;
+
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+
+import java.util.Properties;
+
+/**
+ * @Author: LaoGaoChuang
+ * @Date : 2018/1/8 14:52
+ */
+public class TestKafkaProducer {
+    public static void main(String[] args) {
+        Properties properties = new Properties();
+        properties.put("bootstrap.servers", "127.0.0.1:9092");
+        //The "all" setting we have specified will result in blocking on the full commit of the record, the slowest but most durable setting.
+        //“所有”设置将导致记录的完整提交阻塞，最慢的，但最持久的设置。
+        properties.put("acks", "1");//acks=all 这意味着leader将等待所有副本同步后应答消息。此配置保障消息不会丢失（只要至少有一个同步的副本或者）。这是最强壮的可用性保障。等价于acks=-1
+        //如果请求失败，生产者也会自动重试，即使设置成0 the producer can automatically retry.
+        properties.put("retries", 0);
+        //尝试重试指定topic分区的失败请求之前等待的时间。这样可以避免在某些故障情况下高频次的重复发送请求。100 long
+        properties.put("retry.backoff.ms", 100);
+
+        //The producer maintains buffers of unsent records for each partition.
+        properties.put("batch.size", 16384);
+        //默认立即发送，这里这是延时毫秒数
+        properties.put("linger.ms", 1);
+        //生产者缓冲大小，当缓冲区耗尽后，额外的发送调用将被阻塞。时间超过max.block.ms将抛出TimeoutException
+        properties.put("buffer.memory", 33554432);
+        //The key.serializer and value.serializer instruct how to turn the key and value objects the user provides with their ProducerRecord into bytes.
+        properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+        //创建 kafka 的生产者类
+        Producer<String, String> producer = new KafkaProducer<String, String>(properties);
+        //生产者的主要方法
+        // close();//Close this producer.
+        //   close(long timeout, TimeUnit timeUnit); //This method waits up to timeout for the producer to complete the sending of all incomplete requests.
+        //  flush() ;所有缓存记录被立刻发送
+        for (int i = 0; i < 100; i++) {
+            //这里平均写入４个分区
+//        int i=1;
+            producer.send(new ProducerRecord<String, String>("foo", 0, Integer.toString(i), Integer.toString(i)));
+        }
+            producer.close();
+        producer.flush() ;//所有缓存记录被立刻发送
+    }
+}
