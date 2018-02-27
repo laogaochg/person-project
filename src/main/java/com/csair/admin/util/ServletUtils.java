@@ -1,14 +1,20 @@
 package com.csair.admin.util;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 
 import com.csair.admin.core.po.core.User;
 
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 /**
  * laogaochg
@@ -17,6 +23,36 @@ import java.util.List;
 public class ServletUtils {
 
     private static MenuService menuService;
+
+    /**
+     * response 输出JSON
+     */
+    public static void out(ServletResponse response, Map<String, String> resultMap) {
+        PrintWriter out = null;
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/json;charset=utf-8");
+            out = response.getWriter();
+            out.println(JSON.toJSONString(resultMap));
+        } catch (Exception e) {
+            LoggerUtils.error(ServletUtils.class,"com.csair.admin.util.ServletUtils.out",e);
+        } finally {
+            if (null != out) {
+                out.flush();
+                out.close();
+            }
+        }
+    }
+
+    /**
+     * 是否是Ajax请求
+     *
+     * @param request
+     * @return
+     */
+    public static boolean isAjax(ServletRequest request) {
+        return "XMLHttpRequest".equalsIgnoreCase(((HttpServletRequest) request).getHeader("X-Requested-With"));
+    }
 
     /**
      * 请到当前session里面的用户

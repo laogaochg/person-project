@@ -12,6 +12,22 @@
     <script type="text/javascript" src="${context.contextPath}/js/common/timepick.js"></script>
     <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
     <script type="text/javascript" src="${context.contextPath}/js/jquery.twbsPagination.min.js"></script>
+    <style>
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .fileinput-button input{
+            position:absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 200px;
+        }
+    </style>
     <!-- style.css是项目的样式文件  -->
     <script src="${context.contextPath}/js/layui/layui.all.js" charset="utf-8"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -150,8 +166,10 @@
                 <input type="text" name="keyword" style="width: 150px;" class="form-control" value="${(qo.keyword)!""}">
                 <button type="submit" style="width: 100px;" class="form-control btn btn-info">确定</button>
                 <label>批量导入</label>
-                <input type="file" id="chooseFile" name="file" style="width: 150px;" class="form-control btn btn-info"
-                       value="${(qo.action)!""}">
+                <span class="btn btn-default fileinput-button">
+                        <span>上传文件</span>
+                    <input type="file" id="chooseFile" name="file"  >
+                </span>
                 <a type="file" href="${context.contextPath}/templateFile/CertificateTemplate.xls" style="width: 150px;"
                    class="btn btn-info form-control">下载模板</a>
                 <a type="file" href="${context.contextPath}/certificate/toEditCertificate" style="width: 150px;"
@@ -185,7 +203,8 @@
                         <th> ${((c.createDate)?string("yyyy-MM-dd HH:mm"))!""}</th>
                         <th> ${((c.updateDate)?string("yyyy-MM-dd HH:mm"))!""}</th>
                         <th>
-                            <a href="${context.contextPath}/certificate/toEditCertificate?id=${c.id}" class="btn btn-default">修改</a>
+                            <a href="${context.contextPath}/certificate/toEditCertificate?id=${c.id}"
+                               class="btn btn-default">修改</a>
                             <button type="button" data-id="${c.id}" class="btn btn-danger editCertificate">删除</button>
                         </th>
                     </tr>

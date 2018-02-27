@@ -27,6 +27,7 @@ import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * laogaochg
@@ -40,7 +41,6 @@ public class CertificateController {
 
     @RequestMapping("/editCertificate")
     @ResponseBody
-    @PermissionName("编辑证书")
     public ResponseEntity<Object> editCertificate(Certificate c) {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();
@@ -56,7 +56,6 @@ public class CertificateController {
 
     @RequestMapping("/batchInsertCertificate")
     @ResponseBody
-    @PermissionName("编辑证书")
     public ResponseEntity<Object> batchInsertCertificate(MultipartFile file) throws IOException {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();
@@ -67,6 +66,7 @@ public class CertificateController {
         if (!"application/vnd.ms-excel".equals(file.getContentType())) {
             result.setCode(ParamConstants.ERROR_PARAM);
             result.setMes("请确定选择的文件是否为提供的模板。");
+            return result;
         }
         List<Map<Integer, String>> maps = XlsFileUtil.parseWorkbook(file.getInputStream());
         List<Certificate> list = new ArrayList<>();
@@ -89,30 +89,31 @@ public class CertificateController {
     }
 
     @RequestMapping("/toEditCertificate")
-    @PermissionName("编辑证书")
-    public String editCertificate(Long id, Model model) {
+    public String editCertificate(Long id, Model model,HttpServletRequest httpRequest) {
         Certificate certificate = certificateService.queryById(id);
         model.addAttribute("certificate", certificate);
         if (id != null) {
             List<GoodCategory> goodCategories = new ArrayList<>();
             model.addAttribute("goodCategories", goodCategories);
         }
+        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
+        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return "setting/certificate/edit";
     }
 
     @RequestMapping("/list")
-    @PermissionName("查询证书")
-    public ModelAndView queryCertificate(CertificateQueryObject qo, ModelAndView model) {
+    public ModelAndView queryCertificate(CertificateQueryObject qo, ModelAndView model,HttpServletRequest httpRequest) {
         PageResult pageResult = certificateService.query(qo);
         model.addObject("pageResult", pageResult);
         model.addObject("qo", qo);
+        model.addObject("userMenus", ServletUtils.queryUserMenu());
+        model.addObject("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         model.setViewName("setting/certificate/list");
         return model;
     }
 
     @RequestMapping("/batchDelete")
     @ResponseBody
-    @PermissionName("删除证书")
     public ResponseEntity<Object> batchDelete(Long[] ids) {
         //前端验证
         ResponseEntity<Object> result = new ResponseEntity<>();

@@ -117,6 +117,7 @@ public class ShiroConfig {
         filterChainMap.put("/404", "anon"); //表示可以匿名访问
         filterChainMap.put("/uploadFile", "anon"); //表示可以匿名访问
         filterChainMap.put("/authImage", "anon"); //表示可以匿名访问
+        filterChainMap.put("/unauthorizedException", "anon"); //表示可以匿名访问
         filterChainMap.put("/logout**", "anon");
         filterChainMap.put("/error**", "anon");
         filterChainMap.put("/weixing**", "anon");//微信路径可以匿名

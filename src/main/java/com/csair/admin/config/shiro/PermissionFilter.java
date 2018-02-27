@@ -4,7 +4,9 @@ import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.service.UserService;
 import com.csair.admin.core.service.impl.PermissionServiceImpl;
+import com.csair.admin.util.LoggerUtils;
 import com.csair.admin.util.ParamConstants;
+import com.csair.admin.util.ServletUtils;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -22,6 +24,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -68,7 +71,19 @@ public class PermissionFilter extends AccessControlFilter {
         //如果当前URL没有对应的权限，认证才能看到
         Map<String, Method> noPermissionRequestMapping = PermissionServiceImpl.noPermissionRequestMapping;
         if (noPermissionRequestMapping.containsKey(uri)) {
-            return subject.isAuthenticated();//认证的
+            if (subject.isAuthenticated()) {//认证的
+                return Boolean.TRUE;
+            }
+        }
+        if (ServletUtils.isAjax(request)) {// ajax请求
+            Map<String, String> resultMap = new HashMap<>();
+            resultMap.put("code", "403");
+            if (null == subject.getPrincipal()) {
+                resultMap.put("msg", "当前用户没有登录");//当前用户没有登录！
+            }else{
+                resultMap.put("msg", "你无权进行当前操作");//当前用户没有权限！
+            }
+            ServletUtils.out(response, resultMap);
         }
         return Boolean.FALSE;
     }
@@ -77,7 +92,6 @@ public class PermissionFilter extends AccessControlFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         Subject subject = getSubject(request, response);
-        saveRequest(request);
         String url = "/404";
         if (null == subject.getPrincipal()) {//表示没有登录，重定向到登录页面
             url = "/login";
@@ -85,7 +99,10 @@ public class PermissionFilter extends AccessControlFilter {
         if (!subject.isAuthenticated()) {//没有认证，重定向到登录页面
             url = "/login";
         }
-        WebUtils.issueRedirect(request, response, url);
+        if (!ServletUtils.isAjax(request)) {
+            saveRequest(request);
+            WebUtils.issueRedirect(request, response, url);
+        }
         return Boolean.FALSE;
     }
 
