@@ -157,6 +157,13 @@ public class MenuServiceImpl implements MenuService {
         logger.info("添加菜单：m" + m + "user:" + user);
         menuDao.insert(m);
         operationLogService.log(user.getId(), "添加菜单", "菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(), user.getLastIp());
+        if(StringUtils.hasText(m.getUrl())){
+            Permission p = new Permission();
+            p.setName(m.getMname());
+            p.setUrl(m.getUrl());
+            p.setMid(m.getMid());
+            permissionService.addPermission(p,user);
+        }
         return m.getMid();
     }
 

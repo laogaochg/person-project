@@ -9,7 +9,7 @@
 <#include "../../common/baseImport.ftl" />
     <style>
         .editItemClass {
-            width: 45%;
+            width: 80%;
             margin-top: 60px;
         }
 
@@ -21,6 +21,9 @@
             margin-bottom: 15px;
             margin-left: 41px;
         }
+        .layui-inline{
+            width: 450px;
+        }
     </style>
 </head>
 <body>
@@ -30,24 +33,37 @@
         <div class="fl title-body">
             添加品牌
         </div>
-        <div class="editItemClass">
-            <form class="layui-form" action="${context.contextPath}/permission/editPermission"
+        <div class="editItemClass layui-row">
+            <form class="layui-form layui-col-xs6" action="${context.contextPath}/permission/editPermission"
                   method="post">
                 <input name="id" value="${(item.id)!""}" type="hidden">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">名字</label>
-                    <div class="layui-input-block">
-                        <input name="name" value="${(item.name)!""}" placeholder="请输入名字" class="layui-input">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">名字</label>
+                        <div class="layui-input-block">
+                            <input name="name" value="${(item.name)!""}" placeholder="请输入名字" class="layui-input">
+                        </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">url:</label>
-                    <div class="layui-input-block">
-                        <input name="url" value="${(item.url)!""}" placeholder="请输入url" class="layui-input">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">url:</label>
+                        <div class="layui-input-block">
+                            <input name="url" value="${(item.url)!""}" placeholder="请输入url" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">对应菜单名字</label>
+                        <div class="layui-input-block">
+                            <input name="menuName" readonly="readonly" value="${(item.url)!""}"  class="layui-input">
+                            <input name="mid" type="hidden"  class="layui-input">
+                        </div>
                     </div>
                 </div>
                 <div class="edit_form_info">
-                    (多个url用||分开，如:/a||/b;权限会通过url写菜单关联，<br/>请确保url里面有一个写菜单的url相同，请认真输入!)
+                    (多个url用||分开，如:/a||/b;)
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -56,6 +72,47 @@
                     </div>
                 </div>
             </form>
+            <link rel="stylesheet" href="${context.contextPath}/js/plugin/ztree/css/zTreeStyle/zTreeStyle.css"
+                  type="text/css">
+            <script type="text/javascript"
+                    src="${context.contextPath}/js/plugin/ztree/js/jquery.ztree.core-3.5.js"></script>
+            <div class="layui-col-xs6">
+
+                <h3>选择父级菜单</h3>
+                <div class="zTreeDemoBackground left">
+                    <ul id="treePermission" class="ztree"></ul>
+                </div>
+
+                <script type="text/javascript">
+                    var setting = {
+                        check: {enable: true},
+                        data: {
+                            simpleData: {
+                                enable: true,
+                                idKey: "id",
+                                pIdKey: "parentId",
+                                rootPId: 0
+                            }
+                        }, callback: {
+                            onClick: function (events, treeId, treeNode) {
+                                $("[name=menuName]").val(treeNode.name);
+                                $("[name=mid]").val(treeNode.id);
+                            }
+                        }
+                    };
+
+                    // 查询子节点
+                    function getAsyncUrl(treeId, treeNode) {
+                        return "<%=request.getContextPath()%>/auth/permission/getTreeSubNode";
+                    }
+
+                    $(document).ready(function () {
+                        $.post(contextPath + "/menu/menuChild?parentId=${(parentMenu.mid)!""}", {}, function (jsonResult) {
+                            $.fn.zTree.init($("#treePermission"), setting, jsonResult);
+                        });
+                    });
+                </script>
+            </div>
         </div>
     </div>
 </div>

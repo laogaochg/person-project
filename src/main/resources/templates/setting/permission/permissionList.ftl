@@ -74,10 +74,10 @@
                     <td style="" class="">${(item.url)!""}</td>
                     <td class="operation">
                         <a href="${context.contextPath}/permission/toEditPermission?id=${item.id}"
-                           class="btn btn-warning">
+                           class="btn btn-default">
                             修改
                         </a>
-                        <a onclick="_ajax('ids=${item.id}')" class="btn btn-danger">
+                        <a onclick="_ajax('ids=${item.id}')" class="btn btn-default">
                             删除
                         </a>
                     </td>
