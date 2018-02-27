@@ -14,6 +14,8 @@ import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.config.core.PermissionName;
+import com.csair.admin.util.LoggerUtils;
+import freemarker.ext.beans.StringModel;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -58,20 +60,22 @@ public class UserController {
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginForm(Model model) {
+    public String loginForm(Model model, String returnUrl) {
         model.addAttribute(ParamConstants.USER_SESSION, new User());
+        model.addAttribute("returnUrl", returnUrl);
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String verifyCode,
-                        RedirectAttributes attributes, HttpSession httpSession, Model model, HttpServletRequest request) {
+    public String login(String username, String password, String verifyCode, String returnUrl, Model model, HttpServletRequest request) {
         //判断验证码是否正确，并在页面提示
-        if (!EnvironmentParams.isTestEnvironment()) {//测试环境不用验证验证码
-            String code = httpSession.getAttribute("verifyCode") + "";
+        if (true
+            //&&                !EnvironmentParams.isTestEnvironment()//测试环境不用验证验证码
+                ) {
+            String code = request.getSession().getAttribute("verifyCode") + "";
             if (!StringUtils.hasText(code) || !code.equalsIgnoreCase(verifyCode)) {
-                attributes.addFlashAttribute("message", "验证码错误");
-                return "redirect:/login";
+                model.addAttribute("message", "验证码错误");
+                return "redirect:/login?returnUrl="+returnUrl;
             }
         }
         boolean rememberMe = true;
@@ -81,24 +85,26 @@ public class UserController {
             // 将调用MyShiroRealm.doGetAuthenticationInfo()方法
             currentUser.login(token);
         } catch (Exception e) {
+            String message;
             if (e instanceof UnknownAccountException) {
-                attributes.addFlashAttribute("message", "未知账户");
+                message = "未知账户";
             } else if (e instanceof IncorrectCredentialsException) {
-                attributes.addFlashAttribute("message", "密码不正确");
+                message = "密码不正确";
             } else if (e instanceof LockedAccountException) {
-                attributes.addFlashAttribute("message", "账户已锁定");
+                message = "账户已锁定";
             } else if (e instanceof ExcessiveAttemptsException) {
-                attributes.addFlashAttribute("message", "用户名或密码错误次数超限");
+                message = "用户名或密码错误次数超限";
             } else if (e instanceof PlatformException) {
-                attributes.addFlashAttribute("message", ((PlatformException) e).getReturnMsg());
+                message = ((PlatformException) e).getReturnMsg();
             } else if (e instanceof AuthenticationException) {
-                attributes.addFlashAttribute("message", "对不起，你账号已经被禁止登录。");
+                message = "对不起，你账号已经被禁止登录。";
             } else {
-                attributes.addFlashAttribute("message", "用户名或密码不正确");
+                message = "用户名或密码不正确";
             }
-            e.printStackTrace();
+            model.addAttribute("message", message);
+            LoggerUtils.error(this.getClass(), "login.error", e);
             token.clear();
-            return "redirect:/login";
+            return "redirect:/login?returnUrl="+returnUrl;
         }
         User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
         user.setLastIp(ServletUtils.getIpAddress(request));
@@ -107,17 +113,19 @@ public class UserController {
         userService.editUser(user);
         //验证
         if (currentUser.isAuthenticated()) {
-            PageResult pageResult = userService.query(new UserQueryObject());
-            model.addAttribute("pageResult", pageResult);
             OperationLogQueryObject oqo = new OperationLogQueryObject();
             PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
             model.addAttribute("logResult", operationLogPageResult);
             model.addAttribute("userMenus", menuService.queryUserMenu(user.getId()));
             model.addAttribute("selectMenuIdForIntropect", 0);
-            return "index";
+            if (StringUtils.hasText(returnUrl)) {
+                return "redirect:"+returnUrl;//返回之前的链接
+            } else {
+                return "index";
+            }
         } else {
             token.clear();
-            return "redirect:/login";
+            return "redirect:/login?returnUrl="+returnUrl;
         }
     }
 

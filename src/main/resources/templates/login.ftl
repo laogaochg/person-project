@@ -44,6 +44,7 @@
                         <input type="checkbox">记住密码
                     </label>
                 </div>
+                <input type="hidden" name="returnUrl" value="${(returnUrl)!''}"/>
                 <div class="fm-item">
                     <button type="button" id="send-btn">登录</button>
                 </div>
