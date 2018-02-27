@@ -52,6 +52,11 @@ public class PermissionServiceImpl implements PermissionService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Override
+    public int insertPermission(Permission p) {
+        return permissionDao.insert(p);
+    }
+
+    @Override
     public int editPermission(Permission permission, User u) {
         int i = 0;
         String action;
@@ -150,7 +155,6 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
 
-
     @Override
     public Map<String, Method> getNoPermissionRequestMapping() {
         return noPermissionRequestMapping;
@@ -166,12 +170,18 @@ public class PermissionServiceImpl implements PermissionService {
         Map<String, List<Permission>> result = new HashMap<>();
         for (Menu menu : allMenu) {
             List<Permission> ps = new ArrayList<>();
+            result.put(String.valueOf(menu.getMid()), ps);
             for (Permission permission : allPermission) {
-                String[] split = permission.getUrl().split("\\|\\|");
-                for (String url : split) {
+                boolean hasAdd = false;
+                for (String url : permission.getUrl().split("\\|\\|")) {
                     if (url.equals(menu.getUrl())) {
                         ps.add(permission);
-                        result.put(String.valueOf(menu.getMid()), ps);
+                        hasAdd = true;
+                    }
+                }
+                if (!hasAdd) {//权限的菜单id加进来
+                    if (menu.getMid().equals(permission.getMid())) {
+                        ps.add(permission);
                     }
                 }
             }
@@ -290,7 +300,7 @@ public class PermissionServiceImpl implements PermissionService {
 //            p.setClassName(method.getDeclaringClass().getName());
 //            permissionDao.insert(p);
 //        }
-        logger.debug("没有权限的url:"+urlAndMethod.keySet().toString());
+        logger.debug("没有权限的url:" + urlAndMethod.keySet().toString());
         //把没有权限的url放到共享变量
         PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
     }

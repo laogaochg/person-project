@@ -89,4 +89,6 @@ public interface PermissionService {
      * 有就修改
      */
     int editPermission(Permission permission, User u);
+
+    int insertPermission(Permission p);
 }
