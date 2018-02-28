@@ -286,7 +286,7 @@
         l.op_ip from csair_log_operation l join e_admin_user u on l.author = u.id
         <include refid="base_where"/>
         ORDER BY op_time DESC
-        LIMIT #{startRow},#{pageSize}
+        LIMIT #{startRow},#{limit}
     </select>
     <select id="pageQueryCount" resultType="int">
         select count(1)

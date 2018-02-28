@@ -112,7 +112,7 @@
             } else if (layEvent === 'update') {
                 openUpdate(data);
             } else if (layEvent === 'del') {
-                openDelete(data.id);
+                openDelete(data.mid);
             }
         });
 
@@ -209,7 +209,7 @@
                 , shade: 0.5
                 , id: 'LAY_layuipro' //设定一个id，防止重复弹出
                 , btn: ['删除', '关闭']
-                , content: '您是否要删除当前选中的记录？系统会自动删除该机构以下的子机构'
+                , content: '您是否要删除当前选中的记录？'
                 , success: function (layero) {
                     var btn = layero.find('.layui-layer-btn');
                     btn.css('text-align', 'center');//居中
@@ -220,7 +220,7 @@
                             data: {
                                 id: ids
                             },
-                            type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+                            type: 'DELETE',//默认以get提交，以get提交如果是中文后台会出现乱码
                             dataType: 'json',
                             success: function (r) {
                                 layer.close(loadindex);//关闭进程对话框

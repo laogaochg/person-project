@@ -17,6 +17,7 @@ import org.apache.shiro.util.StringUtils;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -100,8 +101,15 @@ public class MenuController {
     /**
      * 编辑菜单
      */
-    @RequestMapping("/edit")
-    @PermissionName("管理菜单")
+    @RequestMapping(value = "/edit",method=RequestMethod.DELETE)
+    @ResponseBody
+    public Menu delete(Menu menu) {
+        return menu;
+    }
+    /**
+     * 编辑菜单
+     */
+    @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ModelAndView edit(Menu menu, ModelAndView model, HttpServletRequest request) {
         String fileUrl = FileUploadUtils.handlerFile(request);
         menu.setLogoFileName(fileUrl);

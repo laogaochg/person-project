@@ -383,8 +383,8 @@
             JOIN e_admin_user_role r ON u.id = r.uid
         </if>
         <include refid="base_where"/>
-        <if test="pageSize>0">
-            LIMIT #{startRow},#{pageSize}
+        <if test="limit>0">
+            LIMIT #{startRow},#{limit}
         </if>
     </select>
     <select id="pageQueryCount" resultType="int">

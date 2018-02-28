@@ -261,8 +261,8 @@
                 and p.type = #{type}
             </if>
         </where>
-        <if test="pageSize > 0">
-            limit #{startRow} , #{pageSize}
+        <if test="limit > 0">
+            limit #{startRow} , #{limit}
         </if>
     </select>
     <select id="queryCountPermission" resultType="int">

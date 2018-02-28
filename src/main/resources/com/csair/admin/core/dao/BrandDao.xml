@@ -358,7 +358,7 @@
                 AND brand_name LIKE CONCAT('%',#{keyword},'%')
             </if>
         </where>
-        LIMIT #{startRow},#{pageSize}
+        LIMIT #{startRow},#{limit}
     </select>
     <select id="pageQueryCount" resultType="int">
         select
