@@ -104,7 +104,7 @@
 		}
 		var navs;
 		$.ajax({
-			url : '<%=request.getContextPath()%>/menuInf/getTreeByRole.do',
+			url : '${context.contextPath}/menuInf/getTreeByRole.do',
 			dataType : 'json',
 			async: false,
 			success : function(data) {
@@ -123,7 +123,7 @@
 					layer.confirm('是否退出系统？', {
 					  btn: ['退出','取消'] //按钮
 					}, function(){
-						location.href = '${pageContext.request.contextPath}/operInf/logout.do';
+						location.href = '${context.contextPath}/operInf/logout.do';
 					}, function(){
 					  
 					});

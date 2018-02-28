@@ -9,7 +9,7 @@
 <div class="container rightContent">
     <div class="row">
         <div class="content">
-            修改信息：${(msg.mes)!""}
+            修改信息：${(msg.msg)!""}
             <br/>
             <a href="${context.contextPath}/user/list">确定 </a>
         </div>

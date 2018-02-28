@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
 import com.csair.admin.config.core.PlatformException;
 import com.csair.admin.core.dao.UserDao;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
@@ -48,29 +48,29 @@ public class UserServiceImpl implements UserService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
     @Override
-    public ResponseEntity<Object> cancelForbidUserLogin(Long id, User user) {
-        ResponseEntity<Object> re = new ResponseEntity<>();
+    public ResponseMessage<Object> cancelForbidUserLogin(Long id, User user) {
+        ResponseMessage<Object> re = new ResponseMessage<>();
         User u = userDao.selectByPrimaryKey(id);
         if (u == null) {
             re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户不存在。");
+            re.setMsg("用户不存在。");
             return re;
         }
         u.setStatus(User.STATUS_VALID);
         userDao.updateByPrimaryKeySelective(u);
         operationLogService.log(user.getId(), "开放用户登录", "用户ID：" + u.getId(), user.getLastIp());
-        re.setMes("开放该用户登录成功。");
+        re.setMsg("开放该用户登录成功。");
         return re;
     }
 
     @Override
-    public ResponseEntity<Object> forbidUserLogin(Long id, User user) {
+    public ResponseMessage<Object> forbidUserLogin(Long id, User user) {
         List<Role> roles = roleService.queryRoleByUserId(id);
-        ResponseEntity<Object> re = new ResponseEntity<>();
+        ResponseMessage<Object> re = new ResponseMessage<>();
         User u = userDao.selectByPrimaryKey(id);
         if (u == null) {
             re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户不存在。");
+            re.setMsg("用户不存在。");
             return re;
         }
         for (Role r : roles) {
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
                 }
                 if (!operaterHasAdminRole) {
                     re.setCode(ParamConstants.ADMIN_ROLE_EDIT_FORBID);
-                    re.setMes("禁止的用户有超级管理员的角色，只有超级管理员才能禁止。");
+                    re.setMsg("禁止的用户有超级管理员的角色，只有超级管理员才能禁止。");
                     return re;
                 }
             }
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
         u.setStatus(User.STATUS_INVALID);
         userDao.updateByPrimaryKeySelective(u);
         operationLogService.log(user.getId(), "禁止用户登录", "用户ID：" + u.getId(), user.getLastIp());
-        re.setMes("禁止用户登录成功。");
+        re.setMsg("禁止用户登录成功。");
         return re;
     }
 

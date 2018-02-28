@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>找不到网页
     </title>
-<#include "common/baseImport.ftl" />
+<#--<#include "common/baseImport.ftl" />-->
 </head>
 <body>
 <h4 style="text-align: center;">

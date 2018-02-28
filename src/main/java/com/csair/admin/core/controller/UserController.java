@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.OperationLog;
@@ -15,7 +14,6 @@ import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.OperationLogService;
 import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.util.LoggerUtils;
-import freemarker.ext.beans.StringModel;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -32,12 +30,11 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.service.UserService;
@@ -67,15 +64,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(String username, String password, String verifyCode, String returnUrl, Model model, HttpServletRequest request) {
+    @ResponseBody
+    public ResponseMessage login(String username, String password,String verifyCode, String returnUrl,  HttpServletRequest request) {
+        if(!StringUtils.hasText(returnUrl)){
+            returnUrl="";
+        }
+        ResponseMessage msg= new ResponseMessage();
+        msg.setData(returnUrl);
+        msg.setCode(2);
         //判断验证码是否正确，并在页面提示
-        if (true
-            //&&                !EnvironmentParams.isTestEnvironment()//测试环境不用验证验证码
-                ) {
+        if (!EnvironmentParams.isTestEnvironment()//测试环境不用验证验证码
+         ) {
             String code = request.getSession().getAttribute("verifyCode") + "";
             if (!StringUtils.hasText(code) || !code.equalsIgnoreCase(verifyCode)) {
-                model.addAttribute("message", "验证码错误");
-                return "redirect:/login?returnUrl="+returnUrl;
+                msg.setMsg("验证码错误");
+                return msg;
             }
         }
         boolean rememberMe = true;
@@ -101,10 +104,10 @@ public class UserController {
             } else {
                 message = "用户名或密码不正确";
             }
-            model.addAttribute("message", message);
-            LoggerUtils.error(this.getClass(), "login.error", e);
+            msg.setMsg(message);
+            LoggerUtils.error(this.getClass(), "login.error"+e.getClass());
             token.clear();
-            return "redirect:/login?returnUrl="+returnUrl;
+            return msg;
         }
         User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
         user.setLastIp(ServletUtils.getIpAddress(request));
@@ -113,22 +116,19 @@ public class UserController {
         userService.editUser(user);
         //验证
         if (currentUser.isAuthenticated()) {
-            OperationLogQueryObject oqo = new OperationLogQueryObject();
-            PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
-            model.addAttribute("logResult", operationLogPageResult);
-            model.addAttribute("userMenus", menuService.queryUserMenu(user.getId()));
-            model.addAttribute("selectMenuIdForIntropect", 0);
-            if (StringUtils.hasText(returnUrl)) {
-                return "redirect:"+returnUrl;//返回之前的链接
-            } else {
-                return "index";
-            }
+            msg.setCode(200);
+            return msg;
         } else {
             token.clear();
-            return "redirect:/login?returnUrl="+returnUrl;
+            return msg;
         }
     }
 
+
+    @RequestMapping(value = "/toUrl")
+    public String toUrl(String url) {
+        return url;
+    }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(RedirectAttributes attributes) {
@@ -162,16 +162,16 @@ public class UserController {
     @RequestMapping("/user/changePassword")
     @ResponseBody
     @PermissionName("修改密码")
-    public ResponseEntity changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
+    public ResponseMessage changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
-        ResponseEntity e = new ResponseEntity();
+        ResponseMessage e = new ResponseMessage();
         if (!PasswordUtils.checkPassword(oldPassword, u)) {
-            e.setMes("原密码不正确。");
+            e.setMsg("原密码不正确。");
             return e;
         }
         userService.changePassword(oldPassword, newPassword, u);
         e.setCode(200);
-        e.setMes("修改成功！");
+        e.setMsg("修改成功！");
         return e;
     }
 

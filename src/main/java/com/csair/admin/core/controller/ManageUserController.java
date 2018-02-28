@@ -2,7 +2,7 @@ package com.csair.admin.core.controller;
 
 import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.User;
@@ -49,29 +49,29 @@ public class ManageUserController {
     @RequestMapping("/user/editUser")
     @ResponseBody
     @PermissionName("编辑用户")
-    public ResponseEntity<String> editUser(UserVo user) {
+    public ResponseMessage<String> editUser(UserVo user) {
         Subject admin = SecurityUtils.getSubject();
-        ResponseEntity<String> re = new ResponseEntity<>();
+        ResponseMessage<String> re = new ResponseMessage<>();
         //输入数据检查。
         if (user == null) {
             re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户参数不正确。");
+            re.setMsg("用户参数不正确。");
             return re;
         }
         if (!StringUtils.hasText(user.getEmail())) {
             re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户邮箱不能为空。");
+            re.setMsg("用户邮箱不能为空。");
             return re;
         }
         if (!StringUtils.hasText(user.getPswd())) {
             re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("用户密码不能为空。");
+            re.setMsg("用户密码不能为空。");
             return re;
         }
         ReturnMessage message = userService.editUse(user, admin);
         if (!"200".equals(message.getCode())) {
             re.setCode(new Integer(message.getCode()));
-            re.setMes(message.getMes());
+            re.setMsg(message.getMes());
         }
         return re;
     }
@@ -116,12 +116,12 @@ public class ManageUserController {
     @RequestMapping("cancelForbidUserLogin")
     @ResponseBody
     @PermissionName("解禁用户登陆")
-    public ResponseEntity<Object> cancelForbidUserLogin(Long id) {
+    public ResponseMessage<Object> cancelForbidUserLogin(Long id) {
         //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
+        ResponseMessage<Object> result = new ResponseMessage<>();
         if (id == null) {
             result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("id不能为空。");
+            result.setMsg("id不能为空。");
             return result;
         }
         User user = ServletUtils.getUser();
@@ -137,12 +137,12 @@ public class ManageUserController {
     @RequestMapping("forbidUserLogin")
     @ResponseBody
     @PermissionName("禁止用户登陆")
-    public ResponseEntity<Object> forbidUserLogin(Long id) {
+    public ResponseMessage<Object> forbidUserLogin(Long id) {
         //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
+        ResponseMessage<Object> result = new ResponseMessage<>();
         if (id == null) {
             result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("id不能为空。");
+            result.setMsg("id不能为空。");
             return result;
         }
         User user = ServletUtils.getUser();

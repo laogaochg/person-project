@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.csair.admin.config.core.PlatformException;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.Permission;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.query.PermissionQueryObject;
@@ -37,31 +37,31 @@ public class PermissionController {
 
     @RequestMapping("/batchDelete")
     @ResponseBody
-    public ResponseEntity batchDelete(Model model, Long[] ids, HttpServletRequest request) {
-        ResponseEntity re = new ResponseEntity();
+    public ResponseMessage batchDelete(Model model, Long[] ids, HttpServletRequest request) {
+        ResponseMessage re = new ResponseMessage();
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (ids == null || ids.length == 0) {
             re.setCode(1);
-            re.setMes("请选择要操作的数据");
+            re.setMsg("请选择要操作的数据");
         }
         permissionService.batchDelete(ids, u);
         re.setCode(200);
-        re.setMes("删除成功");
+        re.setMsg("删除成功");
         return re;
     }
 
     @RequestMapping("/editPermission")
     @ResponseBody
-    public ResponseEntity editPermission(Model model, Permission permission, HttpServletRequest request) {
-        ResponseEntity re = new ResponseEntity();
+    public ResponseMessage editPermission(Model model, Permission permission, HttpServletRequest request) {
+        ResponseMessage re = new ResponseMessage();
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (permission == null) {
             re.setCode(1);
-            re.setMes("请选择要操作的数据");
+            re.setMsg("请选择要操作的数据");
         }
         permissionService.editPermission(permission, u);
         re.setCode(200);
-        re.setMes("删除成功");
+        re.setMsg("删除成功");
         return re;
     }
 
@@ -99,15 +99,15 @@ public class PermissionController {
      */
     @RequestMapping("/addMenu")
     @ResponseBody
-    public ResponseEntity addMenu(Permission l, HttpServletRequest request) {
-        ResponseEntity re = new ResponseEntity();
+    public ResponseMessage addMenu(Permission l, HttpServletRequest request) {
+        ResponseMessage re = new ResponseMessage();
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (l.getId() == null) {
 //            Long menusList = permissionService.addPermission(l,u);
-            re.setMes("添加成功。");
+            re.setMsg("添加成功。");
         } else {
             permissionService.updatePermissionByPid(l, u);
-            re.setMes("修改成功。");
+            re.setMsg("修改成功。");
         }
         re.setCode(200);
         return re;

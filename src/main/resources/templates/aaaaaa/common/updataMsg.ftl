@@ -16,7 +16,7 @@
     <div class="layui-body" >
     <div class="rwo" style="margin-top: 20px;">
         <div class="col-md-9 col-md-offset-1" style="font-size: 20px;color: #000;">
-            修改信息：${(msg.mes)!""}
+            修改信息：${(msg.msg)!""}
         </div>
     </div>
     <div class="rwo">

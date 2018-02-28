@@ -14,7 +14,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.csair.admin.core.po.core.query.BrandQueryObject;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.service.BrandService;
 import com.csair.admin.core.service.OperationLogService;
@@ -55,8 +55,8 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public ResponseEntity<String> editBrand(Brand brand, User user) {
-        ResponseEntity<String> result = new ResponseEntity<String>();
+    public ResponseMessage<String> editBrand(Brand brand, User user) {
+        ResponseMessage<String> result = new ResponseMessage<String>();
         //过滤特殊字符
         brand.setBrandDesc(HtmlUtils.htmlEscape(brand.getBrandDesc()));
         if (brand.getBrandId() == null) {
@@ -91,7 +91,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public ResponseEntity batchDeleteBrand(Long[] ids, User user) {
+    public ResponseMessage batchDeleteBrand(Long[] ids, User user) {
         for (Long id : ids) {
             Brand brand = brandDao.selectByPrimaryKey(id);
             //删除LOGO图
@@ -110,8 +110,8 @@ public class BrandServiceImpl implements BrandService {
         }
         String content = String.format("品牌ID：（%s）。", StringUtil.join(Arrays.asList(ids), ","));
         operationLogService.log(user.getId(), "批量删除品牌", content, user.getLastIp());
-        ResponseEntity re = new ResponseEntity();
-        re.setMes("删除成功。");
+        ResponseMessage re = new ResponseMessage();
+        re.setMsg("删除成功。");
         return re;
     }
 }

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.csair.admin.config.core.PermissionName;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -22,7 +21,7 @@ import com.csair.admin.core.po.core.GoodCategory;
 import com.csair.admin.core.po.setting.Certificate;
 import com.csair.admin.core.po.setting.CertificateQueryObject;
 import com.csair.admin.core.service.CertificateService;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
 
@@ -41,12 +40,12 @@ public class CertificateController {
 
     @RequestMapping("/editCertificate")
     @ResponseBody
-    public ResponseEntity<Object> editCertificate(Certificate c) {
+    public ResponseMessage<Object> editCertificate(Certificate c) {
         //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
+        ResponseMessage<Object> result = new ResponseMessage<>();
         if (!StringUtils.hasText(c.getName())) {
             result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("名字不能为空");
+            result.setMsg("名字不能为空");
             return result;
         }
         User user = ServletUtils.getUser();
@@ -56,16 +55,16 @@ public class CertificateController {
 
     @RequestMapping("/batchInsertCertificate")
     @ResponseBody
-    public ResponseEntity<Object> batchInsertCertificate(MultipartFile file) throws IOException {
+    public ResponseMessage<Object> batchInsertCertificate(MultipartFile file) throws IOException {
         //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
+        ResponseMessage<Object> result = new ResponseMessage<>();
         if (file == null) {
             result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("请选择文件。");
+            result.setMsg("请选择文件。");
         }
         if (!"application/vnd.ms-excel".equals(file.getContentType())) {
             result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("请确定选择的文件是否为提供的模板。");
+            result.setMsg("请确定选择的文件是否为提供的模板。");
             return result;
         }
         List<Map<Integer, String>> maps = XlsFileUtil.parseWorkbook(file.getInputStream());
@@ -114,13 +113,13 @@ public class CertificateController {
 
     @RequestMapping("/batchDelete")
     @ResponseBody
-    public ResponseEntity<Object> batchDelete(Long[] ids) {
+    public ResponseMessage<Object> batchDelete(Long[] ids) {
         //前端验证
-        ResponseEntity<Object> result = new ResponseEntity<>();
+        ResponseMessage<Object> result = new ResponseMessage<>();
         User user = ServletUtils.getUser();
         if (ids == null) {
             result.setCode(ParamConstants.ERROR_PARAM);
-            result.setMes("请输入正确的参数。");
+            result.setMsg("请输入正确的参数。");
             return result;
         }
         for (Long id : ids) {

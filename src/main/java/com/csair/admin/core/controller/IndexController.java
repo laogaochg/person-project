@@ -8,6 +8,7 @@ import java.util.Enumeration;
 
 import javax.annotation.Resource;
 
+import com.csair.admin.util.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -36,20 +37,11 @@ public class IndexController {
 
     /**
      * 首页
-     *
-     * @param qo
-     * @param model
-     * @return
      */
-    @RequestMapping("index")
-    public ModelAndView index(UserQueryObject qo,ModelAndView model) {
-        PageResult pageResult = userService.query(qo);
-        model.addObject("pageResult",pageResult);
-        OperationLogQueryObject oqo = new OperationLogQueryObject();
-        PageResult<OperationLog> operationLogPageResult = operationLogService.pageQuery(oqo);
-        model.addObject("logResult",operationLogPageResult);
-        model.setViewName("index");
-        model.addObject("selectMenuIdForIntropect",0);
+    @RequestMapping("main")
+    public ModelAndView index(ModelAndView model) {
+        model.addObject("userName", ServletUtils.getUser().getEmail());
+        model.setViewName("main");
         return model;
     }
 }

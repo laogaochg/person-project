@@ -61,7 +61,7 @@ public class ExceptionController {
             dataMap.put("code", code);
             dataMap.put("mes", mes);
             model.setViewName("/404");
-            String msg = dataMap.get("mes") + "";
+            String msg = dataMap.get("msg") + "";
             model.addObject("msg", msg);
             model.addObject("code", dataMap.get("code"));
         }

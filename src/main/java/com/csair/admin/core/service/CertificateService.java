@@ -2,7 +2,7 @@ package com.csair.admin.core.service;
 
 import com.csair.admin.core.po.setting.Certificate;
 import com.csair.admin.core.po.setting.CertificateQueryObject;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.PageResult;
 
@@ -44,5 +44,5 @@ public interface CertificateService {
      * @param user
      * @return
      */
-    ResponseEntity<Object> deleteCertificate(Long id,User user);
+    ResponseMessage<Object> deleteCertificate(Long id, User user);
 }

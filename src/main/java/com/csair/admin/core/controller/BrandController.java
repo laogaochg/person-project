@@ -3,7 +3,7 @@ package com.csair.admin.core.controller;
 import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.query.BrandQueryObject;
@@ -52,11 +52,11 @@ public class BrandController {
     @RequestMapping("batchDeleteBrand")
     @ResponseBody
     @PermissionName("删除品牌")
-    public ResponseEntity batchDeleteBrand(Long[] ids) {
+    public ResponseMessage batchDeleteBrand(Long[] ids) {
         if (ids == null || ids.length == 0) {
-            ResponseEntity re = new ResponseEntity();
+            ResponseMessage re = new ResponseMessage();
             re.setCode(ParamConstants.ERROR_PARAM);
-            re.setMes("id不能为空。");
+            re.setMsg("id不能为空。");
             return re;
         }
         return brandService.batchDeleteBrand(ids, ServletUtils.getUser());

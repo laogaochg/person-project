@@ -2,7 +2,7 @@ package com.csair.admin.core.service;
 
 import org.apache.shiro.subject.Subject;
 
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.resp.UserVo;
@@ -51,7 +51,7 @@ public interface UserService {
      * @param user 操作人
      * @return
      */
-    ResponseEntity<Object> forbidUserLogin(Long id,User user);
+    ResponseMessage<Object> forbidUserLogin(Long id, User user);
 
     /**
      * 取消禁止用户登录
@@ -59,5 +59,5 @@ public interface UserService {
      * @param user
      * @return
      */
-    ResponseEntity<Object> cancelForbidUserLogin(Long id,User user);
+    ResponseMessage<Object> cancelForbidUserLogin(Long id, User user);
 }

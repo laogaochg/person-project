@@ -8,11 +8,10 @@ import com.csair.admin.core.po.setting.CertificateQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.setting.Certificate;
 import com.csair.admin.core.po.setting.CertificateQueryObject;
@@ -31,8 +30,8 @@ public class CertificateServiceImpl implements CertificateService {
     private OperationLogService operationLogService;
 
     @Override
-    public ResponseEntity<Object> deleteCertificate(Long id, User user) {
-        ResponseEntity<Object> re = new ResponseEntity<>();
+    public ResponseMessage<Object> deleteCertificate(Long id, User user) {
+        ResponseMessage<Object> re = new ResponseMessage<>();
         certificateDao.deleteByPrimaryKey(id);
         String content = String.format("证书id:%s;", id);
         operationLogService.log(user.getId(), "添加证书", content, user.getLastIp());

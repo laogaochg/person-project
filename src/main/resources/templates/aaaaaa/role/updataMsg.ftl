@@ -14,7 +14,7 @@
 <div class="layui-layout layui-layout-admin" style="">
 <#include "../common/left_mune.ftl" />
     <div class="layui-body" >
-    修改信息：${(msg.mes)!""}
+    修改信息：${(msg.msg)!""}
     <br/>
     <a href="${context.contextPath}/role/list">确定 </a>
     <div>

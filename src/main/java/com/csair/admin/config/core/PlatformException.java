@@ -30,7 +30,7 @@ public class PlatformException extends RuntimeException {
     public PlatformException() {
         this.code = ParamConstants.UNKNOWNCODE;
         this.mes = ParamConstants.UNKNOWNMSG;
-        logger.info("错误代码： code " + code + " 错误信息：mes" + mes);
+        logger.info("错误代码： code " + code + " 错误信息：msg" + mes);
     }
 
     /**
@@ -39,7 +39,7 @@ public class PlatformException extends RuntimeException {
      */
     public PlatformException(int code) {
         //根据错误码得到对应的错误信息；
-        //String mes = MessageStaticUtils.getMessage(code);
+        //String msg = MessageStaticUtils.getMessage(code);
         this.code = code;
         this.mes = mes;
         logger.info("错误代码： code " + code + " 错误信息：" + mes);

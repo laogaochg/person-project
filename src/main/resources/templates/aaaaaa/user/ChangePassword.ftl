@@ -92,16 +92,16 @@
                 data: data,
                 success: function(data) {
                     if(data.code==200) {
-                        myModal("myModalTest","成功",data.mes,function() {
+                        myModal("myModalTest","成功",data.msg,function() {
                             location.reload();
                         });
                     } else {
-                        myModal("myModalTest","失败",data.mes,function() {
+                        myModal("myModalTest","失败",data.msg,function() {
                             location.reload();
                         });
                     }
                 },error: function(data) {
-                    myModal("myModalTest","失败",data.mes,function() {
+                    myModal("myModalTest","失败",data.msg,function() {
                         location.reload();
                     });
                 }

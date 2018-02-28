@@ -3,7 +3,7 @@ package com.csair.admin.core.service;
 import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.query.BrandQueryObject;
 import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.ResponseEntity;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.User;
 
 public interface BrandService {
@@ -35,7 +35,7 @@ public interface BrandService {
      * @param user
      * @return
      */
-    ResponseEntity<String> editBrand(Brand brand,User user);
+    ResponseMessage<String> editBrand(Brand brand, User user);
 
     /**
      * 分页查询
@@ -50,6 +50,6 @@ public interface BrandService {
      * @param user
      * @return
      */
-    ResponseEntity batchDeleteBrand(Long[] ids,User user);
+    ResponseMessage batchDeleteBrand(Long[] ids, User user);
 
 }

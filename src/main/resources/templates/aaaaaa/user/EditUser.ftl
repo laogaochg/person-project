@@ -85,13 +85,13 @@
                 };
                 var errorFunction=null;
                 ajaxData(url,data,function(data) {
-                    layer.confirm(data.mes,{
+                    layer.confirm(data.msg,{
                         btn: ['确定']    //按钮
                     },function() {
                         window.location.href="${context.contextPath}/user/list";
                     });
                 },function(data) {
-                    layer.confirm(data.mes,{
+                    layer.confirm(data.msg,{
                         btn: ['确定']    //按钮
                     });
                 });
