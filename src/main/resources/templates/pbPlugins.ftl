@@ -1,10 +1,9 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
  <script type="text/javascript">
  
  //数据字典下拉框
  function pbInitCombox($,form,type,id,value){
 		$.ajax({
-			url : '<%=request.getContextPath()%>/dictCd/getList.do?'+type,
+			url : '${context.contextPath}/dictCd/getList.do?'+type,
 			type:'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
 			dataType : 'json',
 			async: true,
@@ -29,7 +28,7 @@
 //普通下拉框
  function pbInitComCombox($,form,url,id,idField,textField,value){
 		$.ajax({
-			url : '<%=request.getContextPath()%>/'+url,
+			url : '${context.contextPath}/'+url,
 			type:'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
 			dataType : 'json',
 			async: true,

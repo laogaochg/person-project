@@ -1,4 +1,3 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -7,12 +6,12 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <!-- layUI -->
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.2.0.min.js"></script>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/plugins/layui-v2/css/layui.css" media="all" />
-<script type="text/javascript"src="<%=request.getContextPath()%>/plugins/layui-v2/layui.js"></script>
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/public.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/jquery-3.2.0.min.js"></script>
+<link rel="stylesheet" href="${context.contextPath}/plugins/layui-v2/css/layui.css" media="all" />
+<script type="text/javascript"src="${context.contextPath}/plugins/layui-v2/layui.js"></script>
+<script type="text/javascript" src="${context.contextPath}/js/public.js"></script>
 <!-- 公共组件 -->
-<jsp:include page="plugins/my/pbPlugins.jsp"></jsp:include>
+<#include "pbPlugins.ftl" />
 
 <style>
 .content {

@@ -1,122 +1,114 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE HTML>
+<html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>系统登录</title>
-<#include "common/baseImport.ftl" />
-    <link href="${context.contextPath}/css/login/login.css" rel="stylesheet" rev="stylesheet" type="text/css"
-          media="all"/>
-
+<title>LaySSH开发框架</title>
+	<script type="text/javascript">
+        var path = '${context.contextPath}';
+        var basePath = '${context.scheme}' + "://"
+				+'${context.serverName}'
+				+ ":" + '${context.serverPort}' + path + "/";
+	</script>
+<#include "inc.ftl" />
+<link rel="stylesheet" type="text/css" href="${context.contextPath}/css/login.css"></link>
+<style>
+body {
+	text-align: center
+}
+</style>
 </head>
-
-<body>
-<div class="content">
-    <div class="login-aside">
-        <div id="o-box-up"></div>
-        <div id="o-box-down" style="table-layout:fixed;">
-            <div class="error-box"></div>
-            <div class="bt">
-                登录
-            </div>
-        <#if message?exists>
-            <div style="color:#F00">${message}</div>
-        </#if>
-            <form class="form-horizontal loginForm" action="login" role="form" method="post">
-                <div class="fm-item">
-                    <input class="form-control username grey" name="username" id="fusername" type="text"
-                           value="alice@test.com">
-                </div>
-                <div class="fm-item">
-                    <input type="password" name="password" class="form-control password grey" id="inputPassword"
-                           value="123">
-                </div>
-                <div class="fm-item pos-r">
-                    <input class="form-control yzm grey verifyCode" name="verifyCode" id="yzm" type="text"
-                           value="请输入你的验证码">
-                    <div class="yz-img">
-                        <img id="authImage" src="${context.contextPath}/authImage" class="yzm-img"/>
-                    </div>
-                </div>
-                <div class="checkbox fm-item">
-                    <label>
-                        <input type="checkbox">记住密码
-                    </label>
-                </div>
-                <input type="hidden" name="returnUrl" value="${(returnUrl)!''}"/>
-                <div class="fm-item">
-                    <button type="button" id="send-btn">登录</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="footer">
-    <p>power By 中国南方航空有限公司 Copyright 2017 all Rights Rersserved</p>
-</div>
-<script type="text/javascript">
-    var authImage = document.getElementById("authImage");
-    authImage.onclick = function changeImg() {
-        var img = document.getElementById("authImage");
-        img.src = "${context.contextPath}/authImage?date=" + new Date();
-    };
-    $(".username").focus(function () {
-        var username = $(this).val();
-        if (username == '请输入你的用户名') {
-            $(this).val('').addClass("black").removeClass("grey");
-            ;
-        }
-    });
-
-    $(".username").focusout(function () {
-        var username = $(this).val();
-        if (username == '') {
-            $(this).val('请输入你的用户名').addClass("grey").removeClass("black");
-        }
-    });
-
-
-    $(".password").focus(function () {
-        var username = $(this).val();
-        if (username == '请输入你的密码') {
-            $(this).val('').addClass("black").removeClass("grey");
-            ;
-        }
-    });
-    $(".password").focusout(function () {
-        var username = $(this).val();
-        if (username == '') {
-            $(this).val('请输入你的密码').addClass("grey").removeClass("black");
-            ;
-        }
-    });
-
-    $(".yzm").focus(function () {
-        var username = $(this).val();
-        if (username == '请输入你的验证码') {
-            $(this).val('').addClass("black").removeClass("grey");
-            ;
-        }
-    });
-
-    $(".yzm").focusout(function () {
-        var username = $(this).val();
-        if (username == '') {
-            $(this).val('请输入你的验证码').addClass("grey").removeClass("black");
-            ;
-        }
-    });
-    $("#send-btn").click(function () {
-        var verifyCode = $(".verifyCode").val();
-        if ("请输入你的验证码" == verifyCode || !verifyCode) {
-            $(this).val('').addClass("black").removeClass("grey");
-            $(".verifyCode").focus();
-        } else {
-            $("[name=verifyCode]").parents("form").submit();
-        }
-    });
-</script>
+<body class="loginbody">
+	<div id="top">
+		<h1 style="margin-top:25px;color:#FFFFFF">LaySSH快速开发框架</h1>
+	</div>
+	<div id="loginbg" class="loginbg" style="margin:0 auto; width:500px; height:500px;">
+		<div id="login_form" class="login_form">
+			<p class="form_name">登录管理系统</p>
+			<div id="table_login">
+				<form name="loginForm" id="Login_loginForm" method="post" action="">
+					<input type="text" placeholder="请输入用户名" value="admin" name="operCd" id="Login_operCd" class="name" /> 
+					<input type="password" placeholder="请输入密码" value="1" class="password" name="operPwd" id="Login_operPwd" />
+					<div class="yzm">
+						<input type="text" placeholder="请输入验证码" class="code" name="code" id="Login_code" /> 
+						<img id="Login_code_img" src="${context.contextPath}/ImageServlet" style="cursor:pointer;" onclick="changeValidateCode()" title="点击图片刷新验证码" />
+					</div>
+						<button class="layui-btn"  style="width:200px" lay-submit="" lay-filter="btnSubmit">立即登录</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
+<script type="text/javascript">
 
+layui.use(['form', 'layedit', 'laydate','jquery'], function(){
+  var form = layui.form;
+  var $ = layui.jquery;
+		  
+ 
+//监听提交
+  form.on('submit(btnSubmit)', function(data){
+	  	var operCd = $('#Login_operCd').val();//用户名
+		var operPwd = $('#Login_operPwd').val();//密码
+		var code = $('#Login_code').val();//验证码
+
+		if (operCd == '') {
+			pubUtil.msg("请输入用户名!", layer, 2, function() {
+			}, 1 * 1000);
+			return false;
+		}
+
+		if (operPwd == '') {
+			pubUtil.msg("请输入密码!", layer, 2, function() {
+			}, 1 * 1000);
+			return false;
+		}
+		if (code == '') {
+			pubUtil.msg("请输入验证码！", layer, 2, function() {
+			}, 1 * 1000);
+			return false;
+		}
+  	 var index = layer.load(1);//开启进度条
+     $.ajax({
+		url : '${context.contextPath}/operInf/execute.do',
+		data :{
+			operCd:$("#Login_operCd").val(),
+			operPwd:$("#Login_operPwd").val(),
+			code:$("#Login_code").val()
+		},
+		type : 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+		dataType : 'json',
+		success : function(obj) {
+			layer.close(index);//关闭   
+			if (obj && obj.success) {
+			 	layer.close(index);//关闭   
+				window.location.href = "${context.contextPath}/"+"main.jsp";
+			} else {
+				layer.close(index);//关闭   
+				changeValidateCode();//修改验证码
+				$('#Login_operPwd').val('');//密码
+				$('#Login_code').val('');//验证码
+				pubUtil.msg(obj.msg, layer, 2, function() {
+				}, 3 * 1000);
+			}
+		}
+	});
+	return false;
+});
+  
+		  
+});
+
+/**
+ *刷新验证码
+ */
+function changeValidateCode() {
+	var obj = $('#Login_code_img');
+	var timenow = new Date().getTime();
+	var url = "${pageContext.request.contextPath}/ImageServlet?d=" + timenow;
+	$(obj).attr("src", url);
+
+}
+
+</script>
 </html>
