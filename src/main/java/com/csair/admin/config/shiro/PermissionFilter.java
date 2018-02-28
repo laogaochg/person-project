@@ -31,17 +31,11 @@ import java.util.Map;
  * 权限校验 Filter
  */
 public class PermissionFilter extends AccessControlFilter {
-    private static Logger logger = LoggerFactory.getLogger(PermissionFilter.class);
 
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         //修改过滤的东西
-        HttpServletRequest httpRequest = ((HttpServletRequest) request);
-        String uri = httpRequest.getRequestURI();//获取URI
-        String basePath = httpRequest.getContextPath();//获取basePath
-        if (null != uri && uri.startsWith(basePath)) {
-            uri = uri.replaceFirst(basePath, "");
-        }
+        String uri = ServletUtils.getUserRequestUrl(request);
 
         //没有登陆就查看记住我功能
         Subject subject = getSubject(request, response);
@@ -80,7 +74,7 @@ public class PermissionFilter extends AccessControlFilter {
             resultMap.put("code", "403");
             if (null == subject.getPrincipal()) {
                 resultMap.put("msg", "当前用户没有登录");//当前用户没有登录！
-            }else{
+            } else {
                 resultMap.put("msg", "你无权进行当前操作");//当前用户没有权限！
             }
             ServletUtils.out(response, resultMap);
@@ -93,11 +87,13 @@ public class PermissionFilter extends AccessControlFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
         Subject subject = getSubject(request, response);
         String url = "/404";
-        if (null == subject.getPrincipal()) {//表示没有登录，重定向到登录页面
-            url = "/login";
-        }
         if (!subject.isAuthenticated()) {//没有认证，重定向到登录页面
             url = "/login";
+        }
+        if (null == subject.getPrincipal()) {//表示没有登录，重定向到登录页面
+            //修改过滤的东西
+            String uri = ServletUtils.getUserRequestUrl(request);
+            url = "/login?returnUrl="+uri;
         }
         if (!ServletUtils.isAjax(request)) {
             saveRequest(request);

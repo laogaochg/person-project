@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -177,10 +178,12 @@ public class ManageUserController {
     //返回用户列表
     @RequestMapping("/user/list")
     @PermissionName("查询所有用户")
-    public ModelAndView queryRole(UserQueryObject qo, ModelAndView model) {
+    public ModelAndView queryRole(UserQueryObject qo, ModelAndView model, HttpServletRequest httpRequest) {
         PageResult pageResult = userService.query(qo);
         model.addObject("pageResult", pageResult);
         model.setViewName("user/UserList");
+        model.addObject("userMenus", ServletUtils.queryUserMenu());
+        model.addObject("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return model;
     }
 }

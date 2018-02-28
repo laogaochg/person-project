@@ -7,8 +7,6 @@
     <meta name="description" content="">
     <title>平面运营后台</title>
 <#include "../common/baseImport.ftl" />
-    <script src="${context.contextPath}/js/common/datetimepicker.js"></script>
-    <!-- style.css是项目的样式文件  -->
 
 </head>
 <body>
@@ -30,10 +28,10 @@
             <label>动作</label>
             <input type="text" name="action" style="width: 150px;" class="form-control" value="${(qo.action)!""}">
             <label>开始时间</label>
-            <input type="text" name="beginTime" style="width: 150px;" class="form-control selectTime"
+            <input type="text" name="beginTime" id="date" style="width: 150px;" class="form-control selectTime"
                    value="${((qo.beginTime)?string("yyyy-MM-dd"))!""}">
             <label>结束时间</label>
-            <input type="text" name="endTime" style="width: 150px;" class="form-control selectTime"
+            <input type="text" name="endTime" id="date1" style="width: 150px;" class="form-control selectTime"
                    value="${((qo.endTime)?string("yyyy-MM-dd"))!""}">
         </div>
         <button type="submit" class="btn btn-default">确定</button>
@@ -65,6 +63,20 @@
 <script type="text/javascript">
     ${pageResult.totalPage};
     $(function() {
+
+        layui.use(['form', 'layedit', 'laydate'], function(){
+            var form = layui.form
+                    ,layer = layui.layer
+                    ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+        });
         $('#pagination').twbsPagination({
             first: "首页",
             prev: "上一页",
@@ -80,10 +92,6 @@
         });
     });
 </script>
-<script type="text/javascript" src="${context.contextPath}/js/bootstrap/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="${context.contextPath}/js/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
-<script type="text/javascript" src="${context.contextPath}/js/common/timepick.js"></script>
 <script type="text/javascript" src="${context.contextPath}/js/common/BaseUtil.js"></script>
-<script type="text/javascript" src="${context.contextPath}/js/query/jquery.twbsPagination.min.js"></script>
 
 </html>
