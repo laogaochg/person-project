@@ -8,6 +8,7 @@ import com.csair.admin.config.shiro.AuthRealm;
 import com.csair.admin.config.shiro.CredentialsMatcher;
 import com.csair.admin.config.shiro.PermissionFilter;
 import com.csair.admin.core.service.UserService;
+import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -53,6 +54,7 @@ public class ShiroConfig {
     public EhCacheManager cacheManager() {
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:shiro-ehcache.xml");
+        ServletUtils.ehCacheManager=cacheManager;
         return cacheManager;
     }
 

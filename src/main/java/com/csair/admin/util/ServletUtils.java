@@ -11,6 +11,9 @@ import com.csair.admin.core.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 
 import com.csair.admin.core.po.core.User;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.subject.Subject;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -23,7 +26,7 @@ import java.util.Map;
 public class ServletUtils {
 
     private static MenuService menuService;
-
+    public static EhCacheManager ehCacheManager;
     public static String getUserRequestUrl(ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();//获取URI
@@ -81,7 +84,17 @@ public class ServletUtils {
         if (menuService == null) {
             menuService = (MenuService) SpringContextUtil.getBean("menuService");
         }
-        return menuService.queryUserMenu();
+        Subject currentUser = SecurityUtils.getSubject();
+        User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
+        Long userId = user.getId();
+        Cache<Object, Object> session_cache = ehCacheManager.getCache("session_cache");
+        String key ="com.csair.admin.util.ServletUtils.queryUserMenu" + userId;
+        List<Menu>menus= (List<Menu>) session_cache.get(key);
+        if(menus==null){
+            menus= menuService.queryUserMenu();
+            session_cache.put(key,menus);
+        }
+        return menus;
     }
 
     public static Long getSelectMenuId(HttpServletRequest httpRequest) {
