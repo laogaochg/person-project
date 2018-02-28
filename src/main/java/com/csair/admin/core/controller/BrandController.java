@@ -64,10 +64,12 @@ public class BrandController {
 
     @RequestMapping("/toEditBrand")
     @PermissionName("编辑品牌")
-    public String editCertificate(Long id, Model model) {
+    public String editCertificate(Long id, Model model, HttpServletRequest httpRequest) {
         if (id != null) {
             model.addAttribute("brand", brandService.queryById(id));
         }
+        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
+        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return "goodManage/brand/editBrand";
     }
 

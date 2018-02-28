@@ -52,7 +52,7 @@
                         <td style="width: 40px"><i data-brandid="${brand.brandId}" class="che js-che tableI"></i></td>
                         <td style="width: 60px">${brand.brandId}</td>
                         <td style="width:280px" class="">${brand.brandName}</td>
-                        <td class=""><img style="width: 40px" src="${context.contextPath}${(brand.brandLogoThumb)!""}">
+                        <td class=""><img style="width: 40px" src="${(brand.brandLogoThumb)!""}">
                         </td>
                         <td class="operation">
                             <a href="${context.contextPath}/brand/toEditBrand?id=${brand.brandId}"

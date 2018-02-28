@@ -23,12 +23,16 @@ import java.util.Map;
 public class ServletUtils {
 
     private static MenuService menuService;
+
     public static String getUserRequestUrl(ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();//获取URI
         String basePath = httpRequest.getContextPath();//获取basePath
         if (null != uri && uri.startsWith(basePath)) {
             uri = uri.replaceFirst(basePath, "");
+            if (uri.equals("/")) {
+                return "";
+            }
         }
         return uri;
     }
@@ -45,7 +49,7 @@ public class ServletUtils {
             out = response.getWriter();
             out.println(JSON.toJSONString(resultMap));
         } catch (Exception e) {
-            LoggerUtils.error(ServletUtils.class,"com.csair.admin.util.ServletUtils.out",e);
+            LoggerUtils.error(ServletUtils.class, "com.csair.admin.util.ServletUtils.out", e);
         } finally {
             if (null != out) {
                 out.flush();
