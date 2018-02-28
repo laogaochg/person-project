@@ -67,7 +67,7 @@ public class CertificateServiceImpl implements CertificateService {
         if(StringUtils.isNotBlank(qo.getKeyword())) criteria.andNameLike("%" + qo.getKeyword() + "%");
         List<Certificate> certificates = certificateDao.selectByExample(ex);
         int count = certificateDao.countByExample(ex);
-        return new PageResult<>(certificates, count, qo.getCurrentPage(), qo.getPageSize());
+        return new PageResult<>(certificates, count, qo.getPage(), qo.getPageSize());
     }
 
     @Override

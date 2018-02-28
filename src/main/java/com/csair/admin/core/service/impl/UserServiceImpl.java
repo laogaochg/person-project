@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
     public PageResult<User> query(UserQueryObject qo) {
         int totalCount = userDao.pageQueryCount(qo);
         List<User> users = userDao.pageQueryUserList(qo);
-        return new PageResult<User>(users, totalCount, qo.getCurrentPage(), qo.getPageSize());
+        return new PageResult<User>(users, totalCount, qo.getPage(), qo.getPageSize());
     }
 
     /**

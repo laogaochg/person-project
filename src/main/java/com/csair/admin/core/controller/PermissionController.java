@@ -130,7 +130,7 @@ public class PermissionController {
         //查询角色
         model.addAttribute("role", roleService.queryById(qo.getRoleId()));
         //查询角色下的权限
-        qo.setPageSize(-1);
+        qo.setLimit(-1);
         PageResult pageResult = permissionService.query(qo);
         List<Permission> permissionList = pageResult.getListData();
         List<Long> ids = new ArrayList<Long>();

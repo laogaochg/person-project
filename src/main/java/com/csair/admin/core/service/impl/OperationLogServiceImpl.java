@@ -28,7 +28,7 @@ public class OperationLogServiceImpl implements OperationLogService {
     public PageResult<OperationLog> pageQuery(OperationLogQueryObject qo) {
         int totalCount = operationLogDao.pageQueryCount(qo);
         List<OperationLog> listData = operationLogDao.pageQueryList(qo);
-        return new PageResult<>(listData, totalCount, qo.getCurrentPage(), qo.getPageSize());
+        return new PageResult<>(listData, totalCount, qo.getPage(), qo.getPageSize());
     }
 
     @Override

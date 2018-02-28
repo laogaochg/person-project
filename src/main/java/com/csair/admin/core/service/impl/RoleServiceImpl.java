@@ -133,7 +133,7 @@ public class RoleServiceImpl implements RoleService {
         }
         List<Role> roles = roleDao.selectByExample(ex);
         int totalCount = roleDao.countByExample(ex);
-        return new PageResult(roles, totalCount, qo.getCurrentPage(), qo.getPageSize());
+        return new PageResult(roles, totalCount, qo.getPage(), qo.getPageSize());
     }
 
 }

@@ -88,7 +88,7 @@ public class RoleQuery {
         return startRow;
     }
 
-    public void setPageSize(Integer pageSize) {
+    public void setLimit(Integer pageSize) {
         this.pageSize=pageSize;
         this.startRow = (pageNo-1)*this.pageSize;
     }

@@ -87,7 +87,7 @@ public class PageBean<T> {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public void setLimit(int pageSize) {
         this.pageSize = pageSize;
     }
 

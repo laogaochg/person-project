@@ -1,35 +1,34 @@
 package com.csair.admin.core.po.core.query;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class QueryObject {
+public class QueryObject {
 
 
-    protected Integer currentPage = 1;//当前页
+    protected Integer page = 1;//当前页
 
-    protected Integer pageSize = 10;//总页数
+
+
+    protected Integer limit = 10;//总页数
 
 
     public Integer getStartRow() {
-        return (currentPage - 1) * pageSize;
+        return (page - 1) * limit;
     }
 
-    public Integer getCurrentPage() {
-        return currentPage;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setCurrentPage(Integer currentPage) {
+    public void setPage(Integer currentPage) {
         if (null == currentPage || currentPage == 1) currentPage = 1;
-        this.currentPage = currentPage;
+        this.page = currentPage;
     }
 
     public Integer getPageSize() {
-        return pageSize;
+        return limit;
     }
 
-    public void setPageSize(Integer pageSize) {
+    public void setLimit(Integer pageSize) {
         if (null == pageSize || pageSize == 1) pageSize = 10;
-        this.pageSize = pageSize;
+        this.limit = pageSize;
     }
 }

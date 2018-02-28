@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletRequest;
  * 角色操作
  */
 @Controller
-@RequestMapping("/role")
-public class RoleController {
+@RequestMapping("/RoleManage")
+public class RoleManageController {
 
     @Resource
     private RoleService roleService;
@@ -80,13 +80,7 @@ public class RoleController {
     //返回角色列表
     @RequestMapping("/list")
     public ModelAndView queryRole(RoleQueryObject qo, ModelAndView model,HttpServletRequest httpRequest) {
-        Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getSession().getAttribute(ParamConstants.USER_SESSION);
-        PageResult pageResult = roleService.query(qo);
-        model.addObject("pageResult", pageResult);
-        model.setViewName("role/roleList");
-        model.addObject("userMenus", ServletUtils.queryUserMenu());
-        model.addObject("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
+        model.setViewName("RoleManage/list");
         return model;
     }
 

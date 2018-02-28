@@ -87,7 +87,7 @@ public class BrandServiceImpl implements BrandService {
     public PageResult<Brand> pageQuery(BrandQueryObject qo) {
         List<Brand> brands = brandDao.pageQueryList(qo);
         int count = brandDao.pageQueryCount(qo);
-        return new PageResult<>(brands, count, qo.getCurrentPage(), qo.getPageSize());
+        return new PageResult<>(brands, count, qo.getPage(), qo.getPageSize());
     }
 
     @Override

@@ -10,6 +10,8 @@ import java.util.Set;
 import com.csair.admin.core.dao.MenuDao;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.query.MenuQuery;
+import com.csair.admin.core.po.core.query.MenuQueryObject;
+import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.util.ParamConstants;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -40,6 +42,22 @@ public class MenuServiceImpl implements MenuService {
     private PermissionService permissionService;
     @Resource
     private OperationLogService operationLogService;
+
+    @Override
+    public DatagridForLayUI<Menu> pageQueryMenu(MenuQueryObject qo) {
+        DatagridForLayUI<Menu> result = new DatagridForLayUI<>();
+        MenuQuery ex= new MenuQuery();
+        if(StringUtils.hasText(qo.getKeyword())){
+            ex.createCriteria().andMnameLike("%"+qo.getKeyword()+"%");
+        }
+        int i = menuDao.countByExample(ex);
+        ex.setLimit(qo.getPageSize());
+        ex.setPageNo(qo.getPage());
+        List<Menu> menus = menuDao.selectByExample(ex);
+        result.setData(menus);
+        result.setCount(new Long(i));
+        return result;
+    }
 
     @Override
     public List<Menu> queryParentMenus(String url) {
@@ -116,12 +134,12 @@ public class MenuServiceImpl implements MenuService {
         }
         //父节点展开处理
         for (MenuVo menuVo : vo) {
-            if(id!=null && menuVo.getId().equals(id)){
-                menuVo.setOpen(true);
-            }
-            if(ppId!=null && menuVo.getId().equals(ppId)){
-                menuVo.setOpen(true);
-            }
+//            if(id!=null && menuVo.getId().equals(id)){
+//                menuVo.setOpen(true);
+//            }
+//            if(ppId!=null && menuVo.getId().equals(ppId)){
+//                menuVo.setOpen(true);
+//            }
         }
         return vo;
     }

@@ -12,6 +12,7 @@ import com.csair.admin.util.ServletUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,9 +40,8 @@ public class IndexController {
      * 首页
      */
     @RequestMapping("main")
-    public ModelAndView index(ModelAndView model) {
-        model.addObject("userName", ServletUtils.getUser().getEmail());
-        model.setViewName("main");
-        return model;
+    public String index(Model model) {
+        model.addAttribute("userName", ServletUtils.getUser().getEmail());
+        return "main";
     }
 }

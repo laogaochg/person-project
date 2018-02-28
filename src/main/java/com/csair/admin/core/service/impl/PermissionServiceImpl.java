@@ -210,7 +210,7 @@ public class PermissionServiceImpl implements PermissionService {
     public synchronized int addAdminPermission() {
         RoleQueryObject qo = new RoleQueryObject();
         qo.setType(Role.ADMIN);
-        qo.setPageSize(99999);
+        qo.setLimit(99999);
         List<Role> listData = roleService.query(qo).getListData();
         for (Role r : listData) {
             List<Long> hasPermission = queryPermissionIdByRoleId(r.getId());
@@ -346,7 +346,7 @@ public class PermissionServiceImpl implements PermissionService {
         if (qo.getPageSize() == -1) {
             return new PageResult<>(permissionDao.queryPermission(qo), 1, 1, 1);
         } else {
-            return new PageResult<>(permissionDao.queryPermission(qo), permissionDao.queryCountPermission(qo), qo.getCurrentPage(), qo.getPageSize());
+            return new PageResult<>(permissionDao.queryPermission(qo), permissionDao.queryCountPermission(qo), qo.getPage(), qo.getPageSize());
         }
     }
 

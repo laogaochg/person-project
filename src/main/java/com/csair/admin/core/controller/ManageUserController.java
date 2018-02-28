@@ -92,7 +92,7 @@ public class ManageUserController {
         titles.add("状态");
         List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
         UserQueryObject qo = new UserQueryObject();
-        qo.setPageSize(-1);
+        qo.setLimit(-1);
         PageResult query = userService.query(qo);
         for (Object o : query.getListData()) {
             User u = (User) o;

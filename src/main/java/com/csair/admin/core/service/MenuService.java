@@ -7,6 +7,8 @@ package com.csair.admin.core.service;
 import java.util.List;
 
 import com.csair.admin.core.po.core.Menu;
+import com.csair.admin.core.po.core.query.MenuQueryObject;
+import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.core.po.core.resp.MenuVo;
 import com.csair.admin.core.po.core.User;
 
@@ -85,4 +87,6 @@ public interface MenuService {
      * @return
      */
     List<Menu> getAllMenu(boolean isTree, boolean getPermission);
+
+    DatagridForLayUI<Menu> pageQueryMenu(MenuQueryObject qo);
 }
