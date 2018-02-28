@@ -1,14 +1,19 @@
 package com.csair.admin.util;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.sql.RowSet;
 
@@ -155,18 +160,33 @@ public class XlsFileUtil {
     }
 
     public static void main(String[] args) throws Exception {
+        File f = new File("D:\\test\\a.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(f));
+        Set<String> set = new HashSet<>();
+        while (reader.ready()) {
+
+            String s = reader.readLine();
+            if (StringUtils.hasText(s)) {
+                set.add(s.trim());
+            }
+        }
+        List<List<String>> listList = parseXlsFile(new FileInputStream(new File("C:\\Users\\lenovo\\Desktop\\jar包升级情况.xls")));
+        for (List<String> list : listList) {
+            if(!set.remove(list.get(0))){
+                System.out.println(list.get(0));
+            }
+        }
+        System.out.println(set);
         List<List<String>> data = new ArrayList<>();
-        List<String> row = new ArrayList<>();
-        row.add("1");
-        row.add("2");
-        row.add("3");
-        row.add("4");
-        data.add(row);
-        data.add(row);
-        data.add(row);
-        createExcel(new File("d:/a12.xls"),data);
+        for (String s : set) {
+            List<String> row = new ArrayList<>();
+            data.add(row);
+            row.add(s);
+        }
+        createExcel(new File("d:/test.xls"), data);
     }
-    public static void createExcel(File file,List<List<String>> data) throws Exception {
+
+    public static void createExcel(File file, List<List<String>> data) throws Exception {
         WritableWorkbook book = Workbook.createWorkbook(file);
         // 生成名为"第一页"的工作表，参数0表示这是第一页
         WritableSheet sheet = book.createSheet("第一页", 0);
