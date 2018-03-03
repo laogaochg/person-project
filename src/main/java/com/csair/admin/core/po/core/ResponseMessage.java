@@ -15,7 +15,7 @@ import lombok.ToString;
 public class ResponseMessage<T> {
     //为服务器自定义的响应码
     private int code = 200;
-    private boolean success;
+    private boolean success ;
 
     //对code的描述，一般对错误的响应码进行描述，方便调用者处理不同种错误情况
     private String msg = "成功";

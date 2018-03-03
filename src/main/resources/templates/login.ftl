@@ -1,7 +1,5 @@
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-
 <head>
 <title>LaySSH开发框架</title>
 	<script type="text/javascript">

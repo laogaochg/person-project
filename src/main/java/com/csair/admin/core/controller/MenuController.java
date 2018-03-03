@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSON;
 import com.csair.admin.config.core.PermissionName;
+import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.util.ServletUtils;
@@ -101,22 +102,28 @@ public class MenuController {
     /**
      * 编辑菜单
      */
-    @RequestMapping(value = "/edit",method=RequestMethod.DELETE)
+    @RequestMapping(value = "/delete")
     @ResponseBody
-    public Menu delete(Menu menu) {
-        return menu;
+    public ResponseMessage<Object> delete(long[] id) {
+        ResponseMessage<Object> result = new ResponseMessage<>();
+        if(id!=null && id.length>0){
+            for (Long l : id) {
+                menuService.deleteMenu(l,ServletUtils.getUser());
+            }
+        }
+        return result;
     }
     /**
      * 编辑菜单
      */
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ModelAndView edit(Menu menu, ModelAndView model, HttpServletRequest request) {
-        String fileUrl = FileUploadUtils.handlerFile(request);
-        menu.setLogoFileName(fileUrl);
+//        String fileUrl = FileUploadUtils.handlerFile(request);
+//        menu.setLogoFileName(fileUrl);
         Subject subject = SecurityUtils.getSubject();
         ReturnMessage msg = new ReturnMessage();
         msg.setToUrl("/menu/list");
-        User user = (User) subject.getSession().getAttribute(ParamConstants.USER_SESSION);
+        User user = ServletUtils.getUser();
         if (null == menu.getMid()) {//新建
             Long id = menuService.addMenu(menu, user);
             if (id != null) {
@@ -140,8 +147,7 @@ public class MenuController {
     /**
      * 删除菜单
      */
-    @RequestMapping("/delete")
-    @PermissionName("删除菜单")
+//    @RequestMapping("/delete")
     public ModelAndView deleteMenu(Long mid, ModelAndView model) {
         Subject subject = SecurityUtils.getSubject();
         ReturnMessage msg = new ReturnMessage();

@@ -41,7 +41,7 @@ public class ServletUtils {
     /**
      * response 输出JSON
      */
-    public static void out(ServletResponse response, Map<String, String> resultMap) {
+    public static void out(ServletResponse response, Map<String, Object> resultMap) {
         PrintWriter out = null;
         try {
             response.setCharacterEncoding("UTF-8");

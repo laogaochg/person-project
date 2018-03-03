@@ -70,7 +70,7 @@ public class PermissionFilter extends AccessControlFilter {
             }
         }
         if (ServletUtils.isAjax(request)) {// ajax请求
-            Map<String, String> resultMap = new HashMap<>();
+            Map<String, Object> resultMap = new HashMap<>();
             resultMap.put("code", "403");
             if (null == subject.getPrincipal()) {
                 resultMap.put("msg", "当前用户没有登录");//当前用户没有登录！

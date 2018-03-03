@@ -152,7 +152,6 @@
                 type: 2,
                 title: '查看',
                 shadeClose: false,//点击遮罩关闭
-                anim: public_anim,
                 btnAlign: 'c',
                 shade: public_shade,//是否有遮罩，可以设置成false
                 maxmin: true, //开启最大化最小化按钮
@@ -185,9 +184,9 @@
                 maxmin: true, //开启最大化最小化按钮
                 area: ['100%', '100%'],
                 boolean: true,
-                content: ['MenuInfoEdit.jsp?obj=' + encodeURIComponent(JSON.stringify(data)), 'yes'], //iframe的url，no代表不显示滚动条
+                content: ['toUrl?url=/Menu/MenuInfoEdit&obj=' + encodeURIComponent(JSON.stringify(data)), 'yes'], //iframe的url，no代表不显示滚动条
                 success: function (layero, lockIndex) {
-                    //alert(JSON.stringify(data));
+//                    alert(JSON.stringify(data));
                     var body = layer.getChildFrame('body', lockIndex);
                     //绑定解锁按钮的点击事件
                     body.find('button#close').on('click', function () {
@@ -216,11 +215,11 @@
                     btn.find('.layui-layer-btn0').on('click', function () {
                         var loadindex = layer.load(1);//开启进度条
                         $.ajax({
-                            url: '${context.contextPath}/menuInf/remove.do',
+                            url: '${context.contextPath}/Menu/delete',
                             data: {
                                 id: ids
                             },
-                            type: 'DELETE',//默认以get提交，以get提交如果是中文后台会出现乱码
+                            type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
                             dataType: 'json',
                             success: function (r) {
                                 layer.close(loadindex);//关闭进程对话框
@@ -300,9 +299,9 @@
                 var ids = '';
                 for (var i = 0; i < data.length; i++) {
                     if (i != (data.length - 1)) {
-                        ids += data[i].id + ",";
+                        ids += data[i].mid + ",";
                     } else {
-                        ids += data[i].id;
+                        ids += data[i].mid;
                     }
                 }
                 openDelete(ids);

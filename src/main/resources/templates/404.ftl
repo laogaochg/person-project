@@ -17,9 +17,9 @@
     <button class="back btn btn-info" style="width: 100px;">返回</button>
 </div>
 <script type="text/javascript">
-    $(".back").click(function () {
-        window.history.back();
-    });
+//    $(".back").click(function () {
+//        window.history.back();
+//    });
 </script>
 <br/>
 </body>
