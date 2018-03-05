@@ -1,14 +1,21 @@
 package com.csair.admin.config.shiro;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.DispatcherType;
 
+import com.alibaba.fastjson.JSON;
 import com.csair.admin.config.shiro.AuthRealm;
 import com.csair.admin.config.shiro.CredentialsMatcher;
 import com.csair.admin.config.shiro.PermissionFilter;
 import com.csair.admin.core.service.UserService;
 import com.csair.admin.util.ServletUtils;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -18,10 +25,13 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.DelegatingFilterProxy;
 
 /**
@@ -96,7 +106,10 @@ public class ShiroConfig {
      * 配置哪些需要认证
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager,UserService userService) {
+    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager,YmlConfig config) {
+        System.out.println("--------------------------------");
+        System.out.println(JSON.toJSONString(config));
+        System.out.println(config.getSimpleProp());
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
 //        //把权限拦截器放进去
@@ -125,7 +138,7 @@ public class ShiroConfig {
         filterChainMap.put("/weixing**", "anon");//微信路径可以匿名
         /** ------故我们用 authc 来校验一些关键操作，比如购买，我们可以采用user校验即可。而支付的时候，我们需要认证的用户，那就需要authc了。----------------------------------------------- */
         filterChainMap.put("/toPay**", "authc");//表示需要认证才可以访问
-        filterChainMap.put("/**", "permissionFilter,user");//表示需要登陆才可以访问
+        filterChainMap.put("/**", "permissionFilter,user");//user表示需要登陆才可以访问
         bean.setFilterChainDefinitionMap(filterChainMap);
         return bean;
     }
