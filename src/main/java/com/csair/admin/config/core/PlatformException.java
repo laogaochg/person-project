@@ -49,7 +49,6 @@ public class PlatformException extends RuntimeException {
      *
      */
     public PlatformException(int code, String mes) {
-        logger.warn("错误代码：  " + code + " 错误信息：" + mes);
         this.code = code;
         this.mes = mes;
     }

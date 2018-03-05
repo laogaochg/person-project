@@ -155,6 +155,7 @@ public class MenuServiceImpl implements MenuService {
         return i;
     }
 
+
     @Override
     public int editMenu(Menu m, User user) {
         logger.info("修改菜单：m" + m + "user:" + user);
@@ -282,19 +283,32 @@ public class MenuServiceImpl implements MenuService {
      */
     private List<Menu> getMenuIds(Long userId) {
         List<String> urls = new ArrayList<>();
+        List<Integer> mids =new ArrayList<>();
         for (Permission p : permissionService.queryPermissionByUserId(userId)) {
             if (StringUtils.hasText(p.getUrl())) {
                 //一个权限可能对应多个URL
                 Collections.addAll(urls, (p.getUrl().split("\\|\\|")));
             }
+            mids.add(p.getId().intValue());
         }
         if (urls.size() == 0) return new ArrayList<>();
         MenuQuery qo = new MenuQuery();
         qo.createCriteria().andUrlIn(urls);
-        List<Menu> result = menuDao.selectByExample(qo);
+        List<Menu> menuList = menuDao.selectByExample(qo);
+        MenuQuery qo1 = new MenuQuery();
+        qo1.createCriteria().andMidIn(mids);
+        menuList.addAll(menuDao.selectByExample(qo1));
         MenuQuery qos = new MenuQuery();
         qos.createCriteria().andUrlIsNull();
-        result.addAll(menuDao.selectByExample(qos));
+        menuList.addAll(menuDao.selectByExample(qos));
+        //-------------去重-------------
+        List<Menu> result = new ArrayList<>();
+        Set<Long> ids = new HashSet<>();
+        for (Menu menu : menuList) {
+            if(ids.add(menu.getMid())){
+                result.add(menu);
+            }
+        }
         return result;
     }
 
