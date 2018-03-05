@@ -6,23 +6,19 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.alibaba.fastjson.JSON;
-import com.csair.admin.config.core.PermissionName;
+import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.StringUtils;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.resp.MenuVo;

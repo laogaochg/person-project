@@ -1,4 +1,4 @@
-package com.csair.admin.config.core;
+package com.csair.admin.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

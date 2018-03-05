@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.csair.admin.config.core.PermissionName;
 import com.csair.admin.core.dao.PermissionDao;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.query.PermissionQuery;

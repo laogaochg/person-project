@@ -1,4 +1,4 @@
-package com.csair.admin.config.core;
+package com.csair.admin.config;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

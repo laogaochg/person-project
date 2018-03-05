@@ -1,4 +1,4 @@
-package com.csair.admin.config.core;
+package com.csair.admin.config;
 
 import com.csair.admin.util.ParamConstants;
 import org.slf4j.Logger;

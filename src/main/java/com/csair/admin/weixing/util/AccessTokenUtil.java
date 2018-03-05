@@ -5,7 +5,7 @@ import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.HttpClientUtils;
 import com.csair.admin.core.po.HttpResultDto;
 import com.csair.admin.util.ParamConstants;
-import com.csair.admin.config.core.PlatformException;
+import com.csair.admin.config.PlatformException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 

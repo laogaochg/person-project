@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.csair.admin.config.core.PlatformException;
+import com.csair.admin.config.PlatformException;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseMessage;

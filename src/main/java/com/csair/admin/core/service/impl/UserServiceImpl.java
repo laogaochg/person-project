@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.csair.admin.config.core.PlatformException;
+import com.csair.admin.config.PlatformException;
 import com.csair.admin.core.dao.UserDao;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseMessage;

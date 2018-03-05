@@ -4,8 +4,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-import com.csair.admin.config.core.PlatformException;
-import com.csair.admin.config.core.SpringRefreshListener;
+import com.csair.admin.config.PlatformException;
+import com.csair.admin.config.SpringRefreshListener;
 
 /**
  * laogaochg

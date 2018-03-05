@@ -7,12 +7,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.csair.admin.core.po.core.Menu;
-import com.csair.admin.core.po.core.OperationLog;
-import com.csair.admin.core.po.core.PageResult;
-import com.csair.admin.core.po.core.query.OperationLogQueryObject;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.OperationLogService;
-import com.csair.admin.config.core.PermissionName;
+import com.csair.admin.config.PermissionName;
 import com.csair.admin.util.LoggerUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -41,7 +38,7 @@ import com.csair.admin.core.service.UserService;
 import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.PasswordUtils;
-import com.csair.admin.config.core.PlatformException;
+import com.csair.admin.config.PlatformException;
 import com.csair.admin.util.ServletUtils;
 
 @Controller
