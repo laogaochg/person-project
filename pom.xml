@@ -204,6 +204,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
+        <!-- ssh2 java远程执行 -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.54</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -217,7 +224,6 @@
                 <configuration>
                     <fork>true</fork>
                 </configuration>
-
             </plugin>
         </plugins>
     </build>
