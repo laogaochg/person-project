@@ -3,6 +3,7 @@ package com.csair.admin.ssh;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.ChannelShell;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
@@ -13,6 +14,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -23,49 +27,49 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class SSHTest {
 
     public static void main(String[] args) throws Exception {
-        SSHDto sshDto = new SSHDto("10.101.173.149", 22, "tomcat", "tomcat+123");
-        String s = sshDto.executeCommand("cd /usr/local/tomcat/apache-tomcat-8.0.50/conf");
-        System.out.println(s);
-        String s1 = sshDto.executeCommand("cat web.xml");
-        System.out.println(s1);
-//        queryLog(channelExec,"tail -50f /usr/local/tomcat/apache-tomcat-8.0.50/logs/catalina.out");
+        //8f,是为了避免判断tomcat启动完成代码的日志出现重复
+        List<String> commands = new ArrayList<>();
+        //等服务器时间可以用命令sleep 5 睡5秒
+        commands.add("/home/mysql/apache-tomcat-7.0.79/bin/shutdown.sh");
+        commands.add("sleep 3");
+        commands.add("/home/mysql/apache-tomcat-7.0.79/bin/startup.sh");
+        commands.add("tail -8f /home/mysql/apache-tomcat-7.0.79/logs/catalina.out");
+        SSHDto sshDto = new SSHDto("192.168.204.128", 22, "mysql", "mysql");
+        startTomcat(commands,sshDto);
     }
 
-
-
-
-
-    public static void queryLog(SSHDto sshDto,String command) throws JSchException {
-        ChannelExec openChannel = sshDto.getOpenChannel();
-        Session sshSession = sshDto.getSession();
-        openChannel.setCommand(command);
-        openChannel.setErrStream(System.err);
-        try {
-            openChannel.connect();
-            InputStream in = openChannel.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String buf;
-            while (((buf = reader.readLine()) != null)) {
-                String temp = new String(buf.getBytes("gbk"), "UTF-8");
-                //添加内容
-                if (StringUtils.isNotBlank(temp)) {
-                    System.out.println(temp);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void startTomcat(List<String> commands,SSHDto sshDto) throws Exception {
+        ChannelShell channel = sshDto.getOpenChannel("");
+        channel.connect();
+        InputStream inputStream = channel.getInputStream();
+        OutputStream outputStream = channel.getOutputStream();
+        for (String command : commands) {
+            outputStream.write((command + " \n\r").getBytes());
         }
-        closeExec(openChannel);
-        closeSession(sshSession);
+        outputStream.flush();
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        String msg;
+        while ((msg = in.readLine()) != null) {
+            System.out.println(msg);
+            checkEnd(msg);
+        }
+        in.close();
     }
 
-    private static void closeSession(Session session) {
-        if ((session != null) && (session.isConnected()))
-            session.disconnect();
+    private static int canExit = 0;
+
+    private static void checkEnd(String msg) {
+        String s0 = "Starting ProtocolHandler [\"http-bio";
+        String s1 = "Starting ProtocolHandler [\"ajp-bio";
+        String s2 = "Server startup in ";
+        if (msg.contains(s0)) canExit++;
+        if (msg.contains(s1)) canExit++;
+        if (msg.contains(s2)) canExit++;
+        if (canExit == 3) {
+            System.out.println("程序判断tomcat成功启动，退出系统");
+            System.exit(1);
+        }
     }
 
-    private static void closeExec(ChannelExec openChannel) {
-        if ((openChannel != null) && (openChannel.isConnected()))
-            openChannel.disconnect();
-    }
+
 }

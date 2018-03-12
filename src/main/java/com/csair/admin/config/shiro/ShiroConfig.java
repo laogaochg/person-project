@@ -1,21 +1,7 @@
 package com.csair.admin.config.shiro;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.DispatcherType;
-
 import com.alibaba.fastjson.JSON;
-import com.csair.admin.config.shiro.AuthRealm;
-import com.csair.admin.config.shiro.CredentialsMatcher;
-import com.csair.admin.config.shiro.PermissionFilter;
-import com.csair.admin.core.service.UserService;
 import com.csair.admin.util.ServletUtils;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -25,14 +11,14 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.DelegatingFilterProxy;
+
+import javax.servlet.DispatcherType;
+import java.util.LinkedHashMap;
 
 /**
  * Shiro配置
@@ -106,10 +92,8 @@ public class ShiroConfig {
      * 配置哪些需要认证
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager,YmlConfig config) {
+    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager manager) {
         System.out.println("--------------------------------");
-        System.out.println(JSON.toJSONString(config));
-        System.out.println(config.getSimpleProp());
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
 //        //把权限拦截器放进去
