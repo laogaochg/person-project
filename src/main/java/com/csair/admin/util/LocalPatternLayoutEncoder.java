@@ -2,6 +2,7 @@ package com.csair.admin.util;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
+import com.csair.admin.config.UserIdConverter;
 
 /**
  * @Author: ZhangQingrong

@@ -1,9 +1,10 @@
-package com.csair.admin.util;
+package com.csair.admin.config;
 
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.csair.admin.util.ParamConstants;
 import org.apache.shiro.SecurityUtils;
 
 import java.lang.reflect.Field;

@@ -27,6 +27,7 @@ public class ServletUtils {
 
     private static MenuService menuService;
     public static EhCacheManager ehCacheManager;
+
     public static String getUserRequestUrl(ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String uri = httpRequest.getRequestURI();//获取URI
@@ -49,7 +50,7 @@ public class ServletUtils {
             out = response.getWriter();
             out.println(JSON.toJSONString(resultMap));
         } catch (Exception e) {
-            LoggerUtils.error(ServletUtils.class,"com.csair.admin.util.ServletUtils.out",e);
+            LoggerUtils.error(ServletUtils.class, "com.csair.admin.util.ServletUtils.out", e);
         } finally {
             if (null != out) {
                 out.flush();
@@ -60,9 +61,6 @@ public class ServletUtils {
 
     /**
      * 是否是Ajax请求
-     *
-     * @param request
-     * @return
      */
     public static boolean isAjax(ServletRequest request) {
         return "XMLHttpRequest".equalsIgnoreCase(((HttpServletRequest) request).getHeader("X-Requested-With"));
@@ -85,11 +83,11 @@ public class ServletUtils {
         User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
         Long userId = user.getId();
         Cache<Object, Object> session_cache = ehCacheManager.getCache("session_cache");
-        String key ="com.csair.admin.util.ServletUtils.queryUserMenu" + userId;
-        List<Menu>menus= (List<Menu>) session_cache.get(key);
-        if(menus==null){
-            menus= menuService.queryUserMenu();
-            session_cache.put(key,menus);
+        String key = "com.csair.admin.util.ServletUtils.queryUserMenu" + userId;
+        List<Menu> menus = (List<Menu>) session_cache.get(key);
+        if (menus == null) {
+            menus = menuService.queryUserMenu();
+            session_cache.put(key, menus);
         }
         return menus;
     }
@@ -118,9 +116,6 @@ public class ServletUtils {
 
     /**
      * 获取操作系统,浏览器及浏览器版本信息
-     *
-     * @param request
-     * @return
      */
     public static String getOsAndBrowserInfo(HttpServletRequest request) {
         String browserDetails = request.getHeader("User-Agent");
@@ -175,17 +170,9 @@ public class ServletUtils {
 
     /**
      * 获取用户真实IP地址，不使用request.getRemoteAddr();的原因是有可能用户使用了代理软件方式避免真实IP地址,
-     * <p>
      * 可是，如果通过了多级反向代理的话，X-Forwarded-For的值并不止一个，而是一串IP值，究竟哪个才是真正的用户端的真实IP呢？
      * 答案是取X-Forwarded-For中第一个非unknown的有效IP字符串。
-     * <p>
-     * 如：X-Forwarded-For：192.168.1.110, 192.168.1.120, 192.168.1.130,
-     * 192.168.1.100
-     * <p>
      * 用户真实IP为： 192.168.1.110
-     *
-     * @param request
-     * @return
      */
     public static String getIpAddress(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");

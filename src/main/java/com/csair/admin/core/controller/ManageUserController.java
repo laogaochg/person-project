@@ -1,6 +1,5 @@
 package com.csair.admin.core.controller;
 
-import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.ReturnMessage;
@@ -48,7 +47,6 @@ public class ManageUserController {
     //编辑用户
     @RequestMapping("/user/editUser")
     @ResponseBody
-    @PermissionName("编辑用户")
     public ResponseMessage<String> editUser(UserVo user) {
         Subject admin = SecurityUtils.getSubject();
         ResponseMessage<String> re = new ResponseMessage<>();
@@ -78,7 +76,6 @@ public class ManageUserController {
 
     //下载用户数据
     @RequestMapping("/user/downloadUser")
-    @PermissionName("下载用户数据")
     public org.springframework.http.ResponseEntity<byte[]> downloadUser(HttpServletResponse response) throws Exception, WriteException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         List<String> titles = new ArrayList<String>();
@@ -115,7 +112,6 @@ public class ManageUserController {
      */
     @RequestMapping("cancelForbidUserLogin")
     @ResponseBody
-    @PermissionName("解禁用户登陆")
     public ResponseMessage<Object> cancelForbidUserLogin(Long id) {
         //前端验证
         ResponseMessage<Object> result = new ResponseMessage<>();
@@ -136,7 +132,6 @@ public class ManageUserController {
      */
     @RequestMapping("forbidUserLogin")
     @ResponseBody
-    @PermissionName("禁止用户登陆")
     public ResponseMessage<Object> forbidUserLogin(Long id) {
         //前端验证
         ResponseMessage<Object> result = new ResponseMessage<>();
@@ -151,7 +146,6 @@ public class ManageUserController {
 
     //返回编辑用户页面roleService
     @RequestMapping("/user/toEditUser")
-    @PermissionName("新建用户")
     public ModelAndView toEditUser(User us, ModelAndView model) {
         model.addObject("roleList", roleService.queryAllRole());
         model.addObject("user", SecurityUtils.getSubject().getSession().getAttribute(ParamConstants.USER_SESSION));
@@ -177,7 +171,6 @@ public class ManageUserController {
 
     //返回用户列表
     @RequestMapping("/user/list")
-    @PermissionName("查询所有用户")
     public ModelAndView queryRole(UserQueryObject qo, ModelAndView model, HttpServletRequest httpRequest) {
         PageResult pageResult = userService.query(qo);
         model.addObject("pageResult", pageResult);

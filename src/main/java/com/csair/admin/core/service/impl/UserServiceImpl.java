@@ -1,20 +1,5 @@
 package com.csair.admin.core.service.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
 import com.csair.admin.config.PlatformException;
 import com.csair.admin.core.dao.UserDao;
 import com.csair.admin.core.po.core.PageResult;
@@ -33,6 +18,19 @@ import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.PasswordUtils;
 import com.csair.admin.util.VerifyCodeUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -119,7 +117,7 @@ public class UserServiceImpl implements UserService {
      */
 
     public User userLogin(String email) {
-        String platFormFlag = EnvironmentParams.PLATFORM_FLAG;
+        String platFormFlag = EnvironmentParams.getParams("PLATFORM_FLAG");
         UserQuery qo = new UserQuery();
         qo.createCriteria().andEmailEqualTo(email).andPlatformFlagEqualTo(platFormFlag);
         List<User> userList = userDao.selectByExample(qo);
@@ -249,7 +247,7 @@ public class UserServiceImpl implements UserService {
         u.setStatus(User.STATUS_VALID);
         u.setRemark(vo.getRemark());
         u.setType(User.PLATFORM);
-        u.setPlatformFlag(EnvironmentParams.PLATFORM_FLAG);
+        u.setPlatformFlag(EnvironmentParams.getParams("PLATFORM_FLAG"));
         userDao.insert(u);
         //设置用户的角色
         if (roleIds != null && roleIds.length > 0) {

@@ -270,38 +270,10 @@ public class PermissionServiceImpl implements PermissionService {
         for (Permission o : ps) {
             //去掉数据库里面一样的
             urlAndMethod.remove(o.getUrl());
-//            Method method = urlAndMethod.get(o.getUrl());
-//            String name = null;
-//            if(method==null) continue;
-//            PermissionName annotation = method.getAnnotation(PermissionName.class);
-//            if (annotation != null) name = annotation.value();
-//            if (!(method.getDeclaringClass().getName().equals(o.getClassName())
-//                    &&
-//                    ((name != null && name.equals(o.getName())) || (name == null && o.getName() == null))
-//            )) {
-//                o.setClassName(method.getDeclaringClass().getName());
-//                o.setName(name);
-//                update.add(o);
-//            }
+            logger.debug("没有权限的url:" + urlAndMethod.keySet().toString());
+            //把没有权限的url放到共享变量
+            PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
         }
-//        for (Permission permission : update) {
-//            permissionDao.updateByPrimaryKey(permission);
-//        }
-//
-//        for (String key : urlAndMethod.keySet()) {
-//            Method method = urlAndMethod.get(key);
-//            Permission p = new Permission();
-//            String name = null;
-//            PermissionName annotation = method.getAnnotation(PermissionName.class);
-//            if (annotation != null) name = annotation.value();
-//            p.setName(name);
-//            p.setUrl(key);
-//            p.setClassName(method.getDeclaringClass().getName());
-//            permissionDao.insert(p);
-//        }
-        logger.debug("没有权限的url:" + urlAndMethod.keySet().toString());
-        //把没有权限的url放到共享变量
-        PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
     }
 
 

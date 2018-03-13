@@ -15,7 +15,7 @@ import com.csair.admin.util.VerifyCodeUtils;
 
 
 @Controller
-public class AuthImage {
+public class AuthImageController {
 
     @RequestMapping("/authImage")
     public void authImage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

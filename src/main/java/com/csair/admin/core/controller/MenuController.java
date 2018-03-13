@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.csair.admin.config.PermissionName;
 import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
@@ -167,7 +166,6 @@ public class MenuController {
      * 添加菜单
      */
     @RequestMapping("/toEdit")
-    @PermissionName("管理菜单")
     public ModelAndView toEdit(Menu menu, Integer flag, ModelAndView model, HttpServletRequest httpRequest) {
         //flag : 1：修改当前菜单 2:添加下级菜单 null:新修菜单
         if (flag == null) {//新建菜单

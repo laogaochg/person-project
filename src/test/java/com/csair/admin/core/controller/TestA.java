@@ -25,7 +25,7 @@ public class TestA {
         button2.setKey("1002");
         button.getButton().add(button1);
         button.getButton().add(button2);
-        String url = EnvironmentParams.CREATE_MENU_URL + AccessTokenUtil.getInstance().getToken();
+        String url;
         url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token="+ AccessTokenUtil.getInstance().getToken();
         System.out.println("url = " + url);
         String content = JSON.toJSONString(button);

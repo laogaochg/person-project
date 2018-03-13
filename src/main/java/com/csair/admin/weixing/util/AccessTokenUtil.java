@@ -57,7 +57,7 @@ public class AccessTokenUtil {
 
     private String processHttpGetToken() {
         lastDate = new Date();
-        String url = EnvironmentParams.GET_TOKEN_URL;
+        String url = EnvironmentParams.getParams("GET_TOKEN_URL");
         HttpResultDto httpResultDto = HttpClientUtils.sendHttpGetMsg(url);
         if (!httpResultDto.getSuccess()) throw new PlatformException(ParamConstants.GET_TOKEN_FAIL);
         Token token = JSON.parseObject(httpResultDto.getResult() + "", Token.class);

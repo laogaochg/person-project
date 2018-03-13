@@ -13,8 +13,8 @@ import java.util.Date;
 /**
  * web 层切面
  */
-//@Component
-//@Aspect
+@Component
+@Aspect
 public class ControllerAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -45,20 +45,5 @@ public class ControllerAspect {
         return result;
     }
 
-    /**
-     * 获取入参日志
-     */
-    private String getLog(Object[] args) {
-        StringBuilder logSb = new StringBuilder("[");
-        for (int i = 0; i < args.length; i++) {
-            Object arg = args[i];
-            logSb.append(arg == null ? null : arg.toString());
-            if (i != args.length - 1) {
-                logSb.append(",");
-            }
-        }
-        logSb.append("]");
-        return logSb.toString();
-    }
 
 }

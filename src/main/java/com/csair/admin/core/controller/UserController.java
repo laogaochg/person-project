@@ -1,16 +1,18 @@
 package com.csair.admin.core.controller;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.csair.admin.config.PlatformException;
 import com.csair.admin.core.po.core.Menu;
+import com.csair.admin.core.po.core.ResponseMessage;
+import com.csair.admin.core.po.core.User;
+import com.csair.admin.core.po.core.query.UserQueryObject;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.OperationLogService;
-import com.csair.admin.config.PermissionName;
+import com.csair.admin.core.service.UserService;
+import com.csair.admin.util.EnvironmentParams;
 import com.csair.admin.util.LoggerUtils;
+import com.csair.admin.util.ParamConstants;
+import com.csair.admin.util.PasswordUtils;
+import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -31,15 +33,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.csair.admin.core.po.core.ResponseMessage;
-import com.csair.admin.core.po.core.User;
-import com.csair.admin.core.po.core.query.UserQueryObject;
-import com.csair.admin.core.service.UserService;
-import com.csair.admin.util.EnvironmentParams;
-import com.csair.admin.util.ParamConstants;
-import com.csair.admin.util.PasswordUtils;
-import com.csair.admin.config.PlatformException;
-import com.csair.admin.util.ServletUtils;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -138,7 +135,6 @@ public class UserController {
     //得到用户权限对应的菜单
     @RequestMapping("/user/getMenus")
     @ResponseBody
-    @PermissionName("修改密码")
     public List<Menu> getMenus() {
         Subject currentUser = SecurityUtils.getSubject();
         User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
@@ -148,7 +144,6 @@ public class UserController {
 
     //去修改密码页面
     @RequestMapping("/changePassword")
-    @PermissionName("修改密码")
     public ModelAndView toChangePassword(UserQueryObject qo, ModelAndView model) {
         model.setViewName("user/changePassword");
         model.addObject("userMenus", menuService.queryUserMenu());
@@ -158,7 +153,6 @@ public class UserController {
     //修改密码
     @RequestMapping("/user/changePassword")
     @ResponseBody
-    @PermissionName("修改密码")
     public ResponseMessage changePassword(String oldPassword, String newPassword, HttpServletRequest request) {
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         ResponseMessage e = new ResponseMessage();
