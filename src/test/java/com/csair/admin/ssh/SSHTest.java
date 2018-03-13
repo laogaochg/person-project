@@ -1,24 +1,15 @@
 package com.csair.admin.ssh;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.ChannelShell;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @Author: LaoGaoChuang
@@ -27,6 +18,16 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class SSHTest {
 
     public static void main(String[] args) throws Exception {
+
+    }
+
+    public static void execute() throws Exception {
+        String cd = "/home/laogaozhg/Public";
+        File file = new File("d:\\a.txt");
+        SSHDto sshDto = new SSHDto("192.168.204.128", "mysql", "mysql");
+        String fileName = file.getName();
+        InputStream inputStream = new FileInputStream(file);
+        sshDto.uploadFile(cd, fileName, inputStream);
         //8f,是为了避免判断tomcat启动完成代码的日志出现重复
         List<String> commands = new ArrayList<>();
         //等服务器时间可以用命令sleep 5 睡5秒
@@ -34,12 +35,11 @@ public class SSHTest {
         commands.add("sleep 3");
         commands.add("/home/mysql/apache-tomcat-7.0.79/bin/startup.sh");
         commands.add("tail -8f /home/mysql/apache-tomcat-7.0.79/logs/catalina.out");
-        SSHDto sshDto = new SSHDto("192.168.204.128", 22, "mysql", "mysql");
-        startTomcat(commands,sshDto);
+        executeCommands(commands, sshDto);
     }
 
-    public static void startTomcat(List<String> commands,SSHDto sshDto) throws Exception {
-        ChannelShell channel = sshDto.getOpenChannel("");
+    public static void executeCommands(List<String> commands, SSHDto sshDto) throws Exception {
+        ChannelShell channel = (ChannelShell) sshDto.openChannel("shell");
         channel.connect();
         InputStream inputStream = channel.getInputStream();
         OutputStream outputStream = channel.getOutputStream();

@@ -1,18 +1,15 @@
 package com.csair.admin.ssh;
 
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.ChannelShell;
+import com.jcraft.jsch.Channel;
+import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Properties;
 
 /**
@@ -21,11 +18,12 @@ import java.util.Properties;
  */
 public class SSHDto {
     private Session session;
+    private Channel channel;
 
-    public SSHDto(String host, int port, String username, String password) throws JSchException {
+    public SSHDto(String host, String username, String password) throws JSchException {
         JSch jsch = new JSch();
-        jsch.getSession(username, host, port);
-        session = jsch.getSession(username, host, port);
+        jsch.getSession(username, host, 22);
+        session = jsch.getSession(username, host, 22);
         session.setPassword(password);
         Properties sshConfig = new Properties();
         sshConfig.put("StrictHostKeyChecking", "no");
@@ -33,72 +31,28 @@ public class SSHDto {
         session.connect();
     }
 
-    public Session getSession() {
-        return session;
+    public void uploadFile(String cd, String fileName, InputStream src) throws Exception {
+        ChannelSftp sftp = (ChannelSftp) this.openChannel("sftp");
+        sftp.connect();
+        sftp.cd(cd);
+        sftp.put(src, fileName);
+        this.closeChannel();
     }
 
-    public void setSession(Session session) {
-        this.session = session;
+    public Channel openChannel(String type) throws JSchException {
+        Channel channel = session.openChannel(type);
+        this.channel = channel;
+        return channel;
     }
 
-    public ChannelShell getOpenChannel(String type) throws JSchException {
-        ChannelShell result =((ChannelShell) session.openChannel("shell"));
-        return result;
-    }
 
-    public ChannelExec getOpenChannel() throws JSchException {
-        ChannelExec result =((ChannelExec) session.openChannel("exec"));
-        result.setErrStream(System.err);
-        return result;
-    }
-
-    public String executeCommand(String command) throws Exception {
-        ChannelExec openChannel = getOpenChannel();
-//        openChannel.setCommand(command);
-
-        OutputStream outputStream = openChannel.getOutputStream();//写入该流的所有数据都将发送到远程端。
-        //使用PrintWriter流的目的就是为了使用println这个方法
-        //好处就是不需要每次手动给字符串加\n
-        PrintWriter printWriter = new PrintWriter(outputStream);
-
-        String cmd = "ls";
-        printWriter.println(cmd);
-        String cmd2 = "cd /home/mysql";
-        printWriter.println(cmd2);
-        String cmd3 = "ls";
-        printWriter.println(cmd3);
-        printWriter.println("exit");//加上个就是为了，结束本次交互
-        printWriter.flush();
-
-
-        StringBuilder sb = new StringBuilder("");
-        try {
-            openChannel.connect();
-            InputStream in = openChannel.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String buf;
-            while ((buf = reader.readLine()) != null) {
-                String str = new String(buf.getBytes("gbk"), "UTF-8");
-                sb.append(str);
-                System.out.println("str = " + str);
-            }
-        } catch (JSchException e) {
-            System.out.println("执行失败");
-            e.printStackTrace();
-            closeExec(openChannel);
-            closeSession();
-        }
-        closeExec(openChannel);
-        return sb.toString();
-    }
-
-    private void closeSession() {
+    public void closeSession() {
         if ((session != null) && (session.isConnected()))
             session.disconnect();
     }
 
-    private void closeExec(ChannelExec openChannel) {
-        if ((openChannel != null) && (openChannel.isConnected()))
-            openChannel.disconnect();
+    public void closeChannel() {
+        if ((channel != null) && (channel.isConnected()))
+            channel.disconnect();
     }
 }
