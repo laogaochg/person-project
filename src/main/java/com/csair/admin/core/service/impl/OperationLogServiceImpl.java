@@ -1,10 +1,13 @@
 package com.csair.admin.core.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import com.csair.admin.core.dao.OperationLogDao;
+import com.csair.admin.core.dao.UserDao;
+import com.csair.admin.core.po.core.User;
 import org.springframework.stereotype.Service;
 
 import com.csair.admin.core.po.core.OperationLog;
@@ -23,11 +26,22 @@ import javax.annotation.Resource;
 public class OperationLogServiceImpl implements OperationLogService {
     @Resource
     private OperationLogDao operationLogDao;
+    @Resource
+    private UserDao userDao;
 
     @Override
     public PageResult<OperationLog> pageQuery(OperationLogQueryObject qo) {
         int totalCount = operationLogDao.pageQueryCount(qo);
         List<OperationLog> listData = operationLogDao.pageQueryList(qo);
+
+        User u =new User();
+        u.setNickname("测试事务回滚操作的用户");
+        String s = new SimpleDateFormat("yyyyMMdd HH:mm ss").format(new Date());
+        u.setEmail(s);
+        u.setPlatformFlag("-------");
+        userDao.insert(u);
+        if(1==1) throw new NullPointerException("数据异常");
+
         return new PageResult<>(listData, totalCount, qo.getPage(), qo.getPageSize());
     }
 

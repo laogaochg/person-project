@@ -77,6 +77,7 @@ public class UserController {
         }
         boolean rememberMe = true;
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+        userService.userLogin(username);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             // 将调用MyShiroRealm.doGetAuthenticationInfo()方法

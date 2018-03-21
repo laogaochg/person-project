@@ -270,7 +270,7 @@ public class PermissionServiceImpl implements PermissionService {
         for (Permission o : ps) {
             //去掉数据库里面一样的
             urlAndMethod.remove(o.getUrl());
-            logger.debug("没有权限的url:" + urlAndMethod.keySet().toString());
+//            logger.debug("没有权限的url:" + urlAndMethod.keySet().toString());
             //把没有权限的url放到共享变量
             PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
         }

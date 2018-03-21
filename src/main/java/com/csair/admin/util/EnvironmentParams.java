@@ -38,9 +38,6 @@ public class EnvironmentParams {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(1);
-    }
 
     public static boolean isTestEnvironment() {
         return "true".equals(property.get("TEST_ENVIRONMENT") + "");

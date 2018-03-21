@@ -23,24 +23,30 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
 public class UserServiceImpl implements UserService {
-    @Resource
+    @Autowired
     private UserDao userDao;
-    @Resource
+    @Autowired
     private RoleService roleService;
-    @Resource
+    @Autowired
     private MenuService menuService;
-    @Resource
+    @Autowired
     private OperationLogService operationLogService;
 
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
@@ -115,7 +121,7 @@ public class UserServiceImpl implements UserService {
      * 查询本平台的后台用户
      * 用户登陆认证
      */
-
+    @Override
     public User userLogin(String email) {
         String platFormFlag = EnvironmentParams.getParams("PLATFORM_FLAG");
         UserQuery qo = new UserQuery();
