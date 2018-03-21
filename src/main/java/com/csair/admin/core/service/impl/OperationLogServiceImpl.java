@@ -34,14 +34,6 @@ public class OperationLogServiceImpl implements OperationLogService {
         int totalCount = operationLogDao.pageQueryCount(qo);
         List<OperationLog> listData = operationLogDao.pageQueryList(qo);
 
-        User u =new User();
-        u.setNickname("测试事务回滚操作的用户");
-        String s = new SimpleDateFormat("yyyyMMdd HH:mm ss").format(new Date());
-        u.setEmail(s);
-        u.setPlatformFlag("-------");
-        userDao.insert(u);
-        if(1==1) throw new NullPointerException("数据异常");
-
         return new PageResult<>(listData, totalCount, qo.getPage(), qo.getPageSize());
     }
 

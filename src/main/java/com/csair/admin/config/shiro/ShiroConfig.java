@@ -32,9 +32,9 @@ public class ShiroConfig {
      * 配置核心安全事务管理器
      */
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(AuthRealm authRealm) {
+    public DefaultWebSecurityManager defaultWebSecurityManager() {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
-        manager.setRealm(authRealm);
+//        manager.setRealm(authRealm);//因为shiro会影响事务，所以放在后面都进行处理
         manager.setCacheManager(cacheManager());
         //注入记住我管理器
         System.err.println("--------------shiro已经加载----------------");
@@ -55,12 +55,12 @@ public class ShiroConfig {
     }
 
     //配置自定义的权限登录器
-    @Bean(name = "authRealm")
-    public AuthRealm authRealm(@Qualifier("credentialsMatcher") CredentialsMatcher matcher) {
+    /*@Bean(name = "authRealm")
+    public AuthRealm authRealm(CredentialsMatcher matcher) {
         AuthRealm authRealm = new AuthRealm();
         authRealm.setCredentialsMatcher(matcher);
         return authRealm;
-    }
+    }*/
 
     //配置自定义的密码比较器
     @Bean(name = "credentialsMatcher")

@@ -7,7 +7,13 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import com.csair.admin.config.shiro.AuthRealm;
+import com.csair.admin.config.shiro.CredentialsMatcher;
+import com.csair.admin.core.service.RoleService;
+import com.csair.admin.core.service.UserService;
+import com.csair.admin.core.service.impl.UserServiceImpl;
 import com.csair.admin.util.SpringContextUtil;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -49,6 +55,15 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
         //配置SpringContextUtil的参数
         logger.info("---------------- spring start complete --------------------");
         SpringContextUtil.applicationContext = event.getApplicationContext();
+        CredentialsMatcher matcher = (CredentialsMatcher) SpringContextUtil.getBean("credentialsMatcher");
+        AuthRealm authRealm = new AuthRealm();
+        authRealm.setCredentialsMatcher(matcher);
+        authRealm.setUserService((UserService) SpringContextUtil.getBean("userServiceImpl"));
+        authRealm.setPermissionService((PermissionService) SpringContextUtil.getBean("permissionServiceImpl"));
+        authRealm.setRoleService((RoleService) SpringContextUtil.getBean("roleServiceImpl"));
+
+        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SpringContextUtil.getBean("securityManager");
+        securityManager.setRealm(authRealm);
     }
 
     private void reloadPermission(ContextRefreshedEvent event) {

@@ -13,12 +13,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ScheduledWork {
-    @Autowired
-    private OperationLogService operationLogService;
+//    @Autowired
+//    private UserService userService;
 
     @Scheduled(cron = "0 */1 * * * ?")//0 */1 * * * ?
     private void updateBanaerCache() {
         System.out.println("-------------定时任务进行-------------------");
-        operationLogService.pageQuery(new OperationLogQueryObject());
+//        operationLogService.pageQuery(new OperationLogQueryObject());
+//        userService.userLogin("alice@test.com");
     }
 }
