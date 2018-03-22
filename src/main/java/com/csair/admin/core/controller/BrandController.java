@@ -6,6 +6,7 @@ import com.csair.admin.core.po.core.ResponseMessage;
 import com.csair.admin.core.po.core.ReturnMessage;
 import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.query.BrandQueryObject;
+import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.core.service.BrandService;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.util.FileUploadUtils;
@@ -37,6 +38,19 @@ public class BrandController {
     private MenuService menuService;
 
     @RequestMapping("/list")
+    @ResponseBody
+    public DatagridForLayUI<Brand> brandList(BrandQueryObject qo) {
+        PageResult<Brand> pageResult = brandService.pageQuery(qo);
+        return new DatagridForLayUI<>(pageResult);
+    }
+    @RequestMapping("/BrandDetails")
+    @ResponseBody
+    public ResponseMessage brandDetails(Long id) {
+        Brand b =  brandService.queryById(id);
+        return new ResponseMessage(b);
+    }
+
+    /*@RequestMapping("/list")
     public String brandList(Model model, BrandQueryObject qo, HttpServletRequest httpRequest) {
         PageResult<Brand> pageResult = brandService.pageQuery(qo);
         model.addAttribute("pageResult", pageResult);
@@ -44,7 +58,7 @@ public class BrandController {
         model.addAttribute("userMenus", ServletUtils.queryUserMenu());
         model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
         return "goodManage/brand/brandList";
-    }
+    }*/
 
 
     @RequestMapping("batchDeleteBrand")
@@ -68,7 +82,7 @@ public class BrandController {
     }
 
     @RequestMapping("/editBrand")
-    public String editBrand(Brand brand, String fileName, Model model) {
+    public String editBrand(Brand brand, Model model) {
         ReturnMessage re = new ReturnMessage();
         model.addAttribute("msg", re);
         //前台数据验证
