@@ -6,26 +6,29 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.core.po.core.Menu;
+import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseMessage;
+import com.csair.admin.core.po.core.ReturnMessage;
+import com.csair.admin.core.po.core.User;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
+import com.csair.admin.core.po.core.resp.MenuVo;
+import com.csair.admin.core.service.MenuService;
+import com.csair.admin.core.service.PermissionService;
+import com.csair.admin.core.service.UserService;
 import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
-import com.csair.admin.core.po.core.Menu;
-import com.csair.admin.core.po.core.resp.MenuVo;
-import com.csair.admin.core.po.core.ReturnMessage;
-import com.csair.admin.core.po.core.User;
-import com.csair.admin.core.service.MenuService;
-import com.csair.admin.core.service.PermissionService;
-import com.csair.admin.core.service.UserService;
 
 /**
  * laogaochg
@@ -78,6 +81,18 @@ public class MenuController {
         return menuService.pageQueryMenu(qo);
     }
 
+    //返回菜单列表
+    @RequestMapping("/menuTree")
+//    @RequiresPermissions("菜单查询")
+    public ModelAndView queryMenu(ModelAndView model) {
+        List<Menu> menusList = menuService.getAllMenu(true,false);
+        model.addObject("menuList",menusList);
+        List<Permission> permissions = new ArrayList<>();
+        model.addObject("permissions",permissions);
+        model.setViewName("Menu/menuTree");
+        return model;
+    }
+
     //返回菜单子列表
     @RequestMapping("/menuChild")
     @ResponseBody
@@ -103,7 +118,7 @@ public class MenuController {
         ResponseMessage<Object> result = new ResponseMessage<>();
         if(id!=null && id.length>0){
             for (Long l : id) {
-                menuService.deleteMenu(l,ServletUtils.getUser());
+                menuService.deleteMenu(l, ServletUtils.getUser());
             }
         }
         return result;
