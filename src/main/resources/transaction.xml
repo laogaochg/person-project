@@ -23,8 +23,6 @@
         </tx:attributes>
     </tx:advice>
     <aop:config>
-        <!--execution(* com.csair.admin.core.controller.*Controller.*(..))-->
-        <!--com.csair.admin.core.service.impl-->
         <aop:pointcut id="allManagerMethod"
                       expression="execution(public * com.csair.admin.core.service.impl.*Impl.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />

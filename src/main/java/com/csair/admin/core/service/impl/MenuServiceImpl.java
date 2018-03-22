@@ -13,6 +13,7 @@ import com.csair.admin.core.po.core.query.MenuQuery;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.util.ParamConstants;
+import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -46,9 +47,9 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public DatagridForLayUI<Menu> pageQueryMenu(MenuQueryObject qo) {
         DatagridForLayUI<Menu> result = new DatagridForLayUI<>();
-        MenuQuery ex= new MenuQuery();
-        if(StringUtils.hasText(qo.getKeyword())){
-            ex.createCriteria().andMnameLike("%"+qo.getKeyword()+"%");
+        MenuQuery ex = new MenuQuery();
+        if (StringUtils.hasText(qo.getKeyword())) {
+            ex.createCriteria().andMnameLike("%" + qo.getKeyword() + "%");
         }
         int i = menuDao.countByExample(ex);
         ex.setLimit(qo.getPageSize());
@@ -79,6 +80,7 @@ public class MenuServiceImpl implements MenuService {
         Collections.reverse(ms);
         return ms;
     }
+
     @Override
     public Menu queryMenuByUrl(String url) {
         MenuQuery ex = new MenuQuery();
@@ -86,7 +88,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> menus = menuDao.selectByExample(ex);
         if (menus.size() > 0) {
             return menus.get(0);
-        }else{
+        } else {
             return null;
         }
     }
@@ -116,20 +118,20 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> menus = getAllMenu(false, false);
         List<MenuVo> vo = new ArrayList<>();
         //选中节点的父id
-        Long id =null;
+        Long id = null;
         for (Menu m : menus) {
             MenuVo v = new MenuVo(m);
             vo.add(v);
-            if(selectId!=null && selectId.equals(m.getMid())){
+            if (selectId != null && selectId.equals(m.getMid())) {
                 v.setChecked(true);
-                id=m.getPid();
+                id = m.getPid();
             }
         }
         //选中节点的父父id
-        Long ppId=null;
+        Long ppId = null;
         for (Menu menu : menus) {
-            if(id!=null && id.equals(menu.getMid())){
-                ppId=menu.getPid();
+            if (id != null && id.equals(menu.getMid())) {
+                ppId = menu.getPid();
             }
         }
         //父节点展开处理
@@ -176,12 +178,12 @@ public class MenuServiceImpl implements MenuService {
         logger.info("添加菜单：m" + m + "user:" + user);
         menuDao.insert(m);
         operationLogService.log(user.getId(), "添加菜单", "菜单id:" + m.getMid() + "；菜单名：" + m.getMname() + "；菜单的url：" + m.getUrl(), user.getLastIp());
-        if(StringUtils.hasText(m.getUrl())){
+        if (StringUtils.hasText(m.getUrl())) {
             Permission p = new Permission();
             p.setName(m.getMname());
             p.setUrl(m.getUrl());
             p.setMid(m.getMid());
-            permissionService.addPermission(p,user);
+            permissionService.addPermission(p, user);
         }
         return m.getMid();
     }
@@ -194,9 +196,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> queryUserMenu(Long userId) {
         if (userId == null) {
-            Subject currentUser = SecurityUtils.getSubject();
-            User user = (User) currentUser.getSession().getAttribute(ParamConstants.USER_SESSION);
-            userId = user.getId();
+            userId = ServletUtils.getUser().getId();
         }
         //已经去重的菜单 权限直接对应的菜单
         List<Menu> permissionMenuIds = getMenuIds(userId);
@@ -210,10 +210,9 @@ public class MenuServiceImpl implements MenuService {
             Menu rootMenu = findRootMenu(m, midMenu, allMenu);
             boolean canAdd = true;
             for (Menu rm : rootMenus) {
-                if (
-                        rootMenu != null
-                                && rm.getMid() != null
-                                && rm.getMid().equals(rootMenu.getMid())) {
+                if (rootMenu != null
+                        && rm.getMid() != null
+                        && rm.getMid().equals(rootMenu.getMid())) {
                     canAdd = false;
                 }
             }
@@ -283,7 +282,7 @@ public class MenuServiceImpl implements MenuService {
      */
     private List<Menu> getMenuIds(Long userId) {
         List<String> urls = new ArrayList<>();
-        List<Integer> mids =new ArrayList<>();
+        List<Integer> mids = new ArrayList<>();
         for (Permission p : permissionService.queryPermissionByUserId(userId)) {
             if (StringUtils.hasText(p.getUrl())) {
                 //一个权限可能对应多个URL
@@ -305,7 +304,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> result = new ArrayList<>();
         Set<Long> ids = new HashSet<>();
         for (Menu menu : menuList) {
-            if(ids.add(menu.getMid())){
+            if (ids.add(menu.getMid())) {
                 result.add(menu);
             }
         }

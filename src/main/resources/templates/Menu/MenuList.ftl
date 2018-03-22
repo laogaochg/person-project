@@ -22,12 +22,12 @@
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
             <div class="layui-btn-group">
+                <button class="layui-btn" onclick="window.location.href='Menu/menuTree'">菜单树</button>
                 <button class="layui-btn" data-type="btnAdd">新增</button>
                 <button class="layui-btn layui-btn-danger" data-type="btnDelAll">批量删除</button>
             </div>
         </div>
         <div class="layui-tab-item">
-        <#--<#include "../MenuInfoSearch.jsp"/>-->
         </div>
     </div>
 </div>
@@ -324,8 +324,6 @@
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-
-
 </script>
 </body>
 </html>

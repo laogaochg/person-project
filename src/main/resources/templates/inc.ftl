@@ -28,3 +28,7 @@
     bottom:0;
 }
 </style>
+<script type="text/javascript">
+    // 配置参数
+    var contextPath = '${context.contextPath}';
+</script>

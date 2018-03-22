@@ -14,7 +14,7 @@
 </h4>
 <div style="text-align: center;">
     <img style="" width="300px" src="${context.contextPath}/image/a.jpg"><br/>
-    <button class="back btn btn-info" style="width: 100px;">返回</button>
+    <button class="btn btn-info" onclick="window.history.back()" style="width: 100px;">返回</button>
 </div>
 <script type="text/javascript">
 //    $(".back").click(function () {
