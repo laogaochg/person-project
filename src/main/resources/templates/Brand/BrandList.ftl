@@ -22,7 +22,7 @@
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
             <div class="layui-btn-group">
-                <button class="layui-btn" data-type="btnAdd">新增</button>
+                <button class="layui-btn" onclick="openUpdate()">新增</button>
                 <button class="layui-btn layui-btn-danger" data-type="btnDelAll">批量删除</button>
             </div>
         </div>
@@ -32,6 +32,15 @@
 </div>
 <table class="layui-hide" id="table" lay-filter="table"></table>
 <script>
+    //修改按钮
+    function openUpdate(data) {
+        if (data) {
+            gotoUrl('/Brand/BrandEdit&id=' + data.brandId);
+        } else {
+            gotoUrl('/Brand/BrandEdit');
+        }
+    }
+
     layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function () {
         var layer = layui.layer; //弹层
         var laydate = layui.laydate; //日期
@@ -82,7 +91,7 @@
                     field: 'brandWebsite',
                     title: '品牌官网地址',
                     align: 'center',
-                    width: '400'
+                    width: '200'
                 },
                 {
                     field: 'status',
@@ -132,7 +141,7 @@
             } else if (layEvent === 'update') {
                 openUpdate(data);
             } else if (layEvent === 'del') {
-                openDelete(data.mid);
+                openDelete("ids="+data.brandId);
             }
         });
 
@@ -192,33 +201,6 @@
             });
         }
 
-        //修改按钮
-        function openUpdate(data) {
-            layer.open({
-                type: 2,
-                title: '修改',
-                shadeClose: false,//点击遮罩关闭
-                anim: public_anim,
-                btnAlign: 'c',
-                shade: public_shade,//是否有遮罩，可以设置成false
-                maxmin: true, //开启最大化最小化按钮
-                area: ['100%', '100%'],
-                boolean: true,
-                content: ['toUrl?url=/Brand/BrandEdit&obj=' + encodeURIComponent(JSON.stringify(data)), 'yes'], //iframe的url，no代表不显示滚动条
-                success: function (layero, lockIndex) {
-//                    alert(JSON.stringify(data));
-                    var body = layer.getChildFrame('body', lockIndex);
-                    //绑定解锁按钮的点击事件
-                    body.find('button#close').on('click', function () {
-                        layer.close(lockIndex);
-                        location.reload();//刷新
-                    });
-                    pubUtil.load(body, data);//填充表单
-                    //body.find("select,:radio,:checkbox").attr("disabled", "disabled");
-                }
-            });
-        }
-
         //删除按钮
         function openDelete(ids) {
             layer.open({
@@ -235,12 +217,8 @@
                     btn.find('.layui-layer-btn0').on('click', function () {
                         var loadindex = layer.load(1);//开启进度条
                         $.ajax({
-                            url: '${context.contextPath}/Menu/delete',
-                            data: {
-                                id: ids
-                            },
-                            type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
-                            dataType: 'json',
+                            url: contextPath+'/brand/delete?'+ids,
+                            type: 'DELETE',//默认以get提交，以get提交如果是中文后台会出现乱码
                             success: function (r) {
                                 layer.close(loadindex);//关闭进程对话框
                                 if (r.success) {
@@ -318,10 +296,10 @@
                 }
                 var ids = '';
                 for (var i = 0; i < data.length; i++) {
-                    if (i != (data.length - 1)) {
-                        ids += data[i].mid + ",";
+                    if (i != 0) {
+                        ids += "&ids="+data[i].brandId ;
                     } else {
-                        ids += data[i].mid;
+                        ids += "ids="+data[i].brandId;
                     }
                 }
                 openDelete(ids);
@@ -355,6 +333,6 @@
     }}
 </script>
 <script type="text/html" id="logo">
-<img src="{{d.brandLogo}}" >
+    <img src="{{d.brandLogo}}">
 </script>
 </html>

@@ -288,7 +288,7 @@ public class MenuServiceImpl implements MenuService {
                 //一个权限可能对应多个URL
                 Collections.addAll(urls, (p.getUrl().split("\\|\\|")));
             }
-            mids.add(p.getId().intValue());
+            if(p.getMid()!=null) mids.add(p.getMid().intValue());
         }
         if (urls.size() == 0) return new ArrayList<>();
         MenuQuery qo = new MenuQuery();

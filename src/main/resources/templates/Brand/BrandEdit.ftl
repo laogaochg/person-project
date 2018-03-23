@@ -50,13 +50,16 @@
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">LOGO</label>
+        <input type="hidden" name="brandLogo" value="2" >
         <div class="layui-input-block">
             <img id="BrandLogo" src="brandLogo">
         </div>
     </div>
-    <div class="layui-form-item">
-        <div class="" style="width: 95%;height: 400px" id="container">
-
+    <div style="width: 95%;height: 400px">
+        <div class="">
+            <!-- 加载编辑器的容器 -->
+            <script id="container" name="brandDesc" type="text/plain">
+            </script>
         </div>
     </div>
 
@@ -64,91 +67,96 @@
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="btnSubmit">立即提交</button>
-            <button class="layui-btn layui-btn-primary" id="close">关闭</button>
+            <button class="layui-btn" type="button" onclick="gotoUrl('/Brand/BrandList')">关闭</button>
         </div>
     </div>
 </form>
-<script>
+<script src="${context.contextPath}/plugins/ueditor/ueditor.config.js"></script>
+<script src="${context.contextPath}/plugins/ueditor/ueditor.all.js"></script>
+<style>
+    .edui-default {
+        height: 300px;
+        display: inline-block;
+    }
+</style>
+<script type="application/javascript">
     //获取传参
-    var data = JSON.parse(decodeURIComponent(getRequestParam().obj));
-    //请求得到编辑东西的详情，渲染页面
-    $.ajax({
-        url: '${context.contextPath}/brand/BrandDetails?id='+data.brandId,
-        type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
-        success: function (obj) {
-            console.log(obj);
-            if (obj.success) {
-                $('#BrandLogo').attr("src",contextPath+ obj.data.brandLogo);
-            } else {
-                pubUtil.msg(obj.msg, layer, 2, function () {
-                }, 5 * 1000);
-            }
-        }
-    });
-
-    layui.use(['form', 'layedit', 'laydate', 'jquery'], function () {
+    var data = {};
+    var params = getRequestParam();
+    console.log(params);
+    if (params && params.id) {
+        data.brandId = params.id;
+    }
+    var ue;
+    layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form;
-
-        //监听提交
-        form.on('submit(btnSubmit)', function (data) {
-            var index = layer.load(1);//开启进度条
+        //请求得到编辑东西的详情
+        if (data.brandId) {
             $.ajax({
-                url: '${context.contextPath}/menuInf/modify.do',
-                data: data.field,
+                url: contextPath + '/brand/BrandDetails?brandId=' + data.brandId,
                 type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
-                dataType: 'json',
                 success: function (obj) {
-                    layer.close(index);//关闭
                     if (obj.success) {
-                        pubUtil.msg(obj.msg, layer, 1, function () {
-                            $("#close").click();
-                        }, 500);
+                        data = obj.data;
+                        pubUtil.load($("[name=form]"), data);//填充表单
+                        $('#BrandLogo').attr("src", data.brandLogo);
+                        $("#container").text(data.brandDesc);
+                        ue = UE.getEditor('container', {
+                            autoHeightEnabled: false,
+                            autoFloatEnabled: false
+                        });
                     } else {
                         pubUtil.msg(obj.msg, layer, 2, function () {
-
                         }, 5 * 1000);
                     }
+                }
+            });
+        } else {
+            ue = UE.getEditor('container', {
+                autoHeightEnabled: false,
+                autoFloatEnabled: false
+            });
+        }
+        //监听提交
+        form.on('submit(btnSubmit)', function (data) {
+            var bar = layer.load(1);//开启进度条
+            layer.open({
+                title: '提示'
+                , content: '确定要执行操作?'
+                , btn: ['确定', '取消']
+                , btnAlign: 'c' //按钮居中
+                , shade: 0 //不显示遮罩
+                , yes: function (c) {
+                    layer.close(c);
+                    $.ajax({
+                        url: contextPath + '/brand/editBrand',
+                        data: data.field,
+                        type: 'POST',
+                        success: function (obj) {
+                            layer.close(bar);//关闭进度条
+                            if (obj.success) {
+                                $("#close").click();
+                                layer.open({
+                                    content: obj.msg,
+                                    yes: function () {
+                                        gotoUrl("/Brand/BrandList");
+                                    }
+                                });
+                            } else {
+                                pubUtil.msg(obj.msg, layer, 3, function () {
+                                }, 3 * 1000);
+                            }
+                        }
+                    });
+                }
+                , btn2: function () {
+                    layer.close(bar);//关闭进度条
                 }
             });
             return false;
         });
     });
 
-    //按钮的点击事件
-    $('button#treeSelect').on('click', function () {
-        parent.layer.open({
-            type: 2,
-            title: '选择<span style="color:red">[请单击选中]</span>',
-            shadeClose: false,//点击遮罩关闭
-            anim: public_anim,
-            btnAlign: 'c',
-            shade: public_shade,//是否有遮罩，可以设置成false
-            maxmin: true, //开启最大化最小化按钮
-            area: ['600px', '300px'],
-            //area: ['100%', '100%'],
-            boolean: true,
-            content: ['MenuInfoTree.jsp', 'yes'], //iframe的url，no代表不显示滚动条
-            btn: ['选择', '关闭']
-            , yes: function (index, layero) {
-                var body = $(layero).find("iframe")[0].contentWindow.document;
-                var pid = body.getElementById("id").value;
-                var pidNm = body.getElementById("name").value;
-                $("#pidNm").val(pidNm);
-                $("#pid").val(pid);
-                parent.layer.close(index); //关闭当前弹层
-            }
-            , btn2: function (index, layero) {
-
-            }
-        });
-    });
-
-
-</script>
-<script src="${context.contextPath}/plugins/ueditor/ueditor.config.js"></script>
-<script src="${context.contextPath}/plugins/ueditor/ueditor.all.js"></script>
-<script>
-    var ue = UE.getEditor('container');
 </script>
 </body>
 </html>

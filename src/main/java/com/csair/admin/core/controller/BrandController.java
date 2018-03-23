@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +35,6 @@ public class BrandController {
 
     @Resource
     private BrandService brandService;
-    @Resource
-    private MenuService menuService;
 
     @RequestMapping("/list")
     @ResponseBody
@@ -45,8 +44,9 @@ public class BrandController {
     }
     @RequestMapping("/BrandDetails")
     @ResponseBody
-    public ResponseMessage brandDetails(Long id) {
-        Brand b =  brandService.queryById(id);
+    public ResponseMessage brandDetails(Brand brand) {
+        Brand b =  brandService.queryById(brand.getBrandId());
+        b.setBrandDesc(HtmlUtils.htmlUnescape(b.getBrandDesc()));
         return new ResponseMessage(b);
     }
 
@@ -61,7 +61,7 @@ public class BrandController {
     }*/
 
 
-    @RequestMapping("batchDeleteBrand")
+    @RequestMapping("delete")
     @ResponseBody
     public ResponseMessage batchDeleteBrand(Long[] ids) {
         if (ids == null || ids.length == 0) {
@@ -82,21 +82,20 @@ public class BrandController {
     }
 
     @RequestMapping("/editBrand")
-    public String editBrand(Brand brand, Model model) {
-        ReturnMessage re = new ReturnMessage();
+    @ResponseBody
+    public ResponseMessage editBrand(Brand brand, Model model) {
+        ResponseMessage re = new ResponseMessage();
         model.addAttribute("msg", re);
         //前台数据验证
         if (!StringUtils.hasText(brand.getBrandName())) {
-            re.setCode(ParamConstants.ERROR_PARAM + "");
-            re.setMes("品牌名字不能为空。");
-            re.setToUrl("/brand/toEditBrand");
-            return "common/updataMsg";
+            re.setCode(ParamConstants.ERROR_PARAM );
+            re.setMsg("品牌名字不能为空。");
+            return re;
         }
         if (!StringUtils.hasText(brand.getBrandLogo())) {
-            re.setCode(ParamConstants.ERROR_PARAM + "");
-            re.setMes("品牌logo不能少。");
-            re.setToUrl("/brand/toEditBrand");
-            return "common/updataMsg";
+            re.setCode(ParamConstants.ERROR_PARAM );
+            re.setMsg("品牌logo不能少。");
+            return re;
         }
         if (brand.getBrandOrder() == null) brand.setBrandOrder(1);
         //保存压缩图片
@@ -105,12 +104,11 @@ public class BrandController {
         User user = ServletUtils.getUser();
         brandService.editBrand(brand, user);
         if (brand.getBrandId() == null) {
-            re.setMes("添加成功。");
+            re.setMsg("添加成功。");
         } else {
-            re.setMes("修改成功。");
+            re.setMsg("修改成功。");
         }
-        re.setToUrl("/brand/list");
-        return "common/updataMsg";
+        return re;
     }
 
 }
