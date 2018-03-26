@@ -68,7 +68,7 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
 
     private void reloadPermission(ContextRefreshedEvent event) {
         if (event.getApplicationContext() instanceof WebApplicationContext) {
-            Map<String, Method> patternMap = new HashMap<String, Method>();
+            /*Map<String, Method> patternMap = new HashMap<String, Method>();
             WebApplicationContext wc = (WebApplicationContext) event.getApplicationContext();
             //扫描所以的RequestMapping对应的方法；
             Map<String, HandlerMapping> requestMappings = BeanFactoryUtils.beansOfTypeIncludingAncestors(wc, HandlerMapping.class, true, false);
@@ -87,8 +87,8 @@ public class SpringRefreshListener implements ApplicationListener<ContextRefresh
                         }
                     }
                 }
-            }
-            permissionService.reloadPermission(patternMap);
+            }*/
+            permissionService.reloadPermission();
         }
     }
 }

@@ -89,4 +89,6 @@ public interface MenuService {
     List<Menu> getAllMenu(boolean isTree, boolean getPermission);
 
     DatagridForLayUI<Menu> pageQueryMenu(MenuQueryObject qo);
+
+    Menu queryById(Long mid);
 }

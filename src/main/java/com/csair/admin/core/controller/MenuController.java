@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseMessage;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
+import org.springframework.web.util.HtmlUtils;
 
 /**
  * laogaochg
@@ -55,7 +57,7 @@ public class MenuController {
         if ("/".equals(basePath)) {
             basePath = "";
         }
-        basePath = basePath+"/toUrl?url=";
+        basePath = basePath + "/toUrl?url=";
         //三层菜单算数
         for (Menu root : menus) {
             MenuVo rootVo = new MenuVo(root);
@@ -74,6 +76,7 @@ public class MenuController {
         }
         return result;
     }
+
     //返回菜单列表
     @RequestMapping("list")
     @ResponseBody
@@ -83,12 +86,11 @@ public class MenuController {
 
     //返回菜单列表
     @RequestMapping("/menuTree")
-//    @RequiresPermissions("菜单查询")
     public ModelAndView queryMenu(ModelAndView model) {
-        List<Menu> menusList = menuService.getAllMenu(true,false);
-        model.addObject("menuList",menusList);
+        List<Menu> menusList = menuService.getAllMenu(true, false);
+        model.addObject("menuList", menusList);
         List<Permission> permissions = new ArrayList<>();
-        model.addObject("permissions",permissions);
+        model.addObject("permissions", permissions);
         model.setViewName("Menu/menuTree");
         return model;
     }
@@ -112,47 +114,51 @@ public class MenuController {
     /**
      * 编辑菜单
      */
-    @RequestMapping(value = "/delete")
+    @RequestMapping(value = "/edit", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseMessage<Object> delete(long[] id) {
+    public ResponseMessage<Object> delete(Menu menu) {
         ResponseMessage<Object> result = new ResponseMessage<>();
-        if(id!=null && id.length>0){
-            for (Long l : id) {
-                menuService.deleteMenu(l, ServletUtils.getUser());
-            }
+        int i = menuService.deleteMenu(menu.getMid(), ServletUtils.getUser());
+        if (i != 0) {
+            result.setMsg("删除成功");
+        } else {
+            result.setMsg("删除失败");
         }
         return result;
     }
+
     /**
      * 编辑菜单
      */
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public ModelAndView edit(Menu menu, ModelAndView model, HttpServletRequest request) {
-//        String fileUrl = FileUploadUtils.handlerFile(request);
-//        menu.setLogoFileName(fileUrl);
-        Subject subject = SecurityUtils.getSubject();
-        ReturnMessage msg = new ReturnMessage();
-        msg.setToUrl("/menu/list");
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage<Object> edit(Menu menu) {
+        ResponseMessage<Object> msg = new ResponseMessage<>(null);
         User user = ServletUtils.getUser();
         if (null == menu.getMid()) {//新建
             Long id = menuService.addMenu(menu, user);
             if (id != null) {
-                msg.setMes("添加成功。");
+                msg.setMsg("添加成功。");
             } else {
-                msg.setMes("添加失败。");
+                msg.setMsg("添加失败。");
             }
         } else {//修改
             int i = menuService.editMenu(menu, user);
             if (i != 0) {
-                msg.setMes("修改成功。");
+                msg.setMsg("修改成功。");
+            } else {
+                msg.setMsg("修改失败。");
             }
         }
-        user.setMenus(menuService.queryUserMenu(user.getId()));
-        model.addObject("msg", msg);
-        model.setViewName("common/updataMsg");
-        return model;
+        return msg;
     }
 
+    @RequestMapping("/MenuDetails")
+    @ResponseBody
+    public ResponseMessage<Menu> brandDetails(Menu m) {
+        Menu b = menuService.queryById(m.getMid());
+        return new ResponseMessage(b);
+    }
 
     /**
      * 删除菜单

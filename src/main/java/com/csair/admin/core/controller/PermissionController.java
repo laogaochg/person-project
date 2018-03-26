@@ -103,7 +103,7 @@ public class PermissionController {
         ResponseMessage re = new ResponseMessage();
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (l.getId() == null) {
-//            Long menusList = permissionService.addPermission(l,u);
+            permissionService.addPermission(l,u);
             re.setMsg("添加成功。");
         } else {
             permissionService.updatePermissionByPid(l, u);

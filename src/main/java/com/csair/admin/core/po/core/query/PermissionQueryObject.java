@@ -1,13 +1,22 @@
 package com.csair.admin.core.po.core.query;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 权限查询参数封装
  */
+@Setter
+@Getter
 public class PermissionQueryObject extends QueryObject {
     /**
      * 查询角色下的权限
      */
     private Long roleId;
+    /**
+     * 菜单id
+     */
+    private Long mid;
     /**
      * 查询名字是**的权限
      */
@@ -17,28 +26,5 @@ public class PermissionQueryObject extends QueryObject {
      */
     private String type;
 
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
 }

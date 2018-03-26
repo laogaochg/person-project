@@ -1,5 +1,6 @@
 package com.csair.admin.core.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.csair.admin.config.PlatformException;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.ResponseMessage;
@@ -120,7 +121,11 @@ public class UserController {
 
 
     @RequestMapping(value = "/toUrl")
-    public String toUrl(String url) {
+    public String toUrl(Model model,String url, HttpServletRequest request) {
+        if("/Menu/menuTree".equals(url)){
+            return "redirect:/Menu/menuTree";
+        }
+        model.addAttribute("params", JSON.toJSONString(request.getParameterMap()));
         return url;
     }
 

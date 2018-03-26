@@ -51,8 +51,8 @@
         //绑定table
         table.render({
             elem: '#table',//table id
-            url: '${context.contextPath}/roleInf/datagrid.do',
-            method: 'POST', //方式
+            url: '${context.contextPath}/RoleManage/role',
+            method: 'GET', //方式
             page: true,//是否开启分页
             limits: [10, 20, 30, 60, 90, 100],
             limit: 20, //默认采用20
@@ -71,26 +71,21 @@
                     checkbox: true
                 },
                 {
-                    field: 'roleNm',
+                    field: 'name',
                     title: '角色名称',
                     align: 'center',
                     width: '200'
                 },
                 {
-                    field: 'write_oper_cd',
-                    title: '创建人',
-                    align: 'center',
-                    width: '200'
-                }, {
-                    field: 'operInsCdNm',
-                    title: '所属机构',
+                    field: 'type',
+                    title: '角色类型',
                     align: 'center',
                     width: '200'
                 }, {
                     field: 'remark',
                     title: '备注',
                     align: 'center',
-                    width: '300'
+                    width: '200'
                 }, {
                     fixed: 'right',
                     title: '操作',
@@ -109,7 +104,7 @@
             } else if (layEvent === 'update') {
                 openUpdate(data);
             } else if (layEvent === 'del') {
-                openDelete(data.roleCd);
+                openDelete(data.id);
             }
         });
 
@@ -227,11 +222,8 @@
                     btn.find('.layui-layer-btn0').on('click', function () {
                         var loadindex = layer.load(1);//开启进度条
                         $.ajax({
-                            url: '${context.contextPath}/roleInf/remove.do',
-                            data: {
-                                roleCd: ids
-                            },
-                            type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+                            url: '${context.contextPath}/RoleManage/role?id='+ids,
+                            type: 'DELETE',
                             dataType: 'json',
                             success: function (r) {
                                 layer.close(loadindex);//关闭进程对话框

@@ -23,7 +23,7 @@ public interface RoleService {
      * @param user
      * @return
      */
-    Map<String, Object> deleteRole(Long roleId, User user);
+    int deleteRole(Long roleId, User user);
 
 
     /**

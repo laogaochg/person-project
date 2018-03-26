@@ -1,8 +1,12 @@
 package com.csair.admin.core.po.core;
 
+import com.alibaba.fastjson.JSON;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Menu implements Serializable {
     /**
@@ -53,7 +57,6 @@ public class Menu implements Serializable {
      * 菜单下的权限
      */
     private List<Permission> permissionList = new ArrayList<Permission>(0);
-
     public Byte getType() {
         return type;
     }

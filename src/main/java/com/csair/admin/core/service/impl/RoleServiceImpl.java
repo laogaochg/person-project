@@ -80,16 +80,11 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public Map<String, Object> deleteRole(Long roleId, User user) {
+    public int deleteRole(Long roleId, User user) {
         Map<String, Object> map = new HashMap<String, Object>();
         logger.debug(user + "deleteRole ; and roleId = " + roleId);
         int i = roleDao.deleteByPrimaryKey(roleId);
-        if (i == 0) {
-            map.put("mes", "删除失败");
-        } else {
-            map.put("mes", "删除成功");
-        }
-        return map;
+        return i;
     }
 
     @Override

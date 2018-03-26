@@ -22,9 +22,9 @@ public interface PermissionService {
     /**
      * 重新加载controller方法里面的权限
      *
-     * @param urlAndMethod 所有RequestMapping对应的URL和它对应的方法
+     *  urlAndMethod 所有RequestMapping对应的URL和它对应的方法
      */
-    int reloadPermission(Map<String, Method> urlAndMethod);
+    int reloadPermission();
 
     /**
      * 查询所有权限

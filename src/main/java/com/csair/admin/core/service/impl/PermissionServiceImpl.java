@@ -255,62 +255,37 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public int reloadPermission(Map<String, Method> urlAndMethod) {
+    public int reloadPermission() {
         //给共享变量赋值
-        updatePermissionMap(urlAndMethod);
+        updatePermissionMap();
         //维护超级管理员权限
         return addAdminPermission();
     }
 
-    private void updatePermissionMap(Map<String, Method> urlAndMethod) {
+    private void updatePermissionMap() {
         //把多余的去掉;去掉404和项目外的
-        removeUnnecessary(urlAndMethod);
         List<Permission> ps = findAllPermission();
-        List<Permission> update = new ArrayList<>();
-        for (Permission o : ps) {
-            //去掉数据库里面一样的
-            urlAndMethod.remove(o.getUrl());
-//            logger.debug("没有权限的url:" + urlAndMethod.keySet().toString());
-            //把没有权限的url放到共享变量
-            PermissionServiceImpl.noPermissionRequestMapping.putAll(urlAndMethod);
-        }
-    }
-
-
-    /**
-     * 把多余的去掉
-     */
-    private void removeUnnecessary(Map<String, Method> urlAndMethod) {
-        List<String> removeUrl = new ArrayList<>();
-        for (String url : urlAndMethod.keySet()) {
-            if (url.contains("{")//
-                    || url.contains(".json")//
-                    || url.contains("404")//
-                    || url.contains("login")//
-                    || url.contains("logout")//
-                    || url.contains("index")//
-                    || url.contains("test")//
-                    || url.contains("Exception")//
-                    || url.contains("exception")//
-                    || "/health".equals(url)//健康检查不算
-                    || "/beans".equals(url)//
-                    || "/trace".equals(url)//
-                    || "/error".equals(url)//错误页面不算
-                    || "/autoconfig".equals(url)) {
-                removeUrl.add(url);
-            }
-            Method m = urlAndMethod.get(url);
-            if (m != null) {
-                //如果不是本项目包里面的
-                if (!(m.getDeclaringClass()).toString().startsWith("class com.csair")) {
-                    removeUrl.add(url);
+        List<Menu> allMenu = menuService.getAllMenu(false, false);
+        for (Menu menu : allMenu) {
+            boolean had = false;
+            for (Permission p : ps) {
+                if (menu.getMid().equals(p.getMid())) {
+                    had = true;
+                    break;
                 }
             }
-        }
-        for (String s : removeUrl) {
-            urlAndMethod.remove(s);
+            if (!had ) {
+                Permission p = new Permission();
+                p.setMid(menu.getMid());
+                p.setName(menu.getMname());
+                p.setUrl(menu.getUrl());
+                User u = new User();
+                u.setId(-1L);
+                addPermission(p, u);
+            }
         }
     }
+
 
     @Override
     public PageResult<Permission> query(PermissionQueryObject qo) {

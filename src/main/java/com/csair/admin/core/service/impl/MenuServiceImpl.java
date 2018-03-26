@@ -11,6 +11,7 @@ import com.csair.admin.core.dao.MenuDao;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.query.MenuQuery;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
+import com.csair.admin.core.po.core.query.PermissionQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.ServletUtils;
@@ -43,6 +44,16 @@ public class MenuServiceImpl implements MenuService {
     private PermissionService permissionService;
     @Resource
     private OperationLogService operationLogService;
+
+    @Override
+    public Menu queryById(Long mid) {
+        Menu result = menuDao.selectByPrimaryKey(mid);
+        PermissionQueryObject qo = new PermissionQueryObject();
+        qo.setLimit(-1);
+        qo.setMid(mid);
+        result.setPermissionList(permissionService.query(qo).getListData());
+        return result;
+    }
 
     @Override
     public DatagridForLayUI<Menu> pageQueryMenu(MenuQueryObject qo) {
@@ -203,7 +214,9 @@ public class MenuServiceImpl implements MenuService {
         //记录根菜单
         List<Menu> rootMenus = new ArrayList<Menu>();
         Set<Long> midMenu = new HashSet<Long>();
-        List<Menu> allMenu = menuDao.selectByExample(new MenuQuery());
+        MenuQuery qo = new MenuQuery();
+        qo.createCriteria().andStateEqualTo(new Byte("1"));//不找隐藏的
+        List<Menu> allMenu = menuDao.selectByExample(qo);
         //每一个菜单都找到自己的根菜单；并把找过程的中间菜单记录下来
         for (Menu m : permissionMenuIds) {
             //找到根菜单，并给中间菜单集合添加内容
@@ -278,29 +291,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     /**
-     * 根据权限的url找到对应的菜单和没有url的菜单
+     * 根据权限找菜单
      */
     private List<Menu> getMenuIds(Long userId) {
-        List<String> urls = new ArrayList<>();
         List<Integer> mids = new ArrayList<>();
         for (Permission p : permissionService.queryPermissionByUserId(userId)) {
-            if (StringUtils.hasText(p.getUrl())) {
-                //一个权限可能对应多个URL
-                Collections.addAll(urls, (p.getUrl().split("\\|\\|")));
-            }
-            if(p.getMid()!=null) mids.add(p.getMid().intValue());
+            if (p.getMid() != null) mids.add(p.getMid().intValue());
         }
-        if (urls.size() == 0) return new ArrayList<>();
-        MenuQuery qo = new MenuQuery();
-        qo.createCriteria().andUrlIn(urls);
-        List<Menu> menuList = menuDao.selectByExample(qo);
+        List<Menu> menuList = new ArrayList<>();
         MenuQuery qo1 = new MenuQuery();
-        qo1.createCriteria().andMidIn(mids);
+        qo1.createCriteria().andMidIn(mids).andStateEqualTo(new Byte("1"));//不找隐藏的
         menuList.addAll(menuDao.selectByExample(qo1));
-        MenuQuery qos = new MenuQuery();
-        qos.createCriteria().andUrlIsNull();
-        menuList.addAll(menuDao.selectByExample(qos));
-        //-------------去重-------------
         List<Menu> result = new ArrayList<>();
         Set<Long> ids = new HashSet<>();
         for (Menu menu : menuList) {

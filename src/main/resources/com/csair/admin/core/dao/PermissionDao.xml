@@ -260,6 +260,9 @@
             <if test="type!=null">
                 and p.type = #{type}
             </if>
+            <if test="mid!=null">
+                and p.mid = #{mid}
+            </if>
         </where>
         <if test="limit > 0">
             limit #{startRow} , #{limit}

@@ -3,18 +3,13 @@
 
 <head>
     <title>菜单管理</title>
-    <script type="text/javascript">
-
-        var path = '${context.contextPath}';
-        var basePath = window.location.protocol + "//"
-                + window.location.host
-                + path + "/";
-    </script>
 <#include "../inc.ftl" />
 </head>
 <body>
 <form name="form" class="layui-form layui-form-pane" style="margin-top: 20px;" method="post" action="">
-    <input type="hidden" name="id" id="id"/>
+    <input type="hidden" name="mid"/>
+    <input type="hidden" name="rank"/>
+    <input type="hidden" name="pid"/>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label" style="color:#F00">菜单名称</label>
@@ -23,43 +18,27 @@
                        autocomplete="off" class="layui-input">
             </div>
         </div>
-        <div class="layui-inline">
-            <label class="layui-form-label">上一级菜单</label>
-            <div class="layui-input-inline">
-                <input type="hidden" name="pid" id="pid">
-                <input type="text" name="pidNm" id="pidNm" readOnly="readOnly" placeholder="请输入" autocomplete="off"
-                       class="layui-input">
-            </div>
-            <div class="layui-input-inline">
-                <button class="layui-btn layui-btn-normal" type="button" id="treeSelect">请选择</button>
-            </div>
-        </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label" style="color:#F00">菜单排序</label>
             <div class="layui-input-inline">
-                <input type="tel" name="menuSort" placeholder="请输入" maxlength="3" lay-verify="required"
+                <input type="tel" name="sort" placeholder="请输入" maxlength="3" lay-verify="required"
                        autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-inline">
-            <label class="layui-form-label" style="color:#F00">图标</label>
-            <div class="layui-input-inline">
-                <input type="text" name="iconCls" placeholder="请输入" lay-verify="required" autocomplete="off"
-                       class="layui-input">
             </div>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">URL</label>
-        <div class="layui-input-block">
-            <input type="text" name="menuUrl" placeholder="请输入" autocomplete="off" class="layui-input"/>
+        <div class="layui-input-inline">
+            <input type="text" name="url" placeholder="请输入" autocomplete="off" class="layui-input"/>
         </div>
     </div>
-    <div class="layui-form-item">
-        <div class="layui-textarea edui-default" id="container">
-
+    <div class="layui-form-item" pane="">
+        <label class="layui-form-label">可见性</label>
+        <div class="layui-input-block">
+            <input type="radio" checked name="state" value="1" title="可见">
+            <input type="radio" name="state" value="0" title="隐藏">
         </div>
     </div>
 
@@ -72,23 +51,46 @@
     </div>
 </form>
 <script>
+    //得到页面传过来的数据
+    var urlParams = getRequestParam();
+    var mid = urlParams.mid;
+    //type :1:添加根菜单,2:添加下级菜单,3 修改菜单
+    var type = urlParams.type;
+    pid = urlParams.pid;
+    if (type == 2) {
+        mid = urlParams.pid;
+    }
+    console.debug(urlParams);
     layui.use(['form', 'layedit', 'laydate', 'jquery'], function () {
-        var form = layui.form ;
-
+        var form = layui.form;
+        getMenuDetail(mid, function (data) {
+            console.debug(inputData, data);
+            var inputData = {};
+            if (type == 1) {
+                inputData.rank = 1;
+            } else if (type == 2) {
+                inputData.pid = mid;
+                inputData.rank = data.rank + 1;
+            } else if (type == 3) {
+                inputData = data;
+            }
+            pubUtil.load($("[name=form]"), inputData);//填充表单
+            form.render(); //更新全部
+        })
         //监听提交
         form.on('submit(btnSubmit)', function (data) {
             var index = layer.load(1);//开启进度条
             $.ajax({
-                url: '${context.contextPath}/menuInf/modify.do',
+                url: contextPath + '/Menu/edit',
                 data: data.field,
-                type: 'POST',//默认以get提交，以get提交如果是中文后台会出现乱码
+                type: 'POST',
                 dataType: 'json',
                 success: function (obj) {
                     layer.close(index);//关闭
                     if (obj.success) {
                         pubUtil.msg(obj.msg, layer, 1, function () {
                             $("#close").click();
-                        }, 500);
+                        }, 3 * 1000);
                     } else {
                         pubUtil.msg(obj.msg, layer, 2, function () {
 
@@ -99,6 +101,19 @@
             return false;
         });
     });
+
+    function getMenuDetail(id, _function) {
+        if (id) {
+            $.ajax({
+                url: contextPath + '/Menu/MenuDetails?mid=' + id,
+                success: function (r) {
+                    _function(r.data);
+                }
+            });
+        } else {
+            _function(null);
+        }
+    }
 
     //按钮的点击事件
     $('button#treeSelect').on('click', function () {
@@ -128,13 +143,6 @@
             }
         });
     });
-
-
-</script>
-<script src="${context.contextPath}/plugins/ueditor/ueditor.config.js"></script>
-<script src="${context.contextPath}/plugins/ueditor/ueditor.all.js"></script>
-<script>
-    var ue = UE.getEditor('container');
 </script>
 </body>
 </html>
