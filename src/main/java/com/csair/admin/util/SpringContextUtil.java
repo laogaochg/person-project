@@ -17,16 +17,16 @@ public class SpringContextUtil extends WebMvcConfigurerAdapter {
     public static ApplicationContext applicationContext;
 
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        // 注册拦截器
-        InterceptorRegistration ir = registry.addInterceptor(new ExceptionInterceptor());
-        // 配置拦截的路径
-        ir.addPathPatterns("/**");
-        ir.excludePathPatterns("/404");
-        // 配置不拦截的路径
-        ir.excludePathPatterns("/**.**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        // 注册拦截器
+//        InterceptorRegistration ir = registry.addInterceptor(new ExceptionInterceptor());
+//        // 配置拦截的路径
+//        ir.addPathPatterns("/**");
+//        ir.excludePathPatterns("/404");
+//        // 配置不拦截的路径
+//        ir.excludePathPatterns("/**.**");
+//    }
 
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
