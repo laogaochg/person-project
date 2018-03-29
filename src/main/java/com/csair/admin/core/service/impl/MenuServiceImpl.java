@@ -134,7 +134,7 @@ public class MenuServiceImpl implements MenuService {
             MenuVo v = new MenuVo(m);
             vo.add(v);
             if (selectId != null && selectId.equals(m.getMid())) {
-                v.setChecked(true);
+//                v.setChecked(true);
                 id = m.getPid();
             }
         }

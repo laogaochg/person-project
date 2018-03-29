@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.csair.admin.core.po.Brand;
+import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.util.ServletUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,13 +76,10 @@ public class PermissionController {
     }
 
     @RequestMapping("/list")
-    public String brandList(Model model, PermissionQueryObject qo, HttpServletRequest httpRequest) {
+    @ResponseBody
+    public DatagridForLayUI<Permission> brandList(PermissionQueryObject qo) {
         PageResult<Permission> pageResult = permissionService.query(qo);
-        model.addAttribute("pageResult", pageResult);
-        model.addAttribute("qo", qo);
-        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
-        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
-        return "setting/permission/permissionList";
+        return new DatagridForLayUI<>(pageResult);
     }
 
     /**
@@ -103,7 +102,7 @@ public class PermissionController {
         ResponseMessage re = new ResponseMessage();
         User u = (User) request.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (l.getId() == null) {
-            permissionService.addPermission(l,u);
+            permissionService.addPermission(l, u);
             re.setMsg("添加成功。");
         } else {
             permissionService.updatePermissionByPid(l, u);

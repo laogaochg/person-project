@@ -15,20 +15,23 @@ import java.util.List;
 @Getter
 public class MenuVo {
     private Long id;
-    private String title;
+    private String name;
     private String href;
-    private String icon = "fa-cube";
+    private String title;// 基本元素
+//    private String icon = "fa-cube";
     private Long pid;
-    private boolean spread = true;
-    private boolean checked = false;
+//    private boolean spread = true;
+    private boolean open = true;
+    private Boolean checked;
     private List<MenuVo> children = new ArrayList<>();
 
 
     public MenuVo(Menu m) {
         this.id = m.getMid();
+        this.name = m.getMname();
         this.title = m.getMname();
         this.href = m.getUrl();
-        this.pid = m.getPid() == null ? 0 : m.getPid();
+        this.pid = m.getPid();
     }
 
     public MenuVo() {

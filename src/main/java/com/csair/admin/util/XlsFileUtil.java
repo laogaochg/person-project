@@ -58,7 +58,6 @@ public class XlsFileUtil {
                     Cell cell = sheet.getCell(c, z);
                     String contents = cell.getContents();
                     if (StringUtils.hasText(contents)) {
-//                        row.put(c,contents);
                         row.add(contents);
                     } else {
                         row.add("");
@@ -163,7 +162,6 @@ public class XlsFileUtil {
         BufferedReader reader = new BufferedReader(new FileReader(f));
         Set<String> set = new HashSet<>();
         while (reader.ready()) {
-
             String s = reader.readLine();
             if (StringUtils.hasText(s)) {
                 set.add(s.trim());
@@ -211,26 +209,6 @@ public class XlsFileUtil {
                 sheet.addCell(lab1);
             }
         }
-//        Label labelA = new Label(0, 0, "第一列标题", normalFormat);
-//        Label labelB = new Label(1, 0, "第二列标题", normalFormat);
-//        Label labelC = new Label(2, 0, "第三列标题", normalFormat);
-//        Label labelD = new Label(3, 0, "第四列标题", normalFormat);
-//        for (int i = 1; i <= 10; i++) {
-//            Label lab1 = new Label(0, i, "第" + i + "行第1列");
-//            Label lab2 = new Label(2, i, "第" + i + "行第2列");
-//            Label lab3 = new Label(3, i, "第" + i + "行第3列", diffFormat);
-//            Label lab4 = new Label(4, i, "第" + i + "行第4列");
-//            sheet.addCell(lab1);
-//            sheet.addCell(lab2);
-//            sheet.addCell(lab3);
-//            sheet.addCell(lab4);
-//        }
-        // 将定义好的单元格添加到工作表中
-//        sheet.addCell(labelA);
-//        sheet.addCell(labelB);
-//        sheet.addCell(labelC);
-//        sheet.addCell(labelD);
-
         book.write();
         book.close();
         System.out.println("创建文件成功!");

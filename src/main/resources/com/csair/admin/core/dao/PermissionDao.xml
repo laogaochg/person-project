@@ -7,6 +7,7 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="mid" property="mid" jdbcType="BIGINT"/>
         <result column="type" property="type" jdbcType="BIT"/>
+        <result column="mname" property="menuName" />
         <result column="class_name" property="className" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Example_Where_Clause">
@@ -245,8 +246,8 @@
   </select>
     <!--ORDER BY rp.pid-->
     <select id="queryPermission" resultMap="BaseResultMap">
-        select p.id,p.mid,p.`name`,p.url ,p.type from
-        e_admin_permission p
+        select p.id,p.mid,p.`name`,p.url ,p.type , menu.mname from
+        e_admin_permission p join  e_admin_menu menu on  p.mid = menu.mid
         <if test="roleId!=null">
             join e_admin_role_permission rp on p.id = rp.pid
         </if>

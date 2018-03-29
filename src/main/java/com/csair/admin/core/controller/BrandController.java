@@ -50,15 +50,6 @@ public class BrandController {
         return new ResponseMessage(b);
     }
 
-    /*@RequestMapping("/list")
-    public String brandList(Model model, BrandQueryObject qo, HttpServletRequest httpRequest) {
-        PageResult<Brand> pageResult = brandService.pageQuery(qo);
-        model.addAttribute("pageResult", pageResult);
-        model.addAttribute("qo", qo);
-        model.addAttribute("userMenus", ServletUtils.queryUserMenu());
-        model.addAttribute("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
-        return "goodManage/brand/brandList";
-    }*/
 
 
     @RequestMapping("delete")
