@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : localhost
-Source Server Version : 50631
-Source Host           : 127.0.0.1:3306
-Source Database       : csair_eshop
+Source Server Version : 50717
+Source Host           : localhost:3306
+Source Database       : springboot_layui
 
 Target Server Type    : MYSQL
-Target Server Version : 50631
+Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-12-01 16:03:24
+Date: 2018-03-29 23:20:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,11 +37,11 @@ CREATE TABLE `csair_brand` (
 -- ----------------------------
 -- Records of csair_brand
 -- ----------------------------
-INSERT INTO `csair_brand` VALUES ('9', '免税品', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', 'small_bd861e694ece4fa2b1f30d960b4afc27.jpg', 'www.miansui.com', '免税&lt;img src=&quot;/image/e815704761784844af388e18776c9ceb.png&quot; alt=&quot;e815704761784844af388e18776c9ceb.png&quot;&gt;', '1', '1', null, null);
-INSERT INTO `csair_brand` VALUES ('10', '跨境购', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', 'small_bd861e694ece4fa2b1f30d960b4afc27.jpg', 'www.kuajinggou.com', '跨境购', '211111111', '1', null, null);
-INSERT INTO `csair_brand` VALUES ('11', '航空精品', '072115bf1c9049678e6d6f76d5d40f6c.jpg', 'small_072115bf1c9049678e6d6f76d5d40f6c.jpg', 'www.hkjp.com', '航空精品', '3', '1', null, null);
-INSERT INTO `csair_brand` VALUES ('12', '航易购', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', 'small_c98de6a79f9740bda809b64b555e9674.jpg', 'www.hyg.com', '航易购', '4', '1', '2017-06-20 17:35:10', '3');
-INSERT INTO `csair_brand` VALUES ('14', '小米', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', 'small_bd861e694ece4fa2b1f30d960b4afc27.jpg', 'http://www.baidu.com', '&lt;img src=&quot;/html/img/0d24a521ac384c75a45dc3c42172db64.jpg&quot; alt=&quot;undefined&quot;&gt;1222&lt;u&gt;222222222211&lt;/u&gt;1111111111111', '10', '1', null, null);
+INSERT INTO `csair_brand` VALUES ('9', '华为', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', null, 'www.miansui.com', '免税&lt;img src=&quot;/image/e815704761784844af388e18776c9ceb.png&quot; alt=&quot;e815704761784844af388e18776c9ceb.png&quot;&gt;', '1', '1', '2017-06-20 17:35:10', null);
+INSERT INTO `csair_brand` VALUES ('10', '天天', '/images/err.gif', null, 'www.kuajinggou.com', '跨境购&lt;b&gt;221221&lt;i&gt;22&lt;/i&gt;22&lt;strike&gt;2222222&lt;/strike&gt;2222gd gd gd&amp;nbsp;&lt;i&gt;&lt;u&gt;天天&amp;nbsp; &lt;/u&gt;在&amp;nbsp;在在&amp;nbsp;在&amp;nbsp;&amp;nbsp;&lt;/i&gt;&lt;/b&gt;&lt;img src=&quot;/my/2018-02-27/db145f78418d4b6e95170d4e298d3167.png&quot; alt=&quot;/my/2018-02-27/db145f78418d4b6e95170d4e298d3167.png&quot;&gt;&lt;img src=&quot;/2018-02-27/1ddbaba75a254be38764ae311fe78226.png&quot; alt=&quot;/2018-02-27/1ddbaba75a254be38764ae311fe78226.png&quot;&gt;', '211111111', '1', '2017-06-20 17:35:10', null);
+INSERT INTO `csair_brand` VALUES ('11', '水明', '072115bf1c9049678e6d6f76d5d40f6c.jpg', null, 'www.hkjp.com', '航空精品', '3', '1', '2017-06-20 17:35:10', null);
+INSERT INTO `csair_brand` VALUES ('12', '小孙', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', null, 'www.hyg.com', '航易购', '4', '1', '2017-06-20 17:35:10', '3');
+INSERT INTO `csair_brand` VALUES ('14', '小米11', 'bd861e694ece4fa2b1f30d960b4afc27.jpg', '', 'http://www.baidu.com', '&lt;p&gt;&lt;img src=&quot;/html/img/0d24a521ac384c75a45dc3c42172db64.jpg&quot; alt=&quot;undefined&quot;/&gt;1222&lt;span style=&quot;text-decoration:underline;&quot;&gt;222222222211&lt;/span&gt;1111111111111&lt;/p&gt;', '101', null, null, null);
 
 -- ----------------------------
 -- Table structure for csair_certificate
@@ -61,7 +61,7 @@ CREATE TABLE `csair_certificate` (
 -- Records of csair_certificate
 -- ----------------------------
 INSERT INTO `csair_certificate` VALUES ('1', '单身证书', '单身', '3', '2017-07-24 18:25:12', null);
-INSERT INTO `csair_certificate` VALUES ('2', '四级证书', '四级1', '3', '2017-07-24 20:32:44', '2017-07-24 20:39:46');
+INSERT INTO `csair_certificate` VALUES ('2', '四级证书', '四级1', '3', '2017-07-24 20:32:44', '2018-02-26 22:08:24');
 INSERT INTO `csair_certificate` VALUES ('15', '七级证书', '七级1', '3', '2017-07-31 14:15:28', '2017-07-31 14:15:35');
 INSERT INTO `csair_certificate` VALUES ('16', '卫生证书', '12', '3', '2017-07-31 14:15:48', null);
 
@@ -77,7 +77,7 @@ CREATE TABLE `csair_log_operation` (
   `op_time` datetime NOT NULL COMMENT '操作时间',
   `op_ip` varchar(255) DEFAULT NULL COMMENT '操作的ip地址',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3025 DEFAULT CHARSET=utf8 COMMENT='后台操作记录日志';
+) ENGINE=InnoDB AUTO_INCREMENT=3099 DEFAULT CHARSET=utf8 COMMENT='后台操作记录日志';
 
 -- ----------------------------
 -- Records of csair_log_operation
@@ -743,6 +743,80 @@ INSERT INTO `csair_log_operation` VALUES ('3021', '3', '修改权限', '权限�
 INSERT INTO `csair_log_operation` VALUES ('3022', '3', '删除权限', '权限id：[490]', '2017-12-01 14:58:21', '0:0:0:0:0:0:0:1');
 INSERT INTO `csair_log_operation` VALUES ('3023', '3', '修改权限', '权限名字：编辑权限 ,URL: /permission/toEditPermission||/permission/editPermission||/permission/list', '2017-12-01 14:59:18', '0:0:0:0:0:0:0:1');
 INSERT INTO `csair_log_operation` VALUES ('3024', '3', '添加权限', '权限名字：类目列表 ,URL: /GoodCategory/queryAllGoodCategory', '2017-12-01 15:59:46', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3025', '3', '删除权限', '权限id：[503]', '2018-02-25 19:52:06', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3026', '3', '添加菜单', '菜单id:149；菜单名：商品列表；菜单的url：/good/list', '2018-02-26 20:30:00', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3027', '3', '修改菜单', '菜单id:125；菜单名：品牌管理；菜单的url：', '2018-02-26 20:30:32', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3028', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 21:57:24', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3029', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 21:58:09', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3030', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 22:03:30', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3031', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 22:04:34', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3032', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 22:04:59', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3033', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 22:07:45', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3034', '3', '修改证书', '证书id:2;证书名字四级证书;', '2018-02-26 22:08:24', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3035', '3', '修改菜单', '菜单id:2；菜单名：商品管理；菜单的url：', '2018-02-26 22:45:26', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3036', '3', '修改菜单', '菜单id:130；菜单名：会员管理；菜单的url：', '2018-02-26 22:45:50', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3037', '3', '添加菜单', '菜单id:150；菜单名：主面；菜单的url：/index', '2018-02-26 22:46:10', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3038', '3', '修改权限', '权限名字：新建用户 ,URL: /user/toEditUser', '2018-02-27 20:37:28', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3039', '3', '修改品牌', '品牌ID:10；品牌名字：跨境购', '2018-02-27 20:46:36', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3040', '3', '删除菜单', '菜单id:95；菜单名：店铺信息审核；菜单的url：null', '2018-03-02 23:06:21', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3041', '3', '删除菜单', '菜单id:92；菜单名：入驻店铺信息管理；菜单的url：/shop/selectshop', '2018-03-02 23:09:26', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3042', '3', '删除菜单', '菜单id:96；菜单名：商家消息管理；菜单的url：null', '2018-03-02 23:09:26', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3043', '3', '修改品牌', '品牌ID:14；品牌名字：小米11', '2018-03-23 22:45:45', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3044', '3', '添加菜单', '菜单id:151；菜单名：主页；菜单的url：/main', '2018-03-24 15:54:36', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3045', '3', '新增权限', '权限的id：null权限的名字：主页  权限的url：/main', '2018-03-24 15:54:36', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3046', '3', '修改菜单', '菜单id:15；菜单名：权限设置；菜单的url：', '2018-03-24 15:58:04', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3047', '3', '修改菜单', '菜单id:114；菜单名：入驻店铺信息管理；菜单的url：/shop/selectshop', '2018-03-24 15:58:14', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3048', '3', '删除菜单', '菜单id:126；菜单名：字典库管理；菜单的url：null', '2018-03-24 16:15:42', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3049', '3', '删除菜单', '菜单id:138；菜单名：商品属性模板列表；菜单的url：/goodCategoryPropertyTemplet/list', '2018-03-24 16:16:30', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3050', '3', '添加菜单', '菜单id:152；菜单名：21；菜单的url：212121', '2018-03-24 16:17:36', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3051', '3', '新增权限', '权限的id：null权限的名字：21  权限的url：212121', '2018-03-24 16:17:36', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3052', '3', '删除菜单', '菜单id:152；菜单名：21；菜单的url：212121', '2018-03-24 16:23:37', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3053', '3', '删除菜单', '菜单id:122；菜单名：类目列表；菜单的url：/GoodCategory/queryAllGoodCategory', '2018-03-24 16:23:58', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3054', '3', '删除菜单', '菜单id:121；菜单名：类目管理；菜单的url：null', '2018-03-24 16:24:10', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3055', '3', '删除菜单', '菜单id:149；菜单名：商品列表；菜单的url：/good/list', '2018-03-24 16:37:57', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3056', '3', '删除菜单', '菜单id:119；菜单名：合同管理；菜单的url：null', '2018-03-24 16:38:06', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3057', '3', '删除菜单', '菜单id:146；菜单名：商品增刪改查；菜单的url：/shop/selectshop', '2018-03-24 16:38:10', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3058', '3', '删除菜单', '菜单id:145；菜单名：保证金管理；菜单的url：null', '2018-03-24 16:38:13', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3059', '3', '删除菜单', '菜单id:135；菜单名：资质变更审核列表；菜单的url：/aptitude/list', '2018-03-24 16:38:15', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3060', '3', '删除菜单', '菜单id:114；菜单名：入驻店铺信息管理；菜单的url：/shop/selectshop', '2018-03-24 16:38:20', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3061', '3', '删除菜单', '菜单id:137；菜单名：订单列表；菜单的url：/order/list', '2018-03-24 16:38:28', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3062', '3', '删除菜单', '菜单id:83；菜单名：修改密码；菜单的url：/changePassword', '2018-03-24 16:38:32', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3063', '3', '删除菜单', '菜单id:82；菜单名：后台操作记录；菜单的url：/log/list', '2018-03-24 16:38:35', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3064', '3', '删除菜单', '菜单id:81；菜单名：账户安全；菜单的url：/use/safety', '2018-03-24 16:38:38', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3065', '3', '修改菜单', '菜单id:15；菜单名：系统设置；菜单的url：', '2018-03-24 16:39:01', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3066', '3', '删除菜单', '菜单id:131；菜单名：会员列表；菜单的url：/member/list', '2018-03-24 16:39:50', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3067', '3', '修改菜单', '菜单id:151；菜单名：主页；菜单的url：/main', '2018-03-24 16:39:58', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3068', '3', '修改菜单', '菜单id:129；菜单名：品牌列表；菜单的url：/Brand/BrandList', '2018-03-24 16:40:11', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3069', '3', '修改菜单', '菜单id:125；菜单名：品牌管理；菜单的url：', '2018-03-24 16:40:19', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3070', '3', '修改菜单', '菜单id:49；菜单名：管理菜单；菜单的url：/Menu/menuTree', '2018-03-24 16:40:29', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3071', '3', '修改菜单', '菜单id:16；菜单名：管理角色；菜单的url：/RoleManage/list', '2018-03-24 16:40:38', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3072', '3', '修改菜单', '菜单id:15；菜单名：系统设置；菜单的url：', '2018-03-24 16:40:47', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3073', '-1', '新增权限', '权限的id：null权限的名字：用户账号  权限的url：/user/list', '2018-03-24 17:15:12', null);
+INSERT INTO `csair_log_operation` VALUES ('3074', '-1', '新增权限', '权限的id：null权限的名字：管理权限  权限的url：/permission/list', '2018-03-24 17:15:12', null);
+INSERT INTO `csair_log_operation` VALUES ('3075', '-1', '新增权限', '权限的id：null权限的名字：管理角色  权限的url：/RoleManage/list', '2018-03-24 17:15:12', null);
+INSERT INTO `csair_log_operation` VALUES ('3076', '-1', '新增权限', '权限的id：null权限的名字：管理菜单  权限的url：/Menu/menuTree', '2018-03-24 17:15:12', null);
+INSERT INTO `csair_log_operation` VALUES ('3077', '-1', '新增权限', '权限的id：null权限的名字：品牌列表  权限的url：/Brand/BrandList', '2018-03-24 17:15:12', null);
+INSERT INTO `csair_log_operation` VALUES ('3078', '-1', '新增权限', '权限的id：null权限的名字：主页  权限的url：/main', '2018-03-24 17:16:31', null);
+INSERT INTO `csair_log_operation` VALUES ('3079', '-1', '新增权限', '权限的id：null权限的名字：系统设置  权限的url：', '2018-03-24 17:16:31', null);
+INSERT INTO `csair_log_operation` VALUES ('3080', '-1', '新增权限', '权限的id：null权限的名字：品牌管理  权限的url：', '2018-03-24 17:16:31', null);
+INSERT INTO `csair_log_operation` VALUES ('3081', '3', '添加菜单', '菜单id:153；菜单名：图书管理；菜单的url：/book/list', '2018-03-24 17:18:02', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3082', '3', '新增权限', '权限的id：null权限的名字：图书管理  权限的url：/book/list', '2018-03-24 17:18:02', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3083', '3', '修改菜单', '菜单id:125；菜单名：品牌管理；菜单的url：', '2018-03-24 17:18:21', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3084', '3', '删除菜单', '菜单id:50；菜单名：用户账号；菜单的url：/user/list', '2018-03-24 17:19:26', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3085', '3', '删除菜单', '菜单id:148；菜单名：管理权限；菜单的url：/permission/list', '2018-03-24 17:19:35', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3086', '3', '修改菜单', '菜单id:151；菜单名：主页；菜单的url：/main', '2018-03-24 17:20:04', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3087', '3', '修改菜单', '菜单id:16；菜单名：管理角色；菜单的url：/RoleManage/list', '2018-03-24 17:20:15', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3088', '3', '修改菜单', '菜单id:16；菜单名：管理角色；菜单的url：/RoleManage/list', '2018-03-24 17:30:57', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3089', '3', '添加菜单', '菜单id:154；菜单名：根21；菜单的url：211221', '2018-03-24 17:33:20', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3090', '3', '新增权限', '权限的id：null权限的名字：根21  权限的url：211221', '2018-03-24 17:33:20', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3091', '3', '添加菜单', '菜单id:155；菜单名：二阶3；菜单的url：1212', '2018-03-24 17:42:21', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3092', '3', '新增权限', '权限的id：null权限的名字：二阶3  权限的url：1212', '2018-03-24 17:42:21', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3093', '3', '添加菜单', '菜单id:156；菜单名：三阶；菜单的url：1221', '2018-03-24 17:42:37', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3094', '3', '新增权限', '权限的id：null权限的名字：三阶  权限的url：1221', '2018-03-24 17:42:37', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3095', '3', '修改菜单', '菜单id:16；菜单名：管理角色；菜单的url：/RoleManage/RoleList', '2018-03-24 17:50:06', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3096', '3', '新增角色', '角色id：8角色名字：null', '2018-03-24 18:21:54', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3097', '3', '新增权限', '权限的id：null权限的名字：权限管理  权限的url：/permission/permissionList', '2018-03-29 19:44:09', '0:0:0:0:0:0:0:1');
+INSERT INTO `csair_log_operation` VALUES ('3098', '3', '添加菜单', '菜单id:157；菜单名：权限管理；菜单的url：/permission/permissionList', '2018-03-29 19:44:09', '0:0:0:0:0:0:0:1');
 
 -- ----------------------------
 -- Table structure for csair_user_info
@@ -818,65 +892,22 @@ CREATE TABLE `e_admin_menu` (
   `logo_file_name` varchar(100) DEFAULT NULL COMMENT 'logo图片的名字',
   `type` tinyint(1) DEFAULT NULL COMMENT '类型 NULL 平台  ，2 商家',
   PRIMARY KEY (`mid`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of e_admin_menu
 -- ----------------------------
-INSERT INTO `e_admin_menu` VALUES ('2', '商品管理', null, '', '1', '1', '1', '', null);
-INSERT INTO `e_admin_menu` VALUES ('9', '店铺管理', null, null, '1', '18', '1', null, null);
-INSERT INTO `e_admin_menu` VALUES ('14', '系统设置', null, null, '1', '40', '1', null, null);
-INSERT INTO `e_admin_menu` VALUES ('15', '权限设置', '14', null, '1', '1', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('16', '管理角色', '15', '/role/list', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('47', '文章列表', '46', null, '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('49', '管理菜单', '15', '/menu/list', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('50', '用户账号', '15', '/user/list', '1', '50', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('64', '首页第一', '1', '/index/list', '1', '100', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('67', '删除文章', '46', '/asf/delete', '1', '11', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('71', '文章分类', '7', '/articleclassify/ArtiCleclassify_list', '1', '8', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('72', '文章', '7', '/article/Article_list', '1', '1', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('78', '交易列表', '6', '/trade/list', '1', '1', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('79', '交易审批', '6', '/trade/list', '1', '20', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('80', '交易新建', '78', null, '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('81', '账户安全', '14', '/use/safety', '1', '20', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('82', '后台操作记录', '81', '/log/list', '1', '10', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('83', '修改密码', '81', '/changePassword', '1', '20', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('86', '交易查询', '6', '/tr', '1', '20', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('88', '短信服务', '87', '/message/smsService', '1', '10', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('90', '邮箱服务', '87', '/message/emailService', '1', '20', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('92', '入驻店铺信息管理', '91', '/shop/selectshop', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('95', '店铺信息审核', '91', null, '1', '2', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('96', '商家消息管理', '91', null, '1', '3', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('98', '资质详情', '97', null, '1', '1', '5', null, null);
-INSERT INTO `e_admin_menu` VALUES ('103', '店铺信息列表', '95', null, '1', '1', '4', null, null);
-INSERT INTO `e_admin_menu` VALUES ('104', '店铺详情', '103', null, '1', '1', '5', null, null);
-INSERT INTO `e_admin_menu` VALUES ('105', '经营类目', '104', null, '1', '1', '6', null, null);
-INSERT INTO `e_admin_menu` VALUES ('106', '经营品牌', '104', null, '1', '2', '6', null, null);
-INSERT INTO `e_admin_menu` VALUES ('107', '店铺首页装修', '103', null, '1', '2', '5', null, null);
-INSERT INTO `e_admin_menu` VALUES ('108', '添加消息', '96', null, '1', '1', '4', null, null);
-INSERT INTO `e_admin_menu` VALUES ('109', '添加消息', '96', null, '1', '1', '4', null, null);
-INSERT INTO `e_admin_menu` VALUES ('114', '入驻店铺信息管理', '9', '/shop/selectshop', '1', '1', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('119', '合同管理', '114', null, '1', '2', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('121', '类目管理', '2', '', '1', '20', '2', '', null);
-INSERT INTO `e_admin_menu` VALUES ('122', '类目列表', '121', '/GoodCategory/queryAllGoodCategory', '1', '100', '3', '', null);
-INSERT INTO `e_admin_menu` VALUES ('125', '品牌管理', '2', '', '1', '3', '2', '', null);
-INSERT INTO `e_admin_menu` VALUES ('126', '字典库管理', '14', null, '1', '40', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('127', '类目证书管理', '126', '/certificate/list', '1', '10', '3', '021ce40fceb54770be73e2f059d1607a.jpg', null);
-INSERT INTO `e_admin_menu` VALUES ('129', '品牌列表', '125', '/brand/list', '1', '10', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('130', '会员管理', null, null, '1', '1', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('131', '会员列表', '130', '/member/list', '1', '1', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('135', '资质变更审核列表', '114', '/aptitude/list', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('136', '订单管理', null, null, '1', '15', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('137', '订单列表', '136', '/order/list', '1', '10', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('138', '商品属性模板列表', '2', '/goodCategoryPropertyTemplet/list', '1', '30', '2', null, null);
-INSERT INTO `e_admin_menu` VALUES ('140', '自取点列表', '139', null, '1', '1', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('141', '添加自取点', '140', null, '1', '1', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('142', '物流公司列表', '139', null, '1', '1', null, null, null);
-INSERT INTO `e_admin_menu` VALUES ('143', '店铺信息列表', '116', '/shop/shopInfoList', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('144', '店铺首页装修', '116', '/shop/shopHomePageUpdate', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('145', '保证金管理', '114', null, '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('146', '商品增刪改查', '114', '/shop/selectshop', '1', '1', '3', null, null);
-INSERT INTO `e_admin_menu` VALUES ('148', '管理权限', '15', '/permission/list', '1', '50', '3', '', null);
+INSERT INTO `e_admin_menu` VALUES ('15', '系统设置', null, '', '1', '52', '1', null, null);
+INSERT INTO `e_admin_menu` VALUES ('16', '管理角色', '15', '/RoleManage/RoleList', '1', '51', '2', null, null);
+INSERT INTO `e_admin_menu` VALUES ('49', '管理菜单', '15', '/Menu/menuTree', '1', '55', '2', null, null);
+INSERT INTO `e_admin_menu` VALUES ('125', '品牌管理', null, '', '1', '26', '1', '', null);
+INSERT INTO `e_admin_menu` VALUES ('129', '品牌列表', '125', '/Brand/BrandList', '1', '50', '2', null, null);
+INSERT INTO `e_admin_menu` VALUES ('151', '主页', null, '/main', '1', '5', '1', null, null);
+INSERT INTO `e_admin_menu` VALUES ('153', '图书管理', null, '/book/list', '1', '30', '1', null, null);
+INSERT INTO `e_admin_menu` VALUES ('154', '根21', null, '211221', '1', '60', '1', null, null);
+INSERT INTO `e_admin_menu` VALUES ('155', '二阶3', '154', '1212', '1', '21', '2', null, null);
+INSERT INTO `e_admin_menu` VALUES ('156', '三阶', '155', '1221', '1', '211', '3', null, null);
+INSERT INTO `e_admin_menu` VALUES ('157', '权限管理', '15', '/permission/permissionList', '1', '30', '2', null, null);
 
 -- ----------------------------
 -- Table structure for e_admin_permission
@@ -890,43 +921,24 @@ CREATE TABLE `e_admin_permission` (
   `type` tinyint(1) DEFAULT NULL COMMENT 'NULL为管理平台的权限；2为商家权限',
   `class_name` varchar(255) DEFAULT NULL COMMENT '归属类的类名，用于确定菜单下的权限列表',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=494 DEFAULT CHARSET=utf8 COMMENT='后台管理权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=521 DEFAULT CHARSET=utf8 COMMENT='后台管理权限表';
 
 -- ----------------------------
 -- Records of e_admin_permission
 -- ----------------------------
-INSERT INTO `e_admin_permission` VALUES ('454', '/certificate/batchDelete', '删除证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('455', '/user/list', '查询所有用户', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('456', '/user/toEditUser', '新建用户', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('457', '/role/userList', '角色成员查询', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('458', '/role/addOrUpdataRole', '角色编辑', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('459', '/brand/editBrand', '编辑品牌', null, null, 'com.csair.admin.core.controller.BrandController');
-INSERT INTO `e_admin_permission` VALUES ('460', '/user/editUser', '编辑用户', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('463', '/role/editRolePermission', '角色权限编辑', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('464', '/brand/toEditBrand', '编辑品牌', null, null, 'com.csair.admin.core.controller.BrandController');
-INSERT INTO `e_admin_permission` VALUES ('465', '/role/list', '角色查询', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('466', '/changePassword', '修改密码', null, null, 'com.csair.admin.core.controller.UserController');
-INSERT INTO `e_admin_permission` VALUES ('467', '/user/downloadUser', '下载用户数据', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('468', '/brand/batchDeleteBrand', '删除品牌', null, null, 'com.csair.admin.core.controller.BrandController');
-INSERT INTO `e_admin_permission` VALUES ('469', '/certificate/toEditCertificate', '编辑证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('471', '/menu/edit', '管理菜单', null, null, 'com.csair.admin.core.controller.MenuController');
-INSERT INTO `e_admin_permission` VALUES ('472', '/certificate/batchInsertCertificate', '编辑证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('473', '/menu/list', '菜单查询', null, null, 'com.csair.admin.core.controller.MenuController');
-INSERT INTO `e_admin_permission` VALUES ('474', '/permission/list', '权限查询', null, null, 'com.csair.admin.core.controller.PermissionController');
-INSERT INTO `e_admin_permission` VALUES ('475', '/role/inputRole', '角色编辑', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('476', '/menu/delete', '删除菜单', null, null, 'com.csair.admin.core.controller.MenuController');
-INSERT INTO `e_admin_permission` VALUES ('478', '/user/changePassword', '修改密码', null, null, 'com.csair.admin.core.controller.UserController');
-INSERT INTO `e_admin_permission` VALUES ('479', '/role/deleteRole', '删除角色', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('480', '/role/removeRoleUser', '删除角色成员', null, null, 'com.csair.admin.core.controller.RoleController');
-INSERT INTO `e_admin_permission` VALUES ('481', '/forbidUserLogin', '禁止用户登陆', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('483', '/brand/list', '查看品牌', null, null, 'com.csair.admin.core.controller.BrandController');
-INSERT INTO `e_admin_permission` VALUES ('484', '/cancelForbidUserLogin', '解禁用户登陆', null, null, 'com.csair.admin.core.controller.ManageUserController');
-INSERT INTO `e_admin_permission` VALUES ('485', '/log/list', '操作历史查询', null, null, 'com.csair.admin.core.controller.OperationLogController');
-INSERT INTO `e_admin_permission` VALUES ('486', '/certificate/list', '查询证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('488', '/certificate/editCertificate', '编辑证书', null, null, 'com.csair.admin.core.controller.CertificateController');
-INSERT INTO `e_admin_permission` VALUES ('489', '/menu/toEdit', '管理菜单', null, null, 'com.csair.admin.core.controller.MenuController');
-INSERT INTO `e_admin_permission` VALUES ('492', '/permission/toEditPermission||/permission/editPermission||/permission/list', '编辑权限', null, null, null);
-INSERT INTO `e_admin_permission` VALUES ('493', '/GoodCategory/queryAllGoodCategory', '类目列表', null, null, null);
+INSERT INTO `e_admin_permission` VALUES ('508', '/user/list', '用户账号', '50', null, null);
+INSERT INTO `e_admin_permission` VALUES ('509', '/permission/list', '管理权限', '148', null, null);
+INSERT INTO `e_admin_permission` VALUES ('510', '/RoleManage/list', '管理角色', '16', null, null);
+INSERT INTO `e_admin_permission` VALUES ('511', '/Menu/menuTree', '管理菜单', '49', null, null);
+INSERT INTO `e_admin_permission` VALUES ('512', '/Brand/BrandList', '品牌列表', '129', null, null);
+INSERT INTO `e_admin_permission` VALUES ('513', '/main', '主页', '151', null, null);
+INSERT INTO `e_admin_permission` VALUES ('514', '', '系统设置', '15', null, null);
+INSERT INTO `e_admin_permission` VALUES ('515', '', '品牌管理', '125', null, null);
+INSERT INTO `e_admin_permission` VALUES ('516', '/book/list', '图书管理', '153', null, null);
+INSERT INTO `e_admin_permission` VALUES ('517', '211221', '根21', '154', null, null);
+INSERT INTO `e_admin_permission` VALUES ('518', '1212', '二阶3', '155', null, null);
+INSERT INTO `e_admin_permission` VALUES ('519', '1221', '三阶', '156', null, null);
+INSERT INTO `e_admin_permission` VALUES ('520', '/permission/permissionList', '权限管理', '157', null, null);
 
 -- ----------------------------
 -- Table structure for e_admin_role
@@ -947,7 +959,6 @@ CREATE TABLE `e_admin_role` (
 INSERT INTO `e_admin_role` VALUES ('1', '管理员', 'admin', '超级管理员1', null);
 INSERT INTO `e_admin_role` VALUES ('2', '编辑', '编辑', '编辑', null);
 INSERT INTO `e_admin_role` VALUES ('4', '普通用户', 'normal', '90-', null);
-INSERT INTO `e_admin_role` VALUES ('5', '21', '1221', '2121', null);
 INSERT INTO `e_admin_role` VALUES ('7', '测试员2', 'root', '99999', null);
 
 -- ----------------------------
@@ -976,243 +987,19 @@ CREATE TABLE `e_admin_role_permission` (
 -- ----------------------------
 -- Records of e_admin_role_permission
 -- ----------------------------
-INSERT INTO `e_admin_role_permission` VALUES ('1', '453');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '454');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '455');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '456');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '457');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '458');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '459');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '460');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '461');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '462');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '455');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '456');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '460');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '457');
-INSERT INTO `e_admin_role_permission` VALUES ('2', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '463');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '464');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '465');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '466');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '467');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '468');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '469');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '470');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '471');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '472');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '473');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '474');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '475');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '476');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '477');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '478');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '479');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '480');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '481');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '482');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '483');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '484');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '485');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '486');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '487');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '488');
-INSERT INTO `e_admin_role_permission` VALUES ('1', '489');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '508');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '509');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '510');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '511');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '512');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '513');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '514');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '515');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '516');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '517');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '518');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '519');
+INSERT INTO `e_admin_role_permission` VALUES ('1', '520');
 
 -- ----------------------------
 -- Table structure for e_admin_user
@@ -1241,8 +1028,8 @@ CREATE TABLE `e_admin_user` (
 -- Records of e_admin_user
 -- ----------------------------
 INSERT INTO `e_admin_user` VALUES ('1', 'julice', 'julice@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-03-29 08:49:00', '1', '222', '222', '222', '2222', '1', '222', 'csair_admin', 'aaaaaa');
-INSERT INTO `e_admin_user` VALUES ('2', 'bob', 'bob@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-10-26 17:23:28', '1', null, null, '0:0:0:0:0:0:0:1', null, null, null, 'csair_admin', 'aaaaaa');
-INSERT INTO `e_admin_user` VALUES ('3', 'alice1', 'alice@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2017-12-01 14:40:32', '1', null, null, '0:0:0:0:0:0:0:1', null, null, null, 'csair_admin', 'aaaaaa');
+INSERT INTO `e_admin_user` VALUES ('2', 'bob', 'bob@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2018-02-25 21:20:20', '1', null, null, '0:0:0:0:0:0:0:1', null, null, null, 'csair_admin', 'aaaaaa');
+INSERT INTO `e_admin_user` VALUES ('3', 'alice1', 'alice@test.com', 'F54C5F3213B11DDD2692C4E53301C66B', '2017-03-29 08:49:00', '2018-03-27 22:03:31', '1', null, null, '127.0.0.1', null, null, null, 'csair_admin', 'aaaaaa');
 INSERT INTO `e_admin_user` VALUES ('23', '123', '2112211221', '783ED423A9D32A96DD84135D8F7EF87A', '2017-07-18 10:02:02', null, '1', null, null, '111', '1221', '1', null, 'csair_admin', 'aaaaaa');
 INSERT INTO `e_admin_user` VALUES ('24', 'testCreate', 'testCerate@test.com', '685228DC8CB1074BD2E9A87F69F103A3', '2017-07-18 11:57:17', null, '0', null, null, '111', '12', '1', null, 'csair_admin', 'kT0OpD');
 INSERT INTO `e_admin_user` VALUES ('25', 'dsgfsad ', 'ateate', '5CED7152440C7125D028EF8CF6389334', '2017-07-26 09:19:33', null, '0', null, null, '111', '', '1', null, 'csair_admin', 'Nfio2Y');
@@ -1300,197 +1087,90 @@ INSERT INTO `e_admin_user_role` VALUES ('57', '2');
 INSERT INTO `e_admin_user_role` VALUES ('11111111111111111', '1');
 
 -- ----------------------------
--- Table structure for permission
+-- Table structure for goods_info
 -- ----------------------------
-DROP TABLE IF EXISTS `permission`;
-CREATE TABLE `permission` (
+DROP TABLE IF EXISTS `goods_info`;
+CREATE TABLE `goods_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL COMMENT '名字',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of goods_info
+-- ----------------------------
+INSERT INTO `goods_info` VALUES ('3', '天朝手机', '2018-03-29 22:26:31');
+
+-- ----------------------------
+-- Table structure for goods_sku
+-- ----------------------------
+DROP TABLE IF EXISTS `goods_sku`;
+CREATE TABLE `goods_sku` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sell_price` decimal(10,0) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of goods_sku
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sku_properties
+-- ----------------------------
+DROP TABLE IF EXISTS `sku_properties`;
+CREATE TABLE `sku_properties` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
+  `good_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=348 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of permission
+-- Records of sku_properties
 -- ----------------------------
-INSERT INTO `permission` VALUES ('237', null, '/weixing');
-INSERT INTO `permission` VALUES ('238', '删除证书', '/certificate/batchDelete');
-INSERT INTO `permission` VALUES ('239', '查询所有用户', '/user/list');
-INSERT INTO `permission` VALUES ('240', null, '/user/toEditUser');
-INSERT INTO `permission` VALUES ('241', '角色编辑', '/role/addOrUpdataRole');
-INSERT INTO `permission` VALUES ('242', '角色成员查询', '/role/userList');
-INSERT INTO `permission` VALUES ('243', '编辑品牌', '/brand/editBrand');
-INSERT INTO `permission` VALUES ('244', '编辑用户', '/user/editUser');
-INSERT INTO `permission` VALUES ('245', null, '/authImage');
-INSERT INTO `permission` VALUES ('246', null, '/menu/menuChild');
-INSERT INTO `permission` VALUES ('247', '角色权限编辑', '/role/editRolePermission');
-INSERT INTO `permission` VALUES ('248', '编辑品牌', '/brand/toEditBrand');
-INSERT INTO `permission` VALUES ('249', '角色查询', '/role/list');
-INSERT INTO `permission` VALUES ('250', '修改密码', '/changePassword');
-INSERT INTO `permission` VALUES ('251', '下载用户数据', '/user/downloadUser');
-INSERT INTO `permission` VALUES ('252', '删除品牌', '/brand/batchDeleteBrand');
-INSERT INTO `permission` VALUES ('253', '编辑证书', '/certificate/toEditCertificate');
-INSERT INTO `permission` VALUES ('254', null, '/menu/queryParentMenus');
-INSERT INTO `permission` VALUES ('255', '管理菜单', '/menu/edit');
-INSERT INTO `permission` VALUES ('256', '编辑证书', '/certificate/batchInsertCertificate');
-INSERT INTO `permission` VALUES ('257', '菜单查询', '/menu/list');
-INSERT INTO `permission` VALUES ('258', '权限查询', '/permission/list');
-INSERT INTO `permission` VALUES ('259', '角色编辑', '/role/inputRole');
-INSERT INTO `permission` VALUES ('260', '删除菜单', '/menu/delete');
-INSERT INTO `permission` VALUES ('261', '权限编辑', '/permission/addMenu');
-INSERT INTO `permission` VALUES ('262', '修改密码', '/user/changePassword');
-INSERT INTO `permission` VALUES ('263', '删除角色', '/role/deleteRole');
-INSERT INTO `permission` VALUES ('264', '删除角色成员', '/role/removeRoleUser');
-INSERT INTO `permission` VALUES ('265', '禁止用户登陆', '/forbidUserLogin');
-INSERT INTO `permission` VALUES ('266', '权限编辑', '/permission/edit');
-INSERT INTO `permission` VALUES ('267', '查看品牌', '/brand/list');
-INSERT INTO `permission` VALUES ('268', '解禁用户登陆', '/cancelForbidUserLogin');
-INSERT INTO `permission` VALUES ('269', '操作历史查询', '/log/list');
-INSERT INTO `permission` VALUES ('270', '查询证书', '/certificate/list');
-INSERT INTO `permission` VALUES ('271', null, '/uploadFile');
-INSERT INTO `permission` VALUES ('272', '编辑证书', '/certificate/editCertificate');
-INSERT INTO `permission` VALUES ('273', '管理菜单', '/menu/toEdit');
-INSERT INTO `permission` VALUES ('274', null, '/weixing');
-INSERT INTO `permission` VALUES ('275', '删除证书', '/certificate/batchDelete');
-INSERT INTO `permission` VALUES ('276', '查询所有用户', '/user/list');
-INSERT INTO `permission` VALUES ('277', null, '/user/toEditUser');
-INSERT INTO `permission` VALUES ('278', '角色编辑', '/role/addOrUpdataRole');
-INSERT INTO `permission` VALUES ('279', '角色成员查询', '/role/userList');
-INSERT INTO `permission` VALUES ('280', '编辑品牌', '/brand/editBrand');
-INSERT INTO `permission` VALUES ('281', '编辑用户', '/user/editUser');
-INSERT INTO `permission` VALUES ('282', null, '/authImage');
-INSERT INTO `permission` VALUES ('283', null, '/menu/menuChild');
-INSERT INTO `permission` VALUES ('284', '角色权限编辑', '/role/editRolePermission');
-INSERT INTO `permission` VALUES ('285', '编辑品牌', '/brand/toEditBrand');
-INSERT INTO `permission` VALUES ('286', '角色查询', '/role/list');
-INSERT INTO `permission` VALUES ('287', '修改密码', '/changePassword');
-INSERT INTO `permission` VALUES ('288', '下载用户数据', '/user/downloadUser');
-INSERT INTO `permission` VALUES ('289', '删除品牌', '/brand/batchDeleteBrand');
-INSERT INTO `permission` VALUES ('290', '编辑证书', '/certificate/toEditCertificate');
-INSERT INTO `permission` VALUES ('291', null, '/menu/queryParentMenus');
-INSERT INTO `permission` VALUES ('292', '管理菜单', '/menu/edit');
-INSERT INTO `permission` VALUES ('293', '编辑证书', '/certificate/batchInsertCertificate');
-INSERT INTO `permission` VALUES ('294', '菜单查询', '/menu/list');
-INSERT INTO `permission` VALUES ('295', '权限查询', '/permission/list');
-INSERT INTO `permission` VALUES ('296', '角色编辑', '/role/inputRole');
-INSERT INTO `permission` VALUES ('297', '删除菜单', '/menu/delete');
-INSERT INTO `permission` VALUES ('298', '权限编辑', '/permission/addMenu');
-INSERT INTO `permission` VALUES ('299', '修改密码', '/user/changePassword');
-INSERT INTO `permission` VALUES ('300', '删除角色', '/role/deleteRole');
-INSERT INTO `permission` VALUES ('301', '删除角色成员', '/role/removeRoleUser');
-INSERT INTO `permission` VALUES ('302', '禁止用户登陆', '/forbidUserLogin');
-INSERT INTO `permission` VALUES ('303', '权限编辑', '/permission/edit');
-INSERT INTO `permission` VALUES ('304', '查看品牌', '/brand/list');
-INSERT INTO `permission` VALUES ('305', '解禁用户登陆', '/cancelForbidUserLogin');
-INSERT INTO `permission` VALUES ('306', '操作历史查询', '/log/list');
-INSERT INTO `permission` VALUES ('307', '查询证书', '/certificate/list');
-INSERT INTO `permission` VALUES ('308', null, '/uploadFile');
-INSERT INTO `permission` VALUES ('309', '编辑证书', '/certificate/editCertificate');
-INSERT INTO `permission` VALUES ('310', '管理菜单', '/menu/toEdit');
-INSERT INTO `permission` VALUES ('311', null, '/weixing');
-INSERT INTO `permission` VALUES ('312', '删除证书', '/certificate/batchDelete');
-INSERT INTO `permission` VALUES ('313', '查询所有用户', '/user/list');
-INSERT INTO `permission` VALUES ('314', null, '/user/toEditUser');
-INSERT INTO `permission` VALUES ('315', '角色编辑', '/role/addOrUpdataRole');
-INSERT INTO `permission` VALUES ('316', '角色成员查询', '/role/userList');
-INSERT INTO `permission` VALUES ('317', '编辑品牌', '/brand/editBrand');
-INSERT INTO `permission` VALUES ('318', '编辑用户', '/user/editUser');
-INSERT INTO `permission` VALUES ('319', null, '/authImage');
-INSERT INTO `permission` VALUES ('320', null, '/menu/menuChild');
-INSERT INTO `permission` VALUES ('321', '角色权限编辑', '/role/editRolePermission');
-INSERT INTO `permission` VALUES ('322', '编辑品牌', '/brand/toEditBrand');
-INSERT INTO `permission` VALUES ('323', '角色查询', '/role/list');
-INSERT INTO `permission` VALUES ('324', '修改密码', '/changePassword');
-INSERT INTO `permission` VALUES ('325', '下载用户数据', '/user/downloadUser');
-INSERT INTO `permission` VALUES ('326', '删除品牌', '/brand/batchDeleteBrand');
-INSERT INTO `permission` VALUES ('327', '编辑证书', '/certificate/toEditCertificate');
-INSERT INTO `permission` VALUES ('328', null, '/menu/queryParentMenus');
-INSERT INTO `permission` VALUES ('329', '管理菜单', '/menu/edit');
-INSERT INTO `permission` VALUES ('330', '编辑证书', '/certificate/batchInsertCertificate');
-INSERT INTO `permission` VALUES ('331', '菜单查询', '/menu/list');
-INSERT INTO `permission` VALUES ('332', '权限查询', '/permission/list');
-INSERT INTO `permission` VALUES ('333', '角色编辑', '/role/inputRole');
-INSERT INTO `permission` VALUES ('334', '删除菜单', '/menu/delete');
-INSERT INTO `permission` VALUES ('335', '权限编辑', '/permission/addMenu');
-INSERT INTO `permission` VALUES ('336', '修改密码', '/user/changePassword');
-INSERT INTO `permission` VALUES ('337', '删除角色', '/role/deleteRole');
-INSERT INTO `permission` VALUES ('338', '删除角色成员', '/role/removeRoleUser');
-INSERT INTO `permission` VALUES ('339', '禁止用户登陆', '/forbidUserLogin');
-INSERT INTO `permission` VALUES ('340', '权限编辑', '/permission/edit');
-INSERT INTO `permission` VALUES ('341', '查看品牌', '/brand/list');
-INSERT INTO `permission` VALUES ('342', '解禁用户登陆', '/cancelForbidUserLogin');
-INSERT INTO `permission` VALUES ('343', '操作历史查询', '/log/list');
-INSERT INTO `permission` VALUES ('344', '查询证书', '/certificate/list');
-INSERT INTO `permission` VALUES ('345', null, '/uploadFile');
-INSERT INTO `permission` VALUES ('346', '编辑证书', '/certificate/editCertificate');
-INSERT INTO `permission` VALUES ('347', '管理菜单', '/menu/toEdit');
+INSERT INTO `sku_properties` VALUES ('1', '大小', '3');
+INSERT INTO `sku_properties` VALUES ('2', '颜色', '3');
+INSERT INTO `sku_properties` VALUES ('3', 'CPU', '3');
 
 -- ----------------------------
--- Table structure for test
+-- Table structure for sku_properties_value
 -- ----------------------------
-DROP TABLE IF EXISTS `test`;
-CREATE TABLE `test` (
+DROP TABLE IF EXISTS `sku_properties_value`;
+CREATE TABLE `sku_properties_value` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `test_fail` varchar(50) DEFAULT NULL COMMENT '退货id',
+  `value` varchar(255) DEFAULT NULL,
+  `sku_properties_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of test
+-- Records of sku_properties_value
 -- ----------------------------
-INSERT INTO `test` VALUES ('1', '1');
-INSERT INTO `test` VALUES ('12', '12');
-INSERT INTO `test` VALUES ('121', '11');
-
--- ----------------------------
--- Procedure structure for num_from_employee
--- ----------------------------
-DROP PROCEDURE IF EXISTS `num_from_employee`;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `num_from_employee`(IN emp_id INT, OUT count_num INT)
-    READS SQL DATA
-BEGIN
-              SELECT  COUNT(*)  INTO  count_num
-              FROM  csair_log_operation
-              WHERE  author=emp_id ;
-
-
-
-END
-;;
-DELIMITER ;
+INSERT INTO `sku_properties_value` VALUES ('1', '1寸', '1');
+INSERT INTO `sku_properties_value` VALUES ('2', '2寸', '1');
+INSERT INTO `sku_properties_value` VALUES ('3', '3寸', '1');
+INSERT INTO `sku_properties_value` VALUES ('4', '红', '2');
+INSERT INTO `sku_properties_value` VALUES ('5', '黑', '2');
+INSERT INTO `sku_properties_value` VALUES ('6', '白', '2');
+INSERT INTO `sku_properties_value` VALUES ('7', '灰', '2');
+INSERT INTO `sku_properties_value` VALUES ('8', '11G', '3');
+INSERT INTO `sku_properties_value` VALUES ('9', '12G', '3');
+INSERT INTO `sku_properties_value` VALUES ('10', '13G', '3');
+INSERT INTO `sku_properties_value` VALUES ('11', '23G', '3');
 
 -- ----------------------------
--- Procedure structure for proc_adder
+-- Table structure for sku_property_connect
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `proc_adder`;
-DELIMITER ;;
-CREATE DEFINER=`csair_eshop`@`localhost` PROCEDURE `proc_adder`(IN a int, IN b int, OUT sum int)
-BEGIN
-    #Routine body goes here...
-
-    DECLARE c int;
-    if a is null then set a = 0;
-    end if;
-
-    if b is null then set b = 0;
-    end if;
-
-    set sum  = a + b;
-
-END
-;;
-DELIMITER ;
+DROP TABLE IF EXISTS `sku_property_connect`;
+CREATE TABLE `sku_property_connect` (
+  `sku_id` bigint(20) NOT NULL,
+  `sku_property_name_id` bigint(20) DEFAULT NULL,
+  `sku_property_value_id` bigint(20) DEFAULT NULL,
+  `good_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='sku和sku属性值的关连表';
 
 -- ----------------------------
--- Procedure structure for test_function
+-- Records of sku_property_connect
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `test_function`;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `test_function`( in name varchar(10) , out seq int)
-begin
- select * FROM  test;
-set seq = 10;
-end
-;;
-DELIMITER ;
