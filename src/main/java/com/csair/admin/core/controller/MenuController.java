@@ -6,7 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.csair.admin.core.po.Brand;
 import com.csair.admin.core.po.core.Menu;
 import com.csair.admin.core.po.core.Permission;
 import com.csair.admin.core.po.core.ResponseMessage;
@@ -18,19 +17,17 @@ import com.csair.admin.core.po.core.resp.MenuVo;
 import com.csair.admin.core.service.MenuService;
 import com.csair.admin.core.service.PermissionService;
 import com.csair.admin.core.service.UserService;
+import com.csair.admin.core.vo.MenuZtreeVo;
 import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.csair.admin.util.FileUploadUtils;
 import com.csair.admin.util.ParamConstants;
-import org.springframework.web.util.HtmlUtils;
 
 /**
  * laogaochg
@@ -98,8 +95,8 @@ public class MenuController {
     //返回菜单子列表
     @RequestMapping("/menuChild")
     @ResponseBody
-    public List<MenuVo> queryChild(Long selectId, ModelAndView model) {
-        List<MenuVo> allMenu = menuService.queryAllMenuVo(selectId);
+    public List<MenuZtreeVo> queryChild(Long selectId) {
+        List<MenuZtreeVo> allMenu = menuService.queryMenuZtreeVo(selectId);
         return allMenu;
     }
 

@@ -11,6 +11,7 @@ import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
 import com.csair.admin.core.po.core.resp.MenuVo;
 import com.csair.admin.core.po.core.User;
+import com.csair.admin.core.vo.MenuZtreeVo;
 
 /**
  * 菜单
@@ -66,7 +67,7 @@ public interface MenuService {
      *
      * @return
      */
-    List<MenuVo> queryAllMenuVo(Long parentId);
+    List<MenuZtreeVo> queryMenuZtreeVo(Long parentId);
 
     Menu queryMenuByUrl(String url);
 

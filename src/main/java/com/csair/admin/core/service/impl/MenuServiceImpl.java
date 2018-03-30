@@ -13,6 +13,7 @@ import com.csair.admin.core.po.core.query.MenuQuery;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.query.PermissionQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
+import com.csair.admin.core.vo.MenuZtreeVo;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.ServletUtils;
 import org.apache.shiro.SecurityUtils;
@@ -125,34 +126,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuVo> queryAllMenuVo(Long selectId) {
-        List<Menu> menus = getAllMenu(false, false);
-        List<MenuVo> vo = new ArrayList<>();
-        //选中节点的父id
-        Long id = null;
+    public List<MenuZtreeVo> queryMenuZtreeVo(Long selectId) {
+        List<Menu> menus = getAllMenu(false, true);
+        List<MenuZtreeVo> vo = new ArrayList<>();
         for (Menu m : menus) {
-            MenuVo v = new MenuVo(m);
+            MenuZtreeVo v = new MenuZtreeVo(m);
             vo.add(v);
-            if (selectId != null && selectId.equals(m.getMid())) {
-//                v.setChecked(true);
-                id = m.getPid();
+            for (Permission permission : m.getPermissionList()) {
+                if (!permission.getUrl().equals(m.getUrl())) {
+                    vo.add(new MenuZtreeVo(permission));
+                }
             }
-        }
-        //选中节点的父父id
-        Long ppId = null;
-        for (Menu menu : menus) {
-            if (id != null && id.equals(menu.getMid())) {
-                ppId = menu.getPid();
-            }
-        }
-        //父节点展开处理
-        for (MenuVo menuVo : vo) {
-//            if(id!=null && menuVo.getId().equals(id)){
-//                menuVo.setOpen(true);
-//            }
-//            if(ppId!=null && menuVo.getId().equals(ppId)){
-//                menuVo.setOpen(true);
-//            }
         }
         return vo;
     }
