@@ -3,7 +3,10 @@
 <mapper namespace="com.csair.admin.core.dao.GoodsSkuDao" >
   <resultMap id="BaseResultMap" type="com.csair.admin.core.po.GoodsSku" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="sell_price" property="sellPrice" jdbcType="DECIMAL" />
+    <result column="sell_price" property="sellPrice" jdbcType="VARCHAR" />
+    <result column="attr_desc" property="attrDesc" jdbcType="VARCHAR" />
+    <result column="good_id" property="goodId" jdbcType="BIGINT" />
+    <result column="attr_id" property="attrId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +68,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, sell_price
+      id, sell_price, attr_desc, good_id, attr_id
     </if>
     <if test="fields != null" >
       ${fields}
@@ -90,7 +93,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,sell_price
+    id,sell_price,attr_desc,good_id,attr_id
     from goods_sku
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -104,11 +107,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.csair.admin.core.po.GoodsSku" >
-    insert into goods_sku (id, sell_price)
-    values (#{id,jdbcType=BIGINT}, #{sellPrice,jdbcType=DECIMAL})
+  <insert id="insert" parameterType="com.csair.admin.core.po.GoodsSku"   useGeneratedKeys="true" keyProperty="id" >
+    insert into goods_sku (id, sell_price, attr_desc, 
+      good_id, attr_id)
+    values (#{id,jdbcType=BIGINT}, #{sellPrice,jdbcType=VARCHAR}, #{attrDesc,jdbcType=VARCHAR}, 
+      #{goodId,jdbcType=BIGINT}, #{attrId,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.csair.admin.core.po.GoodsSku" >
+  <insert id="insertSelective" parameterType="com.csair.admin.core.po.GoodsSku"   useGeneratedKeys="true" keyProperty="id" >
     insert into goods_sku
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -117,13 +122,31 @@
       <if test="sellPrice != null" >
         sell_price,
       </if>
+      <if test="attrDesc != null" >
+        attr_desc,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="attrId != null" >
+        attr_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
       <if test="sellPrice != null" >
-        #{sellPrice,jdbcType=DECIMAL},
+        #{sellPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="attrDesc != null" >
+        #{attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=BIGINT},
+      </if>
+      <if test="attrId != null" >
+        #{attrId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -140,7 +163,16 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.sellPrice != null" >
-        sell_price = #{record.sellPrice,jdbcType=DECIMAL},
+        sell_price = #{record.sellPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.attrDesc != null" >
+        attr_desc = #{record.attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodId != null" >
+        good_id = #{record.goodId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrId != null" >
+        attr_id = #{record.attrId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -150,7 +182,10 @@
   <update id="updateByExample" parameterType="map" >
     update goods_sku
     set id = #{record.id,jdbcType=BIGINT},
-      sell_price = #{record.sellPrice,jdbcType=DECIMAL}
+      sell_price = #{record.sellPrice,jdbcType=VARCHAR},
+      attr_desc = #{record.attrDesc,jdbcType=VARCHAR},
+      good_id = #{record.goodId,jdbcType=BIGINT},
+      attr_id = #{record.attrId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -159,14 +194,26 @@
     update goods_sku
     <set >
       <if test="sellPrice != null" >
-        sell_price = #{sellPrice,jdbcType=DECIMAL},
+        sell_price = #{sellPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="attrDesc != null" >
+        attr_desc = #{attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="goodId != null" >
+        good_id = #{goodId,jdbcType=BIGINT},
+      </if>
+      <if test="attrId != null" >
+        attr_id = #{attrId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.csair.admin.core.po.GoodsSku" >
     update goods_sku
-    set sell_price = #{sellPrice,jdbcType=DECIMAL}
+    set sell_price = #{sellPrice,jdbcType=VARCHAR},
+      attr_desc = #{attrDesc,jdbcType=VARCHAR},
+      good_id = #{goodId,jdbcType=BIGINT},
+      attr_id = #{attrId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

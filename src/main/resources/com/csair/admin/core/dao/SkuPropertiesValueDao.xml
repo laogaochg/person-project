@@ -3,6 +3,7 @@
 <mapper namespace="com.csair.admin.core.dao.SkuPropertiesValueDao" >
   <resultMap id="BaseResultMap" type="com.csair.admin.core.po.SkuPropertiesValue" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sku_property_name" property="skuPropertyName" jdbcType="VARCHAR" />
     <result column="value" property="value" jdbcType="VARCHAR" />
     <result column="sku_properties_id" property="skuPropertiesId" jdbcType="BIGINT" />
   </resultMap>
@@ -66,7 +67,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, value, sku_properties_id
+      id, sku_property_name, value, sku_properties_id
     </if>
     <if test="fields != null" >
       ${fields}
@@ -91,7 +92,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,value,sku_properties_id
+    id,sku_property_name,value,sku_properties_id
     from sku_properties_value
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -105,17 +106,20 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.csair.admin.core.po.SkuPropertiesValue" useGeneratedKeys="true" keyProperty="id" >
-    insert into sku_properties_value (id, value, sku_properties_id
-      )
-    values (#{id,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR}, #{skuPropertiesId,jdbcType=BIGINT}
-      )
+  <insert id="insert" parameterType="com.csair.admin.core.po.SkuPropertiesValue"   useGeneratedKeys="true" keyProperty="id" >
+    insert into sku_properties_value (id, sku_property_name, value, 
+      sku_properties_id)
+    values (#{id,jdbcType=BIGINT}, #{skuPropertyName,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{skuPropertiesId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.csair.admin.core.po.SkuPropertiesValue" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="com.csair.admin.core.po.SkuPropertiesValue"   useGeneratedKeys="true" keyProperty="id" >
     insert into sku_properties_value
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="skuPropertyName != null" >
+        sku_property_name,
       </if>
       <if test="value != null" >
         value,
@@ -127,6 +131,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="skuPropertyName != null" >
+        #{skuPropertyName,jdbcType=VARCHAR},
       </if>
       <if test="value != null" >
         #{value,jdbcType=VARCHAR},
@@ -148,6 +155,9 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.skuPropertyName != null" >
+        sku_property_name = #{record.skuPropertyName,jdbcType=VARCHAR},
+      </if>
       <if test="record.value != null" >
         value = #{record.value,jdbcType=VARCHAR},
       </if>
@@ -162,6 +172,7 @@
   <update id="updateByExample" parameterType="map" >
     update sku_properties_value
     set id = #{record.id,jdbcType=BIGINT},
+      sku_property_name = #{record.skuPropertyName,jdbcType=VARCHAR},
       value = #{record.value,jdbcType=VARCHAR},
       sku_properties_id = #{record.skuPropertiesId,jdbcType=BIGINT}
     <if test="_parameter != null" >
@@ -171,6 +182,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.csair.admin.core.po.SkuPropertiesValue" >
     update sku_properties_value
     <set >
+      <if test="skuPropertyName != null" >
+        sku_property_name = #{skuPropertyName,jdbcType=VARCHAR},
+      </if>
       <if test="value != null" >
         value = #{value,jdbcType=VARCHAR},
       </if>
@@ -182,7 +196,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.csair.admin.core.po.SkuPropertiesValue" >
     update sku_properties_value
-    set value = #{value,jdbcType=VARCHAR},
+    set sku_property_name = #{skuPropertyName,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
       sku_properties_id = #{skuPropertiesId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>

@@ -1,6 +1,7 @@
 package com.csair.admin.core.vo;
 
 import lombok.Data;
+import org.apache.commons.collections.ArrayStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,4 +18,5 @@ public class GoodsVo {
     private Long id;
     private String goodsName;
     private List<Map<String, List<String>>> properties = new ArrayList<>();
+    private List<GoodsSkuVo> skuList = new ArrayList<>();
 }

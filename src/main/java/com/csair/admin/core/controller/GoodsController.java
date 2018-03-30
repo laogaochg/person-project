@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
-    @RequestMapping(value = "/edit", method = RequestMethod.DELETE)
-    @ResponseBody
-    public ResponseMessage<Object> delete(@RequestBody GoodsVo goods) {
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ResponseMessage<Object> insertGoods(@RequestBody GoodsVo goods) {
         ResponseMessage<Object> result = new ResponseMessage<>();
         int i = goodsService.insertGoods(goods);
         return result;

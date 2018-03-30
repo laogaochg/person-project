@@ -1108,9 +1108,12 @@ INSERT INTO `goods_info` VALUES ('3', '天朝手机', '2018-03-29 22:26:31');
 DROP TABLE IF EXISTS `goods_sku`;
 CREATE TABLE `goods_sku` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `sell_price` decimal(10,0) DEFAULT NULL,
+  `sell_price` varchar(255) DEFAULT NULL,
+  `attr_desc` varchar(255) DEFAULT NULL COMMENT '属性值id组合，用,号分开：备用字段',
+  `good_id` bigint(20) DEFAULT NULL COMMENT '商品id',
+  `attr_id` varchar(255) DEFAULT NULL COMMENT '属性名id和属性值id组合：2:33,3:24',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=385 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goods_sku

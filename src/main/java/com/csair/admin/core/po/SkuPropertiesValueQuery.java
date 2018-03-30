@@ -206,6 +206,76 @@ public class SkuPropertiesValueQuery {
             return (Criteria) this;
         }
 
+        public Criteria andSkuPropertyNameIsNull() {
+            addCriterion("sku_property_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameIsNotNull() {
+            addCriterion("sku_property_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameEqualTo(String value) {
+            addCriterion("sku_property_name =", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameNotEqualTo(String value) {
+            addCriterion("sku_property_name <>", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameGreaterThan(String value) {
+            addCriterion("sku_property_name >", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameGreaterThanOrEqualTo(String value) {
+            addCriterion("sku_property_name >=", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameLessThan(String value) {
+            addCriterion("sku_property_name <", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameLessThanOrEqualTo(String value) {
+            addCriterion("sku_property_name <=", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameLike(String value) {
+            addCriterion("sku_property_name like", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameNotLike(String value) {
+            addCriterion("sku_property_name not like", value, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameIn(List<String> values) {
+            addCriterion("sku_property_name in", values, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameNotIn(List<String> values) {
+            addCriterion("sku_property_name not in", values, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameBetween(String value1, String value2) {
+            addCriterion("sku_property_name between", value1, value2, "skuPropertyName");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuPropertyNameNotBetween(String value1, String value2) {
+            addCriterion("sku_property_name not between", value1, value2, "skuPropertyName");
+            return (Criteria) this;
+        }
+
         public Criteria andValueIsNull() {
             addCriterion("value is null");
             return (Criteria) this;
