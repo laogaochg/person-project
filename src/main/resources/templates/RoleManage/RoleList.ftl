@@ -222,7 +222,7 @@
                     btn.find('.layui-layer-btn0').on('click', function () {
                         var loadindex = layer.load(1);//开启进度条
                         $.ajax({
-                            url: '${context.contextPath}/RoleManage/role?id='+ids,
+                            url: '${context.contextPath}/RoleManage/role?id=' + ids,
                             type: 'DELETE',
                             dataType: 'json',
                             success: function (r) {
@@ -293,6 +293,16 @@
 
     });
 
+/*    $.ajax({
+        url: '/goods/edit',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(d),
+        type: 'POST',
+        dataType: 'json',
+        success: function (r) {
+            console.debug(r);
+        }
+    });*/
 </script>
 <script type="text/html" id="toobar">
     <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="setRole">授权</a>

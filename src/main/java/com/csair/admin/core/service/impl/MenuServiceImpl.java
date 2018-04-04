@@ -130,8 +130,6 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> menus = getAllMenu(false, true);
         List<MenuZtreeVo> vo = new ArrayList<>();
         for (Menu m : menus) {
-            MenuZtreeVo v = new MenuZtreeVo(m);
-            vo.add(v);
             for (Permission permission : m.getPermissionList()) {
                 if (!permission.getUrl().equals(m.getUrl())) {
                     vo.add(new MenuZtreeVo(permission));
