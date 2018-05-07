@@ -264,6 +264,9 @@
             <if test="mid!=null">
                 and p.mid = #{mid}
             </if>
+            <if test="permissionId!=null">
+                and p.id = #{permissionId}
+            </if>
         </where>
         <if test="limit > 0">
             limit #{startRow} , #{limit}

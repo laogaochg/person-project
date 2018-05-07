@@ -1144,10 +1144,10 @@ DROP TABLE IF EXISTS `sku_properties_value`;
 CREATE TABLE `sku_properties_value` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `value` varchar(255) DEFAULT NULL,
+  `sku_property_name` varchar(255) DEFAULT NULL,
   `sku_properties_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
-
 -- ----------------------------
 -- Records of sku_properties_value
 -- ----------------------------

@@ -95,8 +95,8 @@ public class MenuController {
     //返回菜单子列表
     @RequestMapping("/menuChild")
     @ResponseBody
-    public List<MenuZtreeVo> queryChild(Long selectId) {
-        List<MenuZtreeVo> allMenu = menuService.queryMenuZtreeVo(selectId);
+    public List<MenuZtreeVo> queryChild(Long selectMenuId , String onlyMenu,Long roleId) {
+        List<MenuZtreeVo> allMenu = menuService.queryMenuZtreeVo(selectMenuId,"1".equals(onlyMenu),roleId);
         return allMenu;
     }
 

@@ -126,14 +126,18 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuZtreeVo> queryMenuZtreeVo(Long selectId) {
-        List<Menu> menus = getAllMenu(false, true);
+    public List<MenuZtreeVo> queryMenuZtreeVo(Long selectId , boolean onlyMenu,Long roleId) {
+        List<Menu> menus = getAllMenu(false, !onlyMenu);
         List<MenuZtreeVo> vo = new ArrayList<>();
         for (Menu m : menus) {
             MenuZtreeVo v = new MenuZtreeVo(m);
             vo.add(v);
             for (Permission permission : m.getPermissionList()) {
-                if (!permission.getUrl().equals(m.getUrl())) {
+                String url = permission.getUrl();
+                if (url !=null && url.contains(m.getUrl())) {
+                    v.setPermissionId(permission.getId());
+                    v.setType(1);
+                }else{
                     vo.add(new MenuZtreeVo(permission));
                 }
             }

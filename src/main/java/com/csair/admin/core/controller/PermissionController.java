@@ -63,7 +63,7 @@ public class PermissionController {
         }
         permissionService.editPermission(permission, u);
         re.setCode(200);
-        re.setMsg("删除成功");
+        re.setMsg("编辑成功");
         return re;
     }
 

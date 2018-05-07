@@ -36,10 +36,10 @@ PubUtil.prototype = {
         $.merge(inputArray, hidden);
         $.merge(inputArray, textarea);
         $.merge(inputArray, textarea2);
-
         inputArray.each(function () {
             var input = $(this);// 循环中的每一个input元素
             var name = input.attr("name");
+            // console.log(input,name,"--------",inputArray)
             if (array[name] != "") {
                 input.val(array[name]);
             }

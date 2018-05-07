@@ -23,7 +23,7 @@
         <div class="layui-tab-item layui-show">
             <div class="layui-btn-group">
                 <button class="layui-btn" onclick="gotoUrl('/permission/permissionTree')">权限树</button>
-                <button class="layui-btn" data-type="btnAdd">新增</button>
+                <button class="layui-btn" onclick="openUpdate()">新增</button>
                 <button class="layui-btn layui-btn-danger" data-type="btnDelAll">批量删除</button>
             </div>
         </div>
@@ -33,6 +33,15 @@
 </div>
 <table class="layui-hide" id="table" lay-filter="table"></table>
 <script>
+    //修改按钮
+    function openUpdate(data) {
+        if (data) {
+            gotoUrl('/permission/PermissionEdit&id=' + data.id);
+        } else {
+            gotoUrl('/permission/PermissionEdit');
+        }
+    }
+
     layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function () {
         var layer = layui.layer; //弹层
         var laydate = layui.laydate; //日期
@@ -67,7 +76,7 @@
                 },
                 {
                     field: 'id',
-                    title: '名字',
+                    title: 'id',
                     align: 'center',
                     sort: true,
                     width: '150'
@@ -83,7 +92,7 @@
                     field: 'url',
                     title: 'URL',
                     align: 'center',
-                    width: '400'
+                    width: '300'
                 },
 //                {
 //                    field: 'iconCls',
@@ -93,9 +102,9 @@
 //                },
                 {
                     field: 'menuName',
-                    title: '对应菜单的id',
+                    title: '对应菜单的名字',
                     align: 'center',
-                    width: '100'
+                    width: '150'
                 }, {
                     fixed: 'right',
                     title: '操作',
@@ -175,7 +184,7 @@
         }
 
         //修改按钮
-        function openUpdate(data) {
+       /* function openUpdate(data) {
             layer.open({
                 type: 2,
                 title: '修改',
@@ -199,7 +208,7 @@
                     //body.find("select,:radio,:checkbox").attr("disabled", "disabled");
                 }
             });
-        }
+        }*/
 
         //删除按钮
         function openDelete(ids) {
@@ -323,7 +332,6 @@
 
 </script>
 <script type="text/html" id="toobar">
-    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
     <a class="layui-btn layui-btn-xs" lay-event="update">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>

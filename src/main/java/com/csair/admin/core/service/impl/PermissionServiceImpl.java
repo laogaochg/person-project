@@ -52,6 +52,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public int insertPermission(Permission p) {
+        if(p.getType()==null ) p.setType(Byte.valueOf("1"));
         return permissionDao.insert(p);
     }
 
@@ -60,7 +61,7 @@ public class PermissionServiceImpl implements PermissionService {
         int i = 0;
         String action;
         if (permission.getId() == null) {
-            i = permissionDao.insert(permission);
+            i = insertPermission(permission);
             action = "添加权限";
         } else {
             i = permissionDao.updateByPrimaryKey(permission);
@@ -229,7 +230,8 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public Long addPermission(Permission p, User u) {
-        permissionDao.insert(p);
+        if(p.getType()==null ) p.setType(Byte.valueOf("1"));
+        insertPermission(p);
         Long id = p.getId();
         //维护共享变量
         if (StringUtils.hasText(p.getUrl())) {

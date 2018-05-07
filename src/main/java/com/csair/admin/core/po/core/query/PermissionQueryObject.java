@@ -25,6 +25,10 @@ public class PermissionQueryObject extends QueryObject {
      * 查询
      */
     private String type;
+    /**
+     * 权限id
+     */
+    private String permissionId;
 
 
 }

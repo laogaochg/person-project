@@ -81,22 +81,18 @@ public class RoleManageController {
      * 编辑角色的权限
      */
     @RequestMapping("/editRolePermission")
-    public ModelAndView editRolePermission(Long roleId, Long[] permissionIds, ModelAndView model, HttpServletRequest httpRequest) {
-        Map<String, Object> map = new HashMap<String, Object>();
+    @ResponseBody
+    public ResponseMessage<Object> editRolePermission(Long roleId, Long[] permissionIds) {
+        ResponseMessage<Object> result = new ResponseMessage<>();
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getSession().getAttribute(ParamConstants.USER_SESSION);
         if (roleId == null) {
-            map.put("code", 200);
-            map.put("mes", "参数错误");
-
+            result.setCode(111);
+            result.setMsg("参数错误");
         } else {
-            map = permissionService.editRolePermission(roleId, permissionIds, user);
+            permissionService.editRolePermission(roleId, permissionIds, user);
         }
-        model.addObject("msg", map);
-        model.addObject("userMenus", ServletUtils.queryUserMenu());
-        model.addObject("selectMenuIdForIntropect", ServletUtils.getSelectMenuId(httpRequest));
-        model.setViewName("role/updataMsg");
-        return model;
+        return result;
     }
 
     //删除角色成员

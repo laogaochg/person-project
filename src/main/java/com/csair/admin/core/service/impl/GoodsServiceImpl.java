@@ -105,8 +105,8 @@ public class GoodsServiceImpl implements GoodsService {
             GoodsSkuVo skuVo = getGoodsSkuVo(goods, attrList.get(i));
             if (skuVo != null) {
                 sku.setSellPrice(skuVo.getPrice());
+                goodsSkuDao.insert(sku);//用户没有编辑的sku，不作保存
             }
-            goodsSkuDao.insert(sku);
         }
         return 0;
     }

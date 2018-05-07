@@ -15,6 +15,7 @@ import java.util.List;
 @Data
 public class MenuZtreeVo {
     private Long id;
+    private Long permissionId;
     private String name;
     private String href;
     //    private String icon = "fa-cube";
@@ -25,19 +26,21 @@ public class MenuZtreeVo {
     private List<MenuVo> children = new ArrayList<>();
     private int type = 0;//0菜单，1权限
 
+
     public MenuZtreeVo(Menu m) {
         this.id = m.getMid();
         this.name = m.getMname();
         this.href = m.getUrl();
         this.pid = m.getPid();
-        type=0;
+        this.type=0;
     }
 
     public MenuZtreeVo(Permission p) {
-        this.id = p.getId();
+        id =0L;
+        this.permissionId = p.getId();
         this.pid = p.getMid();
         this.name = p.getName();
         this.href = p.getUrl();
-        type=1;
+        this.type=1;
     }
 }

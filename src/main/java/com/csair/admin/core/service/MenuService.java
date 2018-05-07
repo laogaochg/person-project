@@ -67,7 +67,7 @@ public interface MenuService {
      *
      * @return
      */
-    List<MenuZtreeVo> queryMenuZtreeVo(Long parentId);
+    List<MenuZtreeVo> queryMenuZtreeVo(Long parentId , boolean onlyMenu,Long roleId);
 
     Menu queryMenuByUrl(String url);
 

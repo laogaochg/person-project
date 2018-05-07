@@ -140,6 +140,7 @@
 
         //打开查看按钮
         function openSetRole(data) {
+            console.log(data);
             layer.open({
                 type: 2,
                 title: '授权',
@@ -148,10 +149,10 @@
                 btnAlign: 'c',
                 shade: public_shade,//是否有遮罩，可以设置成false
                 maxmin: true, //开启最大化最小化按钮
-                area: ['700px', '400px'],
+                area: ['700px', '700px'],
                 //area : [ '100%', '100%' ],
                 boolean: true,
-                content: ['SetRole.jsp?obj=' + encodeURIComponent(JSON.stringify(data)), 'yes'], //iframe的url，no代表不显示滚动条
+                content: contextPath + "/toUrl?url=/RoleManage/SelectPermissionTree&roleId="+data.id,
                 btn: ['授权', '重置', '关闭'],
                 yes: function (index, layero) {
                     var body = layer.getChildFrame('body', index);

@@ -11,7 +11,6 @@ import org.springframework.util.StreamUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.nio.charset.Charset;
 
 @SpringBootTest
@@ -22,8 +21,10 @@ public class GoodsInsertTest {
 
     @Test
     public void testInsert() throws Exception {
-        File file = new File("D:\\nanhang\\管理后台1.0版\\springboot-layui\\log\\GoodsVo.json");
-        String s = StreamUtils.copyToString(new FileInputStream(file), Charset.forName("utf-8"));
+        File file = new File("G:\\daima\\springboot-layui\\springboot-layui\\log\\GoodsVo.json");
+        FileInputStream in = new FileInputStream(file);
+        String s = StreamUtils.copyToString(in, Charset.forName("utf-8"));
+        in.close();
         System.out.println(s);
         GoodsVo goodsVo = JSON.parseObject(s, GoodsVo.class);
         System.out.println("goodsVo = " + goodsVo);
