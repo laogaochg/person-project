@@ -39,12 +39,7 @@ import jxl.write.biff.WritableWorkbookImpl;
 public class XlsFileUtil {
     private static Logger logger = LoggerFactory.getLogger(XlsFileUtil.class);
 
-    /**
-     * 解析xls文件 得到数据
-     *
-     * @param inputStream
-     * @return
-     */
+    /*** 解析xls文件 得到数据 */
     public static List<List<String>> parseXlsFile(InputStream inputStream) {
         List<List<String>> result = new ArrayList<>();
         try {
@@ -74,9 +69,7 @@ public class XlsFileUtil {
         }
     }
 
-    /**
-     * 解析xls文件 得到数据
-     */
+    /*** 解析xls文件 得到数据*/
     public static List<Map<Integer, String>> parseWorkbook(InputStream inputStream) {
         List<Map<Integer, String>> result = new ArrayList<>();
         try {

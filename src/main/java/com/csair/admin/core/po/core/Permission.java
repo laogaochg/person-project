@@ -14,9 +14,7 @@ public class Permission {
     private String name;//url描述
     private List<Role> roleList;//一个权限对应多个角色
     private Long mid;//对应菜单的id
-    /**
-     * NULL为管理平台的权限；2为商家权限
-     */
+    /**** 0:菜单自动添加进来的,1:用户添加的 */
     private Byte type;
     /**
      * 对应父菜单的名字

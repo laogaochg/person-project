@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Author: LaoGaoChuang
  * @Date : 2018/3/29 21:47
  */
-@Controller("goods")
+@Controller
+@RequestMapping("goods")
 @ResponseBody
 public class GoodsController {
     @Autowired
