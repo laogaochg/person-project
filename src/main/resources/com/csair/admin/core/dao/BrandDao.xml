@@ -349,10 +349,11 @@
       add_by = #{addBy}
     where brand_id = #{brandId}
   </update>
-    <select id="pageQueryList" resultMap="BaseResultMap">
+    <select id="pageQueryList" resultMap="ResultMapWithBLOBs">
         select
-        brand_id, brand_name, brand_logo, brand_logo_thumb, brand_website, brand_order, status,
-        add_time, add_by from csair_brand
+        brand_id, brand_name, brand_logo, brand_logo_thumb,
+        brand_website, brand_order, status,
+        add_time, add_by ,brand_desc from csair_brand
         <where>
             <if test="keyword!=null">
                 AND brand_name LIKE CONCAT('%',#{keyword},'%')

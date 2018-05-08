@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @ImportResource("classpath:transaction.xml")
 @EnableTransactionManagement
-@MapperScan(value = {"com.csair.admin.core.dao"})//mapper 接口类扫描包配置
+@MapperScan(value = {"com.csair.admin.core.dao"})
 public class Application extends SpringBootServletInitializer {
 
     @Override
