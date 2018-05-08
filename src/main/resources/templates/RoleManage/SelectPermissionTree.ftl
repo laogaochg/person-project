@@ -63,8 +63,9 @@
         var selectNote = zTree.getCheckedNodes(true);
         for (var i = 0; i < selectNote.length; i++) {
             var note = selectNote[i];
-            console.debug(note);
-            contents += "&permissionIds=" + note.id;
+            if(note.permissionId){
+                contents += "&permissionIds=" + note.permissionId;
+            }
         }
         console.debug(contents);
         $.ajax({

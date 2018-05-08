@@ -47,7 +47,7 @@
         //绑定table
         table.render({
             elem: '#table',//table id
-            url: '${context.contextPath}/Menu/list',
+            url: '${context.contextPath}/log/list',
             method: 'POST', //方式
             page: true,//是否开启分页
             limits: [10, 20, 30, 60, 90, 100],
@@ -66,41 +66,37 @@
                     fixed: 'left',
                 },
                 {
-                    field: 'mname',
-                    title: '菜单名称',
+                    field: 'authorName',
+                    title: '操作人登陆名',
                     align: 'center',
                     sort: true,
                     width: '200'
                 },
                 {
-                    field: 'url',
-                    title: 'URL',
+                    field: 'action',
+                    title: '动作',
+                    align: 'center',
+                    width: '150'
+                },
+                {
+                    field: 'opIp',
+                    title: '操作的ip地址',
+                    align: 'center',
+                    width: '150'
+                },
+                {
+                    field: 'dateString',
+                    title: '操作时间',
+                    align: 'center',
+                    width: '200'
+                },
+                {
+                    field: 'content',
+                    title: '操作内容',
                     align: 'center',
                     width: '400'
-                },
-//                {
-//                    field: 'iconCls',
-//                    title: '图标',
-//                    align: 'center',
-//                    width: '200'
-//                },
-                {
-                    field: 'sort',
-                    title: '排序',
-                    align: 'center',
-                    width: '100'
-                }, {
-                    field: 'pid',
-                    title: '上一级菜单Id',
-                    align: 'center',
-                    width: '200'
-                }, {
-                    fixed: 'right',
-                    title: '操作',
-                    align: 'center',
-                    toolbar: '#toobar',
-                    width: '200'
-                }]]
+                }
+                ]]
         });
 
         //监听工具条

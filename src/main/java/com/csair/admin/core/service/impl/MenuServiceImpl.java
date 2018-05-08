@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 import com.csair.admin.core.dao.MenuDao;
+import com.csair.admin.core.po.core.PageResult;
 import com.csair.admin.core.po.core.Role;
 import com.csair.admin.core.po.core.query.MenuQuery;
 import com.csair.admin.core.po.core.query.MenuQueryObject;
 import com.csair.admin.core.po.core.query.PermissionQueryObject;
 import com.csair.admin.core.po.core.resp.DatagridForLayUI;
+import com.csair.admin.core.service.RoleService;
 import com.csair.admin.core.vo.MenuZtreeVo;
 import com.csair.admin.util.ParamConstants;
 import com.csair.admin.util.ServletUtils;
@@ -45,6 +47,8 @@ public class MenuServiceImpl implements MenuService {
     private PermissionService permissionService;
     @Resource
     private OperationLogService operationLogService;
+    @Resource
+    private RoleService roleService;
 
     @Override
     public Menu queryById(Long mid) {
@@ -126,19 +130,32 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<MenuZtreeVo> queryMenuZtreeVo(Long selectId , boolean onlyMenu,Long roleId) {
+    public List<MenuZtreeVo> queryMenuZtreeVo(Long selectId, boolean onlyMenu, Long roleId) {
         List<Menu> menus = getAllMenu(false, !onlyMenu);
+        PermissionQueryObject qo = new PermissionQueryObject();
+        qo.setRoleId(roleId);
+        qo.setLimit(-1);
+        PageResult<Permission> query = permissionService.query(qo);
+        List<Permission> listData = query.getListData();
+        Set<Long> permissionIdsSet = new HashSet<>();
+        for (Permission permission : listData) {
+            permissionIdsSet.add(permission.getId());
+        }
         List<MenuZtreeVo> vo = new ArrayList<>();
         for (Menu m : menus) {
             MenuZtreeVo v = new MenuZtreeVo(m);
             vo.add(v);
             for (Permission permission : m.getPermissionList()) {
                 String url = permission.getUrl();
-                if (url !=null && url.contains(m.getUrl())) {
+                boolean contains = permissionIdsSet.contains(permission.getId());
+                if (url != null && url.contains(m.getUrl())) {
+                    v.setChecked(contains);
                     v.setPermissionId(permission.getId());
                     v.setType(1);
-                }else{
-                    vo.add(new MenuZtreeVo(permission));
+                } else {
+                    MenuZtreeVo permissionVo = new MenuZtreeVo(permission);
+                    permissionVo.setChecked(contains);
+                    vo.add(permissionVo);
                 }
             }
         }

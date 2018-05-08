@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.csair.admin.core.po.core.OperationLog">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="author" property="author" jdbcType="VARCHAR"/>
+        <result column="authorName" property="authorName" jdbcType="VARCHAR"/>
         <result column="action" property="action" jdbcType="VARCHAR"/>
         <result column="op_time" property="opTime" jdbcType="TIMESTAMP"/>
         <result column="op_ip" property="opIp" jdbcType="VARCHAR"/>
@@ -282,7 +283,7 @@
 
     <select id="pageQueryList" resultMap="BaseResultMap">
         select l.id , l.author ,
-        l.action , l.content , l.op_time ,
+        l.action , l.content , l.op_time ,u.email as authorName,
         l.op_ip from csair_log_operation l join e_admin_user u on l.author = u.id
         <include refid="base_where"/>
         ORDER BY op_time DESC

@@ -149,7 +149,7 @@
                 btnAlign: 'c',
                 shade: public_shade,//是否有遮罩，可以设置成false
                 maxmin: true, //开启最大化最小化按钮
-                area: ['700px', '700px'],
+                area: ['60%', '80%'],
                 //area : [ '100%', '100%' ],
                 boolean: true,
                 content: contextPath + "/toUrl?url=/RoleManage/SelectPermissionTree&roleId="+data.id,

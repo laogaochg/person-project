@@ -22,7 +22,7 @@ public class MenuZtreeVo {
     private Long pid;
     //    private boolean spread = true;
     private boolean open = true;
-    private Boolean checked;
+    private Boolean checked = false;
     private List<MenuVo> children = new ArrayList<>();
     private int type = 0;//0菜单，1权限
 
