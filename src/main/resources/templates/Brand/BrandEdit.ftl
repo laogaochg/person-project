@@ -45,14 +45,36 @@
     <div class="layui-form-item">
         <label class="layui-form-label">URL</label>
         <div class="layui-input-inline">
-            <input type="text" name="menuUrl" placeholder="请输入" autocomplete="off" class="layui-input"/>
+            <input name="menuUrl" placeholder="请输入"
+                   autocomplete="off" class="layui-input"/>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">LOGO</label>
-        <input type="hidden" name="brandLogo" value="2" >
-        <div class="layui-input-block">
-            <img id="BrandLogo" src="brandLogo">
+        <label class="layui-form-label">图片1</label>
+        <input type="hidden" name="brandLogo" value="2">
+        <div class="layui-input-inline">
+            <input type="file" name="file1" class="chooseFile layui-input"/>
+        </div>
+        <div class="layui-input-inline">
+            <img style="display:none;width: 100%;" name="file1img" src="aa">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片2</label>
+        <div class="layui-input-inline">
+            <input type="file" name="file2" class="chooseFile layui-input"/>
+        </div>
+        <div class="layui-input-inline">
+            <img style="display:none;width: 100%;" name="file2img" src="aa">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片3</label>
+        <div class="layui-input-inline">
+            <input type="file" name="file3" class="chooseFile layui-input"/>
+        </div>
+        <div class="layui-input-inline">
+            <img style="display:none;width: 100%;" name="file3img" src="aa">
         </div>
     </div>
     <div style="width: 95%;height: 400px">
@@ -90,6 +112,7 @@
     var ue;
     layui.use(['form', 'layedit', 'laydate', 'jquery', 'layer'], function () {
         var form = layui.form;
+        var imgData ={};
         //请求得到编辑东西的详情
         if (data.brandId) {
             $.ajax({
@@ -117,8 +140,34 @@
                 autoFloatEnabled: false
             });
         }
+
+        $(".chooseFile").change(function () {
+            var formData = new FormData();
+            formData.append("file", this.files[0]);
+            var thisName = this.name;
+            $.ajax({
+                url: "${context.contextPath}/uploadFile",
+                type: "POST",
+                data: formData,
+                /***必须false才会自动加上正确的Content-Type */
+                contentType: false,
+                /*** 必须false才会避开jQuery对 formdata 的默认处理
+                 * XMLHttpRequest会对 formdata 进行正确的处理 */
+                processData: false,
+                success: function (data) {
+                    var s = "[name=" + thisName + "img]";
+                    imgData[thisName] =data.data.src;
+                    $(s).attr("src",contextPath+data.data.src);
+                    $(s).css("display","inline");
+                    console.debug(imgData);
+                }, error: function (data) {
+                    console.log(data);
+                }
+            });
+        });
         //监听提交
         form.on('submit(btnSubmit)', function (data) {
+            data.field.brandLogo = imgData.file1+";"+imgData.file2+";"+imgData.file3;
             var bar = layer.load(1);//开启进度条
             layer.open({
                 title: '提示'
